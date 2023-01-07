@@ -3,8 +3,8 @@ import { FieldValues } from 'react-hook-form';
 import { TypeaheadMultiSelect } from './TypeaheadMultiSelect';
 import { TypeaheadSingleSelect } from './TypeaheadSingleSelect';
 import { UseTypeaheadInputOptions } from './useTypeaheadInput';
-import { FormFieldProps } from '../types';
-import { GenericDataType } from '../../../types';
+import { FormFieldProps } from '../Form';
+import { GenericDataType } from '../../common/types';
 
 export interface TypeaheadSelectProps<
   DataItem extends GenericDataType,

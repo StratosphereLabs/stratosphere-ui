@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
-import { useDebouncedState } from '../../../hooks';
-import { GenericDataType } from '../../../types';
+import { GenericDataType } from '../../common/types';
+import { useDebouncedState } from '../../hooks';
 
 export interface UseTypeaheadInputOptions<DataItem> {
   debounceTime?: number;

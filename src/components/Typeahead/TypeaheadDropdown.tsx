@@ -4,9 +4,9 @@ import { Fragment, ReactNode, useRef } from 'react';
 import { Progress } from 'react-daisyui';
 import { FieldValues } from 'react-hook-form';
 import { TypeaheadSelectProps } from './TypeaheadSelect';
-import { Dropdown, DropdownMenu, DropdownOption } from '../../Dropdown';
-import { useOutsideClick } from '../../../hooks';
-import { GenericDataType } from '../../../types';
+import { Dropdown, DropdownMenu, DropdownOption } from '../Dropdown';
+import { GenericDataType } from '../../common/types';
+import { useOutsideClick } from '../../hooks';
 
 export interface TypeaheadDropdownProps<
   DataItem extends GenericDataType,
