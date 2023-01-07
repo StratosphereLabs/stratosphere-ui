@@ -1,0 +1,85 @@
+{
+  "name": "stratosphere-ui",
+  "version": "0.0.4",
+  "description": "React component library for all Stratosphere Labs user interfaces",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/stratosphere-ui.js",
+  "module": "./dist/stratosphere-ui.js",
+  "exports": {
+    ".": {
+      "types": "./dist/stratosphere-ui.d.ts",
+      "import": "./dist/stratosphere-ui.js",
+      "require": "./dist/stratosphere-ui.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StratosphereLabs/stratosphere-ui.git"
+  },
+  "author": "Ethan Shields",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StratosphereLabs/stratosphere-ui/issues"
+  },
+  "homepage": "https://github.com/StratosphereLabs/stratosphere-ui#readme",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "storybook": "NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 6006",
+    "build-storybook": "NODE_OPTIONS=--openssl-legacy-provider build-storybook",
+    "deploy-storybook": "storybook-to-ghpages"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.7",
+    "@headlessui/react": "^1.7.7",
+    "@mdx-js/react": "^2.2.1",
+    "@storybook/addon-actions": "^6.5.15",
+    "@storybook/addon-docs": "^6.5.15",
+    "@storybook/addon-essentials": "^6.5.15",
+    "@storybook/addon-interactions": "^6.5.15",
+    "@storybook/addon-links": "^6.5.15",
+    "@storybook/addon-postcss": "^2.0.0",
+    "@storybook/addon-storysource": "^6.5.15",
+    "@storybook/builder-vite": "^0.2.6",
+    "@storybook/jest": "^0.0.10",
+    "@storybook/react": "^6.5.15",
+    "@storybook/storybook-deployer": "^2.8.16",
+    "@storybook/testing-library": "^0.0.13",
+    "@types/node": "^18.11.18",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.10",
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/parser": "^5.47.1",
+    "@vitejs/plugin-react": "^3.0.0",
+    "autoprefixer": "^10.4.13",
+    "babel-loader": "^8.3.0",
+    "classnames": "^2.3.2",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard-with-typescript": "^22.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-mdx": "^2.0.5",
+    "eslint-plugin-n": "^15.2.5",
+    "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-storybook": "^0.6.8",
+    "postcss": "^8.4.20",
+    "prettier": "^2.7.1",
+    "react": "^18.2.0",
+    "react-daisyui": "^3.0.2",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.41.3",
+    "storybook-addon-themes": "^6.1.0",
+    "tailwindcss": "^3.2.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.3",
+    "vite-plugin-dts": "^1.7.1",
+    "vite-plugin-eslint": "^1.8.1",
+    "vitest": "^0.26.3"
+  }
+}
