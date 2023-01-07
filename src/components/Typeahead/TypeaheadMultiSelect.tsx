@@ -6,10 +6,9 @@ import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { TypeaheadDropdown } from './TypeaheadDropdown';
 import { TypeaheadSelectProps } from './TypeaheadSelect';
 import { useTypeaheadInput } from './useTypeaheadInput';
-import { FormError } from '../FormError';
-import { FormLabel } from '../FormLabel';
-import { Badge } from '../../Badge';
-import { GenericDataType } from '../../../types';
+import { Badge } from '../Badge';
+import { FormError, FormLabel } from '../Form';
+import { GenericDataType } from '../../common/types';
 
 export interface TypeaheadMultiSelectProps<
   DataItem extends GenericDataType,
