@@ -13,8 +13,9 @@ export interface AlertMessagesContextData {
   dismissAlertMessage: (index?: number) => void;
 }
 
-interface AlertMessagesProviderProps {
+export interface AlertMessagesProviderProps {
   children: ReactNode;
+  initialData?: AlertMessage[];
 }
 
 const initialContext: AlertMessagesContextData = {
@@ -32,9 +33,10 @@ export const useAlertMessages = (): AlertMessagesContextData =>
 
 export const AlertMessagesProvider = ({
   children,
+  initialData,
 }: AlertMessagesProviderProps): JSX.Element => {
   const [alertMessages, setAlertMessages] = useState<AlertMessage[]>(
-    initialContext.alertMessages,
+    initialData ?? initialContext.alertMessages,
   );
   const addAlertMessages = (messages: AlertMessage[]): void =>
     setAlertMessages(prevMessages => [...prevMessages, ...messages]);
