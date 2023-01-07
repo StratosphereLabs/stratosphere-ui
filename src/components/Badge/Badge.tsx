@@ -8,6 +8,7 @@ import {
 import { CloseIcon } from '../Icons';
 
 export interface BadgeProps extends DaisyUIBadgeProps {
+  dismissable?: boolean;
   icon?: FC<ComponentProps<'svg'>>;
   onDismiss?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
@@ -15,6 +16,7 @@ export interface BadgeProps extends DaisyUIBadgeProps {
 export const Badge = ({
   children,
   className,
+  dismissable,
   icon: Icon,
   onDismiss,
   ...props
@@ -26,13 +28,13 @@ export const Badge = ({
   >
     {Icon !== undefined ? <Icon /> : null}
     {children}
-    {onDismiss !== undefined ? (
+    {dismissable === true ? (
       <Button
         color="ghost"
         size="xs"
         onClick={event => {
           event.stopPropagation();
-          onDismiss(event);
+          onDismiss?.(event);
         }}
         onKeyDown={event => {
           event.stopPropagation();

@@ -1,6 +1,7 @@
 import { Story, Meta } from '@storybook/react';
 
 import { Badge, BadgeProps } from './Badge';
+import { CheckIcon } from '../Icons';
 
 export default {
   title: 'Badge',
@@ -15,3 +16,19 @@ export default {
 export const Default: Story<BadgeProps> = args => (
   <Badge {...args}>Badge</Badge>
 );
+
+export const WithIcon: Story<BadgeProps> = args => (
+  <Badge {...args}>Badge</Badge>
+);
+
+WithIcon.args = {
+  icon: CheckIcon,
+};
+
+export const Dismissable: Story<BadgeProps> = args => (
+  <Badge {...args}>Badge</Badge>
+);
+
+Dismissable.args = {
+  dismissable: true,
+};
