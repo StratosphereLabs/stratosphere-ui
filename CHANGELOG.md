@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.1.1 (2023-01-07)
+
+- Added Checkbox, Range slider, Select, and Switch components
+- Fixed issue with missing typings
+
 ## 0.1.0 (2023-01-07)
 
 - Added Form components
