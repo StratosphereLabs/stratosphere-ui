@@ -1,5 +1,12 @@
 # CHANGELOG.md
 
+## 0.1.0 (2023-01-07)
+
+- Added Form components
+- Added Typeahead components
+- Added Modal
+- Added Loading Card
+
 ## 0.0.4 (2023-01-01)
 
 - Added types to Form component export

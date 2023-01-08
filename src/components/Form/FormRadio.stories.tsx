@@ -3,8 +3,8 @@ import { Story, Meta } from '@storybook/react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { FormRadio, FormRadioProps } from './FormRadio';
 import { Form } from '../Form';
-import { FormRadio, FormRadioProps } from '../FormRadio';
 
 export default {
   title: 'FormRadio',

@@ -8,7 +8,7 @@ import { TypeaheadSelectProps } from './TypeaheadSelect';
 import { useTypeaheadInput } from './useTypeaheadInput';
 import { Badge } from '../Badge';
 import { FormError, FormLabel } from '../Form';
-import { GenericDataType } from '../../common/types';
+import { GenericDataType } from '../../common';
 
 export interface TypeaheadMultiSelectProps<
   DataItem extends GenericDataType,

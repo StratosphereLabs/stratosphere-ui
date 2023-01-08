@@ -4,7 +4,7 @@ import { TypeaheadMultiSelect } from './TypeaheadMultiSelect';
 import { TypeaheadSingleSelect } from './TypeaheadSingleSelect';
 import { UseTypeaheadInputOptions } from './useTypeaheadInput';
 import { FormFieldProps } from '../Form';
-import { GenericDataType } from '../../common/types';
+import { GenericDataType } from '../../common';
 
 export interface TypeaheadSelectProps<
   DataItem extends GenericDataType,
