@@ -7,7 +7,7 @@ import { TypeaheadDropdown } from './TypeaheadDropdown';
 import { TypeaheadSelectProps } from './TypeaheadSelect';
 import { useTypeaheadInput } from './useTypeaheadInput';
 import { FormError, FormLabel } from '../Form';
-import { GenericDataType } from '../../common/types';
+import { GenericDataType } from '../../common';
 
 export interface TypeaheadSingleSelectProps<
   DataItem extends GenericDataType,

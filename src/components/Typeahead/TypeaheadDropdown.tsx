@@ -5,7 +5,7 @@ import { Progress } from 'react-daisyui';
 import { FieldValues } from 'react-hook-form';
 import { TypeaheadSelectProps } from './TypeaheadSelect';
 import { Dropdown, DropdownMenu, DropdownOption } from '../Dropdown';
-import { GenericDataType } from '../../common/types';
+import { GenericDataType } from '../../common';
 import { useOutsideClick } from '../../hooks';
 
 export interface TypeaheadDropdownProps<

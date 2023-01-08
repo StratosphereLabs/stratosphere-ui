@@ -3,8 +3,8 @@ import { Story, Meta } from '@storybook/react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Form } from '../Form';
-import { FormControl, FormControlProps } from '../FormControl';
+import { Form } from './Form';
+import { FormControl, FormControlProps } from './FormControl';
 
 export default {
   title: 'FormControl',

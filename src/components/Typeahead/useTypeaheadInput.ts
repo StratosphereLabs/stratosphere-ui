@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
-import { GenericDataType } from '../../common/types';
+import { GenericDataType } from '../../common';
 import { useDebouncedState } from '../../hooks';
 
 export interface UseTypeaheadInputOptions<DataItem> {
