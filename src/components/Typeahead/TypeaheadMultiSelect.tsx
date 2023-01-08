@@ -10,10 +10,10 @@ import { Badge } from '../Badge';
 import { FormError, FormLabel } from '../Form';
 import { GenericDataType } from '../../common';
 
-export interface TypeaheadMultiSelectProps<
+export type TypeaheadMultiSelectProps<
   DataItem extends GenericDataType,
   Values extends FieldValues,
-> extends Omit<TypeaheadSelectProps<DataItem, Values>, 'multi'> {}
+> = Omit<TypeaheadSelectProps<DataItem, Values>, 'multi'>;
 
 export const TypeaheadMultiSelect = <
   DataItem extends GenericDataType,

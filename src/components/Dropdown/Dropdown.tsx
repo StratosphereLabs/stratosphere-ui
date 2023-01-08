@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { forwardRef, HTMLProps } from 'react';
 
-export interface DropdownProps extends HTMLProps<HTMLDivElement> {}
+export type DropdownProps = HTMLProps<HTMLDivElement>;
 
 export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
   ({ children, className, ...props }: DropdownProps, ref): JSX.Element => (

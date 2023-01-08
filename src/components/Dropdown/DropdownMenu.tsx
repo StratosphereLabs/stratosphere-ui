@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { Children, forwardRef } from 'react';
 import { Menu, MenuProps } from 'react-daisyui';
 
-export interface DropdownMenuProps extends MenuProps {}
+export type DropdownMenuProps = MenuProps;
 
 export const DropdownMenu = forwardRef<HTMLUListElement, DropdownMenuProps>(
   ({ children, className, ...props }, ref): JSX.Element => (

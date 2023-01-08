@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { forwardRef, HTMLProps } from 'react';
 
-export interface FormErrorProps extends HTMLProps<HTMLLabelElement> {}
+export type FormErrorProps = HTMLProps<HTMLLabelElement>;
 
 export const FormError = forwardRef<HTMLLabelElement, FormErrorProps>(
   ({ children, className, ...props }, ref): JSX.Element => (

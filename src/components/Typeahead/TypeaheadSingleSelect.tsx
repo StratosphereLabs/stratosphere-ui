@@ -9,10 +9,10 @@ import { useTypeaheadInput } from './useTypeaheadInput';
 import { FormError, FormLabel } from '../Form';
 import { GenericDataType } from '../../common';
 
-export interface TypeaheadSingleSelectProps<
+export type TypeaheadSingleSelectProps<
   DataItem extends GenericDataType,
   Values extends FieldValues,
-> extends Omit<TypeaheadSelectProps<DataItem, Values>, 'multi'> {}
+> = Omit<TypeaheadSelectProps<DataItem, Values>, 'multi'>;
 
 export const TypeaheadSingleSelect = <
   DataItem extends GenericDataType,
