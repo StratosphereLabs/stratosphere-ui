@@ -5,6 +5,7 @@ import { FormLabel } from './FormLabel';
 
 export interface FormRangeSliderProps<Values> {
   barColor?: string;
+  barInnerColor?: string;
   children?: ReactNode;
   defaultMin?: number;
   defaultMax?: number;
@@ -18,12 +19,15 @@ export interface FormRangeSliderProps<Values> {
   showLabels?: boolean;
   step?: number;
   stepOnly?: boolean;
+  thumbLeftColor?: string;
+  thumbRightColor?: string;
 }
 
 export const FormRangeSlider = forwardRef(
   <Values extends FieldValues>(
     {
       barColor,
+      barInnerColor,
       children,
       defaultMin,
       defaultMax,
@@ -37,6 +41,8 @@ export const FormRangeSlider = forwardRef(
       showLabels,
       step,
       stepOnly,
+      thumbLeftColor,
+      thumbRightColor,
     }: FormRangeSliderProps<Values>,
     ref: ForwardedRef<HTMLDivElement>,
   ): JSX.Element => {
@@ -50,11 +56,11 @@ export const FormRangeSlider = forwardRef(
         <MultiRangeSlider
           ref={ref}
           label={showLabels}
-          barInnerColor="#1c64f2"
+          barInnerColor={barInnerColor}
           barLeftColor={barColor}
           barRightColor={barColor}
-          thumbLeftColor="#d1d5db"
-          thumbRightColor="#d1d5db"
+          thumbLeftColor={thumbLeftColor}
+          thumbRightColor={thumbRightColor}
           min={min}
           max={max}
           ruler={ruler}

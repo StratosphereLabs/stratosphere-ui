@@ -38,27 +38,13 @@ interface FormValues {
 export const Default: Story<FormRadioProps<FormValues>> = args => {
   const methods = useForm();
   return (
-    <Form className="w-40" methods={methods} onFormSubmit={() => {}}>
+    <Form className="w-60" methods={methods} onFormSubmit={() => null}>
       <FormRadio {...args} />
     </Form>
   );
 };
 
 Default.args = {
-  name: 'field1',
-  options: radioOptions,
-};
-
-export const WithLabel: Story<FormRadioProps<FormValues>> = args => {
-  const methods = useForm();
-  return (
-    <Form className="w-40" methods={methods} onFormSubmit={() => {}}>
-      <FormRadio {...args} />
-    </Form>
-  );
-};
-
-WithLabel.args = {
   name: 'field1',
   labelText: 'Field Label',
   options: radioOptions,
@@ -67,14 +53,14 @@ WithLabel.args = {
 export const Required: Story<FormRadioProps<FormValues>> = args => {
   const methods = useForm();
   return (
-    <Form className="w-40" methods={methods} onFormSubmit={() => {}}>
+    <Form className="w-60" methods={methods} onFormSubmit={() => null}>
       <FormRadio {...args} />
     </Form>
   );
 };
 
 Required.args = {
-  ...WithLabel.args,
+  ...Default.args,
   isRequired: true,
 };
 
@@ -90,7 +76,7 @@ export const WithError: Story<FormRadioProps<FormValues>> = args => {
     methods.trigger('field1');
   }, []);
   return (
-    <Form className="w-40" methods={methods} onFormSubmit={() => {}}>
+    <Form className="w-60" methods={methods} onFormSubmit={() => null}>
       <FormRadio {...args} />
     </Form>
   );

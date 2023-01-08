@@ -12,7 +12,14 @@
     "plugin:mdx/recommended"
   ],
   "ignorePatterns": ["dist", "node_modules"],
-  "overrides": [],
+  "overrides": [
+    {
+      "files": "*.stories.tsx",
+      "rules": {
+        "@typescript-eslint/no-floating-promises": "off"
+      }
+    }
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",

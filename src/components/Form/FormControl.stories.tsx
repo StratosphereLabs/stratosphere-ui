@@ -23,7 +23,7 @@ interface FormValues {
 export const Default: Story<FormControlProps<FormValues, string>> = args => {
   const methods = useForm();
   return (
-    <Form methods={methods} onFormSubmit={() => {}}>
+    <Form methods={methods} onFormSubmit={() => null}>
       <FormControl {...args} />
     </Form>
   );
@@ -36,7 +36,7 @@ Default.args = {
 export const WithLabel: Story<FormControlProps<FormValues, string>> = args => {
   const methods = useForm();
   return (
-    <Form methods={methods} onFormSubmit={() => {}}>
+    <Form methods={methods} onFormSubmit={() => null}>
       <FormControl {...args} />
     </Form>
   );
@@ -50,7 +50,7 @@ WithLabel.args = {
 export const Required: Story<FormControlProps<FormValues, string>> = args => {
   const methods = useForm();
   return (
-    <Form methods={methods} onFormSubmit={() => {}}>
+    <Form methods={methods} onFormSubmit={() => null}>
       <FormControl {...args} />
     </Form>
   );
@@ -66,7 +66,7 @@ export const WithPlaceholder: Story<
 > = args => {
   const methods = useForm();
   return (
-    <Form methods={methods} onFormSubmit={() => {}}>
+    <Form methods={methods} onFormSubmit={() => null}>
       <FormControl {...args} />
     </Form>
   );
@@ -89,7 +89,7 @@ export const WithError: Story<FormControlProps<FormValues, string>> = args => {
     methods.trigger('field1');
   }, []);
   return (
-    <Form methods={methods} onFormSubmit={() => {}}>
+    <Form methods={methods} onFormSubmit={() => null}>
       <FormControl {...args} />
     </Form>
   );
