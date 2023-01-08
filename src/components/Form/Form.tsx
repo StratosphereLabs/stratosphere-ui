@@ -25,5 +25,3 @@ export const Form = <Values extends FieldValues>({
     </form>
   </FormProvider>
 );
-
-export default Form;

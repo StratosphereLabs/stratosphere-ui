@@ -99,6 +99,7 @@ export const TypeaheadMultiSelect = <
         {selectedItems.length > 0
           ? selectedItems.map((item, index) => (
               <Badge
+                dismissable
                 key={getItemValue(item)}
                 onDismiss={() =>
                   setSelectedItems(items =>
