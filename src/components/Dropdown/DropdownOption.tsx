@@ -10,8 +10,11 @@ export interface DropdownOptionProps extends HTMLProps<HTMLAnchorElement> {
 }
 
 export const DropdownOption = forwardRef<HTMLLIElement, DropdownOptionProps>(
-  ({ active, children, className, selected, ...props }, ref): JSX.Element => (
-    <Menu.Item className={className} ref={ref}>
+  (
+    { active, children, className, disabled, selected, ...props },
+    ref,
+  ): JSX.Element => (
+    <Menu.Item className={className} disabled={disabled} ref={ref}>
       <a className={classNames(active === true && 'active')} {...props}>
         {selected !== undefined ? (
           <div className="w-6 flex justify-center">

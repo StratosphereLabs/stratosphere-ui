@@ -46,7 +46,11 @@ export const TypeaheadDropdown = <
       ref={dropdownRef}
     >
       {show === undefined || show ? (
-        <Combobox.Options as={DropdownMenu} static={show !== undefined}>
+        <Combobox.Options
+          as={DropdownMenu}
+          className="bg-base-100 shadow-xl"
+          static={show !== undefined}
+        >
           {children}
           {isLoading ? (
             <Progress

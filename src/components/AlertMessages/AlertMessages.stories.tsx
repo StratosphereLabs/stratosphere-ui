@@ -1,5 +1,9 @@
 import { Story, Meta } from '@storybook/react';
 import { AlertMessages, AlertMessagesProps } from './AlertMessages';
+import {
+  AlertMessagesProvider,
+  AlertMessagesProviderProps,
+} from './AlertMessagesProvider';
 
 export default {
   title: 'AlertMessages',
@@ -11,8 +15,17 @@ export default {
   },
 } as Meta;
 
-export const Default: Story<AlertMessagesProps> = args => (
-  <AlertMessages {...args} />
+export interface StoryProps
+  extends AlertMessagesProps,
+    Pick<AlertMessagesProviderProps, 'initialData'> {}
+
+export const Default: Story<StoryProps> = ({
+  initialData,
+  maxMessages,
+}: StoryProps) => (
+  <AlertMessagesProvider initialData={initialData}>
+    <AlertMessages maxMessages={maxMessages} />
+  </AlertMessagesProvider>
 );
 
 Default.args = {
@@ -25,8 +38,13 @@ Default.args = {
   maxMessages: 5,
 };
 
-export const SingleRow: Story<AlertMessagesProps> = args => (
-  <AlertMessages {...args} />
+export const SingleRow: Story<StoryProps> = ({
+  initialData,
+  maxMessages,
+}: StoryProps) => (
+  <AlertMessagesProvider initialData={initialData}>
+    <AlertMessages maxMessages={maxMessages} />
+  </AlertMessagesProvider>
 );
 
 SingleRow.args = {

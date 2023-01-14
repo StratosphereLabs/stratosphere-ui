@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.1.3 (2023-01-14)
+
+- Add ability to disable dropdown menu option
+- Add DropdownNavLink component
+
 ## 0.1.2 (2023-01-07)
 
 - Fixed issue with missing typings

@@ -70,7 +70,7 @@ export const FormSelect = <
         </>
       </Listbox.Button>
       <Dropdown>
-        <Listbox.Options as={DropdownMenu}>
+        <Listbox.Options as={DropdownMenu} className="bg-base-100 shadow-xl">
           {options?.map(option => (
             <Listbox.Option
               as={Fragment}
