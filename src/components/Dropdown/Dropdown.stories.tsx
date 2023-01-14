@@ -49,3 +49,15 @@ export const Selected: Story<DropdownOptionProps> = ({ ref, ...args }) => (
 );
 
 Selected.args = {};
+
+export const Disabled: Story<DropdownOptionProps> = ({ ref, ...args }) => (
+  <DropdownMenu>
+    <DropdownOption {...args}>Menu Item 1</DropdownOption>
+    <DropdownOption {...args} disabled>
+      Menu Item 2
+    </DropdownOption>
+    <DropdownOption {...args}>Menu Item 3</DropdownOption>
+  </DropdownMenu>
+);
+
+Disabled.args = {};
