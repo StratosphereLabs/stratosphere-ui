@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## 0.1.4 (2023-01-15)
+
+- Added inputRef prop to FormControl component
+- Added animation to Modal component
+- Temporarily removed initial focus functionality from Modal component
+
 ## 0.1.3 (2023-01-14)
 
 - Add ability to disable dropdown menu option
