@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { RefObject, useMemo } from 'react';
 import { Input, InputProps } from 'react-daisyui';
 import { FieldValues, useController } from 'react-hook-form';
 import { FormError } from './FormError';
@@ -8,11 +8,13 @@ import { FormFieldProps, Transform } from './types';
 export interface FormControlProps<Values extends FieldValues, TOutput>
   extends FormFieldProps<Values>,
     Omit<InputProps, 'name'> {
+  inputRef?: RefObject<HTMLInputElement>;
   transform?: Transform<TOutput>;
 }
 
 export const FormControl = <Values extends FieldValues, TOutput>({
   controllerProps,
+  inputRef,
   isRequired,
   labelText,
   name,
@@ -45,6 +47,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
             transform !== undefined ? transform.output(value) : value,
           )
         }
+        ref={inputRef}
         value={inputValue}
         {...props}
       />
