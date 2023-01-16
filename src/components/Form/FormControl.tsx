@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { RefObject, useMemo } from 'react';
 import { Input, InputProps } from 'react-daisyui';
 import { FieldValues, useController } from 'react-hook-form';
@@ -13,6 +14,7 @@ export interface FormControlProps<Values extends FieldValues, TOutput>
 }
 
 export const FormControl = <Values extends FieldValues, TOutput>({
+  className,
   controllerProps,
   inputRef,
   isRequired,
@@ -34,12 +36,13 @@ export const FormControl = <Values extends FieldValues, TOutput>({
     [field.value, transform],
   );
   return (
-    <div className="form-control w-full">
+    <div className="flex-1 flex flex-col">
       {labelText !== undefined ? (
         <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
       ) : null}
       <Input
         {...field}
+        className={classNames('w-full', className)}
         color={error === undefined ? 'ghost' : 'error'}
         name={name}
         onChange={({ target: { value } }) =>

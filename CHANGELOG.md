@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.1.5 (2023-01-15)
+
+- Changed FormControl container to flex box
+
 ## 0.1.4 (2023-01-15)
 
 - Added inputRef prop to FormControl component
