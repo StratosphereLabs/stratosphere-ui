@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.1.6 (2023-01-17)
+
+- Added required 'id' option to FormRadio item
+- Fixed incorrect Badge labels in Typeahead Multi-Select
+
 ## 0.1.5 (2023-01-15)
 
 - Changed FormControl container to flex box

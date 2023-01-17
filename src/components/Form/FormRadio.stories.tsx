@@ -18,14 +18,17 @@ export default {
 
 const radioOptions = [
   {
+    id: 1,
     label: 'Label 1',
     value: '1',
   },
   {
+    id: 2,
     label: 'Label 2',
     value: '2',
   },
   {
+    id: 3,
     label: 'Label 3',
     value: '3',
   },

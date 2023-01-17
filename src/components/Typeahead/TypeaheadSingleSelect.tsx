@@ -82,7 +82,6 @@ export const TypeaheadSingleSelect = <
       <TypeaheadDropdown
         isLoading={isLoading}
         getItemText={getItemText}
-        getItemValue={getItemValue}
         options={options}
       />
       {error?.message !== undefined ? (
