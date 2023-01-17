@@ -13,7 +13,7 @@ export interface TypeaheadDropdownProps<
   Values extends FieldValues,
 > extends Pick<
     TypeaheadSelectProps<DataItem, Values>,
-    'getItemText' | 'getItemValue' | 'options'
+    'getItemText' | 'options'
   > {
   children?: ReactNode;
   isLoading: boolean;
@@ -28,7 +28,6 @@ export const TypeaheadDropdown = <
 >({
   children,
   getItemText,
-  getItemValue,
   isLoading,
   onClose,
   options,
@@ -62,11 +61,7 @@ export const TypeaheadDropdown = <
           ) : null}
           {!isLoading &&
             options?.map((option, index) => (
-              <Combobox.Option
-                as={Fragment}
-                key={getItemValue(option)}
-                value={option}
-              >
+              <Combobox.Option as={Fragment} key={option.id} value={option}>
                 {({ active, disabled, selected }) => (
                   <DropdownOption
                     active={active}

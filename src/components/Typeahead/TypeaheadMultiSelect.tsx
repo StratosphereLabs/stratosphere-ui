@@ -100,7 +100,7 @@ export const TypeaheadMultiSelect = <
           ? selectedItems.map((item, index) => (
               <Badge
                 dismissable
-                key={getItemValue(item)}
+                key={item.id}
                 onDismiss={() =>
                   setSelectedItems(items =>
                     items.filter((_, itemIndex) => index !== itemIndex),
@@ -115,7 +115,6 @@ export const TypeaheadMultiSelect = <
       <TypeaheadDropdown
         isLoading={isLoading}
         getItemText={getItemText}
-        getItemValue={getItemValue}
         onClose={() => setShowDropdown(false)}
         options={options}
         show={showDropdown}

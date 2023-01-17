@@ -1,8 +1,5 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Story, Meta } from '@storybook/react';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { Form } from '../Form';
 import { TypeaheadSelect, TypeaheadSelectProps } from '../Typeahead';
 
@@ -31,7 +28,7 @@ export const SingleSelect: Story<
 > = args => {
   const methods = useForm();
   return (
-    <Form className="w-64 h-64" methods={methods} onFormSubmit={() => {}}>
+    <Form className="w-64 h-64" methods={methods} onFormSubmit={() => null}>
       <TypeaheadSelect {...args} />
     </Form>
   );
@@ -55,7 +52,7 @@ export const MultiSelect: Story<
 > = args => {
   const methods = useForm();
   return (
-    <Form className="w-64 h-80" methods={methods} onFormSubmit={() => {}}>
+    <Form className="w-64 h-80" methods={methods} onFormSubmit={() => null}>
       <TypeaheadSelect {...args} />
     </Form>
   );

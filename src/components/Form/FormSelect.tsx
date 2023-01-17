@@ -1,4 +1,5 @@
 import { Listbox } from '@headlessui/react';
+import classNames from 'classnames';
 import {
   ComponentProps,
   FC,
@@ -19,9 +20,9 @@ export interface FormSelectProps<
   DataItem extends GenericDataType,
   Values extends FieldValues,
 > extends Omit<FormFieldProps<Values>, 'controllerProps' | 'isRequired'> {
+  buttonColor?: ComponentColor;
   buttonRef?: RefObject<HTMLButtonElement>;
   className?: string;
-  buttonColor?: ComponentColor;
   dropdownIcon?: FC<ComponentProps<'svg'>>;
   getItemText: (data: DataItem) => string;
   getItemValue: (data: DataItem) => string;
@@ -32,13 +33,13 @@ export const FormSelect = <
   DataItem extends GenericDataType,
   Values extends FieldValues,
 >({
+  buttonColor,
   buttonRef,
   className,
   dropdownIcon,
   getItemText,
   getItemValue,
   labelText,
-  buttonColor,
   name,
   options,
 }: FormSelectProps<DataItem, Values>): JSX.Element => {
@@ -52,10 +53,10 @@ export const FormSelect = <
   return (
     <Listbox
       as="div"
-      className={className}
+      className={classNames('flex', 'flex-col', className)}
       name={name}
-      value={selectedItem}
       onChange={setSelectedItem}
+      value={selectedItem}
     >
       {labelText !== undefined ? <FormLabel>{labelText}</FormLabel> : null}
       <Listbox.Button
@@ -72,11 +73,7 @@ export const FormSelect = <
       <Dropdown>
         <Listbox.Options as={DropdownMenu} className="bg-base-100 shadow-xl">
           {options?.map(option => (
-            <Listbox.Option
-              as={Fragment}
-              key={getItemValue(option)}
-              value={option}
-            >
+            <Listbox.Option as={Fragment} key={option.id} value={option}>
               {({ active, disabled, selected }) => (
                 <DropdownOption
                   active={active}
