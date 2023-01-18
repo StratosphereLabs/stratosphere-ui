@@ -1,11 +1,13 @@
-export const CheckIcon = (): JSX.Element => (
+import { SVGProps } from 'react';
+
+export const CheckIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="w-5 h-5"
+    {...props}
   >
     <path
       strokeLinecap="round"
@@ -15,14 +17,14 @@ export const CheckIcon = (): JSX.Element => (
   </svg>
 );
 
-export const CloseIcon = (): JSX.Element => (
+export const CloseIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="w-4 h-4"
+    {...props}
   >
     <path
       strokeLinecap="round"
@@ -32,14 +34,14 @@ export const CloseIcon = (): JSX.Element => (
   </svg>
 );
 
-export const ErrorIcon = (): JSX.Element => (
+export const ErrorIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="w-5 h-5"
+    {...props}
   >
     <path
       strokeLinecap="round"
@@ -49,14 +51,14 @@ export const ErrorIcon = (): JSX.Element => (
   </svg>
 );
 
-export const InfoIcon = (): JSX.Element => (
+export const InfoIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="w-5 h-5"
+    {...props}
   >
     <path
       strokeLinecap="round"
@@ -66,14 +68,14 @@ export const InfoIcon = (): JSX.Element => (
   </svg>
 );
 
-export const SuccessIcon = (): JSX.Element => (
+export const SuccessIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="w-5 h-5"
+    {...props}
   >
     <path
       strokeLinecap="round"
@@ -83,14 +85,14 @@ export const SuccessIcon = (): JSX.Element => (
   </svg>
 );
 
-export const WarningIcon = (): JSX.Element => (
+export const WarningIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="w-5 h-5"
+    {...props}
   >
     <path
       strokeLinecap="round"

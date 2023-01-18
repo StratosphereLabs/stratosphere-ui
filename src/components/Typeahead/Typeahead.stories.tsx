@@ -28,7 +28,7 @@ export const SingleSelect: Story<
 > = args => {
   const methods = useForm();
   return (
-    <Form className="w-64 h-64" methods={methods} onFormSubmit={() => null}>
+    <Form className="h-64 w-64" methods={methods} onFormSubmit={() => null}>
       <TypeaheadSelect {...args} />
     </Form>
   );
@@ -52,7 +52,7 @@ export const MultiSelect: Story<
 > = args => {
   const methods = useForm();
   return (
-    <Form className="w-64 h-80" methods={methods} onFormSubmit={() => null}>
+    <Form className="h-80 w-64" methods={methods} onFormSubmit={() => null}>
       <TypeaheadSelect {...args} />
     </Form>
   );

@@ -17,8 +17,8 @@ export const DropdownOption = forwardRef<HTMLLIElement, DropdownOptionProps>(
     <Menu.Item className={className} disabled={disabled} ref={ref}>
       <a className={classNames(active === true && 'active')} {...props}>
         {selected !== undefined ? (
-          <div className="w-6 flex justify-center">
-            {selected ? <CheckIcon /> : null}
+          <div className="flex w-6 justify-center">
+            {selected ? <CheckIcon className="h-5 w-5" /> : null}
           </div>
         ) : null}
         {children}

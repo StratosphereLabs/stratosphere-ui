@@ -18,8 +18,9 @@
   },
   "include": [
     "src",
-    "./vite.config.ts",
     "./postcss.config.cjs",
-    "./tailwind.config.cjs"
+    "./prettier.config.cjs",
+    "./tailwind.config.cjs",
+    "./vite.config.ts"
   ]
 }

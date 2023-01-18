@@ -36,7 +36,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
     [field.value, transform],
   );
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex flex-1 flex-col">
       {labelText !== undefined ? (
         <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
       ) : null}

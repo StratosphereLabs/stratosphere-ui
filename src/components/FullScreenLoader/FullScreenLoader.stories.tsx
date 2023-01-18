@@ -13,7 +13,7 @@ export default {
 } as Meta;
 
 export const Default: Story = () => (
-  <WindowMockup className="w-full h-72 flex bg-base-100">
+  <WindowMockup className="flex h-72 w-full bg-base-100">
     <FullScreenLoader />
   </WindowMockup>
 );
