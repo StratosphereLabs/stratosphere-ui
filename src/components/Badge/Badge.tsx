@@ -22,7 +22,7 @@ export const Badge = ({
   ...props
 }: BadgeProps): JSX.Element => (
   <DaisyUIBadge
-    className={classNames('text-sm', 'font-semibold', className)}
+    className={classNames('text-sm font-semibold', className)}
     size="lg"
     {...props}
   >
@@ -40,7 +40,7 @@ export const Badge = ({
           event.stopPropagation();
         }}
       >
-        <CloseIcon />
+        <CloseIcon className="h-4 w-4" />
         <span className="sr-only">Remove badge</span>
       </Button>
     ) : null}

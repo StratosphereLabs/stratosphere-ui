@@ -18,12 +18,12 @@ export const AlertMessages = ({
         const Icon = statusToIconMap[status];
         return (
           <Alert
-            className="w-full flex mb-2"
+            className="mb-2 flex w-full"
             key={`error_message_${index}`}
             status={alertMessages[index].status}
-            icon={<Icon />}
+            icon={<Icon className="h-5 w-5" />}
           >
-            <div className="flex-1 flex justify-between gap-2">
+            <div className="flex flex-1 justify-between gap-2">
               {alertMessages[index].message}
             </div>
             <Button

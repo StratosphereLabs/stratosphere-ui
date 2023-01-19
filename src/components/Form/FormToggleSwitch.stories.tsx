@@ -21,7 +21,7 @@ export const Default: Story<FormToggleSwitchProps<FormValues>> = args => {
   const methods = useForm();
   return (
     <Form
-      className="w-full flex gap-2 items-center"
+      className="flex w-full items-center gap-2"
       methods={methods}
       onFormSubmit={() => null}
     >

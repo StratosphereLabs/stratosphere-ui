@@ -61,7 +61,7 @@ export const TypeaheadMultiSelect = <
   return (
     <Combobox
       as="div"
-      className={classNames('form-control', 'w-full', className)}
+      className={classNames('form-control w-full', className)}
       multiple
       name={name}
       onChange={value => setSelectedItems(value)}
@@ -74,14 +74,7 @@ export const TypeaheadMultiSelect = <
       ) : null}
       <div
         className={classNames(
-          'input',
-          'input-ghost',
-          'input-bordered',
-          'flex',
-          'items-center',
-          'gap-2',
-          'cursor-pointer',
-          'overflow-y-scroll',
+          'input-bordered input-ghost input flex cursor-pointer items-center gap-2 overflow-y-scroll',
         )}
         onBlur={event => {
           if (event.relatedTarget === null) setShowDropdown(false);

@@ -8,8 +8,7 @@ export const DropdownMenu = forwardRef<HTMLUListElement, DropdownMenuProps>(
   ({ children, className, ...props }, ref): JSX.Element => (
     <Menu
       className={classNames(
-        'p-2',
-        'rounded-box',
+        'rounded-box p-2',
         Children.toArray(children).length === 0 && 'hidden',
         className,
       )}

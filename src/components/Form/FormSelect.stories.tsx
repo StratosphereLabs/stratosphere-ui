@@ -26,7 +26,7 @@ interface FormValues {
 export const Default: Story<FormSelectProps<DataItem, FormValues>> = args => {
   const methods = useForm();
   return (
-    <Form className="w-full h-60" methods={methods} onFormSubmit={() => null}>
+    <Form className="h-60 w-full" methods={methods} onFormSubmit={() => null}>
       <FormSelect {...args} />
     </Form>
   );
