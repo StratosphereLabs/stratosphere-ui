@@ -53,6 +53,7 @@ export const FormSelect = <
   return (
     <Listbox
       as="div"
+      by="id"
       className={classNames('flex flex-col', className)}
       name={name}
       onChange={setSelectedItem}
