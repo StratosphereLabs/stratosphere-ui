@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.1.7 (2023-01-18)
+
+- Added react-hook-form as external dependency
+
 ## 0.1.6 (2023-01-17)
 
 - Added required 'id' option to FormRadio item
