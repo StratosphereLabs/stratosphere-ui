@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.1.8 (2023-01-18)
+
+- Made getItemValue prop optional in TypeaheadSelect and FormSelect components.
+  Default behavior will be setting the form value to the entire data object.
+
 ## 0.1.7 (2023-01-18)
 
 - Added react-hook-form as external dependency

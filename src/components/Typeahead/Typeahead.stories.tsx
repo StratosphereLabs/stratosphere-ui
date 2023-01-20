@@ -38,7 +38,6 @@ SingleSelect.args = {
   labelText: 'Field Label',
   name: 'field1',
   getItemText: ({ label }) => label,
-  getItemValue: ({ value }) => value,
   options: [
     { id: '1', label: 'Item 1' },
     { id: '2', label: 'Item 2' },
@@ -62,7 +61,6 @@ MultiSelect.args = {
   labelText: 'Field Label',
   name: 'field1',
   getItemText: ({ label }) => label,
-  getItemValue: ({ id }) => id,
   options: [
     { id: '1', label: 'Item 1' },
     { id: '2', label: 'Item 2' },
