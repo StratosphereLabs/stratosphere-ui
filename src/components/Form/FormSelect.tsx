@@ -25,7 +25,7 @@ export interface FormSelectProps<
   className?: string;
   dropdownIcon?: FC<ComponentProps<'svg'>>;
   getItemText: (data: DataItem) => string;
-  getItemValue: (data: DataItem) => string;
+  getItemValue?: (data: DataItem) => string;
   options: DataItem[];
 }
 
@@ -46,13 +46,16 @@ export const FormSelect = <
   const { setValue } = useFormContext();
   const [selectedItem, setSelectedItem] = useState<DataItem>(options[0]);
   useEffect(() => {
-    setValue<string>(name, getItemValue(selectedItem), {
+    const itemValue =
+      getItemValue !== undefined ? getItemValue(selectedItem) : selectedItem;
+    setValue<string>(name, itemValue, {
       shouldValidate: true,
     });
   }, [selectedItem]);
   return (
     <Listbox
       as="div"
+      by="id"
       className={classNames('flex flex-col', className)}
       name={name}
       onChange={setSelectedItem}

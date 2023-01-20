@@ -46,7 +46,12 @@ export const TypeaheadSingleSelect = <
     options,
   });
   useEffect(() => {
-    const itemValue = selectedItem !== null ? getItemValue(selectedItem) : '';
+    const itemValue =
+      getItemValue !== undefined
+        ? selectedItem !== null
+          ? getItemValue(selectedItem)
+          : ''
+        : selectedItem;
     setValue<string>(name, itemValue, {
       shouldValidate: selectedItem !== null,
     });

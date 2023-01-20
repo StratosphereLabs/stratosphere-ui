@@ -22,6 +22,7 @@ export const TypeaheadMultiSelect = <
   className,
   controllerProps,
   debounceTime,
+  getBadgeText,
   getItemText,
   getItemValue,
   inputRef,
@@ -49,7 +50,9 @@ export const TypeaheadMultiSelect = <
     options,
   });
   useEffect(() => {
-    const itemValues = selectedItems.map(getItemValue);
+    const itemValues = getItemValue
+      ? selectedItems.map(getItemValue)
+      : selectedItems;
     setValue<string>(name, itemValues, {
       shouldValidate: true,
     });
@@ -73,9 +76,7 @@ export const TypeaheadMultiSelect = <
         </Combobox.Label>
       ) : null}
       <div
-        className={classNames(
-          'input-bordered input-ghost input flex cursor-pointer items-center gap-2 overflow-y-scroll',
-        )}
+        className="input-bordered input-ghost input flex cursor-pointer items-center gap-2 overflow-y-scroll"
         onBlur={event => {
           if (event.relatedTarget === null) setShowDropdown(false);
         }}
@@ -100,7 +101,7 @@ export const TypeaheadMultiSelect = <
                   )
                 }
               >
-                {getItemValue(item)}
+                {getBadgeText?.(item) ?? item.id}
               </Badge>
             ))
           : placeholder}

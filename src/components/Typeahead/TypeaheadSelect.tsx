@@ -12,8 +12,9 @@ export interface TypeaheadSelectProps<
 > extends UseTypeaheadInputOptions<DataItem>,
     FormFieldProps<Values> {
   className?: string;
+  getBadgeText?: (item: DataItem) => string;
   getItemText: (data: DataItem) => string;
-  getItemValue: (data: DataItem) => string;
+  getItemValue?: (data: DataItem) => string;
   inputRef?: RefObject<HTMLInputElement>;
   multi?: true;
 }

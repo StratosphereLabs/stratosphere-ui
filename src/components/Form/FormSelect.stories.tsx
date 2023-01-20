@@ -36,7 +36,6 @@ Default.args = {
   labelText: 'Field Label',
   name: 'field1',
   getItemText: ({ id, label }) => `${id} - ${label}`,
-  getItemValue: ({ id }) => id,
   options: [
     {
       id: '1',
