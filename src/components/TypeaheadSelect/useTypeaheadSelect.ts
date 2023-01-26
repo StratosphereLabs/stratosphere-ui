@@ -52,15 +52,15 @@ export const useTypeaheadSelect = <
     if (showDropdown) searchInputRef.current?.focus();
   }, [showDropdown]);
   return {
+    dropdownRef,
     error,
     isLoading,
     query,
-    dropdownRef,
+    showDropdown,
     searchInputRef,
     selectedItems,
     setShowDropdown,
     setSelectedItems,
-    showDropdown,
     setQuery,
   };
 };

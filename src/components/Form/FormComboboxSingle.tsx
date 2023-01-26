@@ -25,9 +25,7 @@ export const ComboboxSingle = <
           ? getItemValue(selectedItem)
           : ''
         : selectedItem;
-    setValue<string>(name, itemValue, {
-      shouldValidate: selectedItems.length > 0,
-    });
+    setValue<string>(name, itemValue, { shouldValidate: true });
   }, [selectedItem]);
   return (
     <Combobox
