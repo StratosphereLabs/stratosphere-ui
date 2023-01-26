@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { TypeaheadSelectProps } from './TypeaheadSelect';
-import { useTypeaheadQuery } from './useTypeaheadQuery';
 import { GenericDataType } from '../../common';
-import { useOutsideClick } from '../../hooks';
+import { useOutsideClick, useTypeaheadQuery } from '../../hooks';
 
 export type UseTypeaheadSelectOptions<
   DataItem extends GenericDataType,

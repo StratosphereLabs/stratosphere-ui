@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
-import { GenericDataType } from '../../common';
-import { useDebouncedState } from '../../hooks';
+import { useDebouncedValue } from './useDebouncedValue';
+import { GenericDataType } from '../common';
 
 export interface UseTypeaheadQueryOptions<DataItem> {
   debounceTime?: number;
@@ -20,7 +20,7 @@ export const useTypeaheadQuery = <DataItem extends GenericDataType>({
   options,
 }: UseTypeaheadQueryOptions<DataItem>): UseTypeaheadQueryResult => {
   const [isLoading, setIsLoading] = useState(false);
-  const [query, setQuery, debouncedQuery] = useDebouncedState<string>(
+  const [query, setQuery, debouncedQuery] = useDebouncedValue<string>(
     '',
     debounceTime ?? 400,
   );

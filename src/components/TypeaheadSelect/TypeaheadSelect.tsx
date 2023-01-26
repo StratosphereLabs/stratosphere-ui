@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { Fragment, RefObject } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { Input, Progress } from 'react-daisyui';
-import { UseTypeaheadQueryOptions } from './useTypeaheadQuery';
 import { useTypeaheadSelect } from './useTypeaheadSelect';
 import { Badge } from '../Badge';
 import { Dropdown, DropdownMenu, DropdownOption } from '../Dropdown';
@@ -11,6 +10,7 @@ import { FormError, FormFieldProps, FormLabel } from '../Form';
 import { ComboboxMulti } from '../Form/FormComboboxMulti';
 import { ComboboxSingle } from '../Form/FormComboboxSingle';
 import { GenericDataType } from '../../common';
+import { UseTypeaheadQueryOptions } from '../../hooks';
 
 export interface TypeaheadSelectProps<
   DataItem extends GenericDataType,
