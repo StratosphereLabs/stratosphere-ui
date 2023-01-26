@@ -21,9 +21,7 @@ export const ComboboxMulti = <
     const itemValues = getItemValue
       ? selectedItems.map(getItemValue)
       : selectedItems;
-    setValue<string>(name, itemValues, {
-      shouldValidate: true,
-    });
+    setValue<string>(name, itemValues, { shouldValidate: true });
   }, [selectedItems]);
   return (
     <Combobox

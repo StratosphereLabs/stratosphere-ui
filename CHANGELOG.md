@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.1.10 (2023-01-26)
+
+- Fixed issues with TypeaheadSelect in single mode
+- Fixed error message display in TypeaheadSelect
+
 ## 0.1.9 (2023-01-25)
 
 - Fixed infinite loop in FormRangeSlider component

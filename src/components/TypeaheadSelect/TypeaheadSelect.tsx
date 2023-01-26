@@ -1,6 +1,6 @@
 import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
-import { Fragment, RefObject } from 'react';
+import { Fragment, KeyboardEvent, RefObject } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { Input, Progress } from 'react-daisyui';
 import { useTypeaheadSelect } from './useTypeaheadSelect';
@@ -21,6 +21,7 @@ export interface TypeaheadSelectProps<
   getBadgeText?: (item: DataItem) => string;
   getItemText: (data: DataItem) => string;
   getItemValue?: (data: DataItem) => string;
+  inputPlaceholder?: string;
   inputRef?: RefObject<HTMLInputElement>;
   multi?: true;
 }
@@ -35,6 +36,7 @@ export const TypeaheadSelect = <
   getBadgeText,
   getItemText,
   getItemValue,
+  inputPlaceholder,
   inputRef,
   isRequired,
   labelText,
@@ -48,13 +50,13 @@ export const TypeaheadSelect = <
     dropdownRef,
     error,
     isLoading,
-    showDropdown,
-    selectedItems,
-    setSelectedItems,
-    setShowDropdown,
-    setQuery,
     query,
-    value,
+    showDropdown,
+    searchInputRef,
+    selectedItems,
+    setShowDropdown,
+    setSelectedItems,
+    setQuery,
   } = useTypeaheadSelect<DataItem, Values>({
     controllerProps,
     debounceTime,
@@ -65,13 +67,12 @@ export const TypeaheadSelect = <
   });
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
   return (
-    <Component<DataItem, Values>
+    <Component
       className={className}
       getItemValue={getItemValue}
       name={name}
       selectedItems={selectedItems}
       setSelectedItems={setSelectedItems}
-      value={value}
     >
       {labelText !== undefined ? (
         <Combobox.Label as={FormLabel} isRequired={isRequired}>
@@ -79,7 +80,10 @@ export const TypeaheadSelect = <
         </Combobox.Label>
       ) : null}
       <div
-        className="input-bordered input-ghost input flex cursor-pointer items-center gap-2 overflow-y-scroll"
+        className={classNames(
+          'input-bordered input flex cursor-pointer items-center gap-2 overflow-y-scroll',
+          error !== undefined ? 'input-error' : 'input-ghost',
+        )}
         onBlur={event => {
           if (event.relatedTarget === null) setShowDropdown(false);
         }}
@@ -116,27 +120,23 @@ export const TypeaheadSelect = <
         }}
         ref={dropdownRef}
       >
-        {showDropdown === undefined || showDropdown ? (
+        {showDropdown ? (
           <Combobox.Options
             as={DropdownMenu}
             className="bg-base-100 shadow-xl"
-            static={showDropdown !== undefined}
+            static
           >
             <Combobox.Input
               as={Input}
               className="w-full"
-              color={error === undefined ? 'ghost' : 'error'}
-              displayValue={(item: DataItem | null) =>
-                item !== null ? getItemText(item) : ''
-              }
               onChange={({ target: { value } }) => setQuery(value)}
-              placeholder={placeholder}
-              ref={inputRef}
+              onKeyDown={({ key }: KeyboardEvent) => {
+                if (key === 'Tab') setShowDropdown(false);
+              }}
+              placeholder={inputPlaceholder}
+              ref={searchInputRef}
               value={query}
             />
-            {error?.message !== undefined ? (
-              <FormError>{error.message}</FormError>
-            ) : null}
             {isLoading ? <Progress className="mt-2" /> : null}
             {!isLoading && options?.length === 0 ? (
               <DropdownOption disabled>No Results</DropdownOption>
@@ -159,6 +159,9 @@ export const TypeaheadSelect = <
           </Combobox.Options>
         ) : null}
       </Dropdown>
+      {error?.message !== undefined ? (
+        <FormError>{error.message}</FormError>
+      ) : null}
     </Component>
   );
 };
