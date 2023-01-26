@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.1.9 (2023-01-25)
+
+- Fixed infinite loop in FormRangeSlider component
+- Added custom `useFormValues` hook
+
 ## 0.1.8 (2023-01-18)
 
 - Made getItemValue prop optional in TypeaheadSelect and FormSelect components.
