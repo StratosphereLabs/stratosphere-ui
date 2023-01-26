@@ -1,36 +1,32 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
-import { GenericDataType } from '../../common';
-import { useDebouncedState } from '../../hooks';
+import { useDebouncedValue } from './useDebouncedValue';
+import { GenericDataType } from '../common';
 
-export interface UseTypeaheadInputOptions<DataItem> {
+export interface UseTypeaheadQueryOptions<DataItem> {
   debounceTime?: number;
   onDebouncedChange: (value: string) => void;
   options?: DataItem[];
 }
 
-export interface UseTypeaheadInputResult<DataItem> {
+export interface UseTypeaheadQueryResult {
   isLoading: boolean;
   query: string;
-  selectedItem: DataItem | null;
   setQuery: Dispatch<SetStateAction<string>>;
-  setSelectedItem: Dispatch<SetStateAction<DataItem | null>>;
 }
 
-export const useTypeaheadInput = <DataItem extends GenericDataType>({
+export const useTypeaheadQuery = <DataItem extends GenericDataType>({
   debounceTime,
   onDebouncedChange,
   options,
-}: UseTypeaheadInputOptions<DataItem>): UseTypeaheadInputResult<DataItem> => {
+}: UseTypeaheadQueryOptions<DataItem>): UseTypeaheadQueryResult => {
   const [isLoading, setIsLoading] = useState(false);
-  const [query, setQuery, debouncedQuery] = useDebouncedState<string>(
+  const [query, setQuery, debouncedQuery] = useDebouncedValue<string>(
     '',
     debounceTime ?? 400,
   );
-  const [selectedItem, setSelectedItem] = useState<DataItem | null>(null);
   const currentQuery = useMemo(() => {
     const formattedQuery = query.trim();
-    const formattedDebouncedQuery = debouncedQuery.trim();
-    return formattedQuery === '' ? formattedQuery : formattedDebouncedQuery;
+    return formattedQuery === '' ? formattedQuery : debouncedQuery.trim();
   }, [query, debouncedQuery]);
   useEffect(() => {
     onDebouncedChange?.(currentQuery);
@@ -44,8 +40,6 @@ export const useTypeaheadInput = <DataItem extends GenericDataType>({
   return {
     isLoading,
     query,
-    selectedItem,
     setQuery,
-    setSelectedItem,
   };
 };

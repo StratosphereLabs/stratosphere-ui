@@ -1,14 +1,12 @@
 import MultiRangeSlider, { ChangeResult } from 'multi-range-slider-react';
 import { ForwardedRef, forwardRef, ReactNode } from 'react';
-import { FieldValues, Path, useFormContext } from 'react-hook-form';
+import { FieldValues, Path, useFormContext, useWatch } from 'react-hook-form';
 import { FormLabel } from './FormLabel';
 
 export interface FormRangeSliderProps<Values> {
   barColor?: string;
   barInnerColor?: string;
   children?: ReactNode;
-  defaultMin?: number;
-  defaultMax?: number;
   labelText?: string;
   min: number;
   max: number;
@@ -29,8 +27,6 @@ export const FormRangeSlider = forwardRef(
       barColor,
       barInnerColor,
       children,
-      defaultMin,
-      defaultMax,
       labelText,
       min,
       max,
@@ -46,6 +42,7 @@ export const FormRangeSlider = forwardRef(
     }: FormRangeSliderProps<Values>,
     ref: ForwardedRef<HTMLDivElement>,
   ): JSX.Element => {
+    const values: [number, number] = useWatch<Values>({ name });
     const { setValue } = useFormContext<Values>();
     return (
       <div className="w-full max-w-lg">
@@ -66,8 +63,8 @@ export const FormRangeSlider = forwardRef(
           ruler={ruler}
           step={step}
           stepOnly={stepOnly}
-          minValue={defaultMin}
-          maxValue={defaultMax}
+          minValue={values[0]}
+          maxValue={values[1]}
           onChange={onChange}
           onInput={event => {
             setValue(name, [event.minValue, event.maxValue] as never);

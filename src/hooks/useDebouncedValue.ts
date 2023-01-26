@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 export type UseDebouncedStateValue = string | number | boolean | null;
 
-export const useDebouncedState = <Value extends UseDebouncedStateValue>(
+export const useDebouncedValue = <Value extends UseDebouncedStateValue>(
   value: Value,
   delay: number,
 ): [Value, Dispatch<SetStateAction<Value>>, Value, boolean] => {

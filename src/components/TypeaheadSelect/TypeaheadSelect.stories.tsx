@@ -1,7 +1,7 @@
 import { Story, Meta } from '@storybook/react';
 import { useForm } from 'react-hook-form';
 import { Form } from '../Form';
-import { TypeaheadSelect, TypeaheadSelectProps } from '../Typeahead';
+import { TypeaheadSelect, TypeaheadSelectProps } from '.';
 
 export default {
   title: 'TypeaheadSelect',
@@ -28,7 +28,7 @@ export const SingleSelect: Story<
 > = args => {
   const methods = useForm();
   return (
-    <Form className="h-64 w-64" methods={methods} onFormSubmit={() => null}>
+    <Form className="h-80 w-64" methods={methods} onFormSubmit={() => null}>
       <TypeaheadSelect {...args} />
     </Form>
   );
@@ -43,7 +43,7 @@ SingleSelect.args = {
     { id: '2', label: 'Item 2' },
     { id: '3', label: 'Item 3' },
   ],
-  placeholder: 'Search...',
+  placeholder: 'Select...',
 };
 
 export const MultiSelect: Story<
