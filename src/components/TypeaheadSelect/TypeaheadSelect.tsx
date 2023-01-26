@@ -21,6 +21,7 @@ export interface TypeaheadSelectProps<
   getBadgeText?: (item: DataItem) => string;
   getItemText: (data: DataItem) => string;
   getItemValue?: (data: DataItem) => string;
+  inputPlaceholder?: string;
   inputRef?: RefObject<HTMLInputElement>;
   multi?: true;
 }
@@ -35,6 +36,7 @@ export const TypeaheadSelect = <
   getBadgeText,
   getItemText,
   getItemValue,
+  inputPlaceholder,
   inputRef,
   isRequired,
   labelText,
@@ -54,7 +56,6 @@ export const TypeaheadSelect = <
     setShowDropdown,
     setQuery,
     query,
-    value,
   } = useTypeaheadSelect<DataItem, Values>({
     controllerProps,
     debounceTime,
@@ -65,13 +66,12 @@ export const TypeaheadSelect = <
   });
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
   return (
-    <Component<DataItem, Values>
+    <Component
       className={className}
       getItemValue={getItemValue}
       name={name}
       selectedItems={selectedItems}
       setSelectedItems={setSelectedItems}
-      value={value}
     >
       {labelText !== undefined ? (
         <Combobox.Label as={FormLabel} isRequired={isRequired}>
@@ -116,11 +116,11 @@ export const TypeaheadSelect = <
         }}
         ref={dropdownRef}
       >
-        {showDropdown === undefined || showDropdown ? (
+        {showDropdown ? (
           <Combobox.Options
             as={DropdownMenu}
             className="bg-base-100 shadow-xl"
-            static={showDropdown !== undefined}
+            static
           >
             <Combobox.Input
               as={Input}
@@ -130,7 +130,7 @@ export const TypeaheadSelect = <
                 item !== null ? getItemText(item) : ''
               }
               onChange={({ target: { value } }) => setQuery(value)}
-              placeholder={placeholder}
+              placeholder={inputPlaceholder}
               ref={inputRef}
               value={query}
             />

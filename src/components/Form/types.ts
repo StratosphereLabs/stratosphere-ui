@@ -1,10 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react';
-import {
-  FieldValues,
-  Path,
-  PathValue,
-  UseControllerProps,
-} from 'react-hook-form';
+import { FieldValues, Path, UseControllerProps } from 'react-hook-form';
 import { TypeaheadSelectProps } from '../TypeaheadSelect';
 import { GenericDataType } from '../../common';
 
@@ -26,7 +21,6 @@ export interface ComboboxProps<
   children: ReactNode;
   selectedItems: DataItem[];
   setSelectedItems: Dispatch<SetStateAction<DataItem[]>>;
-  value: PathValue<Values, Path<Values>>;
 }
 
 export interface Transform<TOutput> {

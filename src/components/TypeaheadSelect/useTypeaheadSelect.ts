@@ -29,7 +29,6 @@ export const useTypeaheadSelect = <
   options,
 }: UseTypeaheadSelectOptions<DataItem, Values>) => {
   const {
-    field: { value },
     fieldState: { error },
   } = useController({
     ...controllerProps,
@@ -63,6 +62,5 @@ export const useTypeaheadSelect = <
     setSelectedItems,
     showDropdown,
     setQuery,
-    value,
   };
 };

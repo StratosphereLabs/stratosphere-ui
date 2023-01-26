@@ -15,34 +15,28 @@ export const ComboboxSingle = <
   name,
   selectedItems,
   setSelectedItems,
-  value,
 }: ComboboxProps<DataItem, Values>): JSX.Element => {
   const { setValue } = useFormContext();
-  const selectedItem = useMemo(() => selectedItems[0], [selectedItems]);
+  const selectedItem = useMemo(() => selectedItems[0] ?? null, [selectedItems]);
   useEffect(() => {
     const itemValue =
       getItemValue !== undefined
         ? selectedItem !== undefined
           ? getItemValue(selectedItem)
           : ''
-        : null;
+        : selectedItem;
     setValue<string>(name, itemValue, {
       shouldValidate: selectedItems.length > 0,
     });
   }, [selectedItem]);
-  useEffect(() => {
-    if (value === '') setSelectedItems([]);
-  }, [value]);
   return (
     <Combobox
       as="div"
       className={classNames('form-control w-full', className)}
       name={name}
       nullable
-      onChange={selectedItem =>
-        selectedItem && setSelectedItems([selectedItem])
-      }
-      value={selectedItems[0] ?? null}
+      onChange={value => value && setSelectedItems([value])}
+      value={selectedItem}
     >
       {children}
     </Combobox>
