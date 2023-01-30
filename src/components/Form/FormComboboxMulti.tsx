@@ -16,14 +16,14 @@ export const ComboboxMulti = <
   selectedItems,
   setSelectedItems,
 }: ComboboxProps<DataItem, Values>): JSX.Element => {
-  const [isTouched, setIsTouched] = useState(false);
+  const [shouldTouch, setShouldTouch] = useState(false);
   const { setValue } = useFormContext();
   useEffect(() => {
     const itemValues = getItemValue
       ? selectedItems.map(getItemValue)
       : selectedItems;
-    setValue<string>(name, itemValues, { shouldValidate: isTouched });
-    setIsTouched(true);
+    setValue<string>(name, itemValues, { shouldTouch });
+    setShouldTouch(true);
   }, [selectedItems]);
   return (
     <Combobox

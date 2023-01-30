@@ -17,7 +17,7 @@ export const ComboboxSingle = <
   setShowDropdown,
   setSelectedItems,
 }: ComboboxProps<DataItem, Values>): JSX.Element => {
-  const [isTouched, setIsTouched] = useState(false);
+  const [shouldTouch, setShouldTouch] = useState(false);
   const { setValue } = useFormContext();
   const selectedItem = selectedItems[0] ?? null;
   useEffect(() => {
@@ -27,9 +27,9 @@ export const ComboboxSingle = <
           ? getItemValue(selectedItem)
           : ''
         : selectedItem;
-    setValue<string>(name, itemValue, { shouldValidate: isTouched });
+    setValue<string>(name, itemValue, { shouldTouch });
     setShowDropdown(false);
-    setIsTouched(true);
+    setShouldTouch(true);
   }, [selectedItem]);
   return (
     <Combobox

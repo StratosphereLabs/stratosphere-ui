@@ -43,14 +43,14 @@ export const FormSelect = <
   name,
   options,
 }: FormSelectProps<DataItem, Values>): JSX.Element => {
-  const [isTouched, setIsTouched] = useState(false);
+  const [shouldTouch, setShouldTouch] = useState(false);
   const { setValue } = useFormContext();
   const [selectedItem, setSelectedItem] = useState<DataItem>(options[0]);
   useEffect(() => {
     const itemValue =
       getItemValue !== undefined ? getItemValue(selectedItem) : selectedItem;
-    setValue<string>(name, itemValue, { shouldValidate: isTouched });
-    setIsTouched(true);
+    setValue<string>(name, itemValue, { shouldTouch });
+    setShouldTouch(true);
   }, [selectedItem]);
   return (
     <Listbox
