@@ -1,6 +1,6 @@
 import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { ComboboxProps } from './types';
 import { GenericDataType } from '../../common';
@@ -16,12 +16,14 @@ export const ComboboxMulti = <
   selectedItems,
   setSelectedItems,
 }: ComboboxProps<DataItem, Values>): JSX.Element => {
+  const [isTouched, setIsTouched] = useState(false);
   const { setValue } = useFormContext();
   useEffect(() => {
     const itemValues = getItemValue
       ? selectedItems.map(getItemValue)
       : selectedItems;
-    setValue<string>(name, itemValues, { shouldValidate: true });
+    setValue<string>(name, itemValues, { shouldValidate: isTouched });
+    setIsTouched(true);
   }, [selectedItems]);
   return (
     <Combobox

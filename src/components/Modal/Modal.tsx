@@ -26,6 +26,7 @@ export const Modal = ({
           shape="circle"
           className="absolute right-0 top-0"
           onClick={onClose}
+          type="button"
         >
           ✕
         </Button>

@@ -1,6 +1,6 @@
 import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { ComboboxProps } from './types';
 import { GenericDataType } from '../../common';
@@ -14,18 +14,22 @@ export const ComboboxSingle = <
   getItemValue,
   name,
   selectedItems,
+  setShowDropdown,
   setSelectedItems,
 }: ComboboxProps<DataItem, Values>): JSX.Element => {
+  const [isTouched, setIsTouched] = useState(false);
   const { setValue } = useFormContext();
-  const selectedItem = useMemo(() => selectedItems[0] ?? null, [selectedItems]);
+  const selectedItem = selectedItems[0] ?? null;
   useEffect(() => {
     const itemValue =
       getItemValue !== undefined
-        ? selectedItem !== undefined
+        ? selectedItem !== null
           ? getItemValue(selectedItem)
           : ''
         : selectedItem;
-    setValue<string>(name, itemValue, { shouldValidate: true });
+    setValue<string>(name, itemValue, { shouldValidate: isTouched });
+    setShowDropdown(false);
+    setIsTouched(true);
   }, [selectedItem]);
   return (
     <Combobox

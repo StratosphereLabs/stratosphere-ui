@@ -47,6 +47,7 @@ export const TypeaheadSelect = <
   placeholder,
 }: TypeaheadSelectProps<DataItem, Values>): JSX.Element => {
   const {
+    clearSelectedItem,
     dropdownRef,
     error,
     isLoading,
@@ -60,7 +61,6 @@ export const TypeaheadSelect = <
   } = useTypeaheadSelect<DataItem, Values>({
     controllerProps,
     debounceTime,
-    multi,
     name,
     onDebouncedChange,
     options,
@@ -72,6 +72,7 @@ export const TypeaheadSelect = <
       getItemValue={getItemValue}
       name={name}
       selectedItems={selectedItems}
+      setShowDropdown={setShowDropdown}
       setSelectedItems={setSelectedItems}
     >
       {labelText !== undefined ? (
@@ -102,11 +103,7 @@ export const TypeaheadSelect = <
               <Badge
                 dismissable
                 key={item.id}
-                onDismiss={() =>
-                  setSelectedItems(items =>
-                    items.filter((_, itemIndex) => index !== itemIndex),
-                  )
-                }
+                onDismiss={() => clearSelectedItem(index)}
               >
                 {getBadgeText?.(item) ?? item.id}
               </Badge>

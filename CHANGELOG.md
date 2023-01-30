@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## 0.1.11 (2023-01-29)
+
+- Fixed issue with Typeahead badges clearing when pressing enter while inside
+  another input.
+- Fixed issue with Typeahead component validating on mount.
+
 ## 0.1.10 (2023-01-26)
 
 - Fixed issues with TypeaheadSelect in single mode

@@ -31,6 +31,7 @@ export const AlertMessages = ({
               onClick={() => dismissAlertMessage(index)}
               shape="circle"
               size="xs"
+              type="button"
             >
               ✕
             </Button>
