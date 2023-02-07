@@ -34,7 +34,7 @@ export const ComboboxSingle = <
   return (
     <Combobox
       as="div"
-      className={classNames('form-control w-full', className)}
+      className={classNames('form-control flex-1', className)}
       name={name}
       nullable
       onChange={value => value && setSelectedItems([value])}

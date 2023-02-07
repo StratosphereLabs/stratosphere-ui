@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { Form, Radio, RadioProps } from 'react-daisyui';
 import {
   FieldValues,
@@ -15,6 +16,7 @@ export interface RadioOption {
 
 export interface FormRadioProps<Values extends FieldValues>
   extends UseControllerProps<Values> {
+  className?: string;
   isRequired?: boolean;
   labelText?: string;
   options: RadioOption[];
@@ -22,6 +24,7 @@ export interface FormRadioProps<Values extends FieldValues>
 }
 
 export const FormRadio = <Values extends FieldValues>({
+  className,
   isRequired,
   labelText,
   options,
@@ -33,7 +36,7 @@ export const FormRadio = <Values extends FieldValues>({
     fieldState: { error },
   } = useController(props);
   return (
-    <>
+    <div className={classNames('form-control flex-1', className)}>
       {labelText !== undefined ? (
         <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
       ) : null}
@@ -50,6 +53,6 @@ export const FormRadio = <Values extends FieldValues>({
       {error?.message !== undefined ? (
         <FormError>{error.message}</FormError>
       ) : null}
-    </>
+    </div>
   );
 };

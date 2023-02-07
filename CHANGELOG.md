@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.1.12 (2023-02-01)
+
+- Improved styling for form component containers.
+
 ## 0.1.11 (2023-01-29)
 
 - Fixed issue with Typeahead badges clearing when pressing enter while inside

@@ -28,7 +28,7 @@ export const ComboboxMulti = <
   return (
     <Combobox
       as="div"
-      className={classNames('form-control w-full', className)}
+      className={classNames('form-control flex-1', className)}
       multiple
       name={name}
       onChange={value => setSelectedItems(value)}

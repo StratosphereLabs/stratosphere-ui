@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { Toggle, ToggleProps } from 'react-daisyui';
 import {
   FieldValues,
@@ -23,9 +24,9 @@ export const FormToggleSwitch = <Values extends FieldValues>({
     field: { value, ...field },
   } = useController(props);
   return (
-    <>
-      <Toggle {...field} className={className} checked={value} color={color} />
+    <div className={classNames('flex items-center gap-2', className)}>
+      <Toggle {...field} checked={value} color={color} />
       <FormLabel>{label}</FormLabel>
-    </>
+    </div>
   );
 };
