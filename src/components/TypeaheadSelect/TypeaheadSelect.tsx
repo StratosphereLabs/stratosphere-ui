@@ -1,6 +1,6 @@
 import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
-import { Fragment, KeyboardEvent, RefObject } from 'react';
+import { Fragment, KeyboardEvent, RefObject, useEffect, useRef } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { Input, Progress } from 'react-daisyui';
 import { useTypeaheadSelect } from './useTypeaheadSelect';
@@ -33,6 +33,7 @@ export const TypeaheadSelect = <
   className,
   controllerProps,
   debounceTime,
+  defaultOptions,
   getBadgeText,
   getItemText,
   getItemValue,
@@ -46,6 +47,7 @@ export const TypeaheadSelect = <
   options,
   placeholder,
 }: TypeaheadSelectProps<DataItem, Values>): JSX.Element => {
+  const ref = inputRef ?? useRef<HTMLInputElement>(null);
   const {
     clearSelectedItem,
     dropdownRef,
@@ -66,6 +68,10 @@ export const TypeaheadSelect = <
     options,
   });
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
+  useEffect(() => {
+    if (defaultOptions?.length)
+      setSelectedItems(multi === true ? defaultOptions : [defaultOptions[0]]);
+  }, [defaultOptions]);
   return (
     <Component
       className={className}
@@ -73,7 +79,10 @@ export const TypeaheadSelect = <
       name={name}
       selectedItems={selectedItems}
       setShowDropdown={setShowDropdown}
-      setSelectedItems={setSelectedItems}
+      setSelectedItems={items => {
+        setSelectedItems(items);
+        if (multi === undefined) ref.current?.focus();
+      }}
     >
       {labelText !== undefined ? (
         <Combobox.Label as={FormLabel} isRequired={isRequired}>
@@ -93,9 +102,11 @@ export const TypeaheadSelect = <
           if (event.key === 'Enter') {
             event.preventDefault();
             setShowDropdown(true);
+          } else if (event.key !== 'Tab' && event.key !== 'Shift') {
+            setShowDropdown(true);
           }
         }}
-        ref={inputRef}
+        ref={ref}
         tabIndex={0}
       >
         {selectedItems.length > 0

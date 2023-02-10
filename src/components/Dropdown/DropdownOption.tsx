@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { forwardRef, HTMLProps } from 'react';
+import { forwardRef, HTMLProps, ReactNode } from 'react';
 import { Menu } from 'react-daisyui';
 import { CheckIcon } from '../Icons';
 
@@ -7,11 +7,12 @@ export interface DropdownOptionProps extends HTMLProps<HTMLAnchorElement> {
   active?: boolean;
   disabled?: boolean;
   selected?: boolean;
+  subMenu?: ReactNode;
 }
 
 export const DropdownOption = forwardRef<HTMLLIElement, DropdownOptionProps>(
   (
-    { active, children, className, disabled, selected, ...props },
+    { active, children, className, disabled, selected, subMenu, ...props },
     ref,
   ): JSX.Element => (
     <Menu.Item className={className} disabled={disabled} ref={ref}>
@@ -23,6 +24,7 @@ export const DropdownOption = forwardRef<HTMLLIElement, DropdownOptionProps>(
         ) : null}
         {children}
       </a>
+      {subMenu}
     </Menu.Item>
   ),
 );

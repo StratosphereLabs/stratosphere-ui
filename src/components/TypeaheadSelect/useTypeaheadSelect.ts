@@ -24,6 +24,7 @@ export const useTypeaheadSelect = <
 }: UseTypeaheadSelectOptions<DataItem, Values>) => {
   const {
     fieldState: { error },
+    field: { value },
   } = useController({
     ...controllerProps,
     name,
@@ -46,6 +47,9 @@ export const useTypeaheadSelect = <
     setQuery('');
     if (showDropdown) searchInputRef.current?.focus();
   }, [showDropdown]);
+  useEffect(() => {
+    if (value === '') setSelectedItems([]);
+  }, [value]);
   return {
     clearSelectedItem,
     dropdownRef,

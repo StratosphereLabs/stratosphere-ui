@@ -4,6 +4,7 @@ import { GenericDataType } from '../common';
 
 export interface UseTypeaheadQueryOptions<DataItem> {
   debounceTime?: number;
+  defaultOptions?: DataItem[];
   onDebouncedChange: (value: string) => void;
   options?: DataItem[];
 }
