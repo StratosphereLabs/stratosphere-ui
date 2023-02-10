@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.1.13 (2023-02-09)
+
+- Fixed Typeahead reset when form is reset.
+- Added `subMenu` prop to DropdownOption.
+
 ## 0.1.12 (2023-02-01)
 
 - Improved styling for form component containers.
