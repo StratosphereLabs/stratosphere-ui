@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import MultiRangeSlider, { ChangeResult } from 'multi-range-slider-react';
 import { ForwardedRef, forwardRef, ReactNode } from 'react';
 import { FieldValues, Path, useFormContext, useWatch } from 'react-hook-form';
@@ -7,6 +8,7 @@ export interface FormRangeSliderProps<Values> {
   barColor?: string;
   barInnerColor?: string;
   children?: ReactNode;
+  className?: string;
   labelText?: string;
   min: number;
   max: number;
@@ -27,6 +29,7 @@ export const FormRangeSlider = forwardRef(
       barColor,
       barInnerColor,
       children,
+      className,
       labelText,
       min,
       max,
@@ -45,7 +48,7 @@ export const FormRangeSlider = forwardRef(
     const values: [number, number] = useWatch<Values>({ name });
     const { setValue } = useFormContext<Values>();
     return (
-      <div className="w-full max-w-lg">
+      <div className={classNames('form-control flex-1', className)}>
         <div className="flex justify-between">
           <FormLabel>{labelText}</FormLabel>
           {children}

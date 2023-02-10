@@ -39,6 +39,7 @@ export const Badge = ({
         onKeyDown={event => {
           event.stopPropagation();
         }}
+        type="button"
       >
         <CloseIcon className="h-4 w-4" />
         <span className="sr-only">Remove badge</span>

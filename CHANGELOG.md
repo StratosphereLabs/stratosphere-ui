@@ -1,5 +1,20 @@
 # CHANGELOG.md
 
+## 0.1.13 (2023-02-09)
+
+- Fixed Typeahead reset when form is reset.
+- Added `subMenu` prop to DropdownOption.
+
+## 0.1.12 (2023-02-01)
+
+- Improved styling for form component containers.
+
+## 0.1.11 (2023-01-29)
+
+- Fixed issue with Typeahead badges clearing when pressing enter while inside
+  another input.
+- Fixed issue with Typeahead component validating on mount.
+
 ## 0.1.10 (2023-01-26)
 
 - Fixed issues with TypeaheadSelect in single mode

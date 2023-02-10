@@ -9,12 +9,7 @@ export type UseTypeaheadSelectOptions<
   Values extends FieldValues,
 > = Pick<
   TypeaheadSelectProps<DataItem, Values>,
-  | 'controllerProps'
-  | 'debounceTime'
-  | 'multi'
-  | 'name'
-  | 'onDebouncedChange'
-  | 'options'
+  'controllerProps' | 'debounceTime' | 'name' | 'onDebouncedChange' | 'options'
 >;
 
 export const useTypeaheadSelect = <
@@ -23,13 +18,13 @@ export const useTypeaheadSelect = <
 >({
   controllerProps,
   debounceTime,
-  multi,
   name,
   onDebouncedChange,
   options,
 }: UseTypeaheadSelectOptions<DataItem, Values>) => {
   const {
     fieldState: { error },
+    field: { value },
   } = useController({
     ...controllerProps,
     name,
@@ -43,15 +38,20 @@ export const useTypeaheadSelect = <
     onDebouncedChange,
     options,
   });
+  const clearSelectedItem = (index: number) =>
+    setSelectedItems(items =>
+      items.filter((_, itemIndex) => index !== itemIndex),
+    );
   useOutsideClick(dropdownRef, () => setShowDropdown(false));
-  useEffect(() => {
-    if (multi !== true) setShowDropdown(false);
-  }, [multi, selectedItems]);
   useEffect(() => {
     setQuery('');
     if (showDropdown) searchInputRef.current?.focus();
   }, [showDropdown]);
+  useEffect(() => {
+    if (value === '') setSelectedItems([]);
+  }, [value]);
   return {
+    clearSelectedItem,
     dropdownRef,
     error,
     isLoading,

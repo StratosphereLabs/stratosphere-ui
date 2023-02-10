@@ -43,20 +43,20 @@ export const FormSelect = <
   name,
   options,
 }: FormSelectProps<DataItem, Values>): JSX.Element => {
+  const [shouldTouch, setShouldTouch] = useState(false);
   const { setValue } = useFormContext();
   const [selectedItem, setSelectedItem] = useState<DataItem>(options[0]);
   useEffect(() => {
     const itemValue =
       getItemValue !== undefined ? getItemValue(selectedItem) : selectedItem;
-    setValue<string>(name, itemValue, {
-      shouldValidate: true,
-    });
+    setValue<string>(name, itemValue, { shouldTouch });
+    setShouldTouch(true);
   }, [selectedItem]);
   return (
     <Listbox
       as="div"
       by="id"
-      className={classNames('flex flex-col', className)}
+      className={classNames('form-control flex-1', className)}
       name={name}
       onChange={setSelectedItem}
       value={selectedItem}

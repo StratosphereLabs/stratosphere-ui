@@ -1,6 +1,6 @@
 import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
-import { Fragment, KeyboardEvent, RefObject } from 'react';
+import { Fragment, KeyboardEvent, RefObject, useEffect, useRef } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { Input, Progress } from 'react-daisyui';
 import { useTypeaheadSelect } from './useTypeaheadSelect';
@@ -33,6 +33,7 @@ export const TypeaheadSelect = <
   className,
   controllerProps,
   debounceTime,
+  defaultOptions,
   getBadgeText,
   getItemText,
   getItemValue,
@@ -46,7 +47,9 @@ export const TypeaheadSelect = <
   options,
   placeholder,
 }: TypeaheadSelectProps<DataItem, Values>): JSX.Element => {
+  const ref = inputRef ?? useRef<HTMLInputElement>(null);
   const {
+    clearSelectedItem,
     dropdownRef,
     error,
     isLoading,
@@ -60,19 +63,26 @@ export const TypeaheadSelect = <
   } = useTypeaheadSelect<DataItem, Values>({
     controllerProps,
     debounceTime,
-    multi,
     name,
     onDebouncedChange,
     options,
   });
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
+  useEffect(() => {
+    if (defaultOptions?.length)
+      setSelectedItems(multi === true ? defaultOptions : [defaultOptions[0]]);
+  }, [defaultOptions]);
   return (
     <Component
       className={className}
       getItemValue={getItemValue}
       name={name}
       selectedItems={selectedItems}
-      setSelectedItems={setSelectedItems}
+      setShowDropdown={setShowDropdown}
+      setSelectedItems={items => {
+        setSelectedItems(items);
+        if (multi === undefined) ref.current?.focus();
+      }}
     >
       {labelText !== undefined ? (
         <Combobox.Label as={FormLabel} isRequired={isRequired}>
@@ -92,9 +102,11 @@ export const TypeaheadSelect = <
           if (event.key === 'Enter') {
             event.preventDefault();
             setShowDropdown(true);
+          } else if (event.key !== 'Tab' && event.key !== 'Shift') {
+            setShowDropdown(true);
           }
         }}
-        ref={inputRef}
+        ref={ref}
         tabIndex={0}
       >
         {selectedItems.length > 0
@@ -102,11 +114,7 @@ export const TypeaheadSelect = <
               <Badge
                 dismissable
                 key={item.id}
-                onDismiss={() =>
-                  setSelectedItems(items =>
-                    items.filter((_, itemIndex) => index !== itemIndex),
-                  )
-                }
+                onDismiss={() => clearSelectedItem(index)}
               >
                 {getBadgeText?.(item) ?? item.id}
               </Badge>

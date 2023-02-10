@@ -36,13 +36,13 @@ export const FormControl = <Values extends FieldValues, TOutput>({
     [field.value, transform],
   );
   return (
-    <div className="flex flex-1 flex-col">
+    <div className={classNames('form-control flex-1', className)}>
       {labelText !== undefined ? (
         <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
       ) : null}
       <Input
         {...field}
-        className={classNames('w-full', className)}
+        className="w-full"
         color={error === undefined ? 'ghost' : 'error'}
         name={name}
         onChange={({ target: { value } }) =>

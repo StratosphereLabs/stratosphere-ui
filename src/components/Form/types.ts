@@ -20,6 +20,7 @@ export interface ComboboxProps<
   > {
   children: ReactNode;
   selectedItems: DataItem[];
+  setShowDropdown: Dispatch<SetStateAction<boolean>>;
   setSelectedItems: Dispatch<SetStateAction<DataItem[]>>;
 }
 
