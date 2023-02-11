@@ -95,7 +95,7 @@ export const TypeaheadSelect = <
       {enableBadges ? (
         <div
           className={classNames(
-            'input-bordered input flex cursor-pointer items-center gap-1 overflow-x-scroll',
+            'scrollbar-none input-bordered input flex cursor-pointer items-center gap-1 overflow-x-scroll',
             error !== undefined ? 'input-error' : 'input-ghost',
           )}
           onBlur={event => {

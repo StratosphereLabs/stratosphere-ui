@@ -2,6 +2,8 @@ module.exports = {
   content: [
     './src/**/*.{js,jsx,ts,tsx}',
     './.storybook/**/*.{js,jsx,ts,tsx,mdx}',
+    'node_modules/daisyui/dist/**/*.js',
+    'node_modules/react-daisyui/dist/**/*.js',
   ],
   safelist: [
     {
@@ -18,5 +20,9 @@ module.exports = {
     prefix: '',
     darkTheme: 'dark',
   },
-  plugins: [require('daisyui')],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('daisyui'),
+    require('tailwind-scrollbar'),
+  ],
 };

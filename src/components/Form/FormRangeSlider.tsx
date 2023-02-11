@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import MultiRangeSlider, { ChangeResult } from 'multi-range-slider-react';
 import { ForwardedRef, forwardRef, ReactNode } from 'react';
-import { FieldValues, Path, useFormContext, useWatch } from 'react-hook-form';
+import { FieldValues, Path, useFormContext } from 'react-hook-form';
 import { FormLabel } from './FormLabel';
 
 export interface FormRangeSliderProps<Values> {
@@ -45,7 +45,6 @@ export const FormRangeSlider = forwardRef(
     }: FormRangeSliderProps<Values>,
     ref: ForwardedRef<HTMLDivElement>,
   ): JSX.Element => {
-    const values: [number, number] = useWatch<Values>({ name });
     const { setValue } = useFormContext<Values>();
     return (
       <div className={classNames('form-control flex-1', className)}>
@@ -66,8 +65,8 @@ export const FormRangeSlider = forwardRef(
           ruler={ruler}
           step={step}
           stepOnly={stepOnly}
-          minValue={values[0]}
-          maxValue={values[1]}
+          minValue={min}
+          maxValue={max}
           onChange={onChange}
           onInput={event => {
             setValue(name, [event.minValue, event.maxValue] as never);

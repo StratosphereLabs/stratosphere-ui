@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.1.16 (2023-02-11)
+
+- Removed scrollbar from `TypeaheadSelect` component.
+- Fixed infinite loop in `FormRangeSlider` component.
+
 ## 0.1.15 (2023-02-11)
 
 - Removed `onItemSelect` prop from `TypeaheadSelect` component.
