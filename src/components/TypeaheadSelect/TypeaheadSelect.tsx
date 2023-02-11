@@ -18,6 +18,7 @@ export interface TypeaheadSelectProps<
 > extends UseTypeaheadQueryOptions<DataItem>,
     FormFieldProps<Values> {
   className?: string;
+  disableSingleSelectBadge?: true;
   getBadgeText?: (item: DataItem) => string;
   getItemText: (data: DataItem) => string;
   getItemValue?: (data: DataItem) => string;
@@ -34,6 +35,7 @@ export const TypeaheadSelect = <
   controllerProps,
   debounceTime,
   defaultOptions,
+  disableSingleSelectBadge,
   getBadgeText,
   getItemText,
   getItemValue,
@@ -67,6 +69,7 @@ export const TypeaheadSelect = <
     onDebouncedChange,
     options,
   });
+  const enableBadges = disableSingleSelectBadge === undefined || multi === true;
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
   useEffect(() => {
     if (defaultOptions?.length)
@@ -89,38 +92,56 @@ export const TypeaheadSelect = <
           {labelText}
         </Combobox.Label>
       ) : null}
-      <div
-        className={classNames(
-          'input-bordered input flex cursor-pointer items-center gap-2 overflow-y-scroll',
-          error !== undefined ? 'input-error' : 'input-ghost',
-        )}
-        onBlur={event => {
-          if (event.relatedTarget === null) setShowDropdown(false);
-        }}
-        onClick={() => setShowDropdown(true)}
-        onKeyDown={event => {
-          if (event.key === 'Enter') {
-            event.preventDefault();
-            setShowDropdown(true);
-          } else if (event.key !== 'Tab' && event.key !== 'Shift') {
-            setShowDropdown(true);
-          }
-        }}
-        ref={ref}
-        tabIndex={0}
-      >
-        {selectedItems.length > 0
-          ? selectedItems.map((item, index) => (
-              <Badge
-                dismissable
-                key={item.id}
-                onDismiss={() => clearSelectedItem(index)}
-              >
-                {getBadgeText?.(item) ?? item.id}
-              </Badge>
-            ))
-          : placeholder}
-      </div>
+      {enableBadges ? (
+        <div
+          className={classNames(
+            'input-bordered input flex cursor-pointer items-center gap-1 overflow-x-scroll',
+            error !== undefined ? 'input-error' : 'input-ghost',
+          )}
+          onBlur={event => {
+            if (event.relatedTarget === null) setShowDropdown(false);
+          }}
+          onClick={() => setShowDropdown(true)}
+          onKeyDown={event => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              setShowDropdown(true);
+            } else if (event.key !== 'Tab' && event.key !== 'Shift') {
+              setShowDropdown(true);
+            }
+          }}
+          ref={ref}
+          tabIndex={0}
+        >
+          {selectedItems.length > 0
+            ? selectedItems.map((item, index) => (
+                <Badge
+                  dismissable
+                  key={item.id}
+                  onDismiss={() => clearSelectedItem(index)}
+                >
+                  {getBadgeText?.(item) ?? getItemText(item)}
+                </Badge>
+              ))
+            : placeholder}
+        </div>
+      ) : (
+        <Combobox.Input
+          as={Input}
+          className="w-full"
+          onChange={({ target: { value } }) => {
+            setQuery(value);
+            if (value.length > 0) {
+              setShowDropdown(true);
+            } else {
+              setShowDropdown(false);
+              setSelectedItems([]);
+            }
+          }}
+          placeholder={placeholder}
+          ref={ref}
+        />
+      )}
       <Dropdown
         className="text-left"
         onKeyDown={({ key }) => {
@@ -134,18 +155,22 @@ export const TypeaheadSelect = <
             className="bg-base-100 shadow-xl"
             static
           >
-            <Combobox.Input
-              as={Input}
-              className="w-full"
-              onChange={({ target: { value } }) => setQuery(value)}
-              onKeyDown={({ key }: KeyboardEvent) => {
-                if (key === 'Tab') setShowDropdown(false);
-              }}
-              placeholder={inputPlaceholder}
-              ref={searchInputRef}
-              value={query}
-            />
-            {isLoading ? <Progress className="mt-2" /> : null}
+            {enableBadges ? (
+              <Combobox.Input
+                as={Input}
+                className="w-full"
+                onChange={({ target: { value } }) => setQuery(value)}
+                onKeyDown={({ key }: KeyboardEvent) => {
+                  if (key === 'Tab') setShowDropdown(false);
+                }}
+                placeholder={inputPlaceholder}
+                ref={searchInputRef}
+                value={query}
+              />
+            ) : null}
+            {isLoading ? (
+              <Progress className={classNames(enableBadges && 'mt-2')} />
+            ) : null}
             {!isLoading && options?.length === 0 ? (
               <DropdownOption disabled>No Results</DropdownOption>
             ) : null}
@@ -155,7 +180,9 @@ export const TypeaheadSelect = <
                   {({ active, disabled, selected }) => (
                     <DropdownOption
                       active={active}
-                      className={classNames(index === 0 && 'mt-2')}
+                      className={classNames(
+                        index === 0 && enableBadges && 'mt-2',
+                      )}
                       disabled={disabled}
                       selected={multi === true ? selected : undefined}
                     >
