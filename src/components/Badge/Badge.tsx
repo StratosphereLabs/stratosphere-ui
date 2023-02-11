@@ -22,12 +22,12 @@ export const Badge = ({
   ...props
 }: BadgeProps): JSX.Element => (
   <DaisyUIBadge
-    className={classNames('text-sm font-semibold', className)}
+    className={classNames(dismissable === true && 'pr-0', className)}
     size="lg"
     {...props}
   >
     {Icon !== undefined ? <Icon /> : null}
-    {children}
+    <div className="flex-1 truncate text-sm font-semibold">{children}</div>
     {dismissable === true ? (
       <Button
         color="ghost"

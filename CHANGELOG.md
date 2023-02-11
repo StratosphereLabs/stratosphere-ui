@@ -1,5 +1,13 @@
 # CHANGELOG.md
 
+## 0.1.14 (2023-02-10)
+
+- Added `disableSingleSelectBadge` prop to `TypeaheadSelect` that allows a combined
+  form field and query input.
+- Added `onItemClick` prop to `TypeaheadSelect` that allows passing a callback to the
+  onClick handler for each option.
+- Improved styling for `Badge` component.
+
 ## 0.1.13 (2023-02-09)
 
 - Fixed Typeahead reset when form is reset.
