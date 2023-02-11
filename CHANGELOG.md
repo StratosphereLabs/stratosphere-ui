@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.1.15 (2023-02-11)
+
+- Removed `onItemSelect` prop from `TypeaheadSelect` component.
+- Minor styling fixes for `TypeaheadSelect` component.
+
 ## 0.1.14 (2023-02-10)
 
 - Added `disableSingleSelectBadge` prop to `TypeaheadSelect` that allows a combined

@@ -1,13 +1,6 @@
 import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
-import {
-  Fragment,
-  KeyboardEvent,
-  MouseEvent,
-  RefObject,
-  useEffect,
-  useRef,
-} from 'react';
+import { Fragment, KeyboardEvent, RefObject, useEffect, useRef } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { Input, Progress } from 'react-daisyui';
 import { useTypeaheadSelect } from './useTypeaheadSelect';
@@ -32,10 +25,6 @@ export interface TypeaheadSelectProps<
   inputPlaceholder?: string;
   inputRef?: RefObject<HTMLInputElement>;
   multi?: true;
-  onItemClick?: (
-    event: MouseEvent<HTMLAnchorElement>,
-    option: DataItem,
-  ) => void;
 }
 
 export const TypeaheadSelect = <
@@ -57,7 +46,6 @@ export const TypeaheadSelect = <
   multi,
   name,
   onDebouncedChange,
-  onItemClick,
   options,
   placeholder,
 }: TypeaheadSelectProps<DataItem, Values>): JSX.Element => {
@@ -81,6 +69,7 @@ export const TypeaheadSelect = <
     onDebouncedChange,
     options,
   });
+  const enableBadges = disableSingleSelectBadge === undefined || multi === true;
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
   useEffect(() => {
     if (defaultOptions?.length)
@@ -103,7 +92,7 @@ export const TypeaheadSelect = <
           {labelText}
         </Combobox.Label>
       ) : null}
-      {disableSingleSelectBadge === undefined || multi === true ? (
+      {enableBadges ? (
         <div
           className={classNames(
             'input-bordered input flex cursor-pointer items-center gap-1 overflow-x-scroll',
@@ -140,9 +129,6 @@ export const TypeaheadSelect = <
         <Combobox.Input
           as={Input}
           className="w-full"
-          displayValue={(item: DataItem | null) =>
-            item ? getItemText(item) : ''
-          }
           onChange={({ target: { value } }) => {
             setQuery(value);
             if (value.length > 0) {
@@ -153,7 +139,7 @@ export const TypeaheadSelect = <
             }
           }}
           placeholder={placeholder}
-          ref={inputRef}
+          ref={ref}
         />
       )}
       <Dropdown
@@ -169,7 +155,7 @@ export const TypeaheadSelect = <
             className="bg-base-100 shadow-xl"
             static
           >
-            {disableSingleSelectBadge === undefined || multi === true ? (
+            {enableBadges ? (
               <Combobox.Input
                 as={Input}
                 className="w-full"
@@ -182,7 +168,9 @@ export const TypeaheadSelect = <
                 value={query}
               />
             ) : null}
-            {isLoading ? <Progress className="mt-2" /> : null}
+            {isLoading ? (
+              <Progress className={classNames(enableBadges && 'mt-2')} />
+            ) : null}
             {!isLoading && options?.length === 0 ? (
               <DropdownOption disabled>No Results</DropdownOption>
             ) : null}
@@ -192,13 +180,10 @@ export const TypeaheadSelect = <
                   {({ active, disabled, selected }) => (
                     <DropdownOption
                       active={active}
-                      className={classNames(index === 0 && 'mt-2')}
+                      className={classNames(
+                        index === 0 && enableBadges && 'mt-2',
+                      )}
                       disabled={disabled}
-                      onClick={
-                        onItemClick
-                          ? event => onItemClick(event, option)
-                          : undefined
-                      }
                       selected={multi === true ? selected : undefined}
                     >
                       {getItemText(option)}
