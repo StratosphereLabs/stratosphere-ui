@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.1.17 (2023-02-12)
+
+- Added new `Table` component.
+- Added new `Pagination` component.
+
 ## 0.1.16 (2023-02-11)
 
 - Removed scrollbar from `TypeaheadSelect` component.
