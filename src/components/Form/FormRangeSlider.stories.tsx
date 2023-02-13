@@ -20,7 +20,11 @@ interface FormValues {
 }
 
 export const Default: Story<FormRangeSliderProps<FormValues>> = args => {
-  const methods = useForm();
+  const methods = useForm({
+    defaultValues: {
+      field1: [0, 100],
+    },
+  });
   return (
     <Form className="w-full" methods={methods} onFormSubmit={() => null}>
       <FormRangeSlider {...args} />
@@ -31,4 +35,6 @@ export const Default: Story<FormRangeSliderProps<FormValues>> = args => {
 Default.args = {
   name: 'field1',
   labelText: 'Label Text',
+  min: 0,
+  max: 100,
 };
