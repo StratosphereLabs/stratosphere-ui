@@ -1,5 +1,6 @@
 import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
+import isEqual from 'lodash.isequal';
 import { Fragment, KeyboardEvent, RefObject, useEffect, useRef } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { Input, Progress } from 'react-daisyui';
@@ -69,11 +70,17 @@ export const TypeaheadSelect = <
     onDebouncedChange,
     options,
   });
+  const currentDefaultOptions = useRef(defaultOptions);
   const enableBadges = disableSingleSelectBadge === undefined || multi === true;
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
   useEffect(() => {
-    if (defaultOptions?.length)
+    if (
+      defaultOptions?.length &&
+      !isEqual(defaultOptions, currentDefaultOptions.current)
+    ) {
       setSelectedItems(multi === true ? defaultOptions : [defaultOptions[0]]);
+      currentDefaultOptions.current = defaultOptions;
+    }
   }, [defaultOptions]);
   return (
     <Component
@@ -95,7 +102,7 @@ export const TypeaheadSelect = <
       {enableBadges ? (
         <div
           className={classNames(
-            'scrollbar-none input-bordered input flex cursor-pointer items-center gap-1 overflow-x-scroll',
+            'input-bordered input flex cursor-pointer items-center gap-1 overflow-x-scroll scrollbar-none',
             error !== undefined ? 'input-error' : 'input-ghost',
           )}
           onBlur={event => {

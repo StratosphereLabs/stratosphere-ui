@@ -22,7 +22,7 @@ export const ComboboxMulti = <
     const itemValues = getItemValue
       ? selectedItems.map(getItemValue)
       : selectedItems;
-    setValue<string>(name, itemValues, { shouldTouch });
+    setValue<string>(name, itemValues, { shouldDirty: true, shouldTouch });
     setShouldTouch(true);
   }, [selectedItems]);
   return (

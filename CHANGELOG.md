@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.1.18 (2023-02-15)
+
+- Fixed bug with default value in `TypeaheadSelect` component.
+- Made `onFormSubmit` prop in `Form` component optional.
+
 ## 0.1.17 (2023-02-12)
 
 - Added new `Table` component.
