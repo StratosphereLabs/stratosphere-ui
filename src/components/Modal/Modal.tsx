@@ -1,30 +1,39 @@
 import { Dialog } from '@headlessui/react';
-import { Fragment, ReactNode } from 'react';
-import { Button, ButtonProps, Modal as DaisyUIModal } from 'react-daisyui';
+import classNames from 'classnames';
+import { Fragment } from 'react';
+import {
+  Button,
+  ButtonProps,
+  Modal as DaisyUIModal,
+  ModalProps as DaisyUIModalProps,
+} from 'react-daisyui';
 
-export interface ModalProps {
+export interface ModalProps extends DaisyUIModalProps {
   actionButtons: ButtonProps[];
-  children: ReactNode;
   onClose: () => void;
-  show: boolean;
-  title: string;
 }
 
 export const Modal = ({
   actionButtons,
   children,
+  className,
   onClose,
-  show,
+  open,
   title,
 }: ModalProps): JSX.Element => (
-  <Dialog as={Fragment} onClose={onClose} open={show} static>
-    {({ open }) => (
-      <Dialog.Panel as={DaisyUIModal} open={open} responsive>
+  <Dialog as={Fragment} onClose={onClose} open={open} static>
+    {({ open: isDialogOpen }) => (
+      <Dialog.Panel
+        as={DaisyUIModal}
+        className={classNames('overflow-y-scroll scrollbar-none', className)}
+        open={isDialogOpen}
+        responsive
+      >
         <Button
           color="ghost"
           size="sm"
           shape="circle"
-          className="absolute right-0 top-0"
+          className="absolute right-2 top-2"
           onClick={onClose}
           type="button"
         >

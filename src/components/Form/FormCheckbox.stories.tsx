@@ -27,6 +27,6 @@ export const Default: Story<FormCheckboxProps<FormValues>> = args => {
 };
 
 Default.args = {
+  labelText: 'Label Text',
   name: 'field1',
-  children: 'Label Text',
 };

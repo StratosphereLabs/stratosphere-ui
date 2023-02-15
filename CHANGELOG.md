@@ -1,5 +1,12 @@
 # CHANGELOG.md
 
+## 0.1.19 (2023-02-15)
+
+- Fixed close button positioning in `Modal` component.
+- Removed scrollbar from `Modal` component by default
+- Added `className` prop to `Modal` component.
+- Added `showDirty` prop to all form components.
+
 ## 0.1.18 (2023-02-15)
 
 - Fixed bug with default value in `TypeaheadSelect` component.

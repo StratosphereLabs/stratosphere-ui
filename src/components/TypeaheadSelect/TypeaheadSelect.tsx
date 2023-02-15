@@ -11,7 +11,7 @@ import { FormError, FormFieldProps, FormLabel } from '../Form';
 import { ComboboxMulti } from '../Form/FormComboboxMulti';
 import { ComboboxSingle } from '../Form/FormComboboxSingle';
 import { GenericDataType } from '../../common';
-import { UseTypeaheadQueryOptions } from '../../hooks';
+import { useFieldColor, UseTypeaheadQueryOptions } from '../../hooks';
 
 export interface TypeaheadSelectProps<
   DataItem extends GenericDataType,
@@ -49,6 +49,7 @@ export const TypeaheadSelect = <
   onDebouncedChange,
   options,
   placeholder,
+  showDirty,
 }: TypeaheadSelectProps<DataItem, Values>): JSX.Element => {
   const ref = inputRef ?? useRef<HTMLInputElement>(null);
   const {
@@ -70,6 +71,7 @@ export const TypeaheadSelect = <
     onDebouncedChange,
     options,
   });
+  const color = useFieldColor(name, showDirty);
   const currentDefaultOptions = useRef(defaultOptions);
   const enableBadges = disableSingleSelectBadge === undefined || multi === true;
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
@@ -103,6 +105,7 @@ export const TypeaheadSelect = <
         <div
           className={classNames(
             'input-bordered input flex cursor-pointer items-center gap-1 overflow-x-scroll scrollbar-none',
+            `input-${color}`,
             error !== undefined ? 'input-error' : 'input-ghost',
           )}
           onBlur={event => {

@@ -1,12 +1,11 @@
 import classNames from 'classnames';
+import { RefObject } from 'react';
 import { Form, Radio, RadioProps } from 'react-daisyui';
-import {
-  FieldValues,
-  useController,
-  UseControllerProps,
-} from 'react-hook-form';
+import { FieldValues, useController } from 'react-hook-form';
 import { FormError } from './FormError';
 import { FormLabel } from './FormLabel';
+import { FormFieldProps } from './types';
+import { useFieldColor } from '../../hooks';
 
 export interface RadioOption {
   id: string | number;
@@ -15,26 +14,31 @@ export interface RadioOption {
 }
 
 export interface FormRadioProps<Values extends FieldValues>
-  extends UseControllerProps<Values> {
-  className?: string;
-  isRequired?: boolean;
-  labelText?: string;
+  extends Omit<FormFieldProps<Values>, 'placeholder'>,
+    Omit<RadioProps, 'name'> {
+  inputRef?: RefObject<HTMLInputElement>;
   options: RadioOption[];
-  radioProps?: RadioProps;
 }
 
 export const FormRadio = <Values extends FieldValues>({
   className,
+  controllerProps,
+  inputRef,
   isRequired,
   labelText,
+  name,
   options,
-  radioProps,
+  showDirty,
   ...props
 }: FormRadioProps<Values>): JSX.Element => {
   const {
     field: { value, ...field },
     fieldState: { error },
-  } = useController(props);
+  } = useController({
+    name,
+    ...controllerProps,
+  });
+  const color = useFieldColor(name, showDirty);
   return (
     <div className={classNames('form-control flex-1', className)}>
       {labelText !== undefined ? (
@@ -44,8 +48,10 @@ export const FormRadio = <Values extends FieldValues>({
         <Form.Label key={id} title={label}>
           <Radio
             {...field}
-            {...radioProps}
+            {...props}
             checked={value === optionValue}
+            color={color}
+            ref={inputRef}
             value={optionValue}
           />
         </Form.Label>

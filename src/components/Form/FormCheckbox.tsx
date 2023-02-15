@@ -1,30 +1,41 @@
-import { ReactNode } from 'react';
+import classNames from 'classnames';
+import { RefObject } from 'react';
 import { Checkbox, CheckboxProps } from 'react-daisyui';
-import {
-  FieldValues,
-  useController,
-  UseControllerProps,
-} from 'react-hook-form';
+import { FieldValues, useController } from 'react-hook-form';
+import { useFieldColor } from '../../hooks';
 import { FormLabel } from './FormLabel';
+import { FormFieldProps } from './types';
 
 export interface FormCheckboxProps<Values extends FieldValues>
-  extends UseControllerProps<Values> {
-  children?: ReactNode;
-  inputProps?: CheckboxProps;
+  extends Omit<FormFieldProps<Values>, 'placeholder'>,
+    Omit<CheckboxProps, 'color' | 'name'> {
+  inputRef?: RefObject<HTMLInputElement>;
 }
 
 export const FormCheckbox = <Values extends FieldValues>({
   children,
-  inputProps,
+  className,
+  controllerProps,
+  inputRef,
+  isRequired,
+  labelText,
+  name,
+  showDirty,
   ...props
 }: FormCheckboxProps<Values>): JSX.Element => {
-  const { field } = useController(props);
+  const { field } = useController({ name, ...controllerProps });
+  const color = useFieldColor(name, showDirty);
   return (
-    <div className="flex items-center gap-2">
-      <Checkbox {...field} {...inputProps} />
-      {children !== undefined ? (
-        <FormLabel htmlFor={inputProps?.id}>{children}</FormLabel>
-      ) : null}
+    <div className={classNames('flex flex-1 items-center gap-2', className)}>
+      <Checkbox {...field} {...props} color={color} ref={inputRef} />
+      <div className="flex flex-col">
+        {labelText !== undefined ? (
+          <FormLabel htmlFor={props.id} isRequired={isRequired}>
+            {labelText}
+          </FormLabel>
+        ) : null}
+        {children}
+      </div>
     </div>
   );
 };

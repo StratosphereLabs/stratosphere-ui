@@ -19,7 +19,10 @@ import { GenericDataType } from '../../common';
 export interface FormSelectProps<
   DataItem extends GenericDataType,
   Values extends FieldValues,
-> extends Omit<FormFieldProps<Values>, 'controllerProps' | 'isRequired'> {
+> extends Omit<
+    FormFieldProps<Values>,
+    'controllerProps' | 'placeholder' | 'showDirty'
+  > {
   buttonColor?: ComponentColor;
   buttonRef?: RefObject<HTMLButtonElement>;
   className?: string;
@@ -39,6 +42,7 @@ export const FormSelect = <
   dropdownIcon,
   getItemText,
   getItemValue,
+  isRequired,
   labelText,
   name,
   options,
@@ -49,7 +53,7 @@ export const FormSelect = <
   useEffect(() => {
     const itemValue =
       getItemValue !== undefined ? getItemValue(selectedItem) : selectedItem;
-    setValue<string>(name, itemValue, { shouldTouch });
+    setValue<string>(name, itemValue, { shouldTouch, shouldDirty: true });
     setShouldTouch(true);
   }, [selectedItem]);
   return (
@@ -61,7 +65,9 @@ export const FormSelect = <
       onChange={setSelectedItem}
       value={selectedItem}
     >
-      {labelText !== undefined ? <FormLabel>{labelText}</FormLabel> : null}
+      {labelText !== undefined ? (
+        <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
+      ) : null}
       <Listbox.Button
         as={Button}
         className="w-full"

@@ -5,6 +5,7 @@ import { FieldValues, useController } from 'react-hook-form';
 import { FormError } from './FormError';
 import { FormLabel } from './FormLabel';
 import { FormFieldProps, Transform } from './types';
+import { useFieldColor } from '../../hooks';
 
 export interface FormControlProps<Values extends FieldValues, TOutput>
   extends FormFieldProps<Values>,
@@ -20,6 +21,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
   isRequired,
   labelText,
   name,
+  showDirty,
   transform,
   ...props
 }: FormControlProps<Values, TOutput>): JSX.Element => {
@@ -30,6 +32,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
     ...controllerProps,
     name,
   });
+  const color = useFieldColor(name, showDirty);
   const inputValue = useMemo(
     () =>
       transform !== undefined ? transform.input(field.value) : field.value,
@@ -43,7 +46,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
       <Input
         {...field}
         className="w-full"
-        color={error === undefined ? 'ghost' : 'error'}
+        color={color}
         name={name}
         onChange={({ target: { value } }) =>
           field.onChange(

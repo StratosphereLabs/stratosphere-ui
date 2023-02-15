@@ -69,7 +69,9 @@ export const FormRangeSlider = forwardRef(
           maxValue={max}
           onChange={onChange}
           onInput={event => {
-            setValue(name, [event.minValue, event.maxValue] as never);
+            setValue(name, [event.minValue, event.maxValue] as never, {
+              shouldDirty: true,
+            });
             onInput?.(event);
           }}
         />
