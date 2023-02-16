@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.1.20 (2023-02-15)
+
+- Added ref to `Modal` component.
+
 ## 0.1.19 (2023-02-15)
 
 - Fixed close button positioning in `Modal` component.
