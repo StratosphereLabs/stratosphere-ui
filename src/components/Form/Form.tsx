@@ -10,7 +10,7 @@ export interface FormProps<Values extends FieldValues>
   extends HTMLProps<HTMLFormElement> {
   children?: ReactNode;
   methods: UseFormReturn<Values>;
-  onFormSubmit: SubmitHandler<Values>;
+  onFormSubmit?: SubmitHandler<Values>;
 }
 
 export const Form = <Values extends FieldValues>({
@@ -20,7 +20,11 @@ export const Form = <Values extends FieldValues>({
   ...props
 }: FormProps<Values>): JSX.Element => (
   <FormProvider {...methods}>
-    <form noValidate onSubmit={methods.handleSubmit(onFormSubmit)} {...props}>
+    <form
+      noValidate
+      onSubmit={onFormSubmit ? methods.handleSubmit(onFormSubmit) : undefined}
+      {...props}
+    >
       {children}
     </form>
   </FormProvider>

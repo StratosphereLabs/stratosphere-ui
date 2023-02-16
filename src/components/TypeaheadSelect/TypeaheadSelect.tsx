@@ -1,5 +1,6 @@
 import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
+import isEqual from 'lodash.isequal';
 import { Fragment, KeyboardEvent, RefObject, useEffect, useRef } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { Input, Progress } from 'react-daisyui';
@@ -10,7 +11,7 @@ import { FormError, FormFieldProps, FormLabel } from '../Form';
 import { ComboboxMulti } from '../Form/FormComboboxMulti';
 import { ComboboxSingle } from '../Form/FormComboboxSingle';
 import { GenericDataType } from '../../common';
-import { UseTypeaheadQueryOptions } from '../../hooks';
+import { useFieldColor, UseTypeaheadQueryOptions } from '../../hooks';
 
 export interface TypeaheadSelectProps<
   DataItem extends GenericDataType,
@@ -48,6 +49,7 @@ export const TypeaheadSelect = <
   onDebouncedChange,
   options,
   placeholder,
+  showDirty,
 }: TypeaheadSelectProps<DataItem, Values>): JSX.Element => {
   const ref = inputRef ?? useRef<HTMLInputElement>(null);
   const {
@@ -69,11 +71,18 @@ export const TypeaheadSelect = <
     onDebouncedChange,
     options,
   });
+  const color = useFieldColor(name, showDirty);
+  const currentDefaultOptions = useRef(defaultOptions);
   const enableBadges = disableSingleSelectBadge === undefined || multi === true;
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
   useEffect(() => {
-    if (defaultOptions?.length)
+    if (
+      defaultOptions?.length &&
+      !isEqual(defaultOptions, currentDefaultOptions.current)
+    ) {
       setSelectedItems(multi === true ? defaultOptions : [defaultOptions[0]]);
+      currentDefaultOptions.current = defaultOptions;
+    }
   }, [defaultOptions]);
   return (
     <Component
@@ -95,7 +104,8 @@ export const TypeaheadSelect = <
       {enableBadges ? (
         <div
           className={classNames(
-            'scrollbar-none input-bordered input flex cursor-pointer items-center gap-1 overflow-x-scroll',
+            'input-bordered input flex cursor-pointer items-center gap-1 overflow-x-scroll scrollbar-none',
+            `input-${color}`,
             error !== undefined ? 'input-error' : 'input-ghost',
           )}
           onBlur={event => {

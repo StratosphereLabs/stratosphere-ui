@@ -1,5 +1,21 @@
 # CHANGELOG.md
 
+## 0.1.20 (2023-02-15)
+
+- Added ref to `Modal` component.
+
+## 0.1.19 (2023-02-15)
+
+- Fixed close button positioning in `Modal` component.
+- Removed scrollbar from `Modal` component by default
+- Added `className` prop to `Modal` component.
+- Added `showDirty` prop to all form components.
+
+## 0.1.18 (2023-02-15)
+
+- Fixed bug with default value in `TypeaheadSelect` component.
+- Made `onFormSubmit` prop in `Form` component optional.
+
 ## 0.1.17 (2023-02-12)
 
 - Added new `Table` component.

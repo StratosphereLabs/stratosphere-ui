@@ -27,7 +27,7 @@ export const ComboboxSingle = <
           ? getItemValue(selectedItem)
           : ''
         : selectedItem;
-    setValue<string>(name, itemValue, { shouldTouch });
+    setValue<string>(name, itemValue, { shouldDirty: true, shouldTouch });
     setShowDropdown(false);
     setShouldTouch(true);
   }, [selectedItem]);

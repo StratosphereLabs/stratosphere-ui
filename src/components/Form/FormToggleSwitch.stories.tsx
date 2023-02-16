@@ -32,5 +32,5 @@ export const Default: Story<FormToggleSwitchProps<FormValues>> = args => {
 
 Default.args = {
   name: 'field1',
-  label: 'Label Text',
+  labelText: 'Label Text',
 };

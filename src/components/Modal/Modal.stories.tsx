@@ -14,11 +14,11 @@ export default {
 } as Meta;
 
 export const Default: Story<ModalProps> = args => {
-  const [show, setShow] = useState(false);
+  const [open, setOpen] = useState(false);
   return (
     <>
-      <Button onClick={() => setShow(true)}>Open</Button>
-      <Modal {...args} onClose={() => setShow(false)} show={show} />
+      <Button onClick={() => setOpen(true)}>Open</Button>
+      <Modal {...args} onClose={() => setOpen(false)} open={open} />
     </>
   );
 };
@@ -30,11 +30,11 @@ Default.args = {
 };
 
 export const WithActionButtons: Story<ModalProps> = args => {
-  const [show, setShow] = useState(false);
+  const [open, setOpen] = useState(false);
   return (
     <>
-      <Button onClick={() => setShow(true)}>Open</Button>
-      <Modal {...args} onClose={() => setShow(false)} show={show} />
+      <Button onClick={() => setOpen(true)}>Open</Button>
+      <Modal {...args} onClose={() => setOpen(false)} open={open} />
     </>
   );
 };

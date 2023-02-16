@@ -9,6 +9,7 @@ export interface FormFieldProps<Values extends FieldValues> {
   labelText?: string;
   name: Path<Values>;
   placeholder?: string;
+  showDirty?: boolean;
 }
 
 export interface ComboboxProps<
