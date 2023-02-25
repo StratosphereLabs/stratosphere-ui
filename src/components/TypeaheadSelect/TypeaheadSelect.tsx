@@ -72,7 +72,7 @@ export const TypeaheadSelect = <
     options,
   });
   const color = useFieldColor(name, showDirty);
-  const currentDefaultOptions = useRef(defaultOptions);
+  const currentDefaultOptions = useRef<DataItem[]>();
   const enableBadges = disableSingleSelectBadge === undefined || multi === true;
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
   useEffect(() => {

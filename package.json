@@ -1,6 +1,6 @@
 {
   "name": "stratosphere-ui",
-  "version": "0.1.20",
+  "version": "0.1.22",
   "description": "React component library for all Stratosphere Labs user interfaces",
   "type": "module",
   "files": [
