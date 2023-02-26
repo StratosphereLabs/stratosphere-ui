@@ -1,5 +1,13 @@
 # CHANGELOG.md
 
+## 0.1.23 (2023-02-25)
+
+- Added function to calculate page numbers for `Pagination` component.
+
+## 0.1.22 (2023-02-24)
+
+- Fixed default value not appearing in `TypeaheadSelect` component.
+
 ## 0.1.20 (2023-02-15)
 
 - Added ref to `Modal` component.

@@ -6,6 +6,7 @@ import {
   PaginationProps as DaisyUIPaginationProps,
 } from 'react-daisyui';
 import { PaginationMetadata } from './types';
+import { getPageNumbers } from './utils';
 
 export interface PaginationProps
   extends Omit<DaisyUIPaginationProps, 'children'> {
@@ -20,10 +21,11 @@ export const Pagination = ({
   onPaginationChange,
   size,
   ...props
-}: PaginationProps): JSX.Element | null =>
-  metadata !== undefined ? (
+}: PaginationProps): JSX.Element | null => {
+  const pages = getPageNumbers(metadata);
+  return metadata ? (
     <DaisyUIPagination className={classNames('mt-4', className)} {...props}>
-      {metadata?.pages.map((number, index) => (
+      {pages.map((number, index) => (
         <Button
           key={index}
           active={number === metadata.page}
@@ -38,3 +40,4 @@ export const Pagination = ({
       ))}
     </DaisyUIPagination>
   ) : null;
+};
