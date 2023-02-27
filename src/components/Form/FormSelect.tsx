@@ -1,11 +1,13 @@
 import { Listbox } from '@headlessui/react';
 import classNames from 'classnames';
+import isEqual from 'lodash.isequal';
 import {
   ComponentProps,
   FC,
   Fragment,
   RefObject,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import { ComponentColor } from 'react-daisyui/dist/types';
@@ -26,6 +28,7 @@ export interface FormSelectProps<
   buttonColor?: ComponentColor;
   buttonRef?: RefObject<HTMLButtonElement>;
   className?: string;
+  defaultOption?: DataItem;
   dropdownIcon?: FC<ComponentProps<'svg'>>;
   getItemText: (data: DataItem) => string;
   getItemValue?: (data: DataItem) => string;
@@ -39,6 +42,7 @@ export const FormSelect = <
   buttonColor,
   buttonRef,
   className,
+  defaultOption,
   dropdownIcon,
   getItemText,
   getItemValue,
@@ -47,15 +51,27 @@ export const FormSelect = <
   name,
   options,
 }: FormSelectProps<DataItem, Values>): JSX.Element => {
+  const currentDefaultOption = useRef<DataItem>();
   const [shouldTouch, setShouldTouch] = useState(false);
   const { setValue } = useFormContext();
-  const [selectedItem, setSelectedItem] = useState<DataItem>(options[0]);
+  const [selectedItem, setSelectedItem] = useState<DataItem>(
+    defaultOption ?? options[0],
+  );
   useEffect(() => {
     const itemValue =
       getItemValue !== undefined ? getItemValue(selectedItem) : selectedItem;
     setValue<string>(name, itemValue, { shouldTouch, shouldDirty: true });
     setShouldTouch(true);
   }, [selectedItem]);
+  useEffect(() => {
+    if (
+      defaultOption &&
+      !isEqual(defaultOption, currentDefaultOption.current)
+    ) {
+      setSelectedItem(defaultOption);
+      currentDefaultOption.current = defaultOption;
+    }
+  }, [defaultOption]);
   return (
     <Listbox
       as="div"

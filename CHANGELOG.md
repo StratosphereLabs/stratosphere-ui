@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.1.24 (2023-02-26)
+
+- Added `defaultOption` prop to `FormSelect` component.
+
 ## 0.1.23 (2023-02-25)
 
 - Added function to calculate page numbers for `Pagination` component.
