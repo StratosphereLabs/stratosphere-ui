@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.1.25 (2023-02-26)
+
+- Changed `defaultOption` prop to `defaultOptionId` in `FormSelect` component.
+
 ## 0.1.24 (2023-02-26)
 
 - Added `defaultOption` prop to `FormSelect` component.

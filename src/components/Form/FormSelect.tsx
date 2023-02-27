@@ -1,12 +1,12 @@
 import { Listbox } from '@headlessui/react';
 import classNames from 'classnames';
-import isEqual from 'lodash.isequal';
 import {
   ComponentProps,
   FC,
   Fragment,
   RefObject,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -28,7 +28,7 @@ export interface FormSelectProps<
   buttonColor?: ComponentColor;
   buttonRef?: RefObject<HTMLButtonElement>;
   className?: string;
-  defaultOption?: DataItem;
+  defaultOptionId?: string;
   dropdownIcon?: FC<ComponentProps<'svg'>>;
   getItemText: (data: DataItem) => string;
   getItemValue?: (data: DataItem) => string;
@@ -42,7 +42,7 @@ export const FormSelect = <
   buttonColor,
   buttonRef,
   className,
-  defaultOption,
+  defaultOptionId,
   dropdownIcon,
   getItemText,
   getItemValue,
@@ -54,6 +54,10 @@ export const FormSelect = <
   const currentDefaultOption = useRef<DataItem>();
   const [shouldTouch, setShouldTouch] = useState(false);
   const { setValue } = useFormContext();
+  const defaultOption = useMemo(
+    () => options.find(({ id }) => id === defaultOptionId),
+    [defaultOptionId, options],
+  );
   const [selectedItem, setSelectedItem] = useState<DataItem>(
     defaultOption ?? options[0],
   );
@@ -64,10 +68,7 @@ export const FormSelect = <
     setShouldTouch(true);
   }, [selectedItem]);
   useEffect(() => {
-    if (
-      defaultOption &&
-      !isEqual(defaultOption, currentDefaultOption.current)
-    ) {
+    if (defaultOption) {
       setSelectedItem(defaultOption);
       currentDefaultOption.current = defaultOption;
     }
