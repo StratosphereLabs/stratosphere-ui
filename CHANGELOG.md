@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.1.27 (2023-02-27)
+
+- Added `elementLeft` and `elementRight` props to `FormControl` component.
+
 ## 0.1.26 (2023-02-26)
 
 - Updated `Form` components to show correct color based on form state.

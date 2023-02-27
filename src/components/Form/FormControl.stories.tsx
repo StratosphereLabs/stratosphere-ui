@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form } from './Form';
 import { FormControl, FormControlProps } from './FormControl';
+import { InfoIcon } from '../Icons';
 
 export default {
   title: 'FormControl',
@@ -97,4 +98,38 @@ export const WithError: Story<FormControlProps<FormValues, string>> = args => {
 
 WithError.args = {
   name: 'field1',
+};
+
+export const WithElementOnLeft: Story<
+  FormControlProps<FormValues, string>
+> = args => {
+  const methods = useForm();
+  return (
+    <Form methods={methods} onFormSubmit={() => null}>
+      <FormControl {...args} />
+    </Form>
+  );
+};
+
+WithElementOnLeft.args = {
+  name: 'field1',
+  elementLeft: <InfoIcon className="h-6 w-6" />,
+  inputClassName: 'pl-10',
+};
+
+export const WithElementOnRight: Story<
+  FormControlProps<FormValues, string>
+> = args => {
+  const methods = useForm();
+  return (
+    <Form methods={methods} onFormSubmit={() => null}>
+      <FormControl {...args} />
+    </Form>
+  );
+};
+
+WithElementOnRight.args = {
+  name: 'field1',
+  elementRight: <InfoIcon className="h-6 w-6" />,
+  inputClassName: 'pr-10',
 };
