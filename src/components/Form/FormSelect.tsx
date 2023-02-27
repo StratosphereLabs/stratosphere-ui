@@ -64,7 +64,8 @@ export const FormSelect = <
   }, [selectedItem]);
   useEffect(() => {
     if (defaultOptionId !== '') {
-      const option = options.find(({ id }) => id === defaultOptionId) ?? null;
+      const option =
+        options.find(({ id }) => id === defaultOptionId) ?? options[0];
       setSelectedItem(option);
     }
   }, [defaultOptionId]);
