@@ -51,3 +51,35 @@ Default.args = {
     },
   ],
 };
+
+export const WithDefaultValue: Story<
+  FormSelectProps<DataItem, FormValues>
+> = args => {
+  const methods = useForm();
+  return (
+    <Form className="h-60 w-full" methods={methods} onFormSubmit={() => null}>
+      <FormSelect {...args} />
+    </Form>
+  );
+};
+
+WithDefaultValue.args = {
+  labelText: 'Field Label',
+  name: 'field1',
+  getItemText: ({ id, label }) => `${id} - ${label}`,
+  defaultOptionId: '2',
+  options: [
+    {
+      id: '1',
+      label: 'Item 1',
+    },
+    {
+      id: '2',
+      label: 'Item 2',
+    },
+    {
+      id: '3',
+      label: 'Item 3',
+    },
+  ],
+};

@@ -22,6 +22,7 @@ export interface FormRadioProps<Values extends FieldValues>
 
 export const FormRadio = <Values extends FieldValues>({
   className,
+  color,
   controllerProps,
   inputRef,
   isRequired,
@@ -38,7 +39,7 @@ export const FormRadio = <Values extends FieldValues>({
     name,
     ...controllerProps,
   });
-  const color = useFieldColor(name, showDirty);
+  const fieldColor = useFieldColor(name, showDirty);
   return (
     <div className={classNames('form-control flex-1', className)}>
       {labelText !== undefined ? (
@@ -50,7 +51,7 @@ export const FormRadio = <Values extends FieldValues>({
             {...field}
             {...props}
             checked={value === optionValue}
-            color={color}
+            color={fieldColor ?? color ?? 'ghost'}
             ref={inputRef}
             value={optionValue}
           />

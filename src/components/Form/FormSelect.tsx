@@ -15,6 +15,7 @@ import { FormLabel } from './FormLabel';
 import { FormFieldProps } from './types';
 import { Dropdown, DropdownMenu, DropdownOption } from '../Dropdown';
 import { GenericDataType } from '../../common';
+import { useFieldColor } from '../../hooks';
 
 export interface FormSelectProps<
   DataItem extends GenericDataType,
@@ -26,10 +27,12 @@ export interface FormSelectProps<
   buttonColor?: ComponentColor;
   buttonRef?: RefObject<HTMLButtonElement>;
   className?: string;
+  defaultOptionId?: string;
   dropdownIcon?: FC<ComponentProps<'svg'>>;
   getItemText: (data: DataItem) => string;
   getItemValue?: (data: DataItem) => string;
   options: DataItem[];
+  showDirty?: boolean;
 }
 
 export const FormSelect = <
@@ -39,6 +42,7 @@ export const FormSelect = <
   buttonColor,
   buttonRef,
   className,
+  defaultOptionId,
   dropdownIcon,
   getItemText,
   getItemValue,
@@ -46,16 +50,25 @@ export const FormSelect = <
   labelText,
   name,
   options,
+  showDirty,
 }: FormSelectProps<DataItem, Values>): JSX.Element => {
   const [shouldTouch, setShouldTouch] = useState(false);
   const { setValue } = useFormContext();
-  const [selectedItem, setSelectedItem] = useState<DataItem>(options[0]);
+  const [selectedItem, setSelectedItem] = useState<DataItem | null>(null);
+  const fieldColor = useFieldColor(name, showDirty);
   useEffect(() => {
     const itemValue =
-      getItemValue !== undefined ? getItemValue(selectedItem) : selectedItem;
+      selectedItem && getItemValue ? getItemValue(selectedItem) : selectedItem;
     setValue<string>(name, itemValue, { shouldTouch, shouldDirty: true });
     setShouldTouch(true);
   }, [selectedItem]);
+  useEffect(() => {
+    if (defaultOptionId !== '') {
+      const option =
+        options.find(({ id }) => id === defaultOptionId) ?? options[0];
+      setSelectedItem(option);
+    }
+  }, [defaultOptionId]);
   return (
     <Listbox
       as="div"
@@ -71,7 +84,7 @@ export const FormSelect = <
       <Listbox.Button
         as={Button}
         className="w-full"
-        color={buttonColor}
+        color={fieldColor ?? buttonColor}
         ref={buttonRef}
       >
         <>

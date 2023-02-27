@@ -3,7 +3,6 @@ export interface PaginationMetadata {
   pageCount: number;
   limit: number;
   itemCount: number;
-  pages: Array<number | null>;
 }
 
 export interface PaginatedResults<Data> {

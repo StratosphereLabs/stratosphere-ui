@@ -8,13 +8,14 @@ import { FormFieldProps } from './types';
 
 export interface FormCheckboxProps<Values extends FieldValues>
   extends Omit<FormFieldProps<Values>, 'placeholder'>,
-    Omit<CheckboxProps, 'color' | 'name'> {
+    Omit<CheckboxProps, 'name'> {
   inputRef?: RefObject<HTMLInputElement>;
 }
 
 export const FormCheckbox = <Values extends FieldValues>({
   children,
   className,
+  color,
   controllerProps,
   inputRef,
   isRequired,
@@ -24,10 +25,15 @@ export const FormCheckbox = <Values extends FieldValues>({
   ...props
 }: FormCheckboxProps<Values>): JSX.Element => {
   const { field } = useController({ name, ...controllerProps });
-  const color = useFieldColor(name, showDirty);
+  const fieldColor = useFieldColor(name, showDirty);
   return (
     <div className={classNames('flex flex-1 items-center gap-2', className)}>
-      <Checkbox {...field} {...props} color={color} ref={inputRef} />
+      <Checkbox
+        {...field}
+        {...props}
+        color={fieldColor ?? color ?? 'ghost'}
+        ref={inputRef}
+      />
       <div className="flex flex-col">
         {labelText !== undefined ? (
           <FormLabel htmlFor={props.id} isRequired={isRequired}>
