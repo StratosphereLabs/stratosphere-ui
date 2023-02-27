@@ -10,6 +10,6 @@ export const useFieldColor = <Values extends FieldValues>(
   return error === undefined
     ? isDirty && showDirty
       ? 'success'
-      : 'ghost'
+      : null
     : 'error';
 };

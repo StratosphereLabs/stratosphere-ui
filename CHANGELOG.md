@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.1.26 (2023-02-26)
+
+- Updated `Form` components to show correct color based on form state.
+
 ## 0.1.25 (2023-02-26)
 
 - Changed `defaultOption` prop to `defaultOptionId` in `FormSelect` component.

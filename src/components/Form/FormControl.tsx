@@ -16,6 +16,7 @@ export interface FormControlProps<Values extends FieldValues, TOutput>
 
 export const FormControl = <Values extends FieldValues, TOutput>({
   className,
+  color,
   controllerProps,
   inputRef,
   isRequired,
@@ -32,7 +33,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
     ...controllerProps,
     name,
   });
-  const color = useFieldColor(name, showDirty);
+  const fieldColor = useFieldColor(name, showDirty);
   const inputValue = useMemo(
     () =>
       transform !== undefined ? transform.input(field.value) : field.value,
@@ -46,7 +47,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
       <Input
         {...field}
         className="w-full"
-        color={color}
+        color={fieldColor ?? color ?? 'ghost'}
         name={name}
         onChange={({ target: { value } }) =>
           field.onChange(

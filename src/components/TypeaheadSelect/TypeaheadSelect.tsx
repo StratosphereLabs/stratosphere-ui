@@ -71,7 +71,7 @@ export const TypeaheadSelect = <
     onDebouncedChange,
     options,
   });
-  const color = useFieldColor(name, showDirty);
+  const fieldColor = useFieldColor(name, showDirty);
   const currentDefaultOptions = useRef<DataItem[]>();
   const enableBadges = disableSingleSelectBadge === undefined || multi === true;
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
@@ -105,8 +105,7 @@ export const TypeaheadSelect = <
         <div
           className={classNames(
             'input-bordered input flex cursor-pointer items-center gap-1 overflow-x-scroll scrollbar-none',
-            `input-${color}`,
-            error !== undefined ? 'input-error' : 'input-ghost',
+            `input-${fieldColor ?? 'ghost'}`,
           )}
           onBlur={event => {
             if (event.relatedTarget === null) setShowDropdown(false);
