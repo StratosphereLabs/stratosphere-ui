@@ -67,10 +67,7 @@ WithDefaultValue.args = {
   labelText: 'Field Label',
   name: 'field1',
   getItemText: ({ id, label }) => `${id} - ${label}`,
-  defaultOption: {
-    id: '2',
-    label: 'Item 2',
-  },
+  defaultOptionId: '2',
   options: [
     {
       id: '1',
