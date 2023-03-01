@@ -34,7 +34,8 @@
     "build-storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
     "prepack": "npm run build",
-    "format": "prettier --config ./.prettierrc -w src vite.config.ts"
+    "format": "prettier --config ./.prettierrc -w src vite.config.ts",
+    "test": "vitest run --coverage"
   },
   "devDependencies": {
     "@babel/core": "^7.20.7",
@@ -54,6 +55,8 @@
     "@storybook/testing-library": "^0.0.13",
     "@tailwindcss/typography": "^0.5.9",
     "@tanstack/react-table": "^8.7.9",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.1.0",
     "@types/lodash.isequal": "^4.5.6",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
@@ -61,6 +64,7 @@
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.47.1",
     "@vitejs/plugin-react": "^3.0.0",
+    "@vitest/coverage-c8": "^0.29.2",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^8.3.0",
     "classnames": "^2.3.2",
@@ -74,6 +78,7 @@
     "eslint-plugin-promise": "^6.0.1",
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-storybook": "^0.6.8",
+    "jsdom": "^21.1.0",
     "lodash.isequal": "^4.5.0",
     "multi-range-slider-react": "^2.0.2",
     "postcss": "^8.4.20",
@@ -92,7 +97,7 @@
     "vite": "^4.0.3",
     "vite-plugin-dts": "^1.7.1",
     "vite-plugin-eslint": "^1.8.1",
-    "vitest": "^0.26.3",
+    "vitest": "^0.29.2",
     "zod": "^3.20.2"
   }
 }
