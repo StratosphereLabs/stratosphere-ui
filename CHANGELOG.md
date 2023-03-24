@@ -3,6 +3,8 @@
 ## 0.1.28 (2023-03-23)
 
 - Added `hideErrorMessage` prop to `FormControl` component.
+- Added `PasswordInput` component.
+- Increased the `strokeWidth` of all `Icon` components from 1.5 to 2.
 
 ## 0.1.27 (2023-02-27)
 

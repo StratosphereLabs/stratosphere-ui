@@ -7,5 +7,6 @@ export * from './Icons';
 export * from './LoadingCard';
 export * from './Modal';
 export * from './Pagination';
+export * from './PasswordInput';
 export * from './Table';
 export * from './TypeaheadSelect';
