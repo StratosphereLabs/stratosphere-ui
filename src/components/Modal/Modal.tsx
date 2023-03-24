@@ -15,7 +15,7 @@ export interface ModalProps extends DaisyUIModalProps {
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
   (
-    { actionButtons, children, className, onClose, open, title },
+    { actionButtons, children, className, onClose, open, responsive, title },
     ref,
   ): JSX.Element => (
     <Dialog as={Fragment} onClose={onClose} open={open} static>
@@ -24,7 +24,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           as={DaisyUIModal}
           className={classNames('overflow-y-scroll scrollbar-none', className)}
           open={isDialogOpen}
-          responsive
+          responsive={responsive}
           ref={ref}
         >
           <Button
