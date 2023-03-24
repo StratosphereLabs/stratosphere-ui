@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.1.28 (2023-03-23)
+
+- Added `hideErrorMessage` prop to `FormControl` component.
+
 ## 0.1.27 (2023-02-27)
 
 - Added `elementLeft` and `elementRight` props to `FormControl` component.

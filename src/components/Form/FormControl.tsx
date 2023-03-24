@@ -12,6 +12,7 @@ export interface FormControlProps<Values extends FieldValues, TOutput>
     Omit<InputProps, 'name'> {
   elementLeft?: ReactNode;
   elementRight?: ReactNode;
+  hideErrorMessage?: boolean;
   inputClassName?: string;
   inputRef?: RefObject<HTMLInputElement>;
   transform?: Transform<TOutput>;
@@ -23,6 +24,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
   controllerProps,
   elementLeft,
   elementRight,
+  hideErrorMessage,
   inputClassName,
   inputRef,
   isRequired,
@@ -76,7 +78,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
           </div>
         ) : null}
       </div>
-      {error?.message !== undefined ? (
+      {hideErrorMessage !== true && error?.message !== undefined ? (
         <FormError>{error.message}</FormError>
       ) : null}
     </div>
