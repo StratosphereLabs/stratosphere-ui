@@ -6,7 +6,7 @@ import { FieldValues } from 'react-hook-form';
 import { Input, Progress } from 'react-daisyui';
 import { useTypeaheadSelect } from './useTypeaheadSelect';
 import { Badge } from '../Badge';
-import { Dropdown, DropdownMenu, DropdownOption } from '../Dropdown';
+import { DropdownMenuItem } from '../DropdownMenu';
 import { FormError, FormFieldProps, FormLabel } from '../Form';
 import { ComboboxMulti } from '../Form/FormComboboxMulti';
 import { ComboboxSingle } from '../Form/FormComboboxSingle';
@@ -54,7 +54,6 @@ export const TypeaheadSelect = <
   const ref = inputRef ?? useRef<HTMLInputElement>(null);
   const {
     clearSelectedItem,
-    dropdownRef,
     error,
     isLoading,
     query,
@@ -151,58 +150,50 @@ export const TypeaheadSelect = <
           ref={ref}
         />
       )}
-      <Dropdown
-        className="text-left"
-        onKeyDown={({ key }) => {
-          if (key === 'Escape') setShowDropdown(false);
-        }}
-        ref={dropdownRef}
-      >
-        {showDropdown ? (
-          <Combobox.Options
-            as={DropdownMenu}
-            className="bg-base-100 shadow-xl"
-            static
-          >
-            {enableBadges ? (
-              <Combobox.Input
-                as={Input}
-                className="w-full"
-                onChange={({ target: { value } }) => setQuery(value)}
-                onKeyDown={({ key }: KeyboardEvent) => {
-                  if (key === 'Tab') setShowDropdown(false);
-                }}
-                placeholder={inputPlaceholder}
-                ref={searchInputRef}
-                value={query}
-              />
-            ) : null}
-            {isLoading ? (
-              <Progress className={classNames(enableBadges && 'mt-2')} />
-            ) : null}
-            {!isLoading && options?.length === 0 ? (
-              <DropdownOption disabled>No Results</DropdownOption>
-            ) : null}
-            {!isLoading &&
-              options?.map((option, index) => (
-                <Combobox.Option as={Fragment} key={option.id} value={option}>
-                  {({ active, disabled, selected }) => (
-                    <DropdownOption
-                      active={active}
-                      className={classNames(
-                        index === 0 && enableBadges && 'mt-2',
-                      )}
-                      disabled={disabled}
-                      selected={multi === true ? selected : undefined}
-                    >
-                      {getItemText(option)}
-                    </DropdownOption>
-                  )}
-                </Combobox.Option>
-              ))}
-          </Combobox.Options>
-        ) : null}
-      </Dropdown>
+      {showDropdown ? (
+        <Combobox.Options
+          as="ul"
+          className="menu rounded-box absolute bg-base-100 p-2"
+          static
+        >
+          {enableBadges ? (
+            <Combobox.Input
+              as={Input}
+              className="w-full"
+              onChange={({ target: { value } }) => setQuery(value)}
+              onKeyDown={({ key }: KeyboardEvent) => {
+                if (key === 'Tab') setShowDropdown(false);
+              }}
+              placeholder={inputPlaceholder}
+              ref={searchInputRef}
+              value={query}
+            />
+          ) : null}
+          {isLoading ? (
+            <Progress className={classNames(enableBadges && 'mt-2')} />
+          ) : null}
+          {!isLoading && options?.length === 0 ? (
+            <DropdownMenuItem disabled>No Results</DropdownMenuItem>
+          ) : null}
+          {!isLoading &&
+            options?.map((option, index) => (
+              <Combobox.Option as={Fragment} key={option.id} value={option}>
+                {({ active, disabled, selected }) => (
+                  <DropdownMenuItem
+                    active={active}
+                    className={classNames(
+                      index === 0 && enableBadges && 'mt-2',
+                    )}
+                    disabled={disabled}
+                    selected={multi === true ? selected : undefined}
+                  >
+                    {getItemText(option)}
+                  </DropdownMenuItem>
+                )}
+              </Combobox.Option>
+            ))}
+        </Combobox.Options>
+      ) : null}
       {error?.message !== undefined ? (
         <FormError>{error.message}</FormError>
       ) : null}

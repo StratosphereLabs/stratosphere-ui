@@ -13,7 +13,7 @@ import { Button } from 'react-daisyui';
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { FormLabel } from './FormLabel';
 import { FormFieldProps } from './types';
-import { Dropdown, DropdownMenu, DropdownOption } from '../Dropdown';
+import { DropdownMenuItem } from '../DropdownMenu';
 import { GenericDataType } from '../../common';
 import { useFieldColor } from '../../hooks';
 
@@ -92,23 +92,24 @@ export const FormSelect = <
           {dropdownIcon}
         </>
       </Listbox.Button>
-      <Dropdown>
-        <Listbox.Options as={DropdownMenu} className="bg-base-100 shadow-xl">
-          {options?.map(option => (
-            <Listbox.Option as={Fragment} key={option.id} value={option}>
-              {({ active, disabled, selected }) => (
-                <DropdownOption
-                  active={active}
-                  disabled={disabled}
-                  selected={selected}
-                >
-                  {getItemText(option)}
-                </DropdownOption>
-              )}
-            </Listbox.Option>
-          ))}
-        </Listbox.Options>
-      </Dropdown>
+      <Listbox.Options
+        as="ul"
+        className="menu rounded-box absolute bg-base-100 p-2"
+      >
+        {options?.map(option => (
+          <Listbox.Option as={Fragment} key={option.id} value={option}>
+            {({ active, disabled, selected }) => (
+              <DropdownMenuItem
+                active={active}
+                disabled={disabled}
+                selected={selected}
+              >
+                {getItemText(option)}
+              </DropdownMenuItem>
+            )}
+          </Listbox.Option>
+        ))}
+      </Listbox.Options>
     </Listbox>
   );
 };

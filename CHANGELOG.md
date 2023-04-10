@@ -1,8 +1,9 @@
 # CHANGELOG.md
 
-## 0.2.0 (2023-04-09)
+## 0.2.0 (2023-04-10)
 
-- Added `Tabs` component which integrates HeadlessUI with DaisyUI.
+- Added new `DropdownMenu` component which integrates the HeadlessUI `Dropdown` component.
+- Added new `Popover` component which integrates the HeadlessUI `Popover` component.
 
 ## 0.1.29 (2023-03-24)
 
