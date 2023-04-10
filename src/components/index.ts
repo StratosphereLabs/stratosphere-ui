@@ -9,4 +9,5 @@ export * from './Modal';
 export * from './Pagination';
 export * from './PasswordInput';
 export * from './Table';
+export * from './Tabs';
 export * from './TypeaheadSelect';

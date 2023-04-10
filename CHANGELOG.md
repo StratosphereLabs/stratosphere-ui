@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.2.0 (2023-04-09)
+
+- Added `Tabs` component which integrates HeadlessUI with DaisyUI.
+
 ## 0.1.29 (2023-03-24)
 
 - Passed `responsive` prop to underlying DaisyUI component in `Modal` component.
