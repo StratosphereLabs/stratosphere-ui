@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.2.1 (2023-04-11)
+
+- Added `undefined` as possible return type of `output` function in the `FormControl` `transform` if value is invalid.
+- Added commonly used transformers for number and null empty value inputs.
+
 ## 0.2.0 (2023-04-11)
 
 - Added new `DropdownMenu` component which integrates the HeadlessUI `Dropdown` component.

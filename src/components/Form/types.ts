@@ -24,8 +24,3 @@ export interface ComboboxProps<
   setShowDropdown: Dispatch<SetStateAction<boolean>>;
   setSelectedItems: Dispatch<SetStateAction<DataItem[]>>;
 }
-
-export interface Transform<TOutput> {
-  output: (val: string) => TOutput | null;
-  input: (val: TOutput) => string;
-}

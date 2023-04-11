@@ -4,7 +4,8 @@ import { Input, InputProps } from 'react-daisyui';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { FormError } from './FormError';
 import { FormLabel } from './FormLabel';
-import { FormFieldProps, Transform } from './types';
+import { FormFieldProps } from './types';
+import { Transform } from '../../common';
 import { useFieldColor } from '../../hooks';
 
 export interface FormControlProps<Values extends FieldValues, TOutput>
@@ -67,7 +68,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
           onChange={({ target: { value } }) => {
             const output =
               transform === undefined ? value : transform.output(value);
-            if (output !== null) {
+            if (output !== undefined) {
               setValue<string>(name, output, {
                 shouldDirty: true,
                 shouldTouch: true,
