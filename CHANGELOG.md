@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.2.3 (2023-04-11)
+
+- Added `pathname` prop to `Tabs` component to allow client-side routing integration.
+- Added `paths` option to `TabData` object to allow path matching in `Tabs` component.
+
 ## 0.2.2 (2023-04-11)
 
 - Passed props down to correct element in `Tabs` component.

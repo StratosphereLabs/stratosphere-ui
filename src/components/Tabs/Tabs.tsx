@@ -7,6 +7,7 @@ export interface TabData {
   className?: string;
   disabled?: boolean;
   id: string;
+  paths?: string[];
 }
 
 export interface TabsProps
@@ -14,10 +15,10 @@ export interface TabsProps
   bordered?: boolean;
   boxed?: boolean;
   className?: string;
-  defaultTabId?: string;
   lifted?: boolean;
   manual?: boolean;
-  onChange: (tabId: string) => void;
+  onChange: (tab: TabData) => void;
+  pathname?: string;
   selectedTabId?: string;
   size?: 'xs' | 'sm' | 'lg';
   tabs: TabData[];
@@ -29,30 +30,28 @@ export const Tabs = ({
   boxed,
   children,
   className,
-  defaultTabId,
   manual,
   lifted,
   onChange,
+  pathname,
   selectedTabId,
   size,
   tabs,
   vertical,
   ...props
 }: TabsProps) => {
-  const defaultIndex = useMemo(
-    () => tabs.findIndex(({ id }) => defaultTabId === id),
-    [defaultTabId, tabs],
-  );
   const selectedIndex = useMemo(
-    () => tabs.findIndex(({ id }) => selectedTabId === id),
-    [selectedTabId, tabs],
+    () =>
+      tabs.findIndex(({ id, paths }) =>
+        pathname ? paths?.includes(pathname) : selectedTabId === id,
+      ),
+    [pathname, selectedTabId, tabs],
   );
   return (
     <Tab.Group
-      defaultIndex={defaultIndex > -1 ? defaultIndex : 0}
       manual={manual}
-      onChange={index => onChange(tabs[index].id)}
-      selectedIndex={selectedIndex > -1 ? selectedIndex : 0}
+      onChange={index => onChange(tabs[index])}
+      selectedIndex={selectedIndex > -1 ? selectedIndex : undefined}
       vertical={vertical}
     >
       <Tab.List
