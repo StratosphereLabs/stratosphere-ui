@@ -4,6 +4,7 @@
 
 - Passed props down to correct element in `Tabs` component.
 - Added `defaultTabId`, `manual`, `selectedTabId`, and `vertical` props to `Tabs` component.
+- Passed `ref` to correct element in `DropdownMenuItem` component.
 
 ## 0.2.1 (2023-04-11)
 
