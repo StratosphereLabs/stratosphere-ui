@@ -15,24 +15,36 @@ export interface PopoverPanelRenderProps {
 }
 
 export interface PopoverProps
-  extends Omit<HeadlessUIPopoverProps<'div'>, 'className'> {
-  buttonProps: ButtonProps;
+  extends Omit<HeadlessUIPopoverProps<'div'>, 'as' | 'className'> {
+  buttonProps: Omit<ButtonProps, 'as'>;
   className?: string;
+  popoverClassName?: string;
   popoverComponent: ({ open, close }: PopoverPanelRenderProps) => JSX.Element;
+  withBackdrop?: boolean;
 }
 
 export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
   (
-    { buttonProps, className, popoverComponent, ...props }: PopoverProps,
+    {
+      buttonProps,
+      className,
+      popoverClassName,
+      popoverComponent,
+      withBackdrop,
+      ...props
+    }: PopoverProps,
     ref,
   ): JSX.Element => (
     <HeadlessUIPopover
       as="div"
-      className={classNames('relative inline-block', className)}
+      className={classNames('relative', className)}
       ref={ref}
       {...props}
     >
       <HeadlessUIPopover.Button as={Button} {...buttonProps} />
+      {withBackdrop ? (
+        <HeadlessUIPopover.Overlay className="fixed inset-0 bg-black opacity-30" />
+      ) : null}
       <Transition
         as={Fragment}
         enter="transition duration-100 ease-out"
@@ -44,7 +56,10 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       >
         <HeadlessUIPopover.Panel
           as="div"
-          className="rounded-box absolute bg-base-100 p-2 shadow"
+          className={classNames(
+            'absolute z-50 bg-base-100 p-2 shadow',
+            popoverClassName,
+          )}
         >
           {popoverComponent}
         </HeadlessUIPopover.Panel>

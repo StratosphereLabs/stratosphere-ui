@@ -10,17 +10,21 @@ export interface DropdownItem
 }
 
 export interface DropdownMenuProps
-  extends Omit<MenuProps<'div'>, 'children' | 'className'> {
-  buttonProps?: ButtonProps;
+  extends Omit<MenuProps<'div'>, 'as' | 'children' | 'className'> {
+  buttonProps?: Omit<ButtonProps, 'as'>;
   className?: string;
-  dropdownItems: DropdownItem[];
+  items: DropdownItem[];
+  menuClassName?: string;
 }
 
 export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
-  ({ buttonProps, className, dropdownItems, ...props }, ref): JSX.Element => (
+  (
+    { buttonProps, className, items, menuClassName, ...props },
+    ref,
+  ): JSX.Element => (
     <Menu
       as="div"
-      className={classNames('relative inline-block', className)}
+      className={classNames('relative', className)}
       ref={ref}
       {...props}
     >
@@ -36,9 +40,12 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
       >
         <Menu.Items
           as="ul"
-          className="menu rounded-box absolute bg-base-100 p-2"
+          className={classNames(
+            'menu absolute z-50 bg-base-100',
+            menuClassName,
+          )}
         >
-          {dropdownItems.map(({ id, ...itemProps }) => (
+          {items.map(({ id, ...itemProps }) => (
             <Menu.Item as={Fragment} key={id}>
               {({ active, disabled }) => (
                 <DropdownMenuItem

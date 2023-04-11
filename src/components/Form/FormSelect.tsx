@@ -31,6 +31,7 @@ export interface FormSelectProps<
   dropdownIcon?: FC<ComponentProps<'svg'>>;
   getItemText: (data: DataItem) => string;
   getItemValue?: (data: DataItem) => string;
+  menuClassName?: string;
   options: DataItem[];
   showDirty?: boolean;
 }
@@ -48,6 +49,7 @@ export const FormSelect = <
   getItemValue,
   isRequired,
   labelText,
+  menuClassName,
   name,
   options,
   showDirty,
@@ -73,28 +75,35 @@ export const FormSelect = <
     <Listbox
       as="div"
       by="id"
-      className={classNames('form-control flex-1', className)}
+      className={classNames('relative', className)}
       name={name}
       onChange={setSelectedItem}
       value={selectedItem}
     >
-      {labelText !== undefined ? (
-        <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
-      ) : null}
-      <Listbox.Button
-        as={Button}
-        className="w-full"
-        color={fieldColor ?? buttonColor}
-        ref={buttonRef}
-      >
-        <>
-          {selectedItem !== null ? getItemText(selectedItem) : 'Select an item'}
-          {dropdownIcon}
-        </>
-      </Listbox.Button>
+      <div className="form-control flex-1">
+        {labelText !== undefined ? (
+          <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
+        ) : null}
+        <Listbox.Button
+          as={Button}
+          className="w-full"
+          color={fieldColor ?? buttonColor}
+          ref={buttonRef}
+        >
+          <>
+            {selectedItem !== null
+              ? getItemText(selectedItem)
+              : 'Select an item'}
+            {dropdownIcon}
+          </>
+        </Listbox.Button>
+      </div>
       <Listbox.Options
         as="ul"
-        className="menu rounded-box absolute bg-base-100 p-2"
+        className={classNames(
+          'menu rounded-box absolute z-50 bg-base-100 p-2',
+          menuClassName,
+        )}
       >
         {options?.map(option => (
           <Listbox.Option as={Fragment} key={option.id} value={option}>

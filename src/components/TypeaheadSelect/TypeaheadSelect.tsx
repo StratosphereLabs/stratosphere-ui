@@ -25,6 +25,7 @@ export interface TypeaheadSelectProps<
   getItemValue?: (data: DataItem) => string;
   inputPlaceholder?: string;
   inputRef?: RefObject<HTMLInputElement>;
+  menuClassName?: string;
   multi?: true;
 }
 
@@ -44,6 +45,7 @@ export const TypeaheadSelect = <
   inputRef,
   isRequired,
   labelText,
+  menuClassName,
   multi,
   name,
   onDebouncedChange,
@@ -85,7 +87,7 @@ export const TypeaheadSelect = <
   }, [defaultOptions]);
   return (
     <Component
-      className={className}
+      className={classNames('relative', className)}
       getItemValue={getItemValue}
       name={name}
       selectedItems={selectedItems}
@@ -95,65 +97,70 @@ export const TypeaheadSelect = <
         if (multi === undefined) ref.current?.focus();
       }}
     >
-      {labelText !== undefined ? (
-        <Combobox.Label as={FormLabel} isRequired={isRequired}>
-          {labelText}
-        </Combobox.Label>
-      ) : null}
-      {enableBadges ? (
-        <div
-          className={classNames(
-            'input-bordered input flex cursor-pointer items-center gap-1 overflow-x-scroll scrollbar-none',
-            `input-${fieldColor ?? 'ghost'}`,
-          )}
-          onBlur={event => {
-            if (event.relatedTarget === null) setShowDropdown(false);
-          }}
-          onClick={() => setShowDropdown(true)}
-          onKeyDown={event => {
-            if (event.key === 'Enter') {
-              event.preventDefault();
-              setShowDropdown(true);
-            } else if (event.key !== 'Tab' && event.key !== 'Shift') {
-              setShowDropdown(true);
-            }
-          }}
-          ref={ref}
-          tabIndex={0}
-        >
-          {selectedItems.length > 0
-            ? selectedItems.map((item, index) => (
-                <Badge
-                  dismissable
-                  key={item.id}
-                  onDismiss={() => clearSelectedItem(index)}
-                >
-                  {getBadgeText?.(item) ?? getItemText(item)}
-                </Badge>
-              ))
-            : placeholder}
-        </div>
-      ) : (
-        <Combobox.Input
-          as={Input}
-          className="w-full"
-          onChange={({ target: { value } }) => {
-            setQuery(value);
-            if (value.length > 0) {
-              setShowDropdown(true);
-            } else {
-              setShowDropdown(false);
-              setSelectedItems([]);
-            }
-          }}
-          placeholder={placeholder}
-          ref={ref}
-        />
-      )}
+      <div className="form-control flex-1">
+        {labelText !== undefined ? (
+          <Combobox.Label as={FormLabel} isRequired={isRequired}>
+            {labelText}
+          </Combobox.Label>
+        ) : null}
+        {enableBadges ? (
+          <div
+            className={classNames(
+              'input-bordered input flex cursor-pointer items-center gap-1 overflow-x-scroll scrollbar-none',
+              `input-${fieldColor ?? 'ghost'}`,
+            )}
+            onBlur={event => {
+              if (event.relatedTarget === null) setShowDropdown(false);
+            }}
+            onClick={() => setShowDropdown(true)}
+            onKeyDown={event => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                setShowDropdown(true);
+              } else if (event.key !== 'Tab' && event.key !== 'Shift') {
+                setShowDropdown(true);
+              }
+            }}
+            ref={ref}
+            tabIndex={0}
+          >
+            {selectedItems.length > 0
+              ? selectedItems.map((item, index) => (
+                  <Badge
+                    dismissable
+                    key={item.id}
+                    onDismiss={() => clearSelectedItem(index)}
+                  >
+                    {getBadgeText?.(item) ?? getItemText(item)}
+                  </Badge>
+                ))
+              : placeholder}
+          </div>
+        ) : (
+          <Combobox.Input
+            as={Input}
+            className="w-full"
+            onChange={({ target: { value } }) => {
+              setQuery(value);
+              if (value.length > 0) {
+                setShowDropdown(true);
+              } else {
+                setShowDropdown(false);
+                setSelectedItems([]);
+              }
+            }}
+            placeholder={placeholder}
+            ref={ref}
+          />
+        )}
+      </div>
       {showDropdown ? (
         <Combobox.Options
           as="ul"
-          className="menu rounded-box absolute bg-base-100 p-2"
+          className={classNames(
+            'menu rounded-box absolute z-50 bg-base-100 p-2',
+            menuClassName,
+          )}
           static
         >
           {enableBadges ? (
