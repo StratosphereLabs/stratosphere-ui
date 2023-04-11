@@ -1,4 +1,4 @@
-import { Listbox } from '@headlessui/react';
+import { Listbox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import {
   ComponentProps,
@@ -13,7 +13,7 @@ import { Button } from 'react-daisyui';
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { FormLabel } from './FormLabel';
 import { FormFieldProps } from './types';
-import { Dropdown, DropdownMenu, DropdownOption } from '../Dropdown';
+import { DropdownMenuItem } from '../DropdownMenu';
 import { GenericDataType } from '../../common';
 import { useFieldColor } from '../../hooks';
 
@@ -31,6 +31,7 @@ export interface FormSelectProps<
   dropdownIcon?: FC<ComponentProps<'svg'>>;
   getItemText: (data: DataItem) => string;
   getItemValue?: (data: DataItem) => string;
+  menuClassName?: string;
   options: DataItem[];
   showDirty?: boolean;
 }
@@ -48,6 +49,7 @@ export const FormSelect = <
   getItemValue,
   isRequired,
   labelText,
+  menuClassName,
   name,
   options,
   showDirty,
@@ -73,42 +75,60 @@ export const FormSelect = <
     <Listbox
       as="div"
       by="id"
-      className={classNames('form-control flex-1', className)}
+      className={classNames('relative', className)}
       name={name}
       onChange={setSelectedItem}
       value={selectedItem}
     >
-      {labelText !== undefined ? (
-        <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
-      ) : null}
-      <Listbox.Button
-        as={Button}
-        className="w-full"
-        color={fieldColor ?? buttonColor}
-        ref={buttonRef}
+      <div className="form-control">
+        {labelText !== undefined ? (
+          <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
+        ) : null}
+        <Listbox.Button
+          as={Button}
+          className="w-full"
+          color={fieldColor ?? buttonColor}
+          ref={buttonRef}
+        >
+          <>
+            {selectedItem !== null
+              ? getItemText(selectedItem)
+              : 'Select an item'}
+            {dropdownIcon}
+          </>
+        </Listbox.Button>
+      </div>
+      <Transition
+        as={Fragment}
+        enter="transition duration-100 ease-out"
+        enterFrom="transform scale-95 opacity-0"
+        enterTo="transform scale-100 opacity-100"
+        leave="transition duration-75 ease-out"
+        leaveFrom="transform scale-100 opacity-100"
+        leaveTo="transform scale-95 opacity-0"
       >
-        <>
-          {selectedItem !== null ? getItemText(selectedItem) : 'Select an item'}
-          {dropdownIcon}
-        </>
-      </Listbox.Button>
-      <Dropdown>
-        <Listbox.Options as={DropdownMenu} className="bg-base-100 shadow-xl">
+        <Listbox.Options
+          as="ul"
+          className={classNames(
+            'menu rounded-box absolute z-50 bg-base-100 p-2 shadow-xl',
+            menuClassName,
+          )}
+        >
           {options?.map(option => (
             <Listbox.Option as={Fragment} key={option.id} value={option}>
               {({ active, disabled, selected }) => (
-                <DropdownOption
+                <DropdownMenuItem
                   active={active}
                   disabled={disabled}
                   selected={selected}
                 >
                   {getItemText(option)}
-                </DropdownOption>
+                </DropdownMenuItem>
               )}
             </Listbox.Option>
           ))}
         </Listbox.Options>
-      </Dropdown>
+      </Transition>
     </Listbox>
   );
 };

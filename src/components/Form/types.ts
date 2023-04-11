@@ -26,6 +26,6 @@ export interface ComboboxProps<
 }
 
 export interface Transform<TOutput> {
-  output: (val: string) => TOutput;
+  output: (val: string) => TOutput | null;
   input: (val: TOutput) => string;
 }

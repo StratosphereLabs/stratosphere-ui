@@ -1,5 +1,4 @@
 import { Combobox } from '@headlessui/react';
-import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { ComboboxProps } from './types';
@@ -28,7 +27,7 @@ export const ComboboxMulti = <
   return (
     <Combobox
       as="div"
-      className={classNames('form-control flex-1', className)}
+      className={className}
       multiple
       name={name}
       onChange={value => setSelectedItems(value)}

@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## 0.2.0 (2023-04-11)
+
+- Added new `DropdownMenu` component which integrates the HeadlessUI `Dropdown` component.
+- Added new `Popover` component which integrates the HeadlessUI `Popover` component.
+- Tweaked styling for `FormSelect` and `TypeaheadSelect` components.
+
 ## 0.1.29 (2023-03-24)
 
 - Passed `responsive` prop to underlying DaisyUI component in `Modal` component.

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { ReactNode, RefObject, useMemo } from 'react';
 import { Input, InputProps } from 'react-daisyui';
-import { FieldValues, useController } from 'react-hook-form';
+import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { FormError } from './FormError';
 import { FormLabel } from './FormLabel';
 import { FormFieldProps, Transform } from './types';
@@ -41,6 +41,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
     ...controllerProps,
     name,
   });
+  const { setValue } = useFormContext();
   const fieldColor = useFieldColor(name, showDirty);
   const inputValue = useMemo(
     () =>
@@ -48,7 +49,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
     [field.value, transform],
   );
   return (
-    <div className={classNames('form-control flex-1', className)}>
+    <div className={classNames('form-control', className)}>
       {labelText !== undefined ? (
         <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
       ) : null}
@@ -63,11 +64,16 @@ export const FormControl = <Values extends FieldValues, TOutput>({
           className={classNames('w-full', inputClassName)}
           color={fieldColor ?? color ?? 'ghost'}
           name={name}
-          onChange={({ target: { value } }) =>
-            field.onChange(
-              transform !== undefined ? transform.output(value) : value,
-            )
-          }
+          onChange={({ target: { value } }) => {
+            const output =
+              transform === undefined ? value : transform.output(value);
+            if (output !== null) {
+              setValue<string>(name, output, {
+                shouldDirty: true,
+                shouldTouch: true,
+              });
+            }
+          }}
           ref={inputRef}
           value={inputValue}
           {...props}
