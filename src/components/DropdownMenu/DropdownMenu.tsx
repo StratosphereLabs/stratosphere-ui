@@ -41,7 +41,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
         <Menu.Items
           as="ul"
           className={classNames(
-            'menu absolute z-50 bg-base-100',
+            'menu absolute z-50 bg-base-100 shadow-xl',
             menuClassName,
           )}
         >

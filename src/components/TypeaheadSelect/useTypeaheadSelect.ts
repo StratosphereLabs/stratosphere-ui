@@ -13,6 +13,7 @@ export type UseTypeaheadSelectOptions<
 >;
 
 export const useTypeaheadSelect = <
+  DropdownElement extends HTMLElement,
   DataItem extends GenericDataType,
   Values extends FieldValues,
 >({
@@ -31,7 +32,7 @@ export const useTypeaheadSelect = <
   });
   const [selectedItems, setSelectedItems] = useState<DataItem[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const dropdownRef = useRef<DropdownElement>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const { isLoading, query, setQuery } = useTypeaheadQuery<DataItem>({
     debounceTime,
@@ -44,7 +45,7 @@ export const useTypeaheadSelect = <
     );
   useOutsideClick(dropdownRef, () => setShowDropdown(false));
   useEffect(() => {
-    if (showDropdown) searchInputRef.current?.focus();
+    if (showDropdown) setTimeout(() => searchInputRef.current?.focus());
     else setQuery('');
   }, [showDropdown]);
   useEffect(() => {

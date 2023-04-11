@@ -75,13 +75,14 @@ export const MultiSelect: Story<
 > = args => {
   const methods = useForm();
   return (
-    <Form className="h-80 w-64" methods={methods} onFormSubmit={() => null}>
+    <Form className="h-80 w-full" methods={methods} onFormSubmit={() => null}>
       <TypeaheadSelect {...args} />
     </Form>
   );
 };
 
 MultiSelect.args = {
+  className: 'min-w-[250px] max-w-[400px]',
   labelText: 'Field Label',
   name: 'field1',
   getItemText: ({ label }) => label,

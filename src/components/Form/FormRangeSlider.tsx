@@ -47,7 +47,7 @@ export const FormRangeSlider = forwardRef(
   ): JSX.Element => {
     const { setValue } = useFormContext<Values>();
     return (
-      <div className={classNames('form-control flex-1', className)}>
+      <div className={classNames('form-control', className)}>
         <div className="flex justify-between">
           <FormLabel>{labelText}</FormLabel>
           {children}

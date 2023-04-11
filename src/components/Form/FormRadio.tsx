@@ -41,7 +41,7 @@ export const FormRadio = <Values extends FieldValues>({
   });
   const fieldColor = useFieldColor(name, showDirty);
   return (
-    <div className={classNames('form-control flex-1', className)}>
+    <div className={classNames('form-control', className)}>
       {labelText !== undefined ? (
         <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
       ) : null}

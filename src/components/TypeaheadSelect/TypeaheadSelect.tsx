@@ -1,4 +1,4 @@
-import { Combobox } from '@headlessui/react';
+import { Combobox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import isEqual from 'lodash.isequal';
 import { Fragment, KeyboardEvent, RefObject, useEffect, useRef } from 'react';
@@ -56,6 +56,7 @@ export const TypeaheadSelect = <
   const ref = inputRef ?? useRef<HTMLInputElement>(null);
   const {
     clearSelectedItem,
+    dropdownRef,
     error,
     isLoading,
     query,
@@ -65,7 +66,7 @@ export const TypeaheadSelect = <
     setShowDropdown,
     setSelectedItems,
     setQuery,
-  } = useTypeaheadSelect<DataItem, Values>({
+  } = useTypeaheadSelect<HTMLUListElement, DataItem, Values>({
     controllerProps,
     debounceTime,
     name,
@@ -97,7 +98,7 @@ export const TypeaheadSelect = <
         if (multi === undefined) ref.current?.focus();
       }}
     >
-      <div className="form-control flex-1">
+      <div className="form-control">
         {labelText !== undefined ? (
           <Combobox.Label as={FormLabel} isRequired={isRequired}>
             {labelText}
@@ -154,13 +155,23 @@ export const TypeaheadSelect = <
           />
         )}
       </div>
-      {showDropdown ? (
+      <Transition
+        as={Fragment}
+        show={showDropdown}
+        enter="transition duration-100 ease-out"
+        enterFrom="transform scale-95 opacity-0"
+        enterTo="transform scale-100 opacity-100"
+        leave="transition duration-75 ease-out"
+        leaveFrom="transform scale-100 opacity-100"
+        leaveTo="transform scale-95 opacity-0"
+      >
         <Combobox.Options
           as="ul"
           className={classNames(
-            'menu rounded-box absolute z-50 bg-base-100 p-2',
+            'menu rounded-box absolute z-50 bg-base-100 p-2 shadow-xl',
             menuClassName,
           )}
+          ref={dropdownRef}
           static
         >
           {enableBadges ? (
@@ -200,7 +211,7 @@ export const TypeaheadSelect = <
               </Combobox.Option>
             ))}
         </Combobox.Options>
-      ) : null}
+      </Transition>
       {error?.message !== undefined ? (
         <FormError>{error.message}</FormError>
       ) : null}

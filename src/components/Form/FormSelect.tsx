@@ -1,4 +1,4 @@
-import { Listbox } from '@headlessui/react';
+import { Listbox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import {
   ComponentProps,
@@ -80,7 +80,7 @@ export const FormSelect = <
       onChange={setSelectedItem}
       value={selectedItem}
     >
-      <div className="form-control flex-1">
+      <div className="form-control">
         {labelText !== undefined ? (
           <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
         ) : null}
@@ -98,27 +98,37 @@ export const FormSelect = <
           </>
         </Listbox.Button>
       </div>
-      <Listbox.Options
-        as="ul"
-        className={classNames(
-          'menu rounded-box absolute z-50 bg-base-100 p-2',
-          menuClassName,
-        )}
+      <Transition
+        as={Fragment}
+        enter="transition duration-100 ease-out"
+        enterFrom="transform scale-95 opacity-0"
+        enterTo="transform scale-100 opacity-100"
+        leave="transition duration-75 ease-out"
+        leaveFrom="transform scale-100 opacity-100"
+        leaveTo="transform scale-95 opacity-0"
       >
-        {options?.map(option => (
-          <Listbox.Option as={Fragment} key={option.id} value={option}>
-            {({ active, disabled, selected }) => (
-              <DropdownMenuItem
-                active={active}
-                disabled={disabled}
-                selected={selected}
-              >
-                {getItemText(option)}
-              </DropdownMenuItem>
-            )}
-          </Listbox.Option>
-        ))}
-      </Listbox.Options>
+        <Listbox.Options
+          as="ul"
+          className={classNames(
+            'menu rounded-box absolute z-50 bg-base-100 p-2 shadow-xl',
+            menuClassName,
+          )}
+        >
+          {options?.map(option => (
+            <Listbox.Option as={Fragment} key={option.id} value={option}>
+              {({ active, disabled, selected }) => (
+                <DropdownMenuItem
+                  active={active}
+                  disabled={disabled}
+                  selected={selected}
+                >
+                  {getItemText(option)}
+                </DropdownMenuItem>
+              )}
+            </Listbox.Option>
+          ))}
+        </Listbox.Options>
+      </Transition>
     </Listbox>
   );
 };

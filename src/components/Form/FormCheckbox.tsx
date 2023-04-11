@@ -2,9 +2,9 @@ import classNames from 'classnames';
 import { RefObject } from 'react';
 import { Checkbox, CheckboxProps } from 'react-daisyui';
 import { FieldValues, useController } from 'react-hook-form';
-import { useFieldColor } from '../../hooks';
 import { FormLabel } from './FormLabel';
 import { FormFieldProps } from './types';
+import { useFieldColor } from '../../hooks';
 
 export interface FormCheckboxProps<Values extends FieldValues>
   extends Omit<FormFieldProps<Values>, 'placeholder'>,
@@ -27,7 +27,7 @@ export const FormCheckbox = <Values extends FieldValues>({
   const { field } = useController({ name, ...controllerProps });
   const fieldColor = useFieldColor(name, showDirty);
   return (
-    <div className={classNames('flex flex-1 items-center gap-2', className)}>
+    <div className={classNames('flex items-center gap-2', className)}>
       <Checkbox
         {...field}
         {...props}

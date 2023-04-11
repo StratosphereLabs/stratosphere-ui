@@ -57,7 +57,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
         <HeadlessUIPopover.Panel
           as="div"
           className={classNames(
-            'absolute z-50 bg-base-100 p-2 shadow',
+            'absolute z-50 bg-base-100 p-2 shadow-xl',
             popoverClassName,
           )}
         >
