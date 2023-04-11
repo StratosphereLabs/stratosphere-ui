@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.2.2 (2023-04-11)
+
+- Passed props down to correct element in `Tabs` component.
+
 ## 0.2.1 (2023-04-11)
 
 - Added `undefined` as possible return type of `output` function in the `FormControl` `transform` if value is invalid.

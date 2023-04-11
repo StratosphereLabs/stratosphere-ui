@@ -1,4 +1,4 @@
-import { Tab, TabGroupProps } from '@headlessui/react';
+import { Tab, TabListProps } from '@headlessui/react';
 import classNames from 'classnames';
 import { ReactNode } from 'react';
 
@@ -9,9 +9,11 @@ export interface TabData {
   id: string;
 }
 
-export interface TabsProps extends Omit<TabGroupProps<'div'>, 'onChange'> {
+export interface TabsProps
+  extends Omit<TabListProps<'div'>, 'className' | 'onChange'> {
   bordered?: boolean;
   boxed?: boolean;
+  className?: string;
   lifted?: boolean;
   onChange: (tab: TabData) => void;
   size?: 'xs' | 'sm' | 'lg';
@@ -22,14 +24,18 @@ export const Tabs = ({
   bordered,
   boxed,
   children,
+  className,
   lifted,
   onChange,
   size,
   tabs,
   ...props
 }: TabsProps) => (
-  <Tab.Group onChange={index => onChange(tabs[index])} {...props}>
-    <Tab.List className={classNames('tabs', boxed && 'tabs-boxed')}>
+  <Tab.Group onChange={index => onChange(tabs[index])}>
+    <Tab.List
+      className={classNames('tabs', boxed && 'tabs-boxed', className)}
+      {...props}
+    >
       {tabs.map(({ className, disabled, id, ...tabProps }) => (
         <Tab
           key={id}
