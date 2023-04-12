@@ -28,6 +28,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           ref={ref}
         >
           <Button
+            aria-label="Close Modal"
             color="ghost"
             size="sm"
             shape="circle"

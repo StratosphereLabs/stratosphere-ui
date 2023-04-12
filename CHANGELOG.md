@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.2.5 (2023-04-12)
+
+- Various accessibility improvements.
+
 ## 0.2.4 (2023-04-11)
 
 - Fixed `FormControl` component failing to use `labelText` text as accessible name for input.
