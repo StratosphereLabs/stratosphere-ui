@@ -52,7 +52,9 @@ export const FormControl = <Values extends FieldValues, TOutput>({
   return (
     <div className={classNames('form-control', className)}>
       {labelText !== undefined ? (
-        <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
+        <FormLabel id={`label-${name}`} isRequired={isRequired}>
+          {labelText}
+        </FormLabel>
       ) : null}
       <div className="relative inline-flex">
         {elementLeft ? (
@@ -62,6 +64,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
         ) : null}
         <Input
           {...field}
+          aria-labelledby={labelText ? `label-${name}` : undefined}
           className={classNames('w-full', inputClassName)}
           color={fieldColor ?? color ?? 'ghost'}
           name={name}

@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.2.4 (2023-04-11)
+
+- Fixed `FormControl` component failing to use `labelText` text as accessible name for input.
+
 ## 0.2.3 (2023-04-11)
 
 - Added `pathname` prop to `Tabs` component to allow client-side routing integration.
