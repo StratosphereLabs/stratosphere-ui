@@ -1,5 +1,25 @@
 # CHANGELOG.md
 
+## 0.2.4 (2023-04-11)
+
+- Fixed `FormControl` component failing to use `labelText` text as accessible name for input.
+
+## 0.2.3 (2023-04-11)
+
+- Added `pathname` prop to `Tabs` component to allow client-side routing integration.
+- Added `paths` option to `TabData` object to allow path matching in `Tabs` component.
+
+## 0.2.2 (2023-04-11)
+
+- Passed props down to correct element in `Tabs` component.
+- Added `defaultTabId`, `manual`, `selectedTabId`, and `vertical` props to `Tabs` component.
+- Passed `ref` to correct element in `DropdownMenuItem` component.
+
+## 0.2.1 (2023-04-11)
+
+- Added `undefined` as possible return type of `output` function in the `FormControl` `transform` if value is invalid.
+- Added commonly used transformers for number and null empty value inputs.
+
 ## 0.2.0 (2023-04-11)
 
 - Added new `DropdownMenu` component which integrates the HeadlessUI `Dropdown` component.

@@ -12,7 +12,7 @@ export interface DropdownMenuItemProps extends HTMLProps<HTMLAnchorElement> {
 }
 
 export const DropdownMenuItem = forwardRef<
-  HTMLLIElement,
+  HTMLAnchorElement,
   DropdownMenuItemProps
 >(
   (
@@ -36,9 +36,8 @@ export const DropdownMenuItem = forwardRef<
         disabled && 'disabled',
         className,
       )}
-      ref={ref}
     >
-      <a className={classNames(active && 'active')} {...props}>
+      <a className={classNames(active && 'active')} ref={ref} {...props}>
         {selected !== undefined ? (
           <div className="flex w-6 justify-center">
             {selected ? <CheckIcon className="h-5 w-5" /> : null}

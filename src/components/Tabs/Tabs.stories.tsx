@@ -90,6 +90,27 @@ Boxed.args = {
   ],
 };
 
+export const Controlled: Story<TabsProps> = args => <Tabs {...args} />;
+
+Controlled.args = {
+  boxed: true,
+  selectedTabId: '2',
+  tabs: [
+    {
+      id: '1',
+      children: 'Tab 1',
+    },
+    {
+      id: '2',
+      children: 'Tab 2',
+    },
+    {
+      id: '3',
+      children: 'Tab 3',
+    },
+  ],
+};
+
 export const Disabled: Story<TabsProps> = args => <Tabs {...args} />;
 
 Disabled.args = {

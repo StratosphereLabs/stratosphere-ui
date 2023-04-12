@@ -4,7 +4,8 @@ import { Input, InputProps } from 'react-daisyui';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { FormError } from './FormError';
 import { FormLabel } from './FormLabel';
-import { FormFieldProps, Transform } from './types';
+import { FormFieldProps } from './types';
+import { Transform } from '../../common';
 import { useFieldColor } from '../../hooks';
 
 export interface FormControlProps<Values extends FieldValues, TOutput>
@@ -51,7 +52,9 @@ export const FormControl = <Values extends FieldValues, TOutput>({
   return (
     <div className={classNames('form-control', className)}>
       {labelText !== undefined ? (
-        <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
+        <FormLabel id={`label-${name}`} isRequired={isRequired}>
+          {labelText}
+        </FormLabel>
       ) : null}
       <div className="relative inline-flex">
         {elementLeft ? (
@@ -61,13 +64,14 @@ export const FormControl = <Values extends FieldValues, TOutput>({
         ) : null}
         <Input
           {...field}
+          aria-labelledby={labelText ? `label-${name}` : undefined}
           className={classNames('w-full', inputClassName)}
           color={fieldColor ?? color ?? 'ghost'}
           name={name}
           onChange={({ target: { value } }) => {
             const output =
               transform === undefined ? value : transform.output(value);
-            if (output !== null) {
+            if (output !== undefined) {
               setValue<string>(name, output, {
                 shouldDirty: true,
                 shouldTouch: true,
