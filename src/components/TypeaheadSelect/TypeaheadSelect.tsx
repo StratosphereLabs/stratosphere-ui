@@ -151,7 +151,6 @@ export const TypeaheadSelect = <
             }}
             placeholder={placeholder}
             ref={ref}
-            value={query}
           />
         )}
       </div>
