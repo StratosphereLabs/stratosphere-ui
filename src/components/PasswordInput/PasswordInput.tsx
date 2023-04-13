@@ -32,6 +32,7 @@ export const PasswordInput = <Values extends FieldValues, TOutput>({
           type="button"
         >
           {showPassword ? IconShow : IconHide}
+          <span className="sr-only">Toggle Password Visibility</span>
         </Button>
       }
       inputClassName={classNames('pr-10', inputClassName)}

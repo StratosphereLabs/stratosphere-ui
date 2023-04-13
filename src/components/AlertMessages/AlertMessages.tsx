@@ -27,6 +27,7 @@ export const AlertMessages = ({
               {alertMessages[index].message}
             </div>
             <Button
+              aria-label="Close Alert"
               color="ghost"
               onClick={() => dismissAlertMessage(index)}
               shape="circle"
