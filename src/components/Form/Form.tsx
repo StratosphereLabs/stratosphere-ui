@@ -1,4 +1,4 @@
-import { HTMLProps, ReactNode } from 'react';
+import { HTMLProps, ReactNode, RefObject } from 'react';
 import {
   FieldValues,
   FormProvider,
@@ -7,14 +7,16 @@ import {
 } from 'react-hook-form';
 
 export interface FormProps<Values extends FieldValues>
-  extends HTMLProps<HTMLFormElement> {
+  extends Omit<HTMLProps<HTMLFormElement>, 'ref'> {
   children?: ReactNode;
+  formRef?: RefObject<HTMLFormElement>;
   methods: UseFormReturn<Values>;
   onFormSubmit?: SubmitHandler<Values>;
 }
 
 export const Form = <Values extends FieldValues>({
   children,
+  formRef,
   methods,
   onFormSubmit,
   ...props
@@ -23,6 +25,7 @@ export const Form = <Values extends FieldValues>({
     <form
       noValidate
       onSubmit={onFormSubmit ? methods.handleSubmit(onFormSubmit) : undefined}
+      ref={formRef}
       {...props}
     >
       {children}

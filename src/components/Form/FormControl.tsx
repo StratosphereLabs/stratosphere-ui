@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ReactNode, RefObject, useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { Input, InputProps } from 'react-daisyui';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { FormError } from './FormError';
@@ -15,7 +15,6 @@ export interface FormControlProps<Values extends FieldValues, TOutput>
   elementRight?: ReactNode;
   hideErrorMessage?: boolean;
   inputClassName?: string;
-  inputRef?: RefObject<HTMLInputElement>;
   transform?: Transform<TOutput>;
 }
 
@@ -27,7 +26,6 @@ export const FormControl = <Values extends FieldValues, TOutput>({
   elementRight,
   hideErrorMessage,
   inputClassName,
-  inputRef,
   isRequired,
   labelText,
   name,
@@ -67,7 +65,6 @@ export const FormControl = <Values extends FieldValues, TOutput>({
           aria-labelledby={labelText ? `label-${name}` : undefined}
           className={classNames('w-full', inputClassName)}
           color={fieldColor ?? color ?? 'ghost'}
-          name={name}
           onChange={({ target: { value } }) => {
             const output =
               transform === undefined ? value : transform.output(value);
@@ -78,7 +75,6 @@ export const FormControl = <Values extends FieldValues, TOutput>({
               });
             }
           }}
-          ref={inputRef}
           value={inputValue}
           {...props}
         />

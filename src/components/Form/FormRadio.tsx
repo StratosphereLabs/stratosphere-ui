@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { RefObject } from 'react';
 import { Form, Radio, RadioProps } from 'react-daisyui';
 import { FieldValues, useController } from 'react-hook-form';
 import { FormError } from './FormError';
@@ -16,7 +15,6 @@ export interface RadioOption {
 export interface FormRadioProps<Values extends FieldValues>
   extends Omit<FormFieldProps<Values>, 'placeholder'>,
     Omit<RadioProps, 'name'> {
-  inputRef?: RefObject<HTMLInputElement>;
   options: RadioOption[];
 }
 
@@ -24,7 +22,6 @@ export const FormRadio = <Values extends FieldValues>({
   className,
   color,
   controllerProps,
-  inputRef,
   isRequired,
   labelText,
   name,
@@ -52,7 +49,6 @@ export const FormRadio = <Values extends FieldValues>({
             {...props}
             checked={value === optionValue}
             color={fieldColor ?? color ?? 'ghost'}
-            ref={inputRef}
             value={optionValue}
           />
         </Form.Label>

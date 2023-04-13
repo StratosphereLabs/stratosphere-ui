@@ -1,16 +1,9 @@
 import { Listbox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
-import {
-  ComponentProps,
-  FC,
-  Fragment,
-  RefObject,
-  useEffect,
-  useState,
-} from 'react';
+import { ComponentProps, FC, Fragment, useEffect, useState } from 'react';
 import { ComponentColor } from 'react-daisyui/dist/types';
 import { Button } from 'react-daisyui';
-import { FieldValues, useFormContext } from 'react-hook-form';
+import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { FormLabel } from './FormLabel';
 import { FormFieldProps } from './types';
 import { DropdownMenuItem } from '../DropdownMenu';
@@ -25,7 +18,6 @@ export interface FormSelectProps<
     'controllerProps' | 'placeholder' | 'showDirty'
   > {
   buttonColor?: ComponentColor;
-  buttonRef?: RefObject<HTMLButtonElement>;
   className?: string;
   defaultOptionId?: string;
   dropdownIcon?: FC<ComponentProps<'svg'>>;
@@ -41,7 +33,6 @@ export const FormSelect = <
   Values extends FieldValues,
 >({
   buttonColor,
-  buttonRef,
   className,
   defaultOptionId,
   dropdownIcon,
@@ -56,6 +47,9 @@ export const FormSelect = <
 }: FormSelectProps<DataItem, Values>): JSX.Element => {
   const [shouldTouch, setShouldTouch] = useState(false);
   const { setValue } = useFormContext();
+  const {
+    field: { ref },
+  } = useController({ name });
   const [selectedItem, setSelectedItem] = useState<DataItem | null>(null);
   const fieldColor = useFieldColor(name, showDirty);
   useEffect(() => {
@@ -88,7 +82,7 @@ export const FormSelect = <
           as={Button}
           className="w-full"
           color={fieldColor ?? buttonColor}
-          ref={buttonRef}
+          ref={ref}
         >
           <>
             {selectedItem !== null

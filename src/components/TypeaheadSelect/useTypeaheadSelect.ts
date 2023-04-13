@@ -25,7 +25,7 @@ export const useTypeaheadSelect = <
 }: UseTypeaheadSelectOptions<DataItem, Values>) => {
   const {
     fieldState: { error },
-    field: { value },
+    field: { ref, value },
   } = useController({
     ...controllerProps,
     name,
@@ -45,7 +45,7 @@ export const useTypeaheadSelect = <
     );
   useOutsideClick(dropdownRef, () => setShowDropdown(false));
   useEffect(() => {
-    if (showDropdown) setTimeout(() => searchInputRef.current?.focus());
+    if (showDropdown) searchInputRef.current?.focus();
     else setQuery('');
   }, [showDropdown]);
   useEffect(() => {
@@ -57,6 +57,7 @@ export const useTypeaheadSelect = <
     error,
     isLoading,
     query,
+    ref,
     showDropdown,
     searchInputRef,
     selectedItems,

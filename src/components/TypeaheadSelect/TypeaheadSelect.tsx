@@ -1,8 +1,8 @@
-import { Combobox, Transition } from '@headlessui/react';
+import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
 import isEqual from 'lodash.isequal';
-import { Fragment, KeyboardEvent, RefObject, useEffect, useRef } from 'react';
-import { FieldValues } from 'react-hook-form';
+import { Fragment, KeyboardEvent, useEffect, useRef } from 'react';
+import { FieldValues, useFormContext } from 'react-hook-form';
 import { Input, Progress } from 'react-daisyui';
 import { useTypeaheadSelect } from './useTypeaheadSelect';
 import { Badge } from '../Badge';
@@ -24,7 +24,6 @@ export interface TypeaheadSelectProps<
   getItemText: (data: DataItem) => string;
   getItemValue?: (data: DataItem) => string;
   inputPlaceholder?: string;
-  inputRef?: RefObject<HTMLInputElement>;
   menuClassName?: string;
   multi?: true;
 }
@@ -42,7 +41,6 @@ export const TypeaheadSelect = <
   getItemText,
   getItemValue,
   inputPlaceholder,
-  inputRef,
   isRequired,
   labelText,
   menuClassName,
@@ -53,13 +51,13 @@ export const TypeaheadSelect = <
   placeholder,
   showDirty,
 }: TypeaheadSelectProps<DataItem, Values>): JSX.Element => {
-  const ref = inputRef ?? useRef<HTMLInputElement>(null);
   const {
     clearSelectedItem,
     dropdownRef,
     error,
     isLoading,
     query,
+    ref,
     showDropdown,
     searchInputRef,
     selectedItems,
@@ -73,6 +71,7 @@ export const TypeaheadSelect = <
     onDebouncedChange,
     options,
   });
+  const { setFocus } = useFormContext();
   const fieldColor = useFieldColor(name, showDirty);
   const currentDefaultOptions = useRef<DataItem[]>();
   const enableBadges = disableSingleSelectBadge === undefined || multi === true;
@@ -95,7 +94,7 @@ export const TypeaheadSelect = <
       setShowDropdown={setShowDropdown}
       setSelectedItems={items => {
         setSelectedItems(items);
-        if (multi === undefined) ref.current?.focus();
+        if (multi === undefined) setFocus(name);
       }}
     >
       <div className="form-control">
@@ -152,19 +151,11 @@ export const TypeaheadSelect = <
             }}
             placeholder={placeholder}
             ref={ref}
+            value={query}
           />
         )}
       </div>
-      <Transition
-        as={Fragment}
-        show={showDropdown}
-        enter="transition duration-100 ease-out"
-        enterFrom="transform scale-95 opacity-0"
-        enterTo="transform scale-100 opacity-100"
-        leave="transition duration-75 ease-out"
-        leaveFrom="transform scale-100 opacity-100"
-        leaveTo="transform scale-95 opacity-0"
-      >
+      {showDropdown ? (
         <Combobox.Options
           as="ul"
           className={classNames(
@@ -211,7 +202,7 @@ export const TypeaheadSelect = <
               </Combobox.Option>
             ))}
         </Combobox.Options>
-      </Transition>
+      ) : null}
       {error?.message !== undefined ? (
         <FormError>{error.message}</FormError>
       ) : null}

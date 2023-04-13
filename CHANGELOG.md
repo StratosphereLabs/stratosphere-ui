@@ -2,6 +2,8 @@
 
 ## 0.2.5 (2023-04-12)
 
+- Removed `inputRef` prop from all Form components in favor of the `setFocus()` function provided by React Hook Form.
+- Added `formRef` prop to `Form` component to allow passing ref to form element.
 - Various accessibility improvements.
 
 ## 0.2.4 (2023-04-11)
