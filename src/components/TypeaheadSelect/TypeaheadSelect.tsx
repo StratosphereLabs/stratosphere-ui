@@ -1,7 +1,13 @@
 import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
 import isEqual from 'lodash.isequal';
-import { Fragment, KeyboardEvent, useEffect, useRef } from 'react';
+import {
+  Fragment,
+  KeyboardEvent,
+  KeyboardEventHandler,
+  useEffect,
+  useRef,
+} from 'react';
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { Input, Progress } from 'react-daisyui';
 import { useTypeaheadSelect } from './useTypeaheadSelect';
@@ -26,6 +32,7 @@ export interface TypeaheadSelectProps<
   inputPlaceholder?: string;
   menuClassName?: string;
   multi?: true;
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
 }
 
 export const TypeaheadSelect = <
@@ -47,6 +54,7 @@ export const TypeaheadSelect = <
   multi,
   name,
   onDebouncedChange,
+  onKeyDown,
   options,
   placeholder,
   showDirty,
@@ -117,7 +125,7 @@ export const TypeaheadSelect = <
               if (event.key === 'Enter') {
                 event.preventDefault();
                 setShowDropdown(true);
-              } else if (event.key !== 'Tab' && event.key !== 'Shift') {
+              } else if (event.key.length === 1) {
                 setShowDropdown(true);
               }
             }}
@@ -149,6 +157,7 @@ export const TypeaheadSelect = <
                 setSelectedItems([]);
               }
             }}
+            onKeyDown={onKeyDown}
             placeholder={placeholder}
             ref={ref}
           />
@@ -169,8 +178,9 @@ export const TypeaheadSelect = <
               as={Input}
               className="w-full"
               onChange={({ target: { value } }) => setQuery(value)}
-              onKeyDown={({ key }: KeyboardEvent) => {
-                if (key === 'Tab') setShowDropdown(false);
+              onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
+                if (event.key === 'Tab') setShowDropdown(false);
+                onKeyDown?.(event);
               }}
               placeholder={inputPlaceholder}
               ref={searchInputRef}
