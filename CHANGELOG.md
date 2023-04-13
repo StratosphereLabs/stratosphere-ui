@@ -1,9 +1,10 @@
 # CHANGELOG.md
 
-## 0.2.5 (2023-04-12)
+## 0.2.5 (2023-04-13)
 
 - Removed `inputRef` prop from all Form components in favor of the `setFocus()` function provided by React Hook Form.
 - Added `formRef` prop to `Form` component to allow passing ref to form element.
+- Added `onKeyDown` prop to `TypeaheadSelect` to allow passing down to search input element.
 - Various accessibility improvements.
 
 ## 0.2.4 (2023-04-11)
