@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.2.6 (2023-04-25)
+
+- Fixed issue with `TypeaheadSelect` component not clearing badges when field value is reset to `null`.
+
 ## 0.2.5 (2023-04-13)
 
 - Removed `inputRef` prop from all Form components in favor of the `setFocus()` function provided by React Hook Form.
