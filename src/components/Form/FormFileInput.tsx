@@ -47,7 +47,10 @@ export const FormFileInput = <Values extends FieldValues>({
         name={name}
         onBlur={onBlur}
         onChange={event => {
-          setValue<string>(name, event.target.files?.[0] ?? null);
+          setValue<string>(name, event.target.files?.[0] ?? null, {
+            shouldDirty: true,
+            shouldTouch: true,
+          });
         }}
         ref={ref}
         {...props}
