@@ -1,8 +1,9 @@
 # CHANGELOG.md
 
-## 0.2.8
+## 0.2.8 (2023-04-27)
 
 - Added `shouldDirty` and `shouldTouch` to `setValue` call in `FormFileInput` component so form state is updated correctly when file is selected.
+- Added `FormTextarea` component which integrates DaisyUI's `Textarea` with react-hook-form.
 
 ## 0.2.7 (2023-04-26)
 
