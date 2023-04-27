@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { FieldValues, useController } from 'react-hook-form';
+import { FieldValues, useController, useWatch } from 'react-hook-form';
 import { TypeaheadSelectProps } from './TypeaheadSelect';
 import { GenericDataType } from '../../common';
 import { useOutsideClick, useTypeaheadQuery } from '../../hooks';
@@ -25,11 +25,12 @@ export const useTypeaheadSelect = <
 }: UseTypeaheadSelectOptions<DataItem, Values>) => {
   const {
     fieldState: { error },
-    field: { ref, value },
+    field: { ref },
   } = useController({
     ...controllerProps,
     name,
   });
+  const value = useWatch({ name });
   const [selectedItems, setSelectedItems] = useState<DataItem[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<DropdownElement>(null);
@@ -49,7 +50,8 @@ export const useTypeaheadSelect = <
     else setQuery('');
   }, [showDropdown]);
   useEffect(() => {
-    if (value === '') setSelectedItems([]);
+    if (value === '' || value === null || value === undefined)
+      setSelectedItems([]);
   }, [value]);
   return {
     clearSelectedItem,

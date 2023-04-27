@@ -6,7 +6,7 @@ exports[`FormCheckbox > renders component 1`] = `
     class="flex items-center gap-2"
   >
     <input
-      class="checkbox checkbox-ghost"
+      class="checkbox"
       name="checkbox"
       type="checkbox"
       value="false"

@@ -2,6 +2,7 @@ export * from './Form';
 export * from './FormCheckbox';
 export * from './FormControl';
 export * from './FormError';
+export * from './FormFileInput';
 export * from './FormLabel';
 export * from './FormRadio';
 export * from './FormRangeSlider';
