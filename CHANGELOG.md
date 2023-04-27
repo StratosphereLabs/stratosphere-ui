@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.2.7 (2023-04-26)
+
+- Added `FormFileInput` component that adds React Hook Form integration to DaisyUI's `FileInput`.
+
 ## 0.2.6 (2023-04-25)
 
 - Fixed issue with `TypeaheadSelect` component not clearing badges when field value is reset to `null`.
