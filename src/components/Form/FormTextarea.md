@@ -1,0 +1,59 @@
+# FormTextarea
+
+The `FormTextarea` component is a React component that provides a form control with built-in functionality for handling user input and displaying errors. It is designed to work with the react-hook-form library, and it wraps the `Textarea` component from the react-daisyui library to provide a styled input field.
+
+## Props
+
+The `FormTextarea` component accepts the following props:
+
+- `className?: string`:
+  A class name to apply to the wrapper element of the component.
+- `color?: string`:
+  The color variant to use for the input field. If not specified, the color will be set to 'ghost'.
+- `controllerProps?: Omit<UseControllerProps<Values>, 'name'>`:
+  Props to be passed to the `useController` hook from react-hook-form.
+- `hideErrorMessage?: boolean`:
+  If true, the error message will not be displayed even if an error is present.
+- `inputClassName?: string`:
+  Additional class name to apply to the input field.
+- `inputRef?: RefObject<HTMLInputElement>`:
+  A ref object that can be used to access the underlying input element.
+- `isRequired?: boolean`:
+  If true, the label text will indicate that the field is required with an asterisk.
+- `labelText?: string`:
+  The text to display above the input.
+- `name: Path<Values>`:
+  The name of the field within the form. This prop is required.
+- `placeholder?: string`:
+  The placeholder text to display in the input field.
+- `showDirty?: boolean`:
+  If true, the field will be styled differently if it has been modified by the user.
+- `transform?: Transform`:
+  An object that provides transformation functions for the input value. The object has two properties: `input` and `output`. The `input` function is called with the output value and should return the input value. The `output` function is called with the input value and should return the output value.
+
+## Usage
+
+To use the `FormTextarea` component, simply import it into your React component and render it with the appropriate props:
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { Form, FormTextarea } from 'stratosphere-ui';
+
+interface FormValues {
+  flightRoute: string;
+}
+
+export const MyForm = () => {
+  const methods = useForm<FormValues>();
+  const onSubmit = (formData: FormValues) => {
+    console.log(formData);
+  };
+  return (
+    <Form methods={methods} onFormSubmit={onSubmit}>
+      <FormTextarea name="flightRoute" labelText="Flight Route" />
+    </Form>
+  );
+};
+```
+
+In this example, the `FormTextarea` component will render a textarea field with a label that reads "Flight Route". When the user enters text into the field, react-hook-form will handle updating the form state. If there is an error with the field triggered by the form schema, the `FormError` component will display the error message.
