@@ -1,10 +1,10 @@
-# FormSelect
+# Select
 
-The `FormSelect` component is a custom dropdown component that uses the `Listbox` and `Dropdown` components from the @headlessui/react and stratosphere-ui packages respectively. It allows users to select an option from a list of options.
+The `Select` component is a custom dropdown component that uses the `Listbox` and `Dropdown` components from the @headlessui/react and stratosphere-ui packages respectively. It allows users to select an option from a list of options.
 
 ## Props
 
-The `FormSelect` component accepts the following props:
+The `Select` component accepts the following props:
 
 - `buttonColor?: ComponentColor`: An optional prop representing the color of the button.
 - `buttonRef?: RefObject<HTMLButtonElement>`: An optional prop representing a ref to the button element.
@@ -21,7 +21,7 @@ The `FormSelect` component accepts the following props:
 
 ## Usage
 
-To use the `FormSelect` component, simply import it into your React component and render it with the appropriate props:
+To use the `Select` component, simply import it into your React component and render it with the appropriate props:
 
 ```tsx
 import { useForm } from 'react-hook-form';
@@ -44,7 +44,7 @@ export const MyForm = () => {
   };
   return (
     <Form methods={methods} onFormSubmit={onSubmit}>
-      <FormSelect
+      <Select
         getItemText={option => option.name}
         name="selectField"
         options={options}

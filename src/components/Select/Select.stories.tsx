@@ -1,11 +1,11 @@
 import { Story, Meta } from '@storybook/react';
 import { useForm } from 'react-hook-form';
-import { Form } from './Form';
-import { FormSelect, FormSelectProps } from './FormSelect';
+import { Select, SelectProps } from './Select';
+import { Form } from '../Form';
 
 export default {
-  title: 'FormSelect',
-  component: FormSelect,
+  title: 'Select',
+  component: Select,
   argTypes: {
     icon: {
       control: false,
@@ -23,11 +23,11 @@ interface FormValues {
   field1: string;
 }
 
-export const Default: Story<FormSelectProps<DataItem, FormValues>> = args => {
+export const Default: Story<SelectProps<DataItem, FormValues>> = args => {
   const methods = useForm();
   return (
     <Form className="h-60 w-60" methods={methods} onFormSubmit={() => null}>
-      <FormSelect {...args} />
+      <Select {...args} />
     </Form>
   );
 };
@@ -53,12 +53,12 @@ Default.args = {
 };
 
 export const WithDefaultValue: Story<
-  FormSelectProps<DataItem, FormValues>
+  SelectProps<DataItem, FormValues>
 > = args => {
   const methods = useForm();
   return (
-    <Form className="h-60 w-full" methods={methods} onFormSubmit={() => null}>
-      <FormSelect {...args} />
+    <Form className="h-60 w-60" methods={methods} onFormSubmit={() => null}>
+      <Select {...args} />
     </Form>
   );
 };
@@ -68,6 +68,38 @@ WithDefaultValue.args = {
   name: 'field1',
   getItemText: ({ id, label }) => `${id} - ${label}`,
   defaultOptionId: '2',
+  options: [
+    {
+      id: '1',
+      label: 'Item 1',
+    },
+    {
+      id: '2',
+      label: 'Item 2',
+    },
+    {
+      id: '3',
+      label: 'Item 3',
+    },
+  ],
+};
+
+export const SelectMultiple: Story<
+  SelectProps<DataItem, FormValues>
+> = args => {
+  const methods = useForm();
+  return (
+    <Form className="h-60 w-60" methods={methods} onFormSubmit={() => null}>
+      <Select {...args} />
+    </Form>
+  );
+};
+
+SelectMultiple.args = {
+  labelText: 'Field Label',
+  multi: true,
+  name: 'field1',
+  getItemText: ({ id, label }) => `${id} - ${label}`,
   options: [
     {
       id: '1',
