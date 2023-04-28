@@ -4,6 +4,9 @@
 
 - Added `shouldDirty` and `shouldTouch` to `setValue` call in `FormFileInput` component so form state is updated correctly when file is selected.
 - Added `FormTextarea` component which integrates DaisyUI's `Textarea` with react-hook-form.
+- Renamed `FormSelect` component to `Select`.
+- Added `disabled` prop to `Select` component.
+- Added `multi` prop to `Select` component to allow selection of multiple values.
 
 ## 0.2.7 (2023-04-26)
 

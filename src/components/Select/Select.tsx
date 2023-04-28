@@ -1,16 +1,17 @@
 import { Listbox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
-import { ComponentProps, FC, Fragment, useEffect, useState } from 'react';
+import { Fragment, ReactNode, useEffect, useState } from 'react';
 import { ComponentColor } from 'react-daisyui/dist/types';
 import { Button } from 'react-daisyui';
-import { FieldValues, useController, useFormContext } from 'react-hook-form';
-import { FormLabel } from './FormLabel';
-import { FormFieldProps } from './types';
+import { FieldValues, useController } from 'react-hook-form';
 import { DropdownMenuItem } from '../DropdownMenu';
+import { FormFieldProps, FormLabel } from '../Form';
+import { FormSelectSingle } from '../Form/FormSelectSingle';
+import { FormSelectMulti } from '../Form/FormSelectMulti';
 import { GenericDataType } from '../../common';
 import { useFieldColor } from '../../hooks';
 
-export interface FormSelectProps<
+export interface SelectProps<
   DataItem extends GenericDataType,
   Values extends FieldValues,
 > extends Omit<
@@ -20,59 +21,56 @@ export interface FormSelectProps<
   buttonColor?: ComponentColor;
   className?: string;
   defaultOptionId?: string;
-  dropdownIcon?: FC<ComponentProps<'svg'>>;
+  disabled?: boolean;
+  dropdownIcon?: ReactNode;
   getItemText: (data: DataItem) => string;
   getItemValue?: (data: DataItem) => string;
   menuClassName?: string;
+  multi?: true;
   options: DataItem[];
   showDirty?: boolean;
 }
 
-export const FormSelect = <
+export const Select = <
   DataItem extends GenericDataType,
   Values extends FieldValues,
 >({
   buttonColor,
   className,
   defaultOptionId,
+  disabled,
   dropdownIcon,
   getItemText,
   getItemValue,
   isRequired,
   labelText,
   menuClassName,
+  multi,
   name,
   options,
   showDirty,
-}: FormSelectProps<DataItem, Values>): JSX.Element => {
-  const [shouldTouch, setShouldTouch] = useState(false);
-  const { setValue } = useFormContext();
+}: SelectProps<DataItem, Values>): JSX.Element => {
   const {
     field: { ref },
   } = useController({ name });
-  const [selectedItem, setSelectedItem] = useState<DataItem | null>(null);
+  const [selectedItems, setSelectedItems] = useState<DataItem[]>([]);
   const fieldColor = useFieldColor(name, showDirty);
-  useEffect(() => {
-    const itemValue =
-      selectedItem && getItemValue ? getItemValue(selectedItem) : selectedItem;
-    setValue<string>(name, itemValue, { shouldTouch, shouldDirty: true });
-    setShouldTouch(true);
-  }, [selectedItem]);
   useEffect(() => {
     if (defaultOptionId !== '') {
       const option =
         options.find(({ id }) => id === defaultOptionId) ?? options[0];
-      setSelectedItem(option);
+      setSelectedItems([option]);
     }
   }, [defaultOptionId]);
+  const Component = multi === true ? FormSelectMulti : FormSelectSingle;
   return (
-    <Listbox
-      as="div"
-      by="id"
+    <Component
       className={classNames('relative', className)}
+      disabled={disabled}
+      getItemValue={getItemValue}
       name={name}
-      onChange={setSelectedItem}
-      value={selectedItem}
+      selectedItems={selectedItems}
+      setSelectedItems={setSelectedItems}
     >
       <div className="form-control">
         {labelText !== undefined ? (
@@ -82,14 +80,14 @@ export const FormSelect = <
           as={Button}
           className="w-full"
           color={fieldColor ?? buttonColor}
+          endIcon={dropdownIcon}
           ref={ref}
         >
-          <>
-            {selectedItem !== null
-              ? getItemText(selectedItem)
+          <span className="truncate">
+            {selectedItems.length > 0
+              ? selectedItems.map(item => getItemText(item)).join(', ')
               : 'Select an item'}
-            {dropdownIcon}
-          </>
+          </span>
         </Listbox.Button>
       </div>
       <Transition
@@ -123,6 +121,6 @@ export const FormSelect = <
           ))}
         </Listbox.Options>
       </Transition>
-    </Listbox>
+    </Component>
   );
 };
