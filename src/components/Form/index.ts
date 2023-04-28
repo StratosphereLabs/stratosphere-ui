@@ -7,5 +7,6 @@ export * from './FormLabel';
 export * from './FormRadio';
 export * from './FormRangeSlider';
 export * from './FormSelect';
+export * from './FormTextarea';
 export * from './FormToggleSwitch';
 export * from './types';
