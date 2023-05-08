@@ -15,7 +15,7 @@ export const FormRadioGroupOption = ({
   return (
     <RadioGroup.Option as={Fragment} disabled={disabled} value={value}>
       {({ checked, disabled: isDisabled }) => (
-        <Button active={checked} disabled={isDisabled} {...props}>
+        <Button active={checked} disabled={isDisabled} type="button" {...props}>
           {children}
         </Button>
       )}
