@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.2.9 (2023-05-07)
+
+- Added `FormRadioGroup` component which integrates HeadlessUI and react-hook-form with DaisyUI's `RadioGroup` component.
+
 ## 0.2.8 (2023-04-27)
 
 - Added `shouldDirty` and `shouldTouch` to `setValue` call in `FormFileInput` component so form state is updated correctly when file is selected.
