@@ -5,6 +5,8 @@ export * from './FormError';
 export * from './FormFileInput';
 export * from './FormLabel';
 export * from './FormRadio';
+export * from './FormRadioGroup';
+export * from './FormRadioGroupOption';
 export * from './FormRangeSlider';
 export * from './FormTextarea';
 export * from './FormToggleSwitch';
