@@ -11,6 +11,7 @@ export interface DisclosureProps {
   buttonProps?: ButtonProps;
   children: ReactNode;
   className?: string;
+  defaultOpen?: boolean;
   rounded?: boolean;
 }
 
@@ -22,6 +23,7 @@ export const Disclosure = ({
   } = {},
   children,
   className,
+  defaultOpen,
   rounded,
 }: DisclosureProps) => {
   return (
@@ -32,6 +34,7 @@ export const Disclosure = ({
         rounded && 'rounded-box',
         className,
       )}
+      defaultOpen={defaultOpen}
     >
       {({ open }) => (
         <>

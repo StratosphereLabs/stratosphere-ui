@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.3.1 (2023-05-09)
+
+- Added `defaultOpen` prop to `Disclosure` component.
+
 ## 0.3.0 (2023-05-08)
 
 - Added `Disclosure` component which integrates HeadlessUI's `Disclosure` component with DaisyUI's `Collapse` component.

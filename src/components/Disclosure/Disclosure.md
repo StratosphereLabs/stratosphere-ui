@@ -6,13 +6,15 @@ The `Disclosure` component is a React component that provides an accessible impl
 
 The `Disclosure` component accepts the following props:
 
-- `buttonProps: ButtonProps`:
+- `buttonProps?: ButtonProps`:
   An object containing props to pass down to the Button component.
 - `children: ReactNode`:
   The content to be revealed when the disclosure is expanded.
-- `className: string`:
+- `className?: string`:
   A string of CSS classes to apply to the container component.
-- `rounded: boolean`:
+- `defaultOpen?: boolean`:
+  Whether or not the disclosure should be open by default when rendered for the first time.
+- `rounded?: boolean`:
   A boolean indicating whether to apply rounded corners to the Disclosure component.
 
 ## Usage
@@ -24,7 +26,7 @@ import { Disclosure } from 'stratosphere-ui';
 
 export const MyDisclosure = () => {
   return (
-    <Disclosure buttonProps={{ color: 'ghost' }}>
+    <Disclosure buttonProps={{ children: 'Open', color: 'ghost' }}>
       <div className="flex-1">Disclosure Content</div>
     </Disclosure>
   );
