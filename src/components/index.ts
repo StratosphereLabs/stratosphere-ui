@@ -1,5 +1,6 @@
 export * from './AlertMessages';
 export * from './Badge';
+export * from './Disclosure';
 export * from './DropdownMenu';
 export * from './Form';
 export * from './FullScreenLoader';

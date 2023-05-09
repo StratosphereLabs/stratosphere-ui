@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.3.0 (2023-05-08)
+
+- Added `Disclosure` component which integrates HeadlessUI's `Disclosure` component with DaisyUI's `Collapse` component.
+
 ## 0.2.9 (2023-05-07)
 
 - Added `FormRadioGroup` component which integrates HeadlessUI and react-hook-form with DaisyUI's `RadioGroup` component.
