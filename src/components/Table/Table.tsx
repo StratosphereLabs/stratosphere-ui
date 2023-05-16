@@ -1,5 +1,6 @@
 import { flexRender, TableOptions, useReactTable } from '@tanstack/react-table';
 import classNames from 'classnames';
+import { Checkbox } from 'react-daisyui';
 import { HeaderSortIcon } from './HeaderSortIcon';
 import { FullScreenLoader } from '../FullScreenLoader';
 import { Pagination } from '../Pagination';
@@ -7,12 +8,13 @@ import { PaginationMetadata } from '../Pagination/types';
 import { GenericDataType } from '../../common';
 
 export interface TableProps<DataType extends GenericDataType>
-  extends TableOptions<DataType> {
+  extends Omit<TableOptions<DataType>, 'getRowId'> {
   cellClassNames?: Record<string, string>;
   className?: string;
   compact?: boolean;
   enableFixedWidth?: boolean;
   enableRowHover?: boolean;
+  enableSelectAll?: boolean;
   enableZebra?: boolean;
   isLoading?: boolean;
   metadata?: PaginationMetadata;
@@ -25,6 +27,8 @@ export const Table = <DataType extends GenericDataType>({
   enableFixedWidth,
   enableGlobalFilter,
   enableRowHover,
+  enableRowSelection,
+  enableSelectAll,
   enableZebra,
   initialState,
   isLoading,
@@ -33,6 +37,8 @@ export const Table = <DataType extends GenericDataType>({
 }: TableProps<DataType>): JSX.Element => {
   const tableInstance = useReactTable<DataType>({
     enableGlobalFilter,
+    enableRowSelection,
+    getRowId: ({ id }) => id.toString(),
     globalFilterFn: 'includesString',
     initialState: {
       globalFilter: '',
@@ -40,7 +46,13 @@ export const Table = <DataType extends GenericDataType>({
     },
     ...props,
   });
-  const { getHeaderGroups, getRowModel, setPageIndex } = tableInstance;
+  const {
+    getHeaderGroups,
+    getIsSomeRowsSelected,
+    getRowModel,
+    setPageIndex,
+    toggleAllRowsSelected,
+  } = tableInstance;
   return (
     <div className="flex flex-1 flex-col">
       <div className="flex-1">
@@ -58,6 +70,16 @@ export const Table = <DataType extends GenericDataType>({
           <thead>
             {getHeaderGroups().map(headerGroup => (
               <tr key={headerGroup.id}>
+                {enableRowSelection ? (
+                  <th className="w-[40px]">
+                    {enableSelectAll ? (
+                      <Checkbox
+                        checked={getIsSomeRowsSelected()}
+                        onChange={() => toggleAllRowsSelected()}
+                      />
+                    ) : null}
+                  </th>
+                ) : null}
                 {headerGroup.headers.map(
                   ({ column, getContext, id, isPlaceholder }) => (
                     <th
@@ -88,18 +110,33 @@ export const Table = <DataType extends GenericDataType>({
           </thead>
           {isLoading !== true ? (
             <tbody>
-              {getRowModel().rows.map(({ getVisibleCells, id }) => (
-                <tr
-                  className={enableRowHover === true ? 'hover' : undefined}
-                  key={id}
-                >
-                  {getVisibleCells().map(({ column, getContext }) => (
-                    <td className={cellClassNames?.[column.id]} key={column.id}>
-                      {flexRender(column.columnDef.cell, getContext())}
-                    </td>
-                  ))}
-                </tr>
-              ))}
+              {getRowModel().rows.map(
+                ({ getIsSelected, getVisibleCells, id, toggleSelected }) => (
+                  <tr
+                    className={classNames(enableRowHover === true && 'hover')}
+                    key={id}
+                  >
+                    {enableRowSelection ? (
+                      <td>
+                        <div className="flex h-full w-[40px] items-center">
+                          <Checkbox
+                            checked={getIsSelected()}
+                            onChange={() => toggleSelected()}
+                          />
+                        </div>
+                      </td>
+                    ) : null}
+                    {getVisibleCells().map(({ column, getContext }) => (
+                      <td
+                        className={cellClassNames?.[column.id]}
+                        key={column.id}
+                      >
+                        {flexRender(column.columnDef.cell, getContext())}
+                      </td>
+                    ))}
+                  </tr>
+                ),
+              )}
             </tbody>
           ) : null}
         </table>

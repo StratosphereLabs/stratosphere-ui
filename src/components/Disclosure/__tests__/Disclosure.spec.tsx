@@ -36,4 +36,9 @@ describe('Disclosure', () => {
     const { container } = render(<Disclosure {...defaultProps} rounded />);
     expect(container.firstChild).toHaveClass('rounded-box');
   });
+
+  it('renders the content when defaultOpen is true', () => {
+    const { getByText } = render(<Disclosure {...defaultProps} defaultOpen />);
+    expect(getByText('Content')).toBeInTheDocument();
+  });
 });
