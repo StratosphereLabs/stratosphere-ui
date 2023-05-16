@@ -16,6 +16,7 @@ export interface TableProps<DataType extends GenericDataType>
   enableRowHover?: boolean;
   enableSelectAll?: boolean;
   enableZebra?: boolean;
+  highlightWhenSelected?: boolean;
   isLoading?: boolean;
   metadata?: PaginationMetadata;
 }
@@ -30,6 +31,7 @@ export const Table = <DataType extends GenericDataType>({
   enableRowSelection,
   enableSelectAll,
   enableZebra,
+  highlightWhenSelected,
   initialState,
   isLoading,
   metadata,
@@ -113,7 +115,10 @@ export const Table = <DataType extends GenericDataType>({
               {getRowModel().rows.map(
                 ({ getIsSelected, getVisibleCells, id, toggleSelected }) => (
                   <tr
-                    className={classNames(enableRowHover === true && 'hover')}
+                    className={classNames({
+                      hover: enableRowHover === true,
+                      active: highlightWhenSelected && getIsSelected(),
+                    })}
                     key={id}
                   >
                     {enableRowSelection ? (

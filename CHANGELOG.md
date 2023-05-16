@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.3.3 (2023-05-16)
+
+- Added `highlightWhenSelected` prop for row highlighting when row is selected to `Table` component.
+
 ## 0.3.2 (2023-05-15)
 
 - Added `enableRowSelection` and `enableSelectAll` props to `Table` component to add support for row selection.
