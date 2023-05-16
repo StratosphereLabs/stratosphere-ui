@@ -14,6 +14,8 @@ The Table component accepts the following props:
 - `enableFixedWidth?: boolean`: A boolean that determines whether the table should have fixed width columns.
 - `enableGlobalFilter?: boolean`: A boolean that determines whether to enable the global filter input.
 - `enableRowHover?: boolean`: A boolean that determines whether to enable row hover highlighting.
+- `enableRowSelection?: boolean`: A boolean that determines whether rows can be selected with checkboxes.
+- `enableSelectAll?: boolean`: A boolean that determines whether a checkbox that toggles all rows should be displayed in the header.
 - `enableZebra?: boolean`: A boolean that determines whether to enable zebra striping.
 - `initialState?: TableState`: An object that represents the initial state of the table. It can be used to specify the default page size, sorting, and filtering.
 - `isLoading?: boolean`: A boolean that determines whether to show a full-screen loader while the table is being loaded.
