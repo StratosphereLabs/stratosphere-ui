@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.3.4 (2023-05-17)
+
+- Allow passing function to `enableRowHover` prop to `Table` component to determine whether row hover is enabled given the row's data.
+
 ## 0.3.3 (2023-05-16)
 
 - Added `highlightWhenSelected` prop for row highlighting when row is selected to `Table` component.
