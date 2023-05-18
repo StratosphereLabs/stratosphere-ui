@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.3.4-gio-2 (2023-05-17)
+
+- Allow `number` as a possible type to `defaultOptionId` prop in `Select` component.
+
 ## 0.3.4-gio (2023-05-17)
 
 - Allow `getItemValue` method in `TypeaheadSelect` and `Select` component props to return a `number`.

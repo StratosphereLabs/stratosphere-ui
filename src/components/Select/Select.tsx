@@ -20,7 +20,7 @@ export interface SelectProps<
   > {
   buttonColor?: ComponentColor;
   className?: string;
-  defaultOptionId?: string;
+  defaultOptionId?: string | number;
   disabled?: boolean;
   dropdownIcon?: ReactNode;
   getItemText: (data: DataItem) => string;
