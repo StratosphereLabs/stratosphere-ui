@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.3.4-gio (2023-05-17)
+
+- Allow `getItemValue` method in `TypeaheadSelect` and `Select` component props to return a `number`.
+
 ## 0.3.4 (2023-05-17)
 
 - Allow passing function to `enableRowHover` prop to `Table` component to determine whether row hover is enabled given the row's data.

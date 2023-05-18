@@ -28,7 +28,7 @@ export interface TypeaheadSelectProps<
   disableSingleSelectBadge?: true;
   getBadgeText?: (item: DataItem) => string;
   getItemText: (data: DataItem) => string;
-  getItemValue?: (data: DataItem) => string;
+  getItemValue?: (data: DataItem) => string | number;
   inputPlaceholder?: string;
   menuClassName?: string;
   multi?: true;
