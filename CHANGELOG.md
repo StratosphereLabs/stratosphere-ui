@@ -1,5 +1,12 @@
 # CHANGELOG.md
 
+## 0.4.0-beta1 (2023-05-20)
+
+- Removed `defaultOptionId` prop from `Select` component. Please use `defaultValues` in the react-hook-form `useForm` config.
+- Removed `getItemValue` prop from `Select` and `Typeahead` components.
+- Added `formValueMode` prop to `Select` and `Typeahead` components. If the default value of 'id' is passed, the component will use the data item's ID for the value in the form state. If 'item' is passed, the component will use the data item itself as the form value.
+- Added `disabled` prop to `TypeaheadSelect` component.
+
 ## 0.3.4-gio-2 (2023-05-17)
 
 - Allow `number` as a possible type to `defaultOptionId` prop in `Select` component.

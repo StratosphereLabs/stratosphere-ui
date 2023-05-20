@@ -9,8 +9,9 @@ The `Select` component accepts the following props:
 - `buttonColor?: ComponentColor`: An optional prop representing the color of the button.
 - `buttonRef?: RefObject<HTMLButtonElement>`: An optional prop representing a ref to the button element.
 - `className?: string`: An optional prop representing the class name of the component.
-- `defaultOptionId?: string`: An optional prop representing the default option id.
 - `dropdownIcon?: FC<ComponentProps<'svg'>>`: An optional prop representing the icon to be displayed in the dropdown.
+- `formValueMode?: FormValueMode`:
+  Determines the value that is set in React Hook Form's state. If the default value of 'id' is passed, the component will use the data item's ID for the value in the form state. If 'item' is passed, the component will use the data item itself as the form value.
 - `getItemText: (data: DataItem) => string`: A required prop representing the function used to get the text of an option.
 - `getItemValue?: (data: DataItem) => string`: An optional prop representing the function used to get the value of an option.
 - `isRequired?: boolean`: An optional prop representing whether the field is required or not.

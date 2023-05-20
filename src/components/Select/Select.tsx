@@ -1,15 +1,16 @@
 import { Listbox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
-import { Fragment, ReactNode, useEffect, useState } from 'react';
+import { Dictionary, groupBy } from 'lodash';
+import { Fragment, ReactNode, useState } from 'react';
 import { ComponentColor } from 'react-daisyui/dist/types';
 import { Button } from 'react-daisyui';
 import { FieldValues, useController } from 'react-hook-form';
-import { DropdownMenuItem } from '../DropdownMenu';
-import { FormFieldProps, FormLabel } from '../Form';
-import { FormSelectSingle } from '../Form/FormSelectSingle';
-import { FormSelectMulti } from '../Form/FormSelectMulti';
 import { GenericDataType } from '../../common';
-import { useFieldColor } from '../../hooks';
+import { useFieldColor, useValueChangeEffect } from '../../hooks';
+import { DropdownMenuItem } from '../DropdownMenu';
+import { FormFieldProps, FormLabel, FormValueMode } from '../Form';
+import { FormSelectMulti } from '../Form/FormSelectMulti';
+import { FormSelectSingle } from '../Form/FormSelectSingle';
 
 export interface SelectProps<
   DataItem extends GenericDataType,
@@ -20,11 +21,10 @@ export interface SelectProps<
   > {
   buttonColor?: ComponentColor;
   className?: string;
-  defaultOptionId?: string | number;
   disabled?: boolean;
   dropdownIcon?: ReactNode;
+  formValueMode?: FormValueMode;
   getItemText: (data: DataItem) => string;
-  getItemValue?: (data: DataItem) => string | number;
   menuClassName?: string;
   multi?: true;
   options: DataItem[];
@@ -37,38 +37,35 @@ export const Select = <
 >({
   buttonColor,
   className,
-  defaultOptionId,
   disabled,
   dropdownIcon,
+  formValueMode,
   getItemText,
-  getItemValue,
   isRequired,
   labelText,
   menuClassName,
   multi,
   name,
-  options,
+  options: optionsArray,
   showDirty,
 }: SelectProps<DataItem, Values>): JSX.Element => {
   const {
     field: { ref },
   } = useController({ name });
+  const [options, setOptions] = useState<Dictionary<DataItem[]>>({});
   const [selectedItems, setSelectedItems] = useState<DataItem[]>([]);
   const fieldColor = useFieldColor(name, showDirty);
-  useEffect(() => {
-    if (defaultOptionId !== '') {
-      const option =
-        options.find(({ id }) => id === defaultOptionId) ?? options[0];
-      setSelectedItems([option]);
-    }
-  }, [defaultOptionId]);
   const Component = multi === true ? FormSelectMulti : FormSelectSingle;
+  useValueChangeEffect(options, () => {
+    setOptions(groupBy(optionsArray, ({ id }) => id));
+  });
   return (
     <Component
       className={classNames('relative', className)}
       disabled={disabled}
-      getItemValue={getItemValue}
+      formValueMode={formValueMode}
       name={name}
+      options={options}
       selectedItems={selectedItems}
       setSelectedItems={setSelectedItems}
     >
@@ -106,7 +103,7 @@ export const Select = <
             menuClassName,
           )}
         >
-          {options?.map(option => (
+          {optionsArray?.map(option => (
             <Listbox.Option as={Fragment} key={option.id} value={option}>
               {({ active, disabled, selected }) => (
                 <DropdownMenuItem

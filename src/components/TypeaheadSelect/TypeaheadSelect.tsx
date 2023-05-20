@@ -1,23 +1,23 @@
 import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
-import isEqual from 'lodash.isequal';
+import { Dictionary, groupBy } from 'lodash';
 import {
   Fragment,
   KeyboardEvent,
   KeyboardEventHandler,
   useEffect,
-  useRef,
+  useState,
 } from 'react';
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { Input, Progress } from 'react-daisyui';
-import { useTypeaheadSelect } from './useTypeaheadSelect';
-import { Badge } from '../Badge';
-import { DropdownMenuItem } from '../DropdownMenu';
-import { FormError, FormFieldProps, FormLabel } from '../Form';
-import { ComboboxMulti } from '../Form/FormComboboxMulti';
-import { ComboboxSingle } from '../Form/FormComboboxSingle';
 import { GenericDataType } from '../../common';
 import { useFieldColor, UseTypeaheadQueryOptions } from '../../hooks';
+import { Badge } from '../Badge';
+import { DropdownMenuItem } from '../DropdownMenu';
+import { FormError, FormFieldProps, FormLabel, FormValueMode } from '../Form';
+import { ComboboxMulti } from '../Form/FormComboboxMulti';
+import { ComboboxSingle } from '../Form/FormComboboxSingle';
+import { useTypeaheadSelect } from './useTypeaheadSelect';
 
 export interface TypeaheadSelectProps<
   DataItem extends GenericDataType,
@@ -25,10 +25,11 @@ export interface TypeaheadSelectProps<
 > extends UseTypeaheadQueryOptions<DataItem>,
     FormFieldProps<Values> {
   className?: string;
+  disabled?: boolean;
   disableSingleSelectBadge?: true;
+  formValueMode?: FormValueMode;
   getBadgeText?: (item: DataItem) => string;
   getItemText: (data: DataItem) => string;
-  getItemValue?: (data: DataItem) => string | number;
   inputPlaceholder?: string;
   menuClassName?: string;
   multi?: true;
@@ -42,11 +43,11 @@ export const TypeaheadSelect = <
   className,
   controllerProps,
   debounceTime,
-  defaultOptions,
+  disabled,
   disableSingleSelectBadge,
+  formValueMode,
   getBadgeText,
   getItemText,
-  getItemValue,
   inputPlaceholder,
   isRequired,
   labelText,
@@ -55,7 +56,7 @@ export const TypeaheadSelect = <
   name,
   onDebouncedChange,
   onKeyDown,
-  options,
+  options: optionsArray,
   placeholder,
   showDirty,
 }: TypeaheadSelectProps<DataItem, Values>): JSX.Element => {
@@ -77,27 +78,23 @@ export const TypeaheadSelect = <
     debounceTime,
     name,
     onDebouncedChange,
-    options,
+    options: optionsArray,
   });
+  const [options, setOptions] = useState<Dictionary<DataItem[]>>({});
   const { setFocus } = useFormContext();
   const fieldColor = useFieldColor(name, showDirty);
-  const currentDefaultOptions = useRef<DataItem[]>();
   const enableBadges = disableSingleSelectBadge === undefined || multi === true;
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
   useEffect(() => {
-    if (
-      defaultOptions?.length &&
-      !isEqual(defaultOptions, currentDefaultOptions.current)
-    ) {
-      setSelectedItems(multi === true ? defaultOptions : [defaultOptions[0]]);
-      currentDefaultOptions.current = defaultOptions;
-    }
-  }, [defaultOptions]);
+    setOptions(groupBy(optionsArray, ({ id }) => id));
+  }, [optionsArray]);
   return (
     <Component
       className={classNames('relative', className)}
-      getItemValue={getItemValue}
+      disabled={disabled}
+      formValueMode={formValueMode}
       name={name}
+      options={options}
       selectedItems={selectedItems}
       setShowDropdown={setShowDropdown}
       setSelectedItems={items => {
@@ -114,13 +111,14 @@ export const TypeaheadSelect = <
         {enableBadges ? (
           <div
             className={classNames(
-              'input-bordered input flex cursor-pointer items-center gap-1 overflow-x-scroll scrollbar-none',
+              'input-bordered input flex items-center gap-1 overflow-x-scroll scrollbar-none',
+              !disabled && 'cursor-pointer',
               `input-${fieldColor ?? 'ghost'}`,
             )}
             onBlur={event => {
               if (event.relatedTarget === null) setShowDropdown(false);
             }}
-            onClick={() => setShowDropdown(true)}
+            onClick={() => !disabled && setShowDropdown(true)}
             onKeyDown={event => {
               if (event.key === 'Enter') {
                 event.preventDefault();
@@ -130,7 +128,7 @@ export const TypeaheadSelect = <
               }
             }}
             ref={ref}
-            tabIndex={0}
+            tabIndex={disabled ? -1 : 0}
           >
             {selectedItems.length > 0
               ? selectedItems.map((item, index) => (
@@ -190,26 +188,27 @@ export const TypeaheadSelect = <
           {isLoading ? (
             <Progress className={classNames(enableBadges && 'mt-2')} />
           ) : null}
-          {!isLoading && options?.length === 0 ? (
+          {!isLoading && optionsArray?.length === 0 ? (
             <DropdownMenuItem disabled>No Results</DropdownMenuItem>
           ) : null}
-          {!isLoading &&
-            options?.map((option, index) => (
-              <Combobox.Option as={Fragment} key={option.id} value={option}>
-                {({ active, disabled, selected }) => (
-                  <DropdownMenuItem
-                    active={active}
-                    className={classNames(
-                      index === 0 && enableBadges && 'mt-2',
-                    )}
-                    disabled={disabled}
-                    selected={multi === true ? selected : undefined}
-                  >
-                    {getItemText(option)}
-                  </DropdownMenuItem>
-                )}
-              </Combobox.Option>
-            ))}
+          {!isLoading
+            ? optionsArray?.map((option, index) => (
+                <Combobox.Option as={Fragment} key={option.id} value={option}>
+                  {({ active, disabled, selected }) => (
+                    <DropdownMenuItem
+                      active={active}
+                      className={classNames(
+                        index === 0 && enableBadges && 'mt-2',
+                      )}
+                      disabled={disabled}
+                      selected={multi === true ? selected : undefined}
+                    >
+                      {getItemText(option)}
+                    </DropdownMenuItem>
+                  )}
+                </Combobox.Option>
+              ))
+            : null}
         </Combobox.Options>
       ) : null}
       {error?.message !== undefined ? (

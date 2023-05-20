@@ -1,8 +1,8 @@
 import { Listbox } from '@headlessui/react';
-import { useEffect, useState } from 'react';
-import { FieldValues, useFormContext } from 'react-hook-form';
-import { ListboxProps } from './types';
+import { FieldValues } from 'react-hook-form';
 import { GenericDataType } from '../../common';
+import { ListboxProps } from './types';
+import { useSingleSelectFormSync } from './useSingleSelectFormSync';
 
 export const FormSelectSingle = <
   DataItem extends GenericDataType,
@@ -11,24 +11,20 @@ export const FormSelectSingle = <
   children,
   className,
   disabled,
-  getItemValue,
+  formValueMode,
   name,
+  options,
   selectedItems,
   setSelectedItems,
 }: ListboxProps<DataItem, Values>): JSX.Element => {
-  const [shouldTouch, setShouldTouch] = useState(false);
-  const { setValue } = useFormContext();
+  useSingleSelectFormSync({
+    name,
+    options,
+    selectedItems,
+    setSelectedItems,
+    valueMode: formValueMode ?? 'id',
+  });
   const selectedItem = selectedItems[0] ?? null;
-  useEffect(() => {
-    const itemValue =
-      getItemValue !== undefined
-        ? selectedItem !== null
-          ? getItemValue(selectedItem)
-          : ''
-        : selectedItem;
-    setValue<string>(name, itemValue, { shouldTouch, shouldDirty: true });
-    setShouldTouch(true);
-  }, [selectedItem]);
   return (
     <Listbox
       as="div"

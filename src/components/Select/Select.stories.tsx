@@ -36,6 +36,7 @@ Default.args = {
   labelText: 'Field Label',
   name: 'field1',
   getItemText: ({ id, label }) => `${id} - ${label}`,
+  formValueMode: 'item',
   options: [
     {
       id: '1',
@@ -67,7 +68,6 @@ WithDefaultValue.args = {
   labelText: 'Field Label',
   name: 'field1',
   getItemText: ({ id, label }) => `${id} - ${label}`,
-  defaultOptionId: '2',
   options: [
     {
       id: '1',
