@@ -22,7 +22,7 @@ export const FormSelectMulti = <
     options,
     selectedItems,
     setSelectedItems,
-    valueMode: formValueMode ?? 'id',
+    valueMode: formValueMode,
   });
   return (
     <Listbox

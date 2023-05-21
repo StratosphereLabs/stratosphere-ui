@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { GenericDataType } from '../../common';
 import { useValueChangeEffect } from '../../hooks';
@@ -15,31 +16,35 @@ export const useSingleSelectFormSync = <
   valueMode,
 }: SelectSyncOptions<Values, DataItem>) => {
   const { watch, setValue } = useFormContext();
+  const [isDefaultLoaded, setIsDefaultLoaded] = useState(false);
   const value = watch(name);
   const selectedItem = selectedItems[0] ?? null;
   useValueChangeEffect(
     value,
     () => {
-      if (valueMode === 'item') {
-        setSelectedItems((value as DataItem) ? [value] : []);
-      } else {
+      if (valueMode === 'id') {
         const id = value as DataItem['id'];
         setSelectedItems(id ? (options[id] ? [options[id][0]] : []) : []);
+      } else {
+        setSelectedItems((value as DataItem) ? [value] : []);
       }
+      setIsDefaultLoaded(true);
     },
     [valueMode, options],
   );
   useValueChangeEffect(
     selectedItem,
     () => {
-      const itemValue =
-        valueMode === 'item' ? selectedItem : selectedItem?.id ?? '';
-      setValue<string>(name, itemValue, {
-        shouldTouch: true,
-        shouldDirty: true,
-      });
-      onItemSelect?.([selectedItem]);
+      if (isDefaultLoaded) {
+        const itemValue =
+          valueMode === 'id' ? selectedItem?.id ?? '' : selectedItem;
+        setValue<string>(name, itemValue, {
+          shouldTouch: true,
+          shouldDirty: true,
+        });
+        onItemSelect?.([selectedItem]);
+      }
     },
-    [onItemSelect, valueMode],
+    [isDefaultLoaded, onItemSelect, valueMode],
   );
 };

@@ -54,5 +54,5 @@ export interface SelectSyncOptions<
   options: Dictionary<DataItem[]>;
   selectedItems: DataItem[];
   setSelectedItems: Dispatch<SetStateAction<DataItem[]>>;
-  valueMode: FormValueMode;
+  valueMode?: FormValueMode;
 }

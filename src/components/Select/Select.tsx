@@ -1,12 +1,11 @@
 import { Listbox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
-import { Dictionary, groupBy } from 'lodash';
 import { Fragment, ReactNode, useState } from 'react';
 import { ComponentColor } from 'react-daisyui/dist/types';
 import { Button } from 'react-daisyui';
 import { FieldValues, useController } from 'react-hook-form';
-import { GenericDataType } from '../../common';
-import { useFieldColor, useValueChangeEffect } from '../../hooks';
+import { GenericDataType, getGroupedDataItems } from '../../common';
+import { useFieldColor } from '../../hooks';
 import { DropdownMenuItem } from '../DropdownMenu';
 import { FormFieldProps, FormLabel, FormValueMode } from '../Form';
 import { FormSelectMulti } from '../Form/FormSelectMulti';
@@ -27,7 +26,7 @@ export interface SelectProps<
   getItemText: (data: DataItem) => string;
   menuClassName?: string;
   multi?: true;
-  options: DataItem[];
+  options?: DataItem[];
   showDirty?: boolean;
 }
 
@@ -52,13 +51,10 @@ export const Select = <
   const {
     field: { ref },
   } = useController({ name });
-  const [options, setOptions] = useState<Dictionary<DataItem[]>>({});
+  const options = getGroupedDataItems(optionsArray ?? []);
   const [selectedItems, setSelectedItems] = useState<DataItem[]>([]);
   const fieldColor = useFieldColor(name, showDirty);
   const Component = multi === true ? FormSelectMulti : FormSelectSingle;
-  useValueChangeEffect(options, () => {
-    setOptions(groupBy(optionsArray, ({ id }) => id));
-  });
   return (
     <Component
       className={classNames('relative', className)}
@@ -78,6 +74,7 @@ export const Select = <
           className="w-full"
           color={fieldColor ?? buttonColor}
           endIcon={dropdownIcon}
+          loading={optionsArray === undefined}
           ref={ref}
         >
           <span className="truncate">

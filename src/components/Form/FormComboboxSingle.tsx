@@ -24,7 +24,7 @@ export const ComboboxSingle = <
     options,
     selectedItems,
     setSelectedItems,
-    valueMode: formValueMode ?? 'id',
+    valueMode: formValueMode,
   });
   const selectedItem = selectedItems[0] ?? null;
   return (

@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 0.4.0-beta2 (2023-05-21)
+
+- Changed default value of `formValueMode` prop from 'id' to 'item' for `Select` and `Typeahead` components.
+- Fixed infinite loop when `formValueMode` is 'id' for `Select` and `Typeahead` components.
+
 ## 0.4.0-beta1 (2023-05-20)
 
 - Removed `defaultOptionId` prop from `Select` component. Please use `defaultValues` in the react-hook-form `useForm` config.

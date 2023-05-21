@@ -1,16 +1,9 @@
 import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
-import { Dictionary, groupBy } from 'lodash';
-import {
-  Fragment,
-  KeyboardEvent,
-  KeyboardEventHandler,
-  useEffect,
-  useState,
-} from 'react';
+import { Fragment, KeyboardEvent, KeyboardEventHandler } from 'react';
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { Input, Progress } from 'react-daisyui';
-import { GenericDataType } from '../../common';
+import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor, UseTypeaheadQueryOptions } from '../../hooks';
 import { Badge } from '../Badge';
 import { DropdownMenuItem } from '../DropdownMenu';
@@ -80,14 +73,11 @@ export const TypeaheadSelect = <
     onDebouncedChange,
     options: optionsArray,
   });
-  const [options, setOptions] = useState<Dictionary<DataItem[]>>({});
+  const options = getGroupedDataItems(optionsArray ?? []);
   const { setFocus } = useFormContext();
   const fieldColor = useFieldColor(name, showDirty);
   const enableBadges = disableSingleSelectBadge === undefined || multi === true;
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
-  useEffect(() => {
-    setOptions(groupBy(optionsArray, ({ id }) => id));
-  }, [optionsArray]);
   return (
     <Component
       className={classNames('relative', className)}

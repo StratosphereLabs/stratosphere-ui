@@ -22,7 +22,7 @@ export const ComboboxMulti = <
     options,
     selectedItems,
     setSelectedItems,
-    valueMode: formValueMode ?? 'id',
+    valueMode: formValueMode,
   });
   return (
     <Combobox
