@@ -1,4 +1,9 @@
-import { flexRender, TableOptions, useReactTable } from '@tanstack/react-table';
+import {
+  flexRender,
+  Row,
+  TableOptions,
+  useReactTable,
+} from '@tanstack/react-table';
 import classNames from 'classnames';
 import { Checkbox } from 'react-daisyui';
 import { HeaderSortIcon } from './HeaderSortIcon';
@@ -13,9 +18,10 @@ export interface TableProps<DataType extends GenericDataType>
   className?: string;
   compact?: boolean;
   enableFixedWidth?: boolean;
-  enableRowHover?: boolean;
+  enableRowHover?: boolean | ((row: Row<DataType>) => boolean);
   enableSelectAll?: boolean;
   enableZebra?: boolean;
+  highlightWhenSelected?: boolean;
   isLoading?: boolean;
   metadata?: PaginationMetadata;
 }
@@ -30,6 +36,7 @@ export const Table = <DataType extends GenericDataType>({
   enableRowSelection,
   enableSelectAll,
   enableZebra,
+  highlightWhenSelected,
   initialState,
   isLoading,
   metadata,
@@ -110,33 +117,35 @@ export const Table = <DataType extends GenericDataType>({
           </thead>
           {isLoading !== true ? (
             <tbody>
-              {getRowModel().rows.map(
-                ({ getIsSelected, getVisibleCells, id, toggleSelected }) => (
-                  <tr
-                    className={classNames(enableRowHover === true && 'hover')}
-                    key={id}
-                  >
-                    {enableRowSelection ? (
-                      <td>
-                        <div className="flex h-full w-[40px] items-center">
-                          <Checkbox
-                            checked={getIsSelected()}
-                            onChange={() => toggleSelected()}
-                          />
-                        </div>
-                      </td>
-                    ) : null}
-                    {getVisibleCells().map(({ column, getContext }) => (
-                      <td
-                        className={cellClassNames?.[column.id]}
-                        key={column.id}
-                      >
-                        {flexRender(column.columnDef.cell, getContext())}
-                      </td>
-                    ))}
-                  </tr>
-                ),
-              )}
+              {getRowModel().rows.map(row => (
+                <tr
+                  className={classNames({
+                    hover:
+                      typeof enableRowHover === 'function'
+                        ? enableRowHover(row)
+                        : enableRowHover,
+                    active: highlightWhenSelected && row.getIsSelected(),
+                  })}
+                  key={row.id}
+                >
+                  {enableRowSelection ? (
+                    <td>
+                      <div className="flex h-full w-[40px] items-center">
+                        <Checkbox
+                          checked={row.getIsSelected()}
+                          disabled={!row.getCanSelect()}
+                          onChange={() => row.toggleSelected()}
+                        />
+                      </div>
+                    </td>
+                  ) : null}
+                  {row.getVisibleCells().map(({ column, getContext }) => (
+                    <td className={cellClassNames?.[column.id]} key={column.id}>
+                      {flexRender(column.columnDef.cell, getContext())}
+                    </td>
+                  ))}
+                </tr>
+              ))}
             </tbody>
           ) : null}
         </table>

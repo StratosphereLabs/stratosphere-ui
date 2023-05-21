@@ -1,8 +1,8 @@
 import { Listbox } from '@headlessui/react';
-import { useEffect, useState } from 'react';
-import { FieldValues, useFormContext } from 'react-hook-form';
-import { ListboxProps } from './types';
+import { FieldValues } from 'react-hook-form';
 import { GenericDataType } from '../../common';
+import { ListboxProps } from './types';
+import { useMultiSelectFormSync } from './useMultiSelectFormSync';
 
 export const FormSelectMulti = <
   DataItem extends GenericDataType,
@@ -11,20 +11,19 @@ export const FormSelectMulti = <
   children,
   className,
   disabled,
-  getItemValue,
+  formValueMode,
   name,
+  options,
   selectedItems,
   setSelectedItems,
 }: ListboxProps<DataItem, Values>): JSX.Element => {
-  const [shouldTouch, setShouldTouch] = useState(false);
-  const { setValue } = useFormContext();
-  useEffect(() => {
-    const itemValues = getItemValue
-      ? selectedItems.map(getItemValue)
-      : selectedItems;
-    setValue<string>(name, itemValues, { shouldTouch, shouldDirty: true });
-    setShouldTouch(true);
-  }, [selectedItems]);
+  useMultiSelectFormSync({
+    name,
+    options,
+    selectedItems,
+    setSelectedItems,
+    valueMode: formValueMode,
+  });
   return (
     <Listbox
       as="div"

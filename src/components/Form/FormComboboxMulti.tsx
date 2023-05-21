@@ -1,8 +1,8 @@
 import { Combobox } from '@headlessui/react';
-import { useEffect, useState } from 'react';
-import { FieldValues, useFormContext } from 'react-hook-form';
-import { ComboboxProps } from './types';
+import { FieldValues } from 'react-hook-form';
 import { GenericDataType } from '../../common';
+import { ComboboxProps } from './types';
+import { useMultiSelectFormSync } from './useMultiSelectFormSync';
 
 export const ComboboxMulti = <
   DataItem extends GenericDataType,
@@ -10,24 +10,25 @@ export const ComboboxMulti = <
 >({
   children,
   className,
-  getItemValue,
+  disabled,
+  formValueMode,
   name,
+  options,
   selectedItems,
   setSelectedItems,
 }: ComboboxProps<DataItem, Values>): JSX.Element => {
-  const [shouldTouch, setShouldTouch] = useState(false);
-  const { setValue } = useFormContext();
-  useEffect(() => {
-    const itemValues = getItemValue
-      ? selectedItems.map(getItemValue)
-      : selectedItems;
-    setValue<string>(name, itemValues, { shouldDirty: true, shouldTouch });
-    setShouldTouch(true);
-  }, [selectedItems]);
+  useMultiSelectFormSync({
+    name,
+    options,
+    selectedItems,
+    setSelectedItems,
+    valueMode: formValueMode,
+  });
   return (
     <Combobox
       as="div"
       className={className}
+      disabled={disabled}
       multiple
       name={name}
       onChange={value => setSelectedItems(value)}

@@ -1,5 +1,33 @@
 # CHANGELOG.md
 
+## 0.4.0-beta2 (2023-05-21)
+
+- Changed default value of `formValueMode` prop from 'id' to 'item' for `Select` and `Typeahead` components.
+- Fixed infinite loop when `formValueMode` is 'id' for `Select` and `Typeahead` components.
+
+## 0.4.0-beta1 (2023-05-20)
+
+- Removed `defaultOptionId` prop from `Select` component. Please use `defaultValues` in the react-hook-form `useForm` config.
+- Removed `getItemValue` prop from `Select` and `Typeahead` components.
+- Added `formValueMode` prop to `Select` and `Typeahead` components. If the default value of 'id' is passed, the component will use the data item's ID for the value in the form state. If 'item' is passed, the component will use the data item itself as the form value.
+- Added `disabled` prop to `TypeaheadSelect` component.
+
+## 0.3.4-gio-2 (2023-05-17)
+
+- Allow `number` as a possible type to `defaultOptionId` prop in `Select` component.
+
+## 0.3.4-gio (2023-05-17)
+
+- Allow `getItemValue` method in `TypeaheadSelect` and `Select` component props to return a `number`.
+
+## 0.3.4 (2023-05-17)
+
+- Allow passing function to `enableRowHover` prop to `Table` component to determine whether row hover is enabled given the row's data.
+
+## 0.3.3 (2023-05-16)
+
+- Added `highlightWhenSelected` prop for row highlighting when row is selected to `Table` component.
+
 ## 0.3.2 (2023-05-15)
 
 - Added `enableRowSelection` and `enableSelectAll` props to `Table` component to add support for row selection.
