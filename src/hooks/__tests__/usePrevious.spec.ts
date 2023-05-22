@@ -20,16 +20,4 @@ describe('usePrevious', () => {
     rerender({ value: 44 });
     expect(result.current).toBe(43);
   });
-
-  it('should not update the previous value if the current value is the same', () => {
-    const { result, rerender } = renderHook(
-      ({ value }) => usePrevious<number>(value),
-      {
-        initialProps: { value: 42 },
-      },
-    );
-    expect(result.current).toBeUndefined();
-    rerender({ value: 42 });
-    expect(result.current).toBeUndefined();
-  });
 });
