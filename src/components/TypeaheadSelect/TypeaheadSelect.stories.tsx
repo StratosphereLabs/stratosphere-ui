@@ -70,6 +70,33 @@ SingleSelectWithoutBadge.args = {
   placeholder: 'Select...',
 };
 
+export const SingleSelectWithDefaultValue: Story<
+  TypeaheadSelectProps<DataItem, FormValues>
+> = args => {
+  const methods = useForm({
+    defaultValues: {
+      field1: { id: '2', label: 'Item 2' },
+    },
+  });
+  return (
+    <Form className="h-80 w-64" methods={methods} onFormSubmit={() => null}>
+      <TypeaheadSelect {...args} />
+    </Form>
+  );
+};
+
+SingleSelectWithDefaultValue.args = {
+  labelText: 'Field Label',
+  name: 'field1',
+  getItemText: ({ label }) => label,
+  options: [
+    { id: '1', label: 'Item 1' },
+    { id: '2', label: 'Item 2' },
+    { id: '3', label: 'Item 3' },
+  ],
+  placeholder: 'Select...',
+};
+
 export const MultiSelect: Story<
   TypeaheadSelectProps<DataItem, FormValues>
 > = args => {
@@ -82,6 +109,44 @@ export const MultiSelect: Story<
 };
 
 MultiSelect.args = {
+  className: 'min-w-[250px] max-w-[400px]',
+  labelText: 'Field Label',
+  name: 'field1',
+  getItemText: ({ label }) => label,
+  options: [
+    { id: '1', label: 'Item 1' },
+    { id: '2', label: 'Item 2' },
+    { id: '3', label: 'Item 3' },
+  ],
+  multi: true,
+  placeholder: 'Select...',
+};
+
+export const MultiSelectWithDefaultValues: Story<
+  TypeaheadSelectProps<DataItem, FormValues>
+> = args => {
+  const methods = useForm({
+    defaultValues: {
+      field1: [
+        {
+          id: '2',
+          label: 'Item 2',
+        },
+        {
+          id: '3',
+          label: 'Item 3',
+        },
+      ],
+    },
+  });
+  return (
+    <Form className="h-80 w-full" methods={methods} onFormSubmit={() => null}>
+      <TypeaheadSelect {...args} />
+    </Form>
+  );
+};
+
+MultiSelectWithDefaultValues.args = {
   className: 'min-w-[250px] max-w-[400px]',
   labelText: 'Field Label',
   name: 'field1',
