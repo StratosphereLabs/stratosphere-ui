@@ -1,6 +1,6 @@
 import { Listbox } from '@headlessui/react';
 import { FieldValues } from 'react-hook-form';
-import { GenericDataType } from '../../common';
+import { GenericDataType, dataItemComparator } from '../../common';
 import { ListboxProps } from './types';
 import { useMultiSelectFormSync } from './useMultiSelectFormSync';
 
@@ -27,7 +27,7 @@ export const FormSelectMulti = <
   return (
     <Listbox
       as="div"
-      by="id"
+      by={dataItemComparator}
       className={className}
       disabled={disabled}
       multiple
