@@ -1,16 +1,15 @@
 import { isEqual } from 'lodash';
-import { DependencyList, EffectCallback, useEffect } from 'react';
-import { usePrevious } from './usePrevious';
+import { EffectCallback, useEffect, useState } from 'react';
 
 export const useValueChangeEffect = <Value>(
   value: Value,
   effect: EffectCallback,
-  deps?: DependencyList,
 ): void => {
-  const prevValue = usePrevious<Value>(value);
+  const [currentValue, setCurrentValue] = useState(value);
   useEffect(() => {
-    if (!isEqual(value, prevValue)) {
-      effect();
+    if (!isEqual(currentValue, value)) {
+      setCurrentValue(value);
     }
-  }, [...(deps ?? []), value]);
+  }, [currentValue, value]);
+  useEffect(effect, [currentValue]);
 };

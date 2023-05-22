@@ -30,6 +30,7 @@ export const ComboboxSingle = <
   return (
     <Combobox
       as="div"
+      by="id"
       className={className}
       disabled={disabled}
       name={name}

@@ -1,6 +1,6 @@
 import { Combobox } from '@headlessui/react';
 import { FieldValues } from 'react-hook-form';
-import { GenericDataType } from '../../common';
+import { GenericDataType, dataItemComparator } from '../../common';
 import { ComboboxProps } from './types';
 import { useMultiSelectFormSync } from './useMultiSelectFormSync';
 
@@ -27,11 +27,12 @@ export const ComboboxMulti = <
   return (
     <Combobox
       as="div"
+      by={dataItemComparator}
       className={className}
       disabled={disabled}
       multiple
       name={name}
-      onChange={value => setSelectedItems(value)}
+      onChange={(value: DataItem[]) => setSelectedItems(value)}
       value={selectedItems}
     >
       {children}
