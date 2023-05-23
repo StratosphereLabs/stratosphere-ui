@@ -2,7 +2,6 @@ import { Listbox } from '@headlessui/react';
 import { FieldValues } from 'react-hook-form';
 import { GenericDataType, dataItemComparator } from '../../common';
 import { ListboxProps } from './types';
-import { useMultiSelectFormSync } from './useMultiSelectFormSync';
 
 export const FormSelectMulti = <
   DataItem extends GenericDataType,
@@ -11,31 +10,20 @@ export const FormSelectMulti = <
   children,
   className,
   disabled,
-  formValueMode,
   name,
-  options,
   selectedItems,
   setSelectedItems,
-}: ListboxProps<DataItem, Values>): JSX.Element => {
-  useMultiSelectFormSync({
-    name,
-    options,
-    selectedItems,
-    setSelectedItems,
-    valueMode: formValueMode,
-  });
-  return (
-    <Listbox
-      as="div"
-      by={dataItemComparator}
-      className={className}
-      disabled={disabled}
-      multiple
-      name={name}
-      onChange={setSelectedItems}
-      value={selectedItems}
-    >
-      {children}
-    </Listbox>
-  );
-};
+}: ListboxProps<DataItem, Values>): JSX.Element => (
+  <Listbox
+    as="div"
+    by={dataItemComparator}
+    className={className}
+    disabled={disabled}
+    multiple
+    name={name}
+    onChange={setSelectedItems}
+    value={selectedItems}
+  >
+    {children}
+  </Listbox>
+);

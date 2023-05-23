@@ -2,7 +2,6 @@ import { Listbox } from '@headlessui/react';
 import { FieldValues } from 'react-hook-form';
 import { GenericDataType } from '../../common';
 import { ListboxProps } from './types';
-import { useSingleSelectFormSync } from './useSingleSelectFormSync';
 
 export const FormSelectSingle = <
   DataItem extends GenericDataType,
@@ -11,19 +10,10 @@ export const FormSelectSingle = <
   children,
   className,
   disabled,
-  formValueMode,
   name,
-  options,
   selectedItems,
   setSelectedItems,
 }: ListboxProps<DataItem, Values>): JSX.Element => {
-  useSingleSelectFormSync({
-    name,
-    options,
-    selectedItems,
-    setSelectedItems,
-    valueMode: formValueMode,
-  });
   const selectedItem = selectedItems[0] ?? null;
   return (
     <Listbox

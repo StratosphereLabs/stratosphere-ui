@@ -1,13 +1,17 @@
 # CHANGELOG.md
 
+## 0.4.0 (2023-05-23)
+
+- Release for `TypeaheadSelect` improvements.
+
 ## 0.4.0-beta3 (2023-05-22)
 
-- Fixed default value issue in `Typeahead` component.
+- Fixed default value issue in `TypeaheadSelect` component.
 
 ## 0.4.0-beta2 (2023-05-21)
 
-- Changed default value of `formValueMode` prop from 'id' to 'item' for `Select` and `Typeahead` components.
-- Fixed infinite loop when `formValueMode` is 'id' for `Select` and `Typeahead` components.
+- Changed default value of `formValueMode` prop from 'id' to 'item' for `Select` and `TypeaheadSelect` components.
+- Fixed infinite loop when `formValueMode` is 'id' for `Select` and `TypeaheadSelect` components.
 
 ## 0.4.0-beta1 (2023-05-20)
 
