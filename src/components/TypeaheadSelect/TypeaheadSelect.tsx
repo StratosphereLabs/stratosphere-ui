@@ -1,7 +1,7 @@
 import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
 import { Fragment, KeyboardEvent, KeyboardEventHandler } from 'react';
-import { FieldValues, useFormContext } from 'react-hook-form';
+import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { Input, Progress } from 'react-daisyui';
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor, UseTypeaheadQueryOptions } from '../../hooks';
@@ -55,12 +55,17 @@ export const TypeaheadSelect = <
   showDirty,
 }: TypeaheadSelectProps<DataItem, Values>): JSX.Element => {
   const {
+    fieldState: { error },
+    field: { ref },
+  } = useController({
+    ...controllerProps,
+    name,
+  });
+  const {
     clearSelectedItem,
     dropdownRef,
-    error,
     isLoading,
     query,
-    ref,
     showDropdown,
     searchInputRef,
     selectedItems,
@@ -68,9 +73,7 @@ export const TypeaheadSelect = <
     setSelectedItems,
     setQuery,
   } = useTypeaheadSelect<HTMLUListElement, DataItem, Values>({
-    controllerProps,
     debounceTime,
-    name,
     onDebouncedChange,
     options: optionsArray,
   });

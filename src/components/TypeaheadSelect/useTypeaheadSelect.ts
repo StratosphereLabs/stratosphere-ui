@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import { FieldValues, useController, useWatch } from 'react-hook-form';
-import { TypeaheadSelectProps } from './TypeaheadSelect';
+import { FieldValues } from 'react-hook-form';
 import { GenericDataType } from '../../common';
 import { useOutsideClick, useTypeaheadQuery } from '../../hooks';
+import { TypeaheadSelectProps } from './TypeaheadSelect';
 
 export type UseTypeaheadSelectOptions<
   DataItem extends GenericDataType,
   Values extends FieldValues,
 > = Pick<
   TypeaheadSelectProps<DataItem, Values>,
-  'controllerProps' | 'debounceTime' | 'name' | 'onDebouncedChange' | 'options'
+  'debounceTime' | 'onDebouncedChange' | 'options'
 >;
 
 export const useTypeaheadSelect = <
@@ -17,20 +17,10 @@ export const useTypeaheadSelect = <
   DataItem extends GenericDataType,
   Values extends FieldValues,
 >({
-  controllerProps,
   debounceTime,
-  name,
   onDebouncedChange,
   options,
 }: UseTypeaheadSelectOptions<DataItem, Values>) => {
-  const {
-    fieldState: { error },
-    field: { ref },
-  } = useController({
-    ...controllerProps,
-    name,
-  });
-  const value = useWatch({ name });
   const [selectedItems, setSelectedItems] = useState<DataItem[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<DropdownElement>(null);
@@ -49,17 +39,11 @@ export const useTypeaheadSelect = <
     if (showDropdown) searchInputRef.current?.focus();
     else setQuery('');
   }, [showDropdown]);
-  useEffect(() => {
-    if (value === '' || value === null || value === undefined)
-      setSelectedItems([]);
-  }, [value]);
   return {
     clearSelectedItem,
     dropdownRef,
-    error,
     isLoading,
     query,
-    ref,
     showDropdown,
     searchInputRef,
     selectedItems,
