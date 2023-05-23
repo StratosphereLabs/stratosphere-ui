@@ -17,28 +17,19 @@ export interface FormFieldProps<Values extends FieldValues> {
 export interface ComboboxProps<
   DataItem extends GenericDataType,
   Values extends FieldValues,
-> extends Pick<
-    TypeaheadSelectProps<DataItem, Values>,
-    'className' | 'formValueMode' | 'name'
-  > {
+> extends Pick<TypeaheadSelectProps<DataItem, Values>, 'className' | 'name'> {
   children: ReactNode;
   disabled?: boolean;
-  options: Dictionary<DataItem[]>;
   selectedItems: DataItem[];
-  setShowDropdown: Dispatch<SetStateAction<boolean>>;
   setSelectedItems: Dispatch<SetStateAction<DataItem[]>>;
 }
 
 export interface ListboxProps<
   DataItem extends GenericDataType,
   Values extends FieldValues,
-> extends Pick<
-    SelectProps<DataItem, Values>,
-    'className' | 'formValueMode' | 'name'
-  > {
+> extends Pick<SelectProps<DataItem, Values>, 'className' | 'name'> {
   children?: ReactNode;
   disabled?: boolean;
-  options: Dictionary<DataItem[]>;
   selectedItems: DataItem[];
   setSelectedItems: Dispatch<SetStateAction<DataItem[]>>;
 }
@@ -49,6 +40,7 @@ export interface SelectSyncOptions<
   Values extends FieldValues,
   DataItem extends GenericDataType,
 > {
+  multi?: true;
   name: Path<Values>;
   onItemSelect?: (items: DataItem[]) => void;
   options: Dictionary<DataItem[]>;

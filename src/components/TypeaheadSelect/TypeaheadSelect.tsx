@@ -10,6 +10,7 @@ import { DropdownMenuItem } from '../DropdownMenu';
 import { FormError, FormFieldProps, FormLabel, FormValueMode } from '../Form';
 import { ComboboxMulti } from '../Form/FormComboboxMulti';
 import { ComboboxSingle } from '../Form/FormComboboxSingle';
+import { useSelectFormSync } from '../Form/useSelectFormSync';
 import { useTypeaheadSelect } from './useTypeaheadSelect';
 
 export interface TypeaheadSelectProps<
@@ -74,6 +75,15 @@ export const TypeaheadSelect = <
     options: optionsArray,
   });
   const options = getGroupedDataItems(optionsArray ?? []);
+  useSelectFormSync({
+    multi,
+    name,
+    onItemSelect: () => multi !== true && setShowDropdown(false),
+    options,
+    selectedItems,
+    setSelectedItems,
+    valueMode: formValueMode,
+  });
   const { setFocus } = useFormContext();
   const fieldColor = useFieldColor(name, showDirty);
   const enableBadges = disableSingleSelectBadge === undefined || multi === true;
@@ -82,11 +92,8 @@ export const TypeaheadSelect = <
     <Component
       className={classNames('relative', className)}
       disabled={disabled}
-      formValueMode={formValueMode}
       name={name}
-      options={options}
       selectedItems={selectedItems}
-      setShowDropdown={setShowDropdown}
       setSelectedItems={items => {
         setSelectedItems(items);
         if (multi === undefined) setFocus(name);

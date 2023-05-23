@@ -10,6 +10,7 @@ import { DropdownMenuItem } from '../DropdownMenu';
 import { FormFieldProps, FormLabel, FormValueMode } from '../Form';
 import { FormSelectMulti } from '../Form/FormSelectMulti';
 import { FormSelectSingle } from '../Form/FormSelectSingle';
+import { useSelectFormSync } from '../Form/useSelectFormSync';
 
 export interface SelectProps<
   DataItem extends GenericDataType,
@@ -53,15 +54,21 @@ export const Select = <
   } = useController({ name });
   const options = getGroupedDataItems(optionsArray ?? []);
   const [selectedItems, setSelectedItems] = useState<DataItem[]>([]);
+  useSelectFormSync({
+    multi,
+    name,
+    options,
+    selectedItems,
+    setSelectedItems,
+    valueMode: formValueMode,
+  });
   const fieldColor = useFieldColor(name, showDirty);
   const Component = multi === true ? FormSelectMulti : FormSelectSingle;
   return (
     <Component
       className={classNames('relative', className)}
       disabled={disabled}
-      formValueMode={formValueMode}
       name={name}
-      options={options}
       selectedItems={selectedItems}
       setSelectedItems={setSelectedItems}
     >
