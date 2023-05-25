@@ -15,7 +15,7 @@ export interface DisclosureProps {
   rounded?: boolean;
 }
 
-export const Disclosure = forwardRef<HTMLButtonElement, DisclosureProps>(
+export const Disclosure = forwardRef<HTMLDivElement, DisclosureProps>(
   (
     {
       buttonProps: {
@@ -38,6 +38,7 @@ export const Disclosure = forwardRef<HTMLButtonElement, DisclosureProps>(
         className,
       )}
       defaultOpen={defaultOpen}
+      ref={ref}
     >
       {({ open }) => (
         <>
@@ -49,7 +50,6 @@ export const Disclosure = forwardRef<HTMLButtonElement, DisclosureProps>(
               rounded && 'rounded-box',
               buttonClassName,
             )}
-            ref={ref}
             {...buttonProps}
           >
             {buttonChildren}
