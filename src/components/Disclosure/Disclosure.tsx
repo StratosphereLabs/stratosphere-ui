@@ -3,7 +3,7 @@ import {
   Transition,
 } from '@headlessui/react';
 import classNames from 'classnames';
-import { ReactNode } from 'react';
+import { ReactNode, forwardRef } from 'react';
 import { Button, ButtonProps } from 'react-daisyui';
 import { ChevronDownIcon, ChevronUpIcon } from '../Icons';
 
@@ -15,18 +15,21 @@ export interface DisclosureProps {
   rounded?: boolean;
 }
 
-export const Disclosure = ({
-  buttonProps: {
-    children: buttonChildren,
-    className: buttonClassName,
-    ...buttonProps
-  } = {},
-  children,
-  className,
-  defaultOpen,
-  rounded,
-}: DisclosureProps) => {
-  return (
+export const Disclosure = forwardRef<HTMLButtonElement, DisclosureProps>(
+  (
+    {
+      buttonProps: {
+        children: buttonChildren,
+        className: buttonClassName,
+        ...buttonProps
+      } = {},
+      children,
+      className,
+      defaultOpen,
+      rounded,
+    },
+    ref,
+  ) => (
     <HeadlessUIDisclosure
       as="div"
       className={classNames(
@@ -46,6 +49,7 @@ export const Disclosure = ({
               rounded && 'rounded-box',
               buttonClassName,
             )}
+            ref={ref}
             {...buttonProps}
           >
             {buttonChildren}
@@ -71,5 +75,7 @@ export const Disclosure = ({
         </>
       )}
     </HeadlessUIDisclosure>
-  );
-};
+  ),
+);
+
+Disclosure.displayName = 'Disclosure';
