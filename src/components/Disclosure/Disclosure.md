@@ -14,6 +14,8 @@ The `Disclosure` component accepts the following props:
   A string of CSS classes to apply to the container component.
 - `defaultOpen?: boolean`:
   Whether or not the disclosure should be open by default when rendered for the first time.
+- `ref?: ForwardedRef<HTMLButtonElement>`:
+  Ref object that is passed down to the toggle component.
 - `rounded?: boolean`:
   A boolean indicating whether to apply rounded corners to the Disclosure component.
 

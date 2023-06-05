@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 0.4.1 (2023-05-25)
+
+- Added ability to forward a `ref` to `Disclosure` component.
+
 ## 0.4.0 (2023-05-23)
 
 - Release for `TypeaheadSelect` improvements.
