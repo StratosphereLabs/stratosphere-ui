@@ -22,7 +22,7 @@ export const WithIcon: Story<BadgeProps> = args => (
 );
 
 WithIcon.args = {
-  icon: CheckIcon,
+  icon: () => <CheckIcon className="mr-1 h-4 w-4" />,
 };
 
 export const Dismissable: Story<BadgeProps> = args => (
