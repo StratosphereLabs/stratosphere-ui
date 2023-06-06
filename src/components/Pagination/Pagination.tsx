@@ -1,15 +1,11 @@
 import classNames from 'classnames';
-import {
-  Button,
-  ButtonProps,
-  Pagination as DaisyUIPagination,
-  PaginationProps as DaisyUIPaginationProps,
-} from 'react-daisyui';
+import { HTMLProps } from 'react';
+import { Button, ButtonProps } from '../Button';
 import { PaginationMetadata } from './types';
 import { getPageNumbers } from './utils';
 
 export interface PaginationProps
-  extends Omit<DaisyUIPaginationProps, 'children'> {
+  extends Omit<HTMLProps<HTMLDivElement>, 'size'> {
   metadata?: PaginationMetadata;
   onPaginationChange: (page: number) => void;
   size?: ButtonProps['size'];
@@ -24,11 +20,12 @@ export const Pagination = ({
 }: PaginationProps): JSX.Element | null => {
   const pages = getPageNumbers(metadata);
   return metadata ? (
-    <DaisyUIPagination className={classNames('mt-4', className)} {...props}>
+    <div className={classNames('join', className)} {...props}>
       {pages.map((number, index) => (
         <Button
           key={index}
           active={number === metadata.page}
+          className="join-item"
           onClick={
             number !== null ? () => onPaginationChange(number) : undefined
           }
@@ -38,6 +35,6 @@ export const Pagination = ({
           {number ?? '...'}
         </Button>
       ))}
-    </DaisyUIPagination>
+    </div>
   ) : null;
 };

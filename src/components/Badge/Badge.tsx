@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { ComponentProps, FC, HTMLProps, MouseEvent } from 'react';
+import { Button } from '../Button';
 import { CloseIcon } from '../Icons';
 
 export const BADGE_COLORS = [
@@ -41,7 +42,7 @@ export const Badge = ({
 }: BadgeProps): JSX.Element => (
   <div
     className={classNames(
-      'badge gap-2',
+      'badge gap-1',
       size !== undefined && `badge-${size}`,
       outline === true && 'badge-outline',
       dismissable === true && 'pr-0',
@@ -52,8 +53,9 @@ export const Badge = ({
     {Icon !== undefined ? <Icon /> : null}
     <div className="flex-1 truncate text-sm font-semibold">{children}</div>
     {dismissable === true ? (
-      <button
-        className="btn-ghost btn-xs btn"
+      <Button
+        color="ghost"
+        size="xs"
         onClick={event => {
           event.stopPropagation();
           onDismiss?.(event);
@@ -61,11 +63,10 @@ export const Badge = ({
         onKeyDown={event => {
           event.stopPropagation();
         }}
-        type="button"
       >
         <CloseIcon className="h-4 w-4" />
         <span className="sr-only">Remove badge</span>
-      </button>
+      </Button>
     ) : null}
   </div>
 );

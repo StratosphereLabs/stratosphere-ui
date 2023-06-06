@@ -39,8 +39,8 @@ export const DropdownMenuItem = forwardRef<
     >
       <a className={classNames(active && 'active')} ref={ref} {...props}>
         {selected !== undefined ? (
-          <div className="flex w-6 justify-center">
-            {selected ? <CheckIcon className="h-5 w-5" /> : null}
+          <div className="flex w-4 justify-center">
+            {selected ? <CheckIcon className="h-4 w-4" /> : null}
           </div>
         ) : null}
         {children}

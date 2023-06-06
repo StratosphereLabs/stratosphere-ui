@@ -10,6 +10,10 @@ export interface TabData {
   paths?: string[];
 }
 
+export const TAB_SIZES = ['xs', 'sm', 'md', 'lg'];
+
+export type TabSize = (typeof TAB_SIZES)[number];
+
 export interface TabsProps
   extends Omit<HTMLProps<HTMLDivElement>, 'as' | 'onChange' | 'ref' | 'size'> {
   bordered?: boolean;
@@ -20,7 +24,7 @@ export interface TabsProps
   onChange: (tab: TabData) => void;
   pathname?: string;
   selectedTabId?: string;
-  size?: 'xs' | 'sm' | 'lg';
+  size?: TabSize;
   tabs: TabData[];
   vertical?: boolean;
 }

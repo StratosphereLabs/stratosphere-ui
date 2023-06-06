@@ -30,10 +30,10 @@ export const Default: Story<StoryProps> = ({
 
 Default.args = {
   initialData: [
-    { status: 'info', message: 'Info' },
-    { status: 'warning', message: 'Warning' },
-    { status: 'success', message: 'Success' },
-    { status: 'error', message: 'Error' },
+    { color: 'info', title: 'Info' },
+    { color: 'warning', title: 'Warning' },
+    { color: 'success', title: 'Success' },
+    { color: 'error', title: 'Error' },
   ],
   maxMessages: 5,
 };
@@ -49,10 +49,10 @@ export const SingleRow: Story<StoryProps> = ({
 
 SingleRow.args = {
   initialData: [
-    { status: 'info', message: 'Info' },
-    { status: 'warning', message: 'Warning' },
-    { status: 'success', message: 'Success' },
-    { status: 'error', message: 'Error' },
+    { color: 'info', title: 'Info' },
+    { color: 'warning', title: 'Warning' },
+    { color: 'success', title: 'Success' },
+    { color: 'error', title: 'Error' },
   ],
   maxMessages: 1,
 };

@@ -1,6 +1,7 @@
 import { Menu, MenuProps, Transition } from '@headlessui/react';
 import classNames from 'classnames';
-import { Fragment, HTMLProps, forwardRef } from 'react';
+import { Fragment, forwardRef } from 'react';
+import { Button, ButtonProps } from '../Button';
 import { DropdownMenuItem, DropdownMenuItemProps } from './DropdownMenuItem';
 
 export interface DropdownItem
@@ -10,7 +11,7 @@ export interface DropdownItem
 
 export interface DropdownMenuProps
   extends Omit<MenuProps<'div'>, 'as' | 'children' | 'className'> {
-  buttonProps?: Omit<HTMLProps<HTMLButtonElement>, 'as' | 'ref' | 'type'>;
+  buttonProps?: ButtonProps;
   className?: string;
   items: DropdownItem[];
   menuClassName?: string;
@@ -18,13 +19,7 @@ export interface DropdownMenuProps
 
 export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
   (
-    {
-      buttonProps: { className: buttonClassName, ...buttonProps } = {},
-      className,
-      items,
-      menuClassName,
-      ...props
-    },
+    { buttonProps, className, items, menuClassName, ...props },
     ref,
   ): JSX.Element => (
     <Menu
@@ -33,11 +28,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
       ref={ref}
       {...props}
     >
-      <Menu.Button
-        as="button"
-        className={classNames('btn', buttonClassName)}
-        {...buttonProps}
-      />
+      <Menu.Button as={Button} {...buttonProps} />
       <Transition
         as={Fragment}
         enter="transition duration-100 ease-out"

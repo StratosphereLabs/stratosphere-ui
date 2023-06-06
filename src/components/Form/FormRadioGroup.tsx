@@ -29,7 +29,7 @@ export const FormRadioGroup = <Values extends FieldValues>({
   } = useController({ name, ...controllerProps });
   return (
     <RadioGroup
-      className={classNames('btn-group', className)}
+      className={classNames('join', className)}
       name={name}
       onChange={onChange}
       value={value}

@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { ReactNode, useState } from 'react';
 import { FieldValues } from 'react-hook-form';
+import { Button } from '../Button';
 import { FormControl, FormControlProps } from '../Form';
 import { EyeIcon, EyeSlashIcon } from '../Icons';
 
@@ -22,14 +23,16 @@ export const PasswordInput = <Values extends FieldValues, TOutput>({
   return (
     <FormControl
       elementRight={
-        <button
-          className="btn-ghost btn-sm btn-circle btn w-8"
+        <Button
+          className="w-8"
+          color="ghost"
           onClick={() => setShowPassword(show => !show)}
-          type="button"
+          shape="circle"
+          size="sm"
         >
           {showPassword ? IconShow : IconHide}
           <span className="sr-only">Toggle Password Visibility</span>
-        </button>
+        </Button>
       }
       inputClassName={classNames('pr-10', inputClassName)}
       type={!showPassword ? 'password' : 'text'}

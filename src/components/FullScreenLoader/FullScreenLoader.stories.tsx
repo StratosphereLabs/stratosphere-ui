@@ -11,8 +11,4 @@ export default {
   },
 } as Meta;
 
-export const Default: Story = () => (
-  <div className="mockup-window border border-base-300">
-    <FullScreenLoader />
-  </div>
-);
+export const Default: Story = () => <FullScreenLoader />;

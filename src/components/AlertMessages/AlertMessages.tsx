@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { Button } from '../Button';
 import { useAlertMessages } from './AlertMessagesProvider';
 import { statusToIconMap } from './constants';
 
@@ -29,22 +30,25 @@ export const AlertMessages = ({
             key={`error_message_${index}`}
           >
             <Icon className="h-5 w-5" />
-            <div>
-              <h3 className="font-bold">{alertMessages[index].title}</h3>
+            <div className="flex-1">
+              <h3 className={description.length ? 'font-bold' : undefined}>
+                {alertMessages[index].title}
+              </h3>
               {description.length ? (
                 <div className="text-xs">
                   {alertMessages[index].description}
                 </div>
               ) : null}
             </div>
-            <button
-              className="btn-ghost btn-sm btn-circle btn"
+            <Button
               aria-label="Close Alert"
+              color="ghost"
               onClick={() => dismissAlertMessage(index)}
-              type="button"
+              shape="circle"
+              size="xs"
             >
               ✕
-            </button>
+            </Button>
           </div>
         );
       })}

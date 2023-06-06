@@ -81,6 +81,7 @@ export const FormFileInput = <Values extends FieldValues>({
           });
         }}
         ref={ref}
+        type="file"
         {...props}
       />
       {hideErrorMessage !== true && error?.message !== undefined ? (

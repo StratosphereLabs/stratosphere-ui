@@ -99,5 +99,10 @@
     "vite-plugin-eslint": "^1.8.1",
     "vitest": "^0.31.4",
     "zod": "^3.21.4"
+  },
+  "peerDependencies": {
+    "daisyui": "^3.0.0",
+    "react": "^18.0.0",
+    "react-hook-form": "^7.0.0"
   }
 }

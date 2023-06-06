@@ -1,11 +1,10 @@
 import { Listbox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { Fragment, ReactNode, useState } from 'react';
-import { ComponentColor } from 'react-daisyui/dist/types';
-import { Button } from 'react-daisyui';
 import { FieldValues, useController } from 'react-hook-form';
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor } from '../../hooks';
+import { Button, ButtonColor } from '../Button';
 import { DropdownMenuItem } from '../DropdownMenu';
 import { FormFieldProps, FormLabel, FormValueMode } from '../Form';
 import { FormSelectMulti } from '../Form/FormSelectMulti';
@@ -19,7 +18,7 @@ export interface SelectProps<
     FormFieldProps<Values>,
     'controllerProps' | 'placeholder' | 'showDirty'
   > {
-  buttonColor?: ComponentColor;
+  buttonColor?: ButtonColor;
   className?: string;
   disabled?: boolean;
   dropdownIcon?: ReactNode;
@@ -80,7 +79,6 @@ export const Select = <
           as={Button}
           className="w-full"
           color={fieldColor ?? buttonColor}
-          endIcon={dropdownIcon}
           loading={optionsArray === undefined}
           ref={ref}
         >
@@ -89,6 +87,7 @@ export const Select = <
               ? selectedItems.map(item => getItemText(item)).join(', ')
               : 'Select an item'}
           </span>
+          {dropdownIcon}
         </Listbox.Button>
       </div>
       <Transition
