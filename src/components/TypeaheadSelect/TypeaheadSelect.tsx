@@ -2,7 +2,6 @@ import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
 import { Fragment, KeyboardEvent, KeyboardEventHandler } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
-import { Input, Progress } from 'react-daisyui';
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor, UseTypeaheadQueryOptions } from '../../hooks';
 import { Badge } from '../Badge';
@@ -144,8 +143,7 @@ export const TypeaheadSelect = <
           </div>
         ) : (
           <Combobox.Input
-            as={Input}
-            className="w-full"
+            className="input-bordered input w-full"
             onChange={({ target: { value } }) => {
               setQuery(value);
               if (value.length > 0) {
@@ -173,8 +171,7 @@ export const TypeaheadSelect = <
         >
           {enableBadges ? (
             <Combobox.Input
-              as={Input}
-              className="w-full"
+              className="input-bordered input w-full"
               onChange={({ target: { value } }) => setQuery(value)}
               onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
                 if (event.key === 'Tab') setShowDropdown(false);
@@ -186,7 +183,9 @@ export const TypeaheadSelect = <
             />
           ) : null}
           {isLoading ? (
-            <Progress className={classNames(enableBadges && 'mt-2')} />
+            <progress
+              className={classNames('progress w-56', enableBadges && 'mt-2')}
+            />
           ) : null}
           {!isLoading && optionsArray?.length === 0 ? (
             <DropdownMenuItem disabled>No Results</DropdownMenuItem>

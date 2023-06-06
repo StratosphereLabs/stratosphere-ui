@@ -5,12 +5,11 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import classNames from 'classnames';
-import { Checkbox } from 'react-daisyui';
-import { HeaderSortIcon } from './HeaderSortIcon';
+import { GenericDataType } from '../../common';
 import { FullScreenLoader } from '../FullScreenLoader';
 import { Pagination } from '../Pagination';
 import { PaginationMetadata } from '../Pagination/types';
-import { GenericDataType } from '../../common';
+import { HeaderSortIcon } from './HeaderSortIcon';
 
 export interface TableProps<DataType extends GenericDataType>
   extends Omit<TableOptions<DataType>, 'getRowId'> {
@@ -80,7 +79,8 @@ export const Table = <DataType extends GenericDataType>({
                 {enableRowSelection ? (
                   <th className="w-[40px]">
                     {enableSelectAll ? (
-                      <Checkbox
+                      <input
+                        type="checkbox"
                         checked={getIsSomeRowsSelected()}
                         onChange={() => toggleAllRowsSelected()}
                       />
@@ -131,7 +131,8 @@ export const Table = <DataType extends GenericDataType>({
                   {enableRowSelection ? (
                     <td>
                       <div className="flex h-full w-[40px] items-center">
-                        <Checkbox
+                        <input
+                          type="checkbox"
                           checked={row.getIsSelected()}
                           disabled={!row.getCanSelect()}
                           onChange={() => row.toggleSelected()}

@@ -1,54 +1,65 @@
 import { Dialog } from '@headlessui/react';
 import classNames from 'classnames';
-import { forwardRef, Fragment } from 'react';
-import {
-  Button,
-  ButtonProps,
-  Modal as DaisyUIModal,
-  ModalProps as DaisyUIModalProps,
-} from 'react-daisyui';
+import { forwardRef, Fragment, HTMLProps } from 'react';
 
-export interface ModalProps extends DaisyUIModalProps {
-  actionButtons: ButtonProps[];
+export const MODAL_POSITIONS = ['top', 'bottom', 'middle'] as const;
+
+export type ModalPosition = (typeof MODAL_POSITIONS)[number];
+
+export interface ModalProps extends HTMLProps<HTMLDialogElement> {
+  actionButtons: Omit<HTMLProps<HTMLButtonElement>, 'type'>[];
   onClose: () => void;
+  open?: boolean;
+  responsivePosition?: ModalPosition;
+  title?: string;
 }
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
   (
-    { actionButtons, children, className, onClose, open, responsive, title },
+    {
+      actionButtons,
+      children,
+      className,
+      onClose,
+      open,
+      responsivePosition,
+      title,
+    },
     ref,
   ): JSX.Element => (
     <Dialog as={Fragment} onClose={onClose} open={open} static>
       {({ open: isDialogOpen }) => (
         <Dialog.Panel
-          as={DaisyUIModal}
-          className={classNames('overflow-y-scroll scrollbar-none', className)}
-          open={isDialogOpen}
-          responsive={responsive}
+          as="dialog"
+          className={classNames(
+            'modal overflow-y-scroll scrollbar-none',
+            isDialogOpen && 'modal-open',
+            responsivePosition && `modal-${responsivePosition}`,
+            className,
+          )}
           ref={ref}
         >
-          <Button
-            aria-label="Close Modal"
-            color="ghost"
-            size="sm"
-            shape="circle"
-            className="absolute right-2 top-2"
-            onClick={onClose}
-            type="button"
-          >
-            ✕
-          </Button>
-          <Dialog.Title as={DaisyUIModal.Header} className="font-bold">
-            {title}
-          </Dialog.Title>
-          <DaisyUIModal.Body>{children}</DaisyUIModal.Body>
-          {actionButtons.length > 0 ? (
-            <DaisyUIModal.Actions>
-              {actionButtons.map((buttonProps, index) => (
-                <Button key={index} {...buttonProps} />
-              ))}
-            </DaisyUIModal.Actions>
-          ) : null}
+          <div className="modal-box">
+            <button
+              aria-label="Close Modal"
+              className="btn-ghost btn-sm btn-circle btn absolute right-2 top-2"
+              onClick={onClose}
+              type="button"
+            >
+              ✕
+            </button>
+            <Dialog.Title as="h3" className="text-lg font-bold">
+              {title}
+            </Dialog.Title>
+            {children}
+            {actionButtons.length > 0 ? (
+              <div className="modal-action">
+                {actionButtons.map((buttonProps, index) => (
+                  <button key={index} type="button" {...buttonProps} />
+                ))}
+              </div>
+            ) : null}
+          </div>
         </Dialog.Panel>
       )}
     </Dialog>

@@ -1,6 +1,5 @@
 import classNames from 'classnames';
-import { ReactNode, useMemo } from 'react';
-import { Input, InputProps } from 'react-daisyui';
+import { HTMLProps, ReactNode, useMemo } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { FormError } from './FormError';
 import { FormLabel } from './FormLabel';
@@ -8,17 +7,38 @@ import { FormFieldProps } from './types';
 import { Transform } from '../../common';
 import { useFieldColor } from '../../hooks';
 
+export const INPUT_COLORS = [
+  'ghost',
+  'primary',
+  'secondary',
+  'accent',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
+
+export const INPUT_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+
+export type InputColor = (typeof INPUT_COLORS)[number];
+
+export type InputSize = (typeof INPUT_SIZES)[number];
+
 export interface FormControlProps<Values extends FieldValues, TOutput>
   extends FormFieldProps<Values>,
-    Omit<InputProps, 'name'> {
+    Omit<HTMLProps<HTMLInputElement>, 'name' | 'size'> {
+  bordered?: boolean;
+  color?: InputColor;
   elementLeft?: ReactNode;
   elementRight?: ReactNode;
   hideErrorMessage?: boolean;
   inputClassName?: string;
+  size?: InputSize;
   transform?: Transform<TOutput>;
 }
 
 export const FormControl = <Values extends FieldValues, TOutput>({
+  bordered,
   className,
   color,
   controllerProps,
@@ -30,6 +50,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
   labelText,
   name,
   showDirty,
+  size,
   transform,
   ...props
 }: FormControlProps<Values, TOutput>): JSX.Element => {
@@ -42,6 +63,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
   });
   const { setValue } = useFormContext();
   const fieldColor = useFieldColor(name, showDirty);
+  const currentColor = fieldColor ?? color ?? undefined;
   const inputValue = useMemo(
     () =>
       transform !== undefined ? transform.input(field.value) : field.value,
@@ -60,11 +82,16 @@ export const FormControl = <Values extends FieldValues, TOutput>({
             {elementLeft}
           </div>
         ) : null}
-        <Input
+        <input
           {...field}
           aria-labelledby={labelText ? `label-${name}` : undefined}
-          className={classNames('w-full', inputClassName)}
-          color={fieldColor ?? color ?? 'ghost'}
+          className={classNames(
+            'input w-full',
+            bordered && `input-bordered`,
+            currentColor && `input-${currentColor}`,
+            size && `input-${size}`,
+            inputClassName,
+          )}
           onChange={({ target: { value } }) => {
             const output =
               transform === undefined ? value : transform.output(value);

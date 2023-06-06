@@ -3,7 +3,6 @@ module.exports = {
     './src/**/*.{js,jsx,ts,tsx}',
     './.storybook/**/*.{js,jsx,ts,tsx,mdx}',
     'node_modules/daisyui/dist/**/*.js',
-    'node_modules/react-daisyui/dist/**/*.js',
   ],
   safelist: [
     {

@@ -1,12 +1,14 @@
-import { Alert, Button } from 'react-daisyui';
+import classNames from 'classnames';
 import { useAlertMessages } from './AlertMessagesProvider';
 import { statusToIconMap } from './constants';
 
 export interface AlertMessagesProps {
+  alertClassName?: string;
   maxMessages?: number;
 }
 
 export const AlertMessages = ({
+  alertClassName,
   maxMessages,
 }: AlertMessagesProps): JSX.Element => {
   const { alertMessages, dismissAlertMessage } = useAlertMessages();
@@ -14,29 +16,36 @@ export const AlertMessages = ({
     <>
       {Array.from(Array(maxMessages ?? 1).keys()).map(index => {
         if (alertMessages[index] === undefined) return null;
-        const status = alertMessages[index]?.status ?? 'success';
+        const status = alertMessages[index].color ?? 'success';
+        const description = alertMessages[index].description ?? '';
         const Icon = statusToIconMap[status];
         return (
-          <Alert
-            className="mb-2 flex w-full"
+          <div
+            className={classNames(
+              'alert flex w-full',
+              `alert-${status}`,
+              alertClassName,
+            )}
             key={`error_message_${index}`}
-            status={alertMessages[index].status}
-            icon={<Icon className="h-5 w-5" />}
           >
-            <div className="flex flex-1 justify-between gap-2">
-              {alertMessages[index].message}
+            <Icon className="h-5 w-5" />
+            <div>
+              <h3 className="font-bold">{alertMessages[index].title}</h3>
+              {description.length ? (
+                <div className="text-xs">
+                  {alertMessages[index].description}
+                </div>
+              ) : null}
             </div>
-            <Button
+            <button
+              className="btn-ghost btn-sm btn-circle btn"
               aria-label="Close Alert"
-              color="ghost"
               onClick={() => dismissAlertMessage(index)}
-              shape="circle"
-              size="xs"
               type="button"
             >
               ✕
-            </Button>
-          </Alert>
+            </button>
+          </div>
         );
       })}
     </>

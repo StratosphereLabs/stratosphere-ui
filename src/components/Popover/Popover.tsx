@@ -4,8 +4,7 @@ import {
   Transition,
 } from '@headlessui/react';
 import classNames from 'classnames';
-import { forwardRef, Fragment, MutableRefObject } from 'react';
-import { Button, ButtonProps } from 'react-daisyui';
+import { forwardRef, Fragment, HTMLProps, MutableRefObject } from 'react';
 
 export interface PopoverPanelRenderProps {
   open: boolean;
@@ -16,7 +15,7 @@ export interface PopoverPanelRenderProps {
 
 export interface PopoverProps
   extends Omit<HeadlessUIPopoverProps<'div'>, 'as' | 'className'> {
-  buttonProps: Omit<ButtonProps, 'as'>;
+  buttonProps: Omit<HTMLProps<HTMLButtonElement>, 'as' | 'ref' | 'type'>;
   className?: string;
   popoverClassName?: string;
   popoverComponent: ({ open, close }: PopoverPanelRenderProps) => JSX.Element;
@@ -41,7 +40,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       ref={ref}
       {...props}
     >
-      <HeadlessUIPopover.Button as={Button} {...buttonProps} />
+      <HeadlessUIPopover.Button as="button" type="button" {...buttonProps} />
       {withBackdrop ? (
         <HeadlessUIPopover.Overlay className="fixed inset-0 bg-black opacity-30" />
       ) : null}

@@ -1,16 +1,32 @@
 import classNames from 'classnames';
-import { ComponentProps, FC, MouseEvent } from 'react';
-import {
-  Badge as DaisyUIBadge,
-  BadgeProps as DaisyUIBadgeProps,
-  Button,
-} from 'react-daisyui';
+import { ComponentProps, FC, HTMLProps, MouseEvent } from 'react';
 import { CloseIcon } from '../Icons';
 
-export interface BadgeProps extends DaisyUIBadgeProps {
+export const BADGE_COLORS = [
+  'neutral',
+  'primary',
+  'secondary',
+  'accent',
+  'ghost',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
+
+export const BADGE_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+
+export type BadgeColor = (typeof BADGE_COLORS)[number];
+
+export type BadgeSize = (typeof BADGE_SIZES)[number];
+
+export interface BadgeProps extends Omit<HTMLProps<HTMLDivElement>, 'size'> {
+  color?: BadgeColor;
   dismissable?: boolean;
   icon?: FC<ComponentProps<'svg'>>;
   onDismiss?: (event: MouseEvent<HTMLButtonElement>) => void;
+  outline?: boolean;
+  size?: BadgeSize;
 }
 
 export const Badge = ({
@@ -19,19 +35,25 @@ export const Badge = ({
   dismissable,
   icon: Icon,
   onDismiss,
+  outline,
+  size,
   ...props
 }: BadgeProps): JSX.Element => (
-  <DaisyUIBadge
-    className={classNames(dismissable === true && 'pr-0', className)}
-    size="lg"
+  <div
+    className={classNames(
+      'badge gap-2',
+      size !== undefined && `badge-${size}`,
+      outline === true && 'badge-outline',
+      dismissable === true && 'pr-0',
+      className,
+    )}
     {...props}
   >
     {Icon !== undefined ? <Icon /> : null}
     <div className="flex-1 truncate text-sm font-semibold">{children}</div>
     {dismissable === true ? (
-      <Button
-        color="ghost"
-        size="xs"
+      <button
+        className="btn-ghost btn-xs btn"
         onClick={event => {
           event.stopPropagation();
           onDismiss?.(event);
@@ -43,7 +65,7 @@ export const Badge = ({
       >
         <CloseIcon className="h-4 w-4" />
         <span className="sr-only">Remove badge</span>
-      </Button>
+      </button>
     ) : null}
-  </DaisyUIBadge>
+  </div>
 );

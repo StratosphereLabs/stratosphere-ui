@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { ReactNode, useState } from 'react';
-import { Button } from 'react-daisyui';
 import { FieldValues } from 'react-hook-form';
 import { FormControl, FormControlProps } from '../Form';
 import { EyeIcon, EyeSlashIcon } from '../Icons';
@@ -23,17 +22,14 @@ export const PasswordInput = <Values extends FieldValues, TOutput>({
   return (
     <FormControl
       elementRight={
-        <Button
-          className="w-8"
-          color="ghost"
+        <button
+          className="btn-ghost btn-sm btn-circle btn w-8"
           onClick={() => setShowPassword(show => !show)}
-          shape="circle"
-          size="sm"
           type="button"
         >
           {showPassword ? IconShow : IconHide}
           <span className="sr-only">Toggle Password Visibility</span>
-        </Button>
+        </button>
       }
       inputClassName={classNames('pr-10', inputClassName)}
       type={!showPassword ? 'password' : 'text'}

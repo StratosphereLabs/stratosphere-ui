@@ -1,22 +1,42 @@
 import classNames from 'classnames';
-import { useMemo } from 'react';
-import { Textarea, TextareaProps } from 'react-daisyui';
+import { HTMLProps, useMemo } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
+import { Transform } from '../../common';
+import { useFieldColor } from '../../hooks';
 import { FormError } from './FormError';
 import { FormLabel } from './FormLabel';
 import { FormFieldProps } from './types';
-import { Transform } from '../../common';
-import { useFieldColor } from '../../hooks';
+
+export const TEXTAREA_COLORS = [
+  'ghost',
+  'primary',
+  'secondary',
+  'accent',
+  'info',
+  'success',
+  'warning',
+  'error',
+] as const;
+
+export const TEXTAREA_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+
+export type TextareaColor = (typeof TEXTAREA_COLORS)[number];
+
+export type TextareaSize = (typeof TEXTAREA_SIZES)[number];
 
 export interface FormTextareaProps<Values extends FieldValues, TOutput>
   extends FormFieldProps<Values>,
-    Omit<TextareaProps, 'name'> {
+    Omit<HTMLProps<HTMLInputElement>, 'name' | 'size'> {
+  bordered?: boolean;
+  color?: TextareaColor;
   hideErrorMessage?: boolean;
   inputClassName?: string;
+  size?: TextareaSize;
   transform?: Transform<TOutput>;
 }
 
 export const FormTextarea = <Values extends FieldValues, TOutput>({
+  bordered,
   className,
   color,
   controllerProps,
@@ -26,6 +46,7 @@ export const FormTextarea = <Values extends FieldValues, TOutput>({
   labelText,
   name,
   showDirty,
+  size,
   transform,
   ...props
 }: FormTextareaProps<Values, TOutput>): JSX.Element => {
@@ -38,6 +59,7 @@ export const FormTextarea = <Values extends FieldValues, TOutput>({
   });
   const { setValue } = useFormContext();
   const fieldColor = useFieldColor(name, showDirty);
+  const currentColor = fieldColor ?? color ?? undefined;
   const inputValue = useMemo(
     () =>
       transform !== undefined ? transform.input(field.value) : field.value,
@@ -50,11 +72,16 @@ export const FormTextarea = <Values extends FieldValues, TOutput>({
           {labelText}
         </FormLabel>
       ) : null}
-      <Textarea
+      <input
         {...field}
         aria-labelledby={labelText ? `label-${name}` : undefined}
-        className={classNames('w-full', inputClassName)}
-        color={fieldColor ?? color ?? 'ghost'}
+        className={classNames(
+          'w-full',
+          bordered && 'textarea-bordered',
+          currentColor && `textarea-${currentColor}`,
+          size && `textarea-${size}`,
+          inputClassName,
+        )}
         onChange={({ target: { value } }) => {
           const output =
             transform === undefined ? value : transform.output(value);

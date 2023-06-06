@@ -1,9 +1,13 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { AlertProps } from 'react-daisyui';
+
+export const ALERT_COLORS = ['info', 'success', 'warning', 'error'] as const;
+
+export type AlertColor = (typeof ALERT_COLORS)[number];
 
 export interface AlertMessage {
-  status: AlertProps['status'];
-  message: string;
+  color?: AlertColor;
+  title: string;
+  description?: string;
 }
 
 export interface AlertMessagesContextData {

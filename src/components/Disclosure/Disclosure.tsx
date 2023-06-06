@@ -3,12 +3,11 @@ import {
   Transition,
 } from '@headlessui/react';
 import classNames from 'classnames';
-import { ReactNode, forwardRef } from 'react';
-import { Button, ButtonProps } from 'react-daisyui';
+import { HTMLProps, ReactNode, forwardRef } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '../Icons';
 
 export interface DisclosureProps {
-  buttonProps?: ButtonProps;
+  buttonProps?: Omit<HTMLProps<HTMLButtonElement>, 'as' | 'ref' | 'type'>;
   children: ReactNode;
   className?: string;
   defaultOpen?: boolean;
@@ -43,13 +42,12 @@ export const Disclosure = forwardRef<HTMLDivElement, DisclosureProps>(
       {({ open }) => (
         <>
           <HeadlessUIDisclosure.Button
-            as={Button}
-            animation={false}
             className={classNames(
-              'w-full justify-between capitalize hover:bg-inherit',
+              'no-animation btn w-full justify-between capitalize hover:bg-inherit',
               rounded && 'rounded-box',
               buttonClassName,
             )}
+            type="button"
             {...buttonProps}
           >
             {buttonChildren}
