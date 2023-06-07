@@ -1,19 +1,40 @@
 import classNames from 'classnames';
-import { FileInput, FileInputProps } from 'react-daisyui';
+import { HTMLProps } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
+import { useFieldColor } from '../../hooks';
 import { FormError } from './FormError';
 import { FormLabel } from './FormLabel';
 import { FormFieldProps } from './types';
-import { useFieldColor } from '../../hooks';
+
+export const FILE_INPUT_COLORS = [
+  'ghost',
+  'primary',
+  'secondary',
+  'accent',
+  'info',
+  'warning',
+  'success',
+  'error',
+] as const;
+
+export const FILE_INPUT_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+
+export type FileInputColor = (typeof FILE_INPUT_COLORS)[number];
+
+export type FileInputSize = (typeof FILE_INPUT_SIZES)[number];
 
 export interface FormFileInputProps<Values extends FieldValues>
   extends FormFieldProps<Values>,
-    Omit<FileInputProps, 'name'> {
+    Omit<HTMLProps<HTMLInputElement>, 'name' | 'size'> {
+  bordered?: boolean;
+  color?: FileInputColor;
   hideErrorMessage?: boolean;
   inputClassName?: string;
+  size?: FileInputSize;
 }
 
 export const FormFileInput = <Values extends FieldValues>({
+  bordered,
   className,
   color,
   controllerProps,
@@ -23,6 +44,7 @@ export const FormFileInput = <Values extends FieldValues>({
   labelText,
   name,
   showDirty,
+  size,
   ...props
 }: FormFileInputProps<Values>) => {
   const {
@@ -34,6 +56,7 @@ export const FormFileInput = <Values extends FieldValues>({
   });
   const fieldColor = useFieldColor(name, showDirty);
   const { setValue } = useFormContext();
+  const currentColor = fieldColor ?? color ?? undefined;
   return (
     <div className={classNames('form-control', className)}>
       {labelText !== undefined ? (
@@ -41,9 +64,14 @@ export const FormFileInput = <Values extends FieldValues>({
           {labelText}
         </FormLabel>
       ) : null}
-      <FileInput
-        className={inputClassName}
-        color={fieldColor ?? color ?? 'ghost'}
+      <input
+        className={classNames(
+          'file-input',
+          bordered && 'file-input-bordered',
+          currentColor && `file-input-${currentColor}`,
+          size && `file-input-${size}`,
+          inputClassName,
+        )}
         name={name}
         onBlur={onBlur}
         onChange={event => {
@@ -53,6 +81,7 @@ export const FormFileInput = <Values extends FieldValues>({
           });
         }}
         ref={ref}
+        type="file"
         {...props}
       />
       {hideErrorMessage !== true && error?.message !== undefined ? (

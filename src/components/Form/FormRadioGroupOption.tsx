@@ -1,6 +1,7 @@
 import { RadioGroup } from '@headlessui/react';
+import classNames from 'classnames';
 import { Fragment } from 'react';
-import { Button, ButtonProps } from 'react-daisyui';
+import { Button, ButtonProps } from '../Button';
 
 export interface FormRadioGroupOptionProps extends ButtonProps {
   value: string;
@@ -8,17 +9,22 @@ export interface FormRadioGroupOptionProps extends ButtonProps {
 
 export const FormRadioGroupOption = ({
   children,
+  className,
   disabled,
   value,
   ...props
-}: FormRadioGroupOptionProps) => {
-  return (
-    <RadioGroup.Option as={Fragment} disabled={disabled} value={value}>
-      {({ checked, disabled: isDisabled }) => (
-        <Button active={checked} disabled={isDisabled} type="button" {...props}>
-          {children}
-        </Button>
-      )}
-    </RadioGroup.Option>
-  );
-};
+}: FormRadioGroupOptionProps) => (
+  <RadioGroup.Option as={Fragment} disabled={disabled} value={value}>
+    {({ checked, disabled: isDisabled }) => (
+      <Button
+        active={checked}
+        className={classNames('join-item', className)}
+        color={checked ? 'primary' : undefined}
+        disabled={isDisabled}
+        {...props}
+      >
+        {children}
+      </Button>
+    )}
+  </RadioGroup.Option>
+);

@@ -5,32 +5,34 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import classNames from 'classnames';
-import { Checkbox } from 'react-daisyui';
-import { HeaderSortIcon } from './HeaderSortIcon';
+import { GenericDataType } from '../../common';
 import { FullScreenLoader } from '../FullScreenLoader';
 import { Pagination } from '../Pagination';
 import { PaginationMetadata } from '../Pagination/types';
-import { GenericDataType } from '../../common';
+import { HeaderSortIcon } from './HeaderSortIcon';
+
+export const TABLE_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+
+export type TableSize = (typeof TABLE_SIZES)[number];
 
 export interface TableProps<DataType extends GenericDataType>
   extends Omit<TableOptions<DataType>, 'getRowId'> {
   cellClassNames?: Record<string, string>;
   className?: string;
-  compact?: boolean;
-  enableFixedWidth?: boolean;
   enableRowHover?: boolean | ((row: Row<DataType>) => boolean);
   enableSelectAll?: boolean;
   enableZebra?: boolean;
   highlightWhenSelected?: boolean;
   isLoading?: boolean;
   metadata?: PaginationMetadata;
+  pinCols?: boolean;
+  pinRows?: boolean;
+  size?: TableSize;
 }
 
 export const Table = <DataType extends GenericDataType>({
   cellClassNames,
   className,
-  compact,
-  enableFixedWidth,
   enableGlobalFilter,
   enableRowHover,
   enableRowSelection,
@@ -40,6 +42,9 @@ export const Table = <DataType extends GenericDataType>({
   initialState,
   isLoading,
   metadata,
+  pinCols,
+  pinRows,
+  size,
   ...props
 }: TableProps<DataType>): JSX.Element => {
   const tableInstance = useReactTable<DataType>({
@@ -66,10 +71,11 @@ export const Table = <DataType extends GenericDataType>({
         <table
           className={classNames(
             'table w-full',
+            size && `table-${size}`,
             {
-              'table-compact': compact,
-              'table-fixed': enableFixedWidth,
               'table-zebra': enableZebra,
+              'table-pin-cols': pinCols,
+              'table-pin-rows': pinRows,
             },
             className,
           )}
@@ -80,7 +86,9 @@ export const Table = <DataType extends GenericDataType>({
                 {enableRowSelection ? (
                   <th className="w-[40px]">
                     {enableSelectAll ? (
-                      <Checkbox
+                      <input
+                        className="checkbox"
+                        type="checkbox"
                         checked={getIsSomeRowsSelected()}
                         onChange={() => toggleAllRowsSelected()}
                       />
@@ -131,7 +139,9 @@ export const Table = <DataType extends GenericDataType>({
                   {enableRowSelection ? (
                     <td>
                       <div className="flex h-full w-[40px] items-center">
-                        <Checkbox
+                        <input
+                          className="checkbox"
+                          type="checkbox"
                           checked={row.getIsSelected()}
                           disabled={!row.getCanSelect()}
                           onChange={() => row.toggleSelected()}
@@ -154,7 +164,7 @@ export const Table = <DataType extends GenericDataType>({
       <Pagination
         metadata={metadata}
         onPaginationChange={number => setPageIndex(number - 1)}
-        size={compact === true ? 'sm' : undefined}
+        size={size}
       />
     </div>
   );

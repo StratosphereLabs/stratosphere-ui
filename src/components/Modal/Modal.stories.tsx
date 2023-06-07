@@ -1,6 +1,6 @@
 import { Story, Meta } from '@storybook/react';
 import { useState } from 'react';
-import { Button } from 'react-daisyui';
+import { Button } from '../Button';
 import { Modal, ModalProps } from './Modal';
 
 export default {
@@ -13,7 +13,7 @@ export default {
   },
 } as Meta;
 
-export const Default: Story<ModalProps> = args => {
+export const Default: Story<ModalProps> = ({ ref, ...args }) => {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -29,7 +29,7 @@ Default.args = {
   title: 'Title',
 };
 
-export const WithActionButtons: Story<ModalProps> = args => {
+export const WithActionButtons: Story<ModalProps> = ({ ref, ...args }) => {
   const [open, setOpen] = useState(false);
   return (
     <>

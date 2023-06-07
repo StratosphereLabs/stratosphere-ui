@@ -4,7 +4,7 @@ import {
 } from '@headlessui/react';
 import classNames from 'classnames';
 import { ReactNode, forwardRef } from 'react';
-import { Button, ButtonProps } from 'react-daisyui';
+import { Button, ButtonProps } from '../Button';
 import { ChevronDownIcon, ChevronUpIcon } from '../Icons';
 
 export interface DisclosureProps {
@@ -44,12 +44,12 @@ export const Disclosure = forwardRef<HTMLDivElement, DisclosureProps>(
         <>
           <HeadlessUIDisclosure.Button
             as={Button}
-            animation={false}
             className={classNames(
               'w-full justify-between capitalize hover:bg-inherit',
               rounded && 'rounded-box',
               buttonClassName,
             )}
+            noAnimation
             {...buttonProps}
           >
             {buttonChildren}

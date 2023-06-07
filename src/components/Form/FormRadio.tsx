@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import { Form, Radio, RadioProps } from 'react-daisyui';
+import { HTMLProps } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
+import { useFieldColor } from '../../hooks';
 import { FormError } from './FormError';
 import { FormLabel } from './FormLabel';
 import { FormFieldProps } from './types';
-import { useFieldColor } from '../../hooks';
 
 export interface RadioOption {
   id: string | number;
@@ -12,21 +12,42 @@ export interface RadioOption {
   value: string;
 }
 
+export const RADIO_COLORS = [
+  'primary',
+  'secondary',
+  'accent',
+  'success',
+  'warning',
+  'info',
+  'error',
+] as const;
+
+export const RADIO_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+
+export type RadioColor = (typeof RADIO_COLORS)[number];
+
+export type RadioSize = (typeof RADIO_SIZES)[number];
+
 export interface FormRadioProps<Values extends FieldValues>
   extends Omit<FormFieldProps<Values>, 'placeholder'>,
-    Omit<RadioProps, 'name'> {
+    Omit<HTMLProps<HTMLInputElement>, 'name' | 'size'> {
+  color?: RadioColor;
+  inputClassName?: string;
   options: RadioOption[];
+  size?: RadioSize;
 }
 
 export const FormRadio = <Values extends FieldValues>({
   className,
   color,
   controllerProps,
+  inputClassName,
   isRequired,
   labelText,
   name,
   options,
   showDirty,
+  size,
   ...props
 }: FormRadioProps<Values>): JSX.Element => {
   const {
@@ -37,21 +58,29 @@ export const FormRadio = <Values extends FieldValues>({
     ...controllerProps,
   });
   const fieldColor = useFieldColor(name, showDirty);
+  const currentColor = fieldColor ?? color ?? undefined;
   return (
     <div className={classNames('form-control', className)}>
       {labelText !== undefined ? (
         <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
       ) : null}
       {options.map(({ id, label, value: optionValue }) => (
-        <Form.Label key={id} title={label}>
-          <Radio
+        <label key={id} className="label cursor-pointer">
+          <span className="label-text">{label}</span>
+          <input
             {...field}
             {...props}
             checked={value === optionValue}
-            color={fieldColor ?? color ?? 'ghost'}
+            className={classNames(
+              'radio',
+              currentColor && `radio-${currentColor}`,
+              size && `radio-${size}`,
+              inputClassName,
+            )}
+            type="radio"
             value={optionValue}
           />
-        </Form.Label>
+        </label>
       ))}
       {error?.message !== undefined ? (
         <FormError>{error.message}</FormError>

@@ -5,7 +5,7 @@ import {
 } from '@headlessui/react';
 import classNames from 'classnames';
 import { forwardRef, Fragment, MutableRefObject } from 'react';
-import { Button, ButtonProps } from 'react-daisyui';
+import { Button, ButtonProps } from '../Button';
 
 export interface PopoverPanelRenderProps {
   open: boolean;
@@ -16,7 +16,7 @@ export interface PopoverPanelRenderProps {
 
 export interface PopoverProps
   extends Omit<HeadlessUIPopoverProps<'div'>, 'as' | 'className'> {
-  buttonProps: Omit<ButtonProps, 'as'>;
+  buttonProps: ButtonProps;
   className?: string;
   popoverClassName?: string;
   popoverComponent: ({ open, close }: PopoverPanelRenderProps) => JSX.Element;

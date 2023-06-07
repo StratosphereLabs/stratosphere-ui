@@ -1,7 +1,7 @@
 import { Menu, MenuProps, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { Fragment, forwardRef } from 'react';
-import { Button, ButtonProps } from 'react-daisyui';
+import { Button, ButtonProps } from '../Button';
 import { DropdownMenuItem, DropdownMenuItemProps } from './DropdownMenuItem';
 
 export interface DropdownItem
@@ -11,7 +11,7 @@ export interface DropdownItem
 
 export interface DropdownMenuProps
   extends Omit<MenuProps<'div'>, 'as' | 'children' | 'className'> {
-  buttonProps?: Omit<ButtonProps, 'as'>;
+  buttonProps?: ButtonProps;
   className?: string;
   items: DropdownItem[];
   menuClassName?: string;

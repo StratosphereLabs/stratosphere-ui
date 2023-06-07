@@ -1,5 +1,4 @@
 import { Story, Meta } from '@storybook/react';
-import { WindowMockup } from 'react-daisyui';
 import { FullScreenLoader } from './FullScreenLoader';
 
 export default {
@@ -12,8 +11,4 @@ export default {
   },
 } as Meta;
 
-export const Default: Story = () => (
-  <WindowMockup className="flex h-72 w-full bg-base-100">
-    <FullScreenLoader />
-  </WindowMockup>
-);
+export const Default: Story = () => <FullScreenLoader />;

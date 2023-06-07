@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { ReactNode, useState } from 'react';
-import { Button } from 'react-daisyui';
 import { FieldValues } from 'react-hook-form';
+import { Button } from '../Button';
 import { FormControl, FormControlProps } from '../Form';
 import { EyeIcon, EyeSlashIcon } from '../Icons';
 
@@ -29,7 +29,6 @@ export const PasswordInput = <Values extends FieldValues, TOutput>({
           onClick={() => setShowPassword(show => !show)}
           shape="circle"
           size="sm"
-          type="button"
         >
           {showPassword ? IconShow : IconHide}
           <span className="sr-only">Toggle Password Visibility</span>
