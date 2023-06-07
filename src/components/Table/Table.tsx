@@ -87,6 +87,7 @@ export const Table = <DataType extends GenericDataType>({
                   <th className="w-[40px]">
                     {enableSelectAll ? (
                       <input
+                        className="checkbox"
                         type="checkbox"
                         checked={getIsSomeRowsSelected()}
                         onChange={() => toggleAllRowsSelected()}
@@ -139,6 +140,7 @@ export const Table = <DataType extends GenericDataType>({
                     <td>
                       <div className="flex h-full w-[40px] items-center">
                         <input
+                          className="checkbox"
                           type="checkbox"
                           checked={row.getIsSelected()}
                           disabled={!row.getCanSelect()}

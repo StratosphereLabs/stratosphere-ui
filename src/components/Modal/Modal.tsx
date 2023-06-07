@@ -34,13 +34,16 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         'modal',
         open && 'modal-open',
         responsivePosition && `modal-${responsivePosition}`,
-        className,
       )}
       onClose={onClose}
       open={open}
       static
     >
-      <Dialog.Panel as="div" className="modal-box" ref={ref}>
+      <Dialog.Panel
+        as="div"
+        className={classNames('modal-box', className)}
+        ref={ref}
+      >
         <Button
           aria-label="Close Modal"
           color="ghost"
@@ -54,7 +57,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         <Dialog.Title as="h3" className="text-lg font-bold">
           {title}
         </Dialog.Title>
-        {children}
+        <div className="py-4">{children}</div>
         {actionButtons.length > 0 ? (
           <div className="modal-action">
             {actionButtons.map((buttonProps, index) => (

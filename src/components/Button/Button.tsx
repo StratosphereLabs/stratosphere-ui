@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, forwardRef } from 'react';
 
 export const BUTTON_COLORS = [
   'neutral',
@@ -38,50 +38,58 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   wide?: boolean;
 }
 
-export const Button = ({
-  active,
-  block,
-  children,
-  className,
-  color,
-  disabled,
-  glass,
-  link,
-  loading,
-  noAnimation,
-  outline,
-  shape,
-  size,
-  wide,
-  ...props
-}: ButtonProps): JSX.Element => (
-  <button
-    className={classNames(
-      'btn',
-      active && 'btn-active',
-      block && 'btn-block',
-      color && `btn-${color}`,
-      disabled && 'btn-disabled',
-      glass && 'glass',
-      link && 'btn-link',
-      noAnimation && 'no-animation',
-      outline && 'btn-outline',
-      shape && `btn-${shape}`,
-      size && `btn-${size}`,
-      wide && 'btn-wide',
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      active,
+      block,
+      children,
       className,
-    )}
-    type="button"
-    {...props}
-  >
-    {loading ? (
-      <span
-        className={classNames(
-          'loading loading-spinner',
-          size && `loading-${size}`,
-        )}
-      ></span>
-    ) : null}
-    {children}
-  </button>
+      color,
+      disabled,
+      glass,
+      link,
+      loading,
+      noAnimation,
+      outline,
+      shape,
+      size,
+      wide,
+      ...props
+    },
+    ref,
+  ): JSX.Element => (
+    <button
+      className={classNames(
+        'btn',
+        active && 'btn-active',
+        block && 'btn-block',
+        color && `btn-${color}`,
+        disabled && 'btn-disabled',
+        glass && 'glass',
+        link && 'btn-link',
+        noAnimation && 'no-animation',
+        outline && 'btn-outline',
+        shape && `btn-${shape}`,
+        size && `btn-${size}`,
+        wide && 'btn-wide',
+        className,
+      )}
+      ref={ref}
+      type="button"
+      {...props}
+    >
+      {loading ? (
+        <span
+          className={classNames(
+            'loading loading-spinner',
+            size && `loading-${size}`,
+          )}
+        ></span>
+      ) : null}
+      {children}
+    </button>
+  ),
 );
+
+Button.displayName = 'Button';

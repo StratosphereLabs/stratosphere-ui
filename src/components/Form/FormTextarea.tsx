@@ -77,7 +77,7 @@ export const FormTextarea = <Values extends FieldValues, TOutput>({
         aria-labelledby={labelText ? `label-${name}` : undefined}
         className={classNames(
           'w-full',
-          bordered && 'textarea-bordered',
+          bordered !== false && 'textarea-bordered',
           currentColor && `textarea-${currentColor}`,
           size && `textarea-${size}`,
           inputClassName,

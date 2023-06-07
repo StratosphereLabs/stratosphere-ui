@@ -33,6 +33,7 @@ export interface BadgeProps extends Omit<HTMLProps<HTMLDivElement>, 'size'> {
 export const Badge = ({
   children,
   className,
+  color,
   dismissable,
   icon: Icon,
   onDismiss,
@@ -43,7 +44,8 @@ export const Badge = ({
   <div
     className={classNames(
       'badge gap-1',
-      size !== undefined && `badge-${size}`,
+      color && `badge-${color}`,
+      size && `badge-${size}`,
       outline === true && 'badge-outline',
       dismissable === true && 'pr-0',
       className,

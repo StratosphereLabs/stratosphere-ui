@@ -4,7 +4,7 @@ import { Fragment, KeyboardEvent, KeyboardEventHandler } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor, UseTypeaheadQueryOptions } from '../../hooks';
-import { Badge } from '../Badge';
+import { Badge, BadgeColor } from '../Badge';
 import { DropdownMenuItem } from '../DropdownMenu';
 import { FormError, FormFieldProps, FormLabel, FormValueMode } from '../Form';
 import { ComboboxMulti } from '../Form/FormComboboxMulti';
@@ -17,6 +17,7 @@ export interface TypeaheadSelectProps<
   Values extends FieldValues,
 > extends UseTypeaheadQueryOptions<DataItem>,
     FormFieldProps<Values> {
+  badgeColor?: BadgeColor;
   className?: string;
   disabled?: boolean;
   disableSingleSelectBadge?: true;
@@ -33,6 +34,7 @@ export const TypeaheadSelect = <
   DataItem extends GenericDataType,
   Values extends FieldValues,
 >({
+  badgeColor,
   className,
   controllerProps,
   debounceTime,
@@ -132,6 +134,7 @@ export const TypeaheadSelect = <
             {selectedItems.length > 0
               ? selectedItems.map((item, index) => (
                   <Badge
+                    color={badgeColor ?? 'neutral'}
                     dismissable
                     key={item.id}
                     onDismiss={() => clearSelectedItem(index)}
