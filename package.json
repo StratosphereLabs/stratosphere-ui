@@ -38,7 +38,7 @@
     "test": "vitest run --coverage"
   },
   "devDependencies": {
-    "@headlessui/react": "^1.7.15",
+    "@headlessui/react": "1.7.14",
     "@hookform/resolvers": "^3.1.0",
     "@mdx-js/react": "^2.3.0",
     "@storybook/addon-actions": "^6.5.15",
