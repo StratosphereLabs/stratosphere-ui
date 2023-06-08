@@ -1,5 +1,13 @@
 # CHANGELOG.md
 
+## 1.0.1 (2023-06-08)
+
+- Bugfix for disabled typeahead input on mobile version of Chrome.
+
+## 1.0.0 (2023-06-06)
+
+- Migrated to DaisyUI 3.0.0. Detailed changelog coming...
+
 ## 0.4.1 (2023-05-25)
 
 - Added ability to forward a `ref` to `Disclosure` component.

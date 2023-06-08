@@ -92,7 +92,6 @@ export const TypeaheadSelect = <
   const fieldColor = useFieldColor(name, showDirty);
   const enableBadges = disableSingleSelectBadge === undefined || multi === true;
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
-  console.log({ query });
   return (
     <Component
       className={classNames('relative', className)}
@@ -175,13 +174,11 @@ export const TypeaheadSelect = <
         >
           {enableBadges ? (
             <Combobox.Input
-              className="w-full"
+              className="input-bordered input w-full"
               onChange={({ target: { value } }) => {
-                console.log('onChange', value);
                 setQuery(value);
               }}
               onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
-                console.log('onKeyDown', event.key);
                 if (event.key === 'Tab') setShowDropdown(false);
                 onKeyDown?.(event);
               }}
