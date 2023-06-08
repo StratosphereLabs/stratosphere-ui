@@ -175,12 +175,13 @@ export const TypeaheadSelect = <
         >
           {enableBadges ? (
             <Combobox.Input
-              className="input-bordered input w-full"
+              className="w-full"
               onChange={({ target: { value } }) => {
                 console.log('onChange', value);
                 setQuery(value);
               }}
               onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
+                console.log('onKeyDown', event.key);
                 if (event.key === 'Tab') setShowDropdown(false);
                 onKeyDown?.(event);
               }}
