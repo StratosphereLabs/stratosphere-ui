@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { HTMLAttributes } from 'react';
 
-export const TOOLTIP_POSITIONS = ['top', 'bottom', 'left', 'right'];
+export const TOOLTIP_POSITIONS = ['top', 'bottom', 'left', 'right'] as const;
 
 export type TooltipPosition = (typeof TOOLTIP_POSITIONS)[number];
 

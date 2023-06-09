@@ -10,7 +10,7 @@ export interface TabData {
   paths?: string[];
 }
 
-export const TAB_SIZES = ['xs', 'sm', 'md', 'lg'];
+export const TAB_SIZES = ['xs', 'sm', 'md', 'lg'] as const;
 
 export type TabSize = (typeof TAB_SIZES)[number];
 
