@@ -15,8 +15,7 @@ The `BadgeProps` interface extends `BadgeProps` from the react-daisyui library, 
 ## Usage
 
 ```tsx
-import { Badge } from './Badge';
-import { BellIcon } from './Icons';
+import { Badge, BellIcon } from 'stratosphere-ui';
 
 export const NotificationBadge = ({ count, onDismiss }) => (
   <Badge color="primary" dismissable onDismiss={onDismiss} icon={BellIcon}>

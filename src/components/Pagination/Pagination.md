@@ -1,21 +1,19 @@
 # Pagination
 
-The `Pagination` component is a React component that renders a pagination control for navigating through a list of items. It is based on the `Pagination` component from the react-daisyui library.
+The `Pagination` component is a React component that displays a set of buttons representing pages for navigating through a collection of data. It provides an intuitive user interface for pagination functionality.
 
 ## Props
 
-The component accepts the following props:
+The `Pagination` component accepts the following props:
 
-- `metadata?: PaginationMetadata`:
-  An object that contains metadata about the pagination. It has the following properties:
+- `className (optional)`: Additional CSS classes to be applied to the root div element.
+- `metadata (optional)`: `PaginationMetadata` object that contains information about the current page and the total number of pages. It has the following properties:
   - `page: number`: the current page.
   - `pageCount: number`: the total number of pages.
   - `limit: number`: the maximum number of items per page.
   - `itemCount: number`: the total number of items.
-- `onPaginationChange?: boolean`:
-  A function that is called when the user changes the page. It receives the new page number as an argument.
-- `size?: string`:
-  The size of the buttons. Can be one of 'sm', 'md', or 'lg'. Defaults to 'md'.
+- `onPaginationChange (required)`: Callback function invoked when a page button is clicked. It receives the selected page number as a parameter.
+- `size (optional)`: Size of the pagination buttons. It accepts the same values as the `Button` component's `size` prop.
 
 ## Usage
 

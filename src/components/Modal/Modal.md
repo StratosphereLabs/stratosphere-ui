@@ -1,15 +1,18 @@
 # Modal
 
-The `Modal` component is a custom modal component built using React and DaisyUI. It allows the user to display content in a modal overlay with customizable action buttons and a close button.
+The `Modal` component is a customizable modal dialog box built using React and the `@headlessui/react` library. It provides a flexible and reusable way to display content in a modal window. It supports different positions, title, action buttons, and an onClose callback function.
 
 ## Props
 
-- `actionButtons: ButtonProps[]`: An array of ButtonProps objects that define the action buttons for the modal.
-- `onClose: () => void`: A function that is called when the modal is closed.
-- `className?: string`: A string that defines the CSS classes to be applied to the modal.
-- `open?: boolean`: A boolean that indicates whether the modal is open or closed.
-- `responsive?: boolean`: A boolean that indicates whether the modal should be responsive.
-- `title?: string`: A string that defines the title of the modal.
+The `Modal` component accepts the following props:
+
+- `actionButtons`: An array of ButtonProps objects representing the action buttons to be displayed in the modal. Each ButtonProps object should have the properties defined in the Button component.
+- `children`: The content to be displayed within the modal.
+- `className`: Additional CSS classes to be applied to the modal container.
+- `onClose`: A callback function that will be called when the modal is closed.
+- `open`: A boolean value indicating whether the modal is open or closed. When open is true, the modal will be visible.
+- `responsivePosition`: (Optional) A string indicating the position of the modal. Valid values are 'top', 'bottom', or 'middle'. The default position is 'middle'.
+- `title`: (Optional) A string representing the title of the modal.
 
 ## Usage
 
@@ -18,27 +21,51 @@ To use the `Modal` component, import it from its file location and use it like a
 ```tsx
 import { Modal } from 'stratosphere-ui';
 
-export const MyModal = () => {
+function App() {
+  const handleCloseModal = () => {
+    // Handle modal close logic here
+  };
+
+  const handleActionButtonClick = () => {
+    // Handle action button click logic here
+  };
+
   const actionButtons = [
-    { label: 'Save', color: 'primary', onClick: () => console.log('Saved!') },
+    {
+      label: 'Save',
+      onClick: handleActionButtonClick,
+    },
     {
       label: 'Cancel',
-      color: 'secondary',
-      onClick: () => console.log('Cancelled!'),
+      onClick: handleCloseModal,
     },
   ];
 
-  const handleClose = () => console.log('Modal closed!');
-
   return (
-    <Modal actionButtons={actionButtons} onClose={handleClose} title="My Modal">
-      <p>My modal content goes here!</p>
-    </Modal>
+    <div>
+      {/* Your application content */}
+      <Modal
+        actionButtons={actionButtons}
+        onClose={handleCloseModal}
+        open={true}
+        responsivePosition="bottom"
+        title="Example Modal"
+      >
+        <p>This is an example modal.</p>
+        <p>You can add any content here.</p>
+      </Modal>
+    </div>
   );
-};
+}
 ```
 
-## Notes
+In the above example, a `Modal` component is rendered with the following configuration:
 
-- The `Modal` component is built using @headlessui/react and react-daisyui for the modal functionality and styling, respectively.
-- The `Modal` component uses the `forwardRef` function to allow for the ref to be passed through to the underlying `Dialog.Panel` component. This is necessary for proper functionality of the modal.
+- The `actionButtons` prop is set to an array of two objects representing action buttons.
+- The `onClose` prop is set to a callback function that will be called when the modal is closed.
+- The `open` prop is set to true, indicating that the modal should be visible.
+- The `responsivePosition` prop is set to 'middle', which will position the modal in the middle of the screen.
+- The `title` prop is set to "Example Modal".
+- The `className` prop is set to "custom-modal", which allows custom styling of the modal.
+
+The `content` of the modal is specified as a child element of the `Modal` component. In this example, a paragraph element is used as the content of the modal.
