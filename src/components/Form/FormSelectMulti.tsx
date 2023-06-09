@@ -13,7 +13,7 @@ export const FormSelectMulti = <
   name,
   selectedItems,
   setSelectedItems,
-}: ListboxProps<DataItem, Values>): JSX.Element => (
+}: ListboxProps<DataItem, Values>) => (
   <Listbox
     as="div"
     by={dataItemComparator}

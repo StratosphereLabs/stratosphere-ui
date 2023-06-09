@@ -6,7 +6,7 @@ export interface FormLabelProps extends HTMLProps<HTMLLabelElement> {
 }
 
 export const FormLabel = forwardRef<HTMLLabelElement, FormLabelProps>(
-  ({ children, className, isRequired, ...props }, ref): JSX.Element => (
+  ({ children, className, isRequired, ...props }, ref) => (
     <label
       className={classNames('label font-semibold', className)}
       ref={ref}

@@ -47,7 +47,7 @@ export const Select = <
   name,
   options: optionsArray,
   showDirty,
-}: SelectProps<DataItem, Values>): JSX.Element => {
+}: SelectProps<DataItem, Values>) => {
   const {
     field: { ref },
   } = useController({ name });

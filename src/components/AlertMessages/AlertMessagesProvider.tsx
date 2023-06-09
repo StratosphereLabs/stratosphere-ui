@@ -19,7 +19,7 @@ export interface AlertMessagesProviderProps {
   initialData?: AlertMessage[];
 }
 
-const initialContext: AlertMessagesContextData = {
+const initialContext = {
   alertMessages: [],
   addAlertMessages: () => undefined,
   clearAlertMessages: () => undefined,
@@ -29,13 +29,12 @@ const initialContext: AlertMessagesContextData = {
 const AlertMessagesContext =
   createContext<AlertMessagesContextData>(initialContext);
 
-export const useAlertMessages = (): AlertMessagesContextData =>
-  useContext(AlertMessagesContext);
+export const useAlertMessages = () => useContext(AlertMessagesContext);
 
 export const AlertMessagesProvider = ({
   children,
   initialData,
-}: AlertMessagesProviderProps): JSX.Element => {
+}: AlertMessagesProviderProps) => {
   const [alertMessages, setAlertMessages] = useState<AlertMessage[]>(
     initialData ?? initialContext.alertMessages,
   );

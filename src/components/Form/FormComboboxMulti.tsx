@@ -13,7 +13,7 @@ export const ComboboxMulti = <
   name,
   selectedItems,
   setSelectedItems,
-}: ComboboxProps<DataItem, Values>): JSX.Element => (
+}: ComboboxProps<DataItem, Values>) => (
   <Combobox
     as="div"
     by={dataItemComparator}

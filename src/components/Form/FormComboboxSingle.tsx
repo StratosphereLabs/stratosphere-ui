@@ -13,7 +13,7 @@ export const ComboboxSingle = <
   name,
   selectedItems,
   setSelectedItems,
-}: ComboboxProps<DataItem, Values>): JSX.Element => {
+}: ComboboxProps<DataItem, Values>) => {
   const selectedItem = selectedItems[0] ?? null;
   return (
     <Combobox

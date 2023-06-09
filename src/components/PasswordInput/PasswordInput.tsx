@@ -16,7 +16,7 @@ export const PasswordInput = <Values extends FieldValues, TOutput>({
   iconShow,
   inputClassName,
   ...props
-}: PasswordInputProps<Values, TOutput>): JSX.Element => {
+}: PasswordInputProps<Values, TOutput>) => {
   const [showPassword, setShowPassword] = useState(false);
   const IconHide = iconHide ?? <EyeIcon className="h-5 w-5" />;
   const IconShow = iconShow ?? <EyeSlashIcon className="h-5 w-5" />;

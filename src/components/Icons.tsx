@@ -1,6 +1,6 @@
 import { SVGProps } from 'react';
 
-export const CheckIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
+export const CheckIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -17,9 +17,7 @@ export const CheckIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   </svg>
 );
 
-export const ChevronDownIcon = (
-  props: SVGProps<SVGSVGElement>,
-): JSX.Element => (
+export const ChevronDownIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -36,7 +34,7 @@ export const ChevronDownIcon = (
   </svg>
 );
 
-export const ChevronUpIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
+export const ChevronUpIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -53,7 +51,7 @@ export const ChevronUpIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   </svg>
 );
 
-export const CloseIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
+export const CloseIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -70,7 +68,7 @@ export const CloseIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   </svg>
 );
 
-export const ErrorIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
+export const ErrorIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -87,7 +85,7 @@ export const ErrorIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   </svg>
 );
 
-export const EyeIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
+export const EyeIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -109,7 +107,7 @@ export const EyeIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   </svg>
 );
 
-export const EyeSlashIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
+export const EyeSlashIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -126,7 +124,7 @@ export const EyeSlashIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   </svg>
 );
 
-export const InfoIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
+export const InfoIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -143,7 +141,7 @@ export const InfoIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   </svg>
 );
 
-export const SortAscendingIcon = (): JSX.Element => (
+export const SortAscendingIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className="ml-1 h-3 w-3"
@@ -155,7 +153,7 @@ export const SortAscendingIcon = (): JSX.Element => (
   </svg>
 );
 
-export const SortDescendingIcon = (): JSX.Element => (
+export const SortDescendingIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className="ml-1 h-3 w-3"
@@ -167,7 +165,7 @@ export const SortDescendingIcon = (): JSX.Element => (
   </svg>
 );
 
-export const SortIcon = (): JSX.Element => (
+export const SortIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className="ml-1 h-3 w-3"
@@ -179,7 +177,7 @@ export const SortIcon = (): JSX.Element => (
   </svg>
 );
 
-export const SuccessIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
+export const SuccessIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -196,7 +194,7 @@ export const SuccessIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
   </svg>
 );
 
-export const WarningIcon = (props: SVGProps<SVGSVGElement>): JSX.Element => (
+export const WarningIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"

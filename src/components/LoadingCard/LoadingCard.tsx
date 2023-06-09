@@ -11,7 +11,7 @@ export const LoadingCard = ({
   className,
   isLoading,
   ...props
-}: LoadingCardProps): JSX.Element => (
+}: LoadingCardProps) => (
   <div className={classNames('card', className)} {...props}>
     {isLoading === true ? <FullScreenLoader /> : children}
   </div>

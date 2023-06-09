@@ -20,7 +20,7 @@ export const Form = <Values extends FieldValues>({
   methods,
   onFormSubmit,
   ...props
-}: FormProps<Values>): JSX.Element => (
+}: FormProps<Values>) => (
   <FormProvider {...methods}>
     <form
       noValidate

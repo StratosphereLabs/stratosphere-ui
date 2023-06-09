@@ -28,7 +28,7 @@ export const DropdownMenuItem = forwardRef<
       ...props
     },
     ref,
-  ): JSX.Element => (
+  ) => (
     <li
       className={classNames(
         bordered && 'bordered',

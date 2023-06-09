@@ -49,7 +49,7 @@ export const FormTextarea = <Values extends FieldValues, TOutput>({
   size,
   transform,
   ...props
-}: FormTextareaProps<Values, TOutput>): JSX.Element => {
+}: FormTextareaProps<Values, TOutput>) => {
   const {
     field,
     fieldState: { error },

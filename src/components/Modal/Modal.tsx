@@ -27,7 +27,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       title,
     },
     ref,
-  ): JSX.Element => (
+  ) => (
     <Dialog
       as="dialog"
       className={classNames(

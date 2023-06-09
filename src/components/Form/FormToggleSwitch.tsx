@@ -41,7 +41,7 @@ export const FormToggleSwitch = <Values extends FieldValues>({
   showDirty,
   size,
   ...props
-}: FormToggleSwitchProps<Values>): JSX.Element => {
+}: FormToggleSwitchProps<Values>) => {
   const {
     field: { value, ...field },
   } = useController({ name, ...controllerProps });

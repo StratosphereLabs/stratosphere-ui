@@ -46,7 +46,7 @@ export const Table = <DataType extends GenericDataType>({
   pinRows,
   size,
   ...props
-}: TableProps<DataType>): JSX.Element => {
+}: TableProps<DataType>) => {
   const tableInstance = useReactTable<DataType>({
     enableGlobalFilter,
     enableRowSelection,

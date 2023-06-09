@@ -53,7 +53,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
   size,
   transform,
   ...props
-}: FormControlProps<Values, TOutput>): JSX.Element => {
+}: FormControlProps<Values, TOutput>) => {
   const {
     field,
     fieldState: { error },

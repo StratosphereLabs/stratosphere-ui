@@ -11,7 +11,7 @@ export interface AlertMessagesProps {
 export const AlertMessages = ({
   alertClassName,
   maxMessages,
-}: AlertMessagesProps): JSX.Element => {
+}: AlertMessagesProps) => {
   const { alertMessages, dismissAlertMessage } = useAlertMessages();
   return (
     <>

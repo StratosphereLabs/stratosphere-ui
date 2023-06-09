@@ -8,7 +8,7 @@ export interface HeaderSortIconProps<DataType extends GenericDataType> {
 
 export const HeaderSortIcon = <DataType extends GenericDataType>({
   column,
-}: HeaderSortIconProps<DataType>): JSX.Element | null => {
+}: HeaderSortIconProps<DataType>) => {
   if (!column.getCanSort()) return null;
   if (column.getIsSorted() === 'asc') return <SortAscendingIcon />;
   if (column.getIsSorted() === 'desc') return <SortDescendingIcon />;

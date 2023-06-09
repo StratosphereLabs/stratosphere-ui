@@ -44,7 +44,7 @@ export const FormRangeSlider = forwardRef(
       thumbRightColor,
     }: FormRangeSliderProps<Values>,
     ref: ForwardedRef<HTMLDivElement>,
-  ): JSX.Element => {
+  ) => {
     const { setValue } = useFormContext<Values>();
     return (
       <div className={classNames('form-control', className)}>
