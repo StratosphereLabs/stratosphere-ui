@@ -13,7 +13,7 @@ export const TOOLTIP_COLORS = [
   'warning',
   'success',
   'error',
-];
+] as const;
 
 export type TooltipColor = (typeof TOOLTIP_COLORS)[number];
 

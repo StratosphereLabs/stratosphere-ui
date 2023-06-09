@@ -16,6 +16,7 @@ export * from './PasswordInput';
 export * from './Popover';
 export * from './Progress';
 export * from './Select';
+export * from './Stat';
 export * from './Table';
 export * from './Tabs';
 export * from './Tooltip';

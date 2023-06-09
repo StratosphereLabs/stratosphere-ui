@@ -8,11 +8,11 @@ export const LOADING_SHAPES = [
   'ball',
   'bars',
   'infinity',
-];
+] as const;
 
 export type LoadingShape = (typeof LOADING_SHAPES)[number];
 
-export const LOADING_SIZES = ['xs', 'sm', 'md', 'lg'];
+export const LOADING_SIZES = ['xs', 'sm', 'md', 'lg'] as const;
 
 export type LoadingSize = (typeof LOADING_SIZES)[number];
 

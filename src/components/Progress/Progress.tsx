@@ -9,7 +9,7 @@ export const PROGRESS_COLORS = [
   'success',
   'warning',
   'error',
-];
+] as const;
 
 export type ProgressColor = (typeof PROGRESS_COLORS)[number];
 
