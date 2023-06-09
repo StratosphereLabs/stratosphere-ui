@@ -1,6 +1,7 @@
 export * from './AlertMessages';
 export * from './Badge';
 export * from './Button';
+export * from './Card';
 export * from './Disclosure';
 export * from './DropdownMenu';
 export * from './Form';

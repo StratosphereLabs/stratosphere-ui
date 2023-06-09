@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.0.2 (2023-06-08)
+
+- Added `Card` component along with `CardBody`, `CardActions`, and `CardTitle` sub components.
+
 ## 1.0.1 (2023-06-08)
 
 - Bugfix for disabled typeahead input on mobile version of Chrome.
