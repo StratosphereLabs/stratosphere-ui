@@ -1,8 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
-
-export const ALERT_COLORS = ['info', 'success', 'warning', 'error'] as const;
-
-export type AlertColor = (typeof ALERT_COLORS)[number];
+import { AlertColor } from '../Alert';
 
 export interface AlertMessage {
   color?: AlertColor;

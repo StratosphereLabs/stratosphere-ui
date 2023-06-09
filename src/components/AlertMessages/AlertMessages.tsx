@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Button } from '../Button';
+import { Alert } from '../Alert';
 import { useAlertMessages } from './AlertMessagesProvider';
 import { statusToIconMap } from './constants';
 
@@ -17,39 +17,28 @@ export const AlertMessages = ({
     <>
       {Array.from(Array(maxMessages ?? 1).keys()).map(index => {
         if (alertMessages[index] === undefined) return null;
-        const status = alertMessages[index].color ?? 'success';
-        const description = alertMessages[index].description ?? '';
-        const Icon = statusToIconMap[status];
+        const color = alertMessages[index].color ?? 'success';
+        const Icon = statusToIconMap[color];
         return (
-          <div
-            className={classNames(
-              'alert flex w-full',
-              `alert-${status}`,
-              alertClassName,
-            )}
+          <Alert
+            actionButtons={[
+              {
+                id: 'close',
+                'aria-label': 'Close Alert',
+                color: 'ghost',
+                onClick: () => dismissAlertMessage(index),
+                shape: 'circle',
+                size: 'xs',
+                children: '✕',
+              },
+            ]}
+            className={classNames('flex w-full', alertClassName)}
+            color={color}
+            description={alertMessages[index].description}
+            icon={Icon}
             key={`error_message_${index}`}
-          >
-            <Icon className="h-5 w-5" />
-            <div className="flex-1">
-              <h3 className={description.length ? 'font-bold' : undefined}>
-                {alertMessages[index].title}
-              </h3>
-              {description.length ? (
-                <div className="text-xs">
-                  {alertMessages[index].description}
-                </div>
-              ) : null}
-            </div>
-            <Button
-              aria-label="Close Alert"
-              color="ghost"
-              onClick={() => dismissAlertMessage(index)}
-              shape="circle"
-              size="xs"
-            >
-              ✕
-            </Button>
-          </div>
+            title={alertMessages[index].title}
+          />
         );
       })}
     </>
