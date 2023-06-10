@@ -68,7 +68,7 @@
     "autoprefixer": "^10.4.14",
     "classnames": "^2.3.2",
     "cross-env": "^7.0.3",
-    "daisyui": "3.0.20",
+    "daisyui": "3.0.22",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard-with-typescript": "^35.0.0",
