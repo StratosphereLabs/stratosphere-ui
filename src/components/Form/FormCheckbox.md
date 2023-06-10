@@ -1,6 +1,6 @@
 # FormCheckbox
 
-The `FormCheckbox` component is a custom form field component built with React. It provides a styled checkbox input that integrates with the react-daisyui library, and includes support for the react-hook-form library.
+The `FormCheckbox` component is a custom form field component built with React. It provides a styled checkbox input that integrates with the DaisyUI library, and includes support for the `react-hook-form` library.
 
 ## Props
 

@@ -26,7 +26,7 @@ export type TextareaSize = (typeof TEXTAREA_SIZES)[number];
 
 export interface FormTextareaProps<Values extends FieldValues, TOutput>
   extends FormFieldProps<Values>,
-    Omit<HTMLProps<HTMLInputElement>, 'name' | 'size'> {
+    Omit<HTMLProps<HTMLTextAreaElement>, 'name' | 'size'> {
   bordered?: boolean;
   color?: TextareaColor;
   hideErrorMessage?: boolean;
@@ -72,11 +72,11 @@ export const FormTextarea = <Values extends FieldValues, TOutput>({
           {labelText}
         </FormLabel>
       ) : null}
-      <input
+      <textarea
         {...field}
         aria-labelledby={labelText ? `label-${name}` : undefined}
         className={classNames(
-          'w-full',
+          'textarea w-full',
           bordered !== false && 'textarea-bordered',
           currentColor && `textarea-${currentColor}`,
           size && `textarea-${size}`,

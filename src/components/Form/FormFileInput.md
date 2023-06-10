@@ -1,6 +1,6 @@
 # FormFileInput
 
-The `FormFileInput` component is a React component that provides a custom file input with built-in functionality for handling user input and displaying errors. It is designed to work with the react-hook-form library, and it wraps the `FileInput` component from the react-daisyui library to provide a styled input field.
+The `FormFileInput` component is a React component that provides a custom file input with built-in functionality for handling user input and displaying errors. It is designed to work with the `react-hook-form` library, and it wraps the `FileInput` component from the DaisyUI library to provide a styled input field.
 
 ## Props
 
@@ -21,7 +21,7 @@ The `FormFileInput` component accepts the following props:
 - `labelText: string`
   The label text to display for the input.
 - `name: Path<Values>`
-  The name of the field, as defined in react-hook-form.
+  The name of the field, as defined in `react-hook-form`.
 - `placeholder: string`
   The placeholder text to display in the input.
 - `showDirty: boolean`
@@ -54,4 +54,4 @@ export const MyForm = () => {
 };
 ```
 
-In this example, the `FormFileInput` component will render an input field with a label that reads "File". When the user chooses a file, react-hook-form will handle updating the form state. If there is an error with the file upload, the `FormError` component will display the error message.
+In this example, the `FormFileInput` component will render an input field with a label that reads "File". When the user chooses a file, `react-hook-form` will handle updating the form state. If there is an error with the file upload, the `FormError` component will display the error message.

@@ -1,10 +1,10 @@
 # LoadingCard
 
-The `LoadingCard` component is a React component that wraps around the `Card` component from the react-daisyui library. It provides an optional loading state where a full-screen loader is displayed while the component is loading.
+The `LoadingCard` component is a React component that wraps around the `Card` component from the DaisyUI library. It provides an optional loading state where a full-screen loader is displayed while the component is loading.
 
 ## Props
 
-The `LoadingCardProps` interface extends the `CardProps` interface from react-daisyui and adds an optional `isLoading` prop.
+The `LoadingCardProps` interface extends the `HTMLAttributes<HTMLInputElement>` interface and adds an optional `isLoading` prop.
 
 - `isLoading?: boolean`: Determines whether the component should display a loading state or not. Defaults to false.
 

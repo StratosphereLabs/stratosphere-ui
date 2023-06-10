@@ -1,6 +1,6 @@
 # FormRadio
 
-The `FormRadio` component is a wrapper around the `Radio` component from react-daisyui. It is used to render a group of radio buttons that are part of a form, and integrates with react-hook-form for managing form state.
+The `FormRadio` component is a wrapper around the `Radio` component from DaisyUI. It is used to render a group of radio buttons that are part of a form, and integrates with `react-hook-form` for managing form state.
 
 ## Props
 
@@ -9,17 +9,17 @@ The `FormRadio` component accepts the following props:
 - `className?: string`:
   Optional class name to be applied to the outermost container div element.
 - `color?: string`:
-  The color of the radio buttons, which is passed to the `Radio` component from react-daisyui. If not provided, the default is 'ghost'.
+  The color of the radio buttons. If not provided, the default is 'ghost'.
 - `controllerProps?: Omit<UseControllerProps<Values>, 'name'>`:
-  Optional props for the `useController` hook from react-hook-form, which is used to integrate the radio buttons with the form state.
+  Optional props for the `useController` hook from `react-hook-form`, which is used to integrate the radio buttons with the form state.
 - `inputRef?: RefObject<HTMLInputElement>`:
-  Optional ref object to be passed to the Radio component from react-daisyui.
+  Optional ref object to be passed to the underlying input component.
 - `isRequired?: boolean`:
   Whether the field is required. If true, an asterisk will be added to the label text.
 - `labelText?: string`:
   Optional text to be used for the label of the radio button group.
 - `name: Path<Values>`:
-  The name of the field, used as the key for the form state object in react-hook-form.
+  The name of the field, used as the key for the form state object in `react-hook-form`.
 - `options: RadioOption[]`:
   An array of objects containing the id, label, and value of each radio button option.
 - `showDirty?: boolean`:

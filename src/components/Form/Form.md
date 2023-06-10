@@ -1,6 +1,6 @@
 # Form
 
-The `Form` component is a reusable React component built using the react-hook-form library that provides a way to handle form submission and form input validation.
+The `Form` component is a reusable React component built using the `react-hook-form` library that provides a way to handle form submission and form input validation.
 
 ## Props
 
@@ -41,4 +41,4 @@ export const MyForm = () => {
 };
 ```
 
-In the example above, the `Form` component is used to control a form with two input fields and a submit button. The methods prop is passed to the `Form` component, which is created using the `useForm` hook provided by the react-hook-form library. The `onFormSubmit` prop is also passed to the `Form` component, which is a callback function that logs the form data when the form is submitted. The input fields are registered using the `methods.register` function provided by the `useForm` hook.
+In the example above, the `Form` component is used to control a form with two input fields and a submit button. The methods prop is passed to the `Form` component, which is created using the `useForm` hook provided by the `react-hook-form` library. The `onFormSubmit` prop is also passed to the `Form` component, which is a callback function that logs the form data when the form is submitted. The input fields are registered using the `methods.register` function provided by the `useForm` hook.

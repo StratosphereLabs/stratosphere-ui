@@ -10,8 +10,6 @@ A customizable badge component with dismissible option and optional icon.
 - `icon?: FC<ComponentProps<'svg'>>`: An SVG icon component to display on the left side of the badge content.
 - `onDismiss?: (event: MouseEvent<HTMLButtonElement>) => void`: A callback function to be called when the dismiss button is clicked.
 
-The `BadgeProps` interface extends `BadgeProps` from the react-daisyui library, which includes additional props such as color, variant, and size.
-
 ## Usage
 
 ```tsx
