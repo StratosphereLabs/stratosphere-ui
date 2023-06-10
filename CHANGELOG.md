@@ -1,5 +1,18 @@
 # CHANGELOG.md
 
+## 1.0.2 (2023-06-08)
+
+- Added `Alert` component.
+- Added `Button` component.
+- Added `Card` component along with `CardBody`, `CardActions`, and `CardTitle` sub components.
+- Added `Link` component.
+- Added `Loading` component.
+- Added `Progress` and `RadialProgress` components.
+- Added `Stats` component along with `Stat`, `StatActions`, `StatDesc`, `StatFigure`, `StatTitle`, and `StatValue` sub-components.
+- Added `Steps` component along with `Step` sub-component.
+- Fixed `TAB_SIZES` constant typing.
+- Added `Tooltip` component.
+
 ## 1.0.1 (2023-06-08)
 
 - Bugfix for disabled typeahead input on mobile version of Chrome.
@@ -27,7 +40,7 @@
 
 ## 0.4.0-beta1 (2023-05-20)
 
-- Removed `defaultOptionId` prop from `Select` component. Please use `defaultValues` in the react-hook-form `useForm` config.
+- Removed `defaultOptionId` prop from `Select` component. Please use `defaultValues` in the `react-hook-form` `useForm` config.
 - Removed `getItemValue` prop from `Select` and `Typeahead` components.
 - Added `formValueMode` prop to `Select` and `Typeahead` components. If the default value of 'id' is passed, the component will use the data item's ID for the value in the form state. If 'item' is passed, the component will use the data item itself as the form value.
 - Added `disabled` prop to `TypeaheadSelect` component.
@@ -63,12 +76,12 @@
 
 ## 0.2.9 (2023-05-07)
 
-- Added `FormRadioGroup` component which integrates HeadlessUI and react-hook-form with DaisyUI's `RadioGroup` component.
+- Added `FormRadioGroup` component which integrates HeadlessUI and `react-hook-form` with DaisyUI's `RadioGroup` component.
 
 ## 0.2.8 (2023-04-27)
 
 - Added `shouldDirty` and `shouldTouch` to `setValue` call in `FormFileInput` component so form state is updated correctly when file is selected.
-- Added `FormTextarea` component which integrates DaisyUI's `Textarea` with react-hook-form.
+- Added `FormTextarea` component which integrates DaisyUI's `Textarea` with `react-hook-form`.
 - Renamed `FormSelect` component to `Select`.
 - Added `disabled` prop to `Select` component.
 - Added `multi` prop to `Select` component to allow selection of multiple values.
@@ -219,7 +232,7 @@
 
 ## 0.1.7 (2023-01-18)
 
-- Added react-hook-form as external dependency
+- Added `react-hook-form` as external dependency
 
 ## 0.1.6 (2023-01-17)
 

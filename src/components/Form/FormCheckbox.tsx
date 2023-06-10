@@ -41,7 +41,7 @@ export const FormCheckbox = <Values extends FieldValues>({
   showDirty,
   size,
   ...props
-}: FormCheckboxProps<Values>): JSX.Element => {
+}: FormCheckboxProps<Values>) => {
   const { field } = useController({ name, ...controllerProps });
   const fieldColor = useFieldColor(name, showDirty);
   const currentColor = fieldColor ?? color ?? undefined;

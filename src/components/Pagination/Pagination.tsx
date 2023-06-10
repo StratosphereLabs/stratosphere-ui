@@ -17,7 +17,7 @@ export const Pagination = ({
   onPaginationChange,
   size,
   ...props
-}: PaginationProps): JSX.Element | null => {
+}: PaginationProps) => {
   const pages = getPageNumbers(metadata);
   return metadata ? (
     <div className={classNames('join', className)} {...props}>

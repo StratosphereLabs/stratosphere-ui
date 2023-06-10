@@ -54,7 +54,7 @@ export const TypeaheadSelect = <
   options: optionsArray,
   placeholder,
   showDirty,
-}: TypeaheadSelectProps<DataItem, Values>): JSX.Element => {
+}: TypeaheadSelectProps<DataItem, Values>) => {
   const {
     fieldState: { error },
     field: { ref },

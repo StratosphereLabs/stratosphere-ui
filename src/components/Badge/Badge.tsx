@@ -40,7 +40,7 @@ export const Badge = ({
   outline,
   size,
   ...props
-}: BadgeProps): JSX.Element => (
+}: BadgeProps) => (
   <div
     className={classNames(
       'badge gap-1',

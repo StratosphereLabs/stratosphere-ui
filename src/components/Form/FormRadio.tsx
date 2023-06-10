@@ -49,7 +49,7 @@ export const FormRadio = <Values extends FieldValues>({
   showDirty,
   size,
   ...props
-}: FormRadioProps<Values>): JSX.Element => {
+}: FormRadioProps<Values>) => {
   const {
     field: { value, ...field },
     fieldState: { error },

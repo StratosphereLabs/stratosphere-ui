@@ -1,5 +1,10 @@
 import classNames from 'classnames';
-import { ButtonHTMLAttributes, forwardRef } from 'react';
+import {
+  ButtonHTMLAttributes,
+  createElement,
+  forwardRef,
+  useMemo,
+} from 'react';
 
 export const BUTTON_COLORS = [
   'neutral',
@@ -25,6 +30,7 @@ export type ButtonSize = (typeof BUTTON_SIZES)[number];
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
+  as?: 'a' | 'button';
   block?: boolean;
   color?: ButtonColor;
   disabled?: boolean;
@@ -38,10 +44,14 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   wide?: boolean;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<
+  HTMLAnchorElement | HTMLButtonElement,
+  ButtonProps
+>(
   (
     {
       active,
+      as,
       block,
       children,
       className,
@@ -58,38 +68,61 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       ...props
     },
     ref,
-  ): JSX.Element => (
-    <button
-      className={classNames(
-        'btn',
-        active && 'btn-active',
-        block && 'btn-block',
-        color && `btn-${color}`,
-        disabled && 'btn-disabled',
-        glass && 'glass',
-        link && 'btn-link',
-        noAnimation && 'no-animation',
-        outline && 'btn-outline',
-        shape && `btn-${shape}`,
-        size && `btn-${size}`,
-        wide && 'btn-wide',
+  ) => {
+    const componentProps = useMemo(
+      () => ({
+        className: classNames(
+          'btn',
+          active && 'btn-active',
+          block && 'btn-block',
+          color && `btn-${color}`,
+          disabled && 'btn-disabled',
+          glass && 'glass',
+          link && 'btn-link',
+          noAnimation && 'no-animation',
+          outline && 'btn-outline',
+          shape && `btn-${shape}`,
+          size && `btn-${size}`,
+          wide && 'btn-wide',
+          className,
+        ),
+        ref: ref,
+        type: 'button',
+        ...props,
+      }),
+      [
+        active,
+        block,
+        color,
+        disabled,
+        glass,
+        link,
+        noAnimation,
+        outline,
+        props,
+        ref,
+        shape,
+        size,
+        wide,
         className,
-      )}
-      ref={ref}
-      type="button"
-      {...props}
-    >
-      {loading ? (
-        <span
-          className={classNames(
-            'loading loading-spinner',
-            size && `loading-${size}`,
-          )}
-        ></span>
-      ) : null}
-      {children}
-    </button>
-  ),
+      ],
+    );
+    return createElement(
+      as ?? 'button',
+      componentProps,
+      <>
+        {loading ? (
+          <span
+            className={classNames(
+              'loading loading-spinner',
+              size && `loading-${size}`,
+            )}
+          ></span>
+        ) : null}
+        {children}
+      </>,
+    );
+  },
 );
 
 Button.displayName = 'Button';

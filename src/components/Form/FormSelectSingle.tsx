@@ -13,7 +13,7 @@ export const FormSelectSingle = <
   name,
   selectedItems,
   setSelectedItems,
-}: ListboxProps<DataItem, Values>): JSX.Element => {
+}: ListboxProps<DataItem, Values>) => {
   const selectedItem = selectedItems[0] ?? null;
   return (
     <Listbox

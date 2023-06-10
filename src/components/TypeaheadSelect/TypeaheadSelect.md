@@ -7,7 +7,7 @@ The `TypeaheadSelect` component is a React component that provides a typeahead s
 The `TypeaheadSelect` component accepts the following props:
 
 - `controllerProps?: Omit<UseControllerProps<Values>, 'name'>`:
-  An object containing additional props that are passed to the `useController` hook from the react-hook-form package. The name prop is not included in this object, as it is provided separately.
+  An object containing additional props that are passed to the `useController` hook from the `react-hook-form` package. The name prop is not included in this object, as it is provided separately.
 - `debounceTime?: number`:
   The number of milliseconds to debounce the input before making a query. Defaults to 300.
 - `disabled?: boolean`:
@@ -33,7 +33,7 @@ The `TypeaheadSelect` component accepts the following props:
 - `multi?: boolean`:
   A boolean indicating whether multiple items can be selected.
 - `name: Path<Values>`:
-  The name of the field. This is used as the key when registering the field with react-hook-form.
+  The name of the field. This is used as the key when registering the field with `react-hook-form`.
 - `onDebouncedChange: (value: string) => void`:
   A function that is called when the input value changes after the debounce time. This function is passed the current input value.
 - `options?: DataItem[]`:

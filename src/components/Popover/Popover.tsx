@@ -34,7 +34,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       ...props
     }: PopoverProps,
     ref,
-  ): JSX.Element => (
+  ) => (
     <HeadlessUIPopover
       as="div"
       className={classNames('relative', className)}

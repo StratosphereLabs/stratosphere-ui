@@ -1,6 +1,6 @@
 # FullScreenLoader
 
-The `FullScreenLoader` component is a React component that displays a full-screen loader with a progress bar using the `Progress` component from the react-daisyui library.
+The `FullScreenLoader` component is a React component that displays a full-screen loader with a progress bar using the `Progress` component from the DaisyUI library.
 
 ## Props
 

@@ -18,10 +18,7 @@ export interface DropdownMenuProps
 }
 
 export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
-  (
-    { buttonProps, className, items, menuClassName, ...props },
-    ref,
-  ): JSX.Element => (
+  ({ buttonProps, className, items, menuClassName, ...props }, ref) => (
     <Menu
       as="div"
       className={classNames('relative', className)}

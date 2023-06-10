@@ -1,6 +1,6 @@
 # FormControl
 
-The `FormControl` component is a React component that provides a form control with built-in functionality for handling user input and displaying errors. It is designed to work with the react-hook-form library, and it wraps the `Input` component from the react-daisyui library to provide a styled input field.
+The `FormControl` component is a React component that provides a form control with built-in functionality for handling user input and displaying errors. It is designed to work with the `react-hook-form` library, and it wraps the `Input` component from the DaisyUI library to provide a styled input field.
 
 ## Props
 
@@ -11,7 +11,7 @@ The `FormControl` component accepts the following props:
 - `color?: string`:
   The color variant to use for the input field. If not specified, the color will be set to 'ghost'.
 - `controllerProps?: Omit<UseControllerProps<Values>, 'name'>`:
-  Props to be passed to the `useController` hook from react-hook-form.
+  Props to be passed to the `useController` hook from `react-hook-form`.
 - `elementLeft?: ReactNode`:
   A React node to render to the left of the input field.
 - `elementRight?: ReactNode`:
@@ -60,4 +60,4 @@ export const MyForm = () => {
 };
 ```
 
-In this example, the `FormControl` component will render an input field with a label that reads "Email Address". When the user enters text into the field, react-hook-form will handle updating the form state. If there is an error with the field (such as an invalid email address), the `FormError` component will display the error message.
+In this example, the `FormControl` component will render an input field with a label that reads "Email Address". When the user enters text into the field, `react-hook-form` will handle updating the form state. If there is an error with the field (such as an invalid email address), the `FormError` component will display the error message.
