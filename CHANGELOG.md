@@ -1,6 +1,10 @@
 # CHANGELOG.md
 
-## 1.0.2 (2023-06-08)
+## 1.0.3 (2023-06-09)
+
+- Added `Avatar` component.
+
+## 1.0.2 (2023-06-09)
 
 - Added `Alert` component.
 - Added `Button` component.
