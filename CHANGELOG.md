@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.0.4 (2023-06-13)
+
+- Fixed props for `Link` component.
+
 ## 1.0.3 (2023-06-09)
 
 - Added `Avatar` component.

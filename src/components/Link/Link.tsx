@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { HTMLAttributes } from 'react';
+import { HTMLProps } from 'react';
 
 export const LINK_COLORS = [
   'neutral',
@@ -14,7 +14,7 @@ export const LINK_COLORS = [
 
 export type LinkColor = (typeof LINK_COLORS)[number];
 
-export interface LinkProps extends HTMLAttributes<HTMLAnchorElement> {
+export interface LinkProps extends HTMLProps<HTMLAnchorElement> {
   color?: LinkColor;
   hover?: boolean;
 }
