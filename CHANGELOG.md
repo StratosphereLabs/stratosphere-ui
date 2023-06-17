@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 1.0.5 (2023-06-16)
+
+- Fixed default color of `TypeaheadSelect` input field.
+- Added `menuSize` prop to `Select`, `TypeaheadSelect`, and `DropdownMenu` components.
+
 ## 1.0.4 (2023-06-13)
 
 - Fixed props for `Link` component.

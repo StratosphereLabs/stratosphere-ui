@@ -5,7 +5,7 @@ import { FieldValues, useController } from 'react-hook-form';
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor } from '../../hooks';
 import { Button, ButtonColor } from '../Button';
-import { DropdownMenuItem } from '../DropdownMenu';
+import { DropdownMenuItem, MenuSize } from '../DropdownMenu';
 import { FormFieldProps, FormLabel, FormValueMode } from '../Form';
 import { FormSelectMulti } from '../Form/FormSelectMulti';
 import { FormSelectSingle } from '../Form/FormSelectSingle';
@@ -25,6 +25,7 @@ export interface SelectProps<
   formValueMode?: FormValueMode;
   getItemText: (data: DataItem) => string;
   menuClassName?: string;
+  menuSize?: MenuSize;
   multi?: true;
   options?: DataItem[];
   showDirty?: boolean;
@@ -43,6 +44,7 @@ export const Select = <
   isRequired,
   labelText,
   menuClassName,
+  menuSize,
   multi,
   name,
   options: optionsArray,
@@ -103,6 +105,7 @@ export const Select = <
           as="ul"
           className={classNames(
             'menu rounded-box absolute z-50 bg-base-100 p-2 shadow-xl',
+            menuSize && `menu-${menuSize}`,
             menuClassName,
           )}
         >
