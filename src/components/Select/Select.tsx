@@ -10,6 +10,7 @@ import { FormFieldProps, FormLabel, FormValueMode } from '../Form';
 import { FormSelectMulti } from '../Form/FormSelectMulti';
 import { FormSelectSingle } from '../Form/FormSelectSingle';
 import { useSelectFormSync } from '../Form/useSelectFormSync';
+import { ChevronDownIcon } from '../Icons';
 
 export interface SelectProps<
   DataItem extends GenericDataType,
@@ -24,6 +25,7 @@ export interface SelectProps<
   dropdownIcon?: ReactNode;
   formValueMode?: FormValueMode;
   getItemText: (data: DataItem) => string;
+  hideDropdownIcon?: true;
   menuClassName?: string;
   menuSize?: MenuSize;
   multi?: true;
@@ -41,6 +43,7 @@ export const Select = <
   dropdownIcon,
   formValueMode,
   getItemText,
+  hideDropdownIcon,
   isRequired,
   labelText,
   menuClassName,
@@ -79,17 +82,19 @@ export const Select = <
         ) : null}
         <Listbox.Button
           as={Button}
-          className="w-full"
+          className="w-full flex-nowrap"
           color={fieldColor ?? buttonColor}
           loading={optionsArray === undefined}
           ref={ref}
         >
-          <span className="truncate">
+          <span className="flex-1 truncate">
             {selectedItems.length > 0
               ? selectedItems.map(item => getItemText(item)).join(', ')
               : 'Select an item'}
           </span>
-          {dropdownIcon}
+          {hideDropdownIcon !== true
+            ? dropdownIcon ?? <ChevronDownIcon className="h-4 w-4" />
+            : null}
         </Listbox.Button>
       </div>
       <Transition

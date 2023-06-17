@@ -4,6 +4,7 @@
 
 - Fixed default color of `TypeaheadSelect` input field.
 - Added `menuSize` prop to `Select`, `TypeaheadSelect`, and `DropdownMenu` components.
+- Added dropdown icon to `Select` component along with a `hideDropdown` prop to hide the icon.
 
 ## 1.0.4 (2023-06-13)
 
