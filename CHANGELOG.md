@@ -1,5 +1,15 @@
 # CHANGELOG.md
 
+## 1.0.5 (2023-06-16)
+
+- Fixed default color of `TypeaheadSelect` input field.
+- Added `menuSize` prop to `Select`, `TypeaheadSelect`, and `DropdownMenu` components.
+- Added dropdown icon to `Select` component along with a `hideDropdown` prop to hide the icon.
+
+## 1.0.4 (2023-06-13)
+
+- Fixed props for `Link` component.
+
 ## 1.0.3 (2023-06-09)
 
 - Added `Avatar` component.

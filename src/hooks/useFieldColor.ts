@@ -7,9 +7,7 @@ export const useFieldColor = <Values extends FieldValues>(
   const {
     fieldState: { error, isDirty },
   } = useController({ name });
-  return error === undefined
-    ? isDirty && showDirty
-      ? 'success'
-      : null
-    : 'error';
+  if (error !== undefined) return 'error';
+  if (showDirty && isDirty) return 'success';
+  return null;
 };

@@ -5,11 +5,12 @@ import { FieldValues, useController } from 'react-hook-form';
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor } from '../../hooks';
 import { Button, ButtonColor } from '../Button';
-import { DropdownMenuItem } from '../DropdownMenu';
+import { DropdownMenuItem, MenuSize } from '../DropdownMenu';
 import { FormFieldProps, FormLabel, FormValueMode } from '../Form';
 import { FormSelectMulti } from '../Form/FormSelectMulti';
 import { FormSelectSingle } from '../Form/FormSelectSingle';
 import { useSelectFormSync } from '../Form/useSelectFormSync';
+import { ChevronDownIcon } from '../Icons';
 
 export interface SelectProps<
   DataItem extends GenericDataType,
@@ -24,7 +25,9 @@ export interface SelectProps<
   dropdownIcon?: ReactNode;
   formValueMode?: FormValueMode;
   getItemText: (data: DataItem) => string;
+  hideDropdownIcon?: true;
   menuClassName?: string;
+  menuSize?: MenuSize;
   multi?: true;
   options?: DataItem[];
   showDirty?: boolean;
@@ -40,9 +43,11 @@ export const Select = <
   dropdownIcon,
   formValueMode,
   getItemText,
+  hideDropdownIcon,
   isRequired,
   labelText,
   menuClassName,
+  menuSize,
   multi,
   name,
   options: optionsArray,
@@ -77,17 +82,19 @@ export const Select = <
         ) : null}
         <Listbox.Button
           as={Button}
-          className="w-full"
+          className="w-full flex-nowrap"
           color={fieldColor ?? buttonColor}
           loading={optionsArray === undefined}
           ref={ref}
         >
-          <span className="truncate">
+          <span className="flex-1 truncate">
             {selectedItems.length > 0
               ? selectedItems.map(item => getItemText(item)).join(', ')
               : 'Select an item'}
           </span>
-          {dropdownIcon}
+          {hideDropdownIcon !== true
+            ? dropdownIcon ?? <ChevronDownIcon className="h-4 w-4" />
+            : null}
         </Listbox.Button>
       </div>
       <Transition
@@ -103,6 +110,7 @@ export const Select = <
           as="ul"
           className={classNames(
             'menu rounded-box absolute z-50 bg-base-100 p-2 shadow-xl',
+            menuSize && `menu-${menuSize}`,
             menuClassName,
           )}
         >

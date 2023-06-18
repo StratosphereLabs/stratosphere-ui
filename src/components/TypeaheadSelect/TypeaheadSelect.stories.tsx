@@ -102,7 +102,7 @@ export const MultiSelect: Story<
 > = args => {
   const methods = useForm();
   return (
-    <Form className="h-80 w-full" methods={methods} onFormSubmit={() => null}>
+    <Form className="h-80 w-64" methods={methods} onFormSubmit={() => null}>
       <TypeaheadSelect {...args} />
     </Form>
   );
@@ -140,7 +140,7 @@ export const MultiSelectWithDefaultValues: Story<
     },
   });
   return (
-    <Form className="h-80 w-full" methods={methods} onFormSubmit={() => null}>
+    <Form className="h-80 w-64" methods={methods} onFormSubmit={() => null}>
       <TypeaheadSelect {...args} />
     </Form>
   );

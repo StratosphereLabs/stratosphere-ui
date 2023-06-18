@@ -2,7 +2,11 @@ import { Menu, MenuProps, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { Fragment, forwardRef } from 'react';
 import { Button, ButtonProps } from '../Button';
-import { DropdownMenuItem, DropdownMenuItemProps } from './DropdownMenuItem';
+import {
+  DropdownMenuItem,
+  DropdownMenuItemProps,
+  MenuSize,
+} from './DropdownMenuItem';
 
 export interface DropdownItem
   extends Omit<DropdownMenuItemProps, 'active' | 'disabled' | 'ref'> {
@@ -15,10 +19,14 @@ export interface DropdownMenuProps
   className?: string;
   items: DropdownItem[];
   menuClassName?: string;
+  menuSize?: MenuSize;
 }
 
 export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
-  ({ buttonProps, className, items, menuClassName, ...props }, ref) => (
+  (
+    { buttonProps, className, items, menuClassName, menuSize, ...props },
+    ref,
+  ) => (
     <Menu
       as="div"
       className={classNames('relative', className)}
@@ -39,6 +47,7 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
           as="ul"
           className={classNames(
             'menu absolute z-50 bg-base-100 shadow-xl',
+            menuSize && `menu-${menuSize}`,
             menuClassName,
           )}
         >

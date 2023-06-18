@@ -5,7 +5,7 @@ import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor, UseTypeaheadQueryOptions } from '../../hooks';
 import { Badge, BadgeColor } from '../Badge';
-import { DropdownMenuItem } from '../DropdownMenu';
+import { DropdownMenuItem, MenuSize } from '../DropdownMenu';
 import { FormError, FormFieldProps, FormLabel, FormValueMode } from '../Form';
 import { ComboboxMulti } from '../Form/FormComboboxMulti';
 import { ComboboxSingle } from '../Form/FormComboboxSingle';
@@ -26,6 +26,7 @@ export interface TypeaheadSelectProps<
   getItemText: (data: DataItem) => string;
   inputPlaceholder?: string;
   menuClassName?: string;
+  menuSize?: MenuSize;
   multi?: true;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
 }
@@ -47,6 +48,7 @@ export const TypeaheadSelect = <
   isRequired,
   labelText,
   menuClassName,
+  menuSize,
   multi,
   name,
   onDebouncedChange,
@@ -114,7 +116,7 @@ export const TypeaheadSelect = <
             className={classNames(
               'input-bordered input flex items-center gap-1 overflow-x-scroll scrollbar-none',
               !disabled && 'cursor-pointer',
-              `input-${fieldColor ?? 'ghost'}`,
+              fieldColor && `input-${fieldColor}`,
             )}
             onBlur={event => {
               if (event.relatedTarget === null) setShowDropdown(false);
@@ -167,6 +169,7 @@ export const TypeaheadSelect = <
           as="ul"
           className={classNames(
             'menu rounded-box absolute z-50 bg-base-100 p-2 shadow-xl',
+            menuSize && `menu-${menuSize}`,
             menuClassName,
           )}
           ref={dropdownRef}
