@@ -118,8 +118,8 @@ export const Select = <
             <Listbox.Option as={Fragment} key={option.id} value={option}>
               {({ active, disabled, selected }) => (
                 <DropdownMenuItem
-                  active={active}
                   disabled={disabled}
+                  focus={active}
                   selected={selected}
                 >
                   {getItemText(option)}

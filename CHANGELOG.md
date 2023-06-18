@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.0.6 (2023-06-18)
+
+- Fixed menu item focus color for `DropdownMenu`, `Select`, and `TypeaheadSelect` components.
+
 ## 1.0.5 (2023-06-16)
 
 - Fixed default color of `TypeaheadSelect` input field.

@@ -203,11 +203,11 @@ export const TypeaheadSelect = <
                 <Combobox.Option as={Fragment} key={option.id} value={option}>
                   {({ active, disabled, selected }) => (
                     <DropdownMenuItem
-                      active={active}
                       className={classNames(
                         index === 0 && enableBadges && 'mt-2',
                       )}
                       disabled={disabled}
+                      focus={active}
                       selected={multi === true ? selected : undefined}
                     >
                       {getItemText(option)}
