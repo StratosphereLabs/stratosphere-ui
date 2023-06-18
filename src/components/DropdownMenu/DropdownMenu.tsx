@@ -55,8 +55,8 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
             <Menu.Item as={Fragment} key={id}>
               {({ active, disabled }) => (
                 <DropdownMenuItem
-                  active={active}
                   disabled={disabled}
+                  focus={active}
                   {...itemProps}
                 />
               )}

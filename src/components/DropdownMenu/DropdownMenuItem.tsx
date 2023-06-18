@@ -11,6 +11,7 @@ export interface DropdownMenuItemProps extends HTMLProps<HTMLAnchorElement> {
   bordered?: boolean;
   borderOnHover?: boolean;
   disabled?: boolean;
+  focus?: boolean;
   selected?: boolean;
   subMenu?: ReactNode;
 }
@@ -27,6 +28,7 @@ export const DropdownMenuItem = forwardRef<
       children,
       className,
       disabled,
+      focus,
       selected,
       subMenu,
       ...props
@@ -44,6 +46,7 @@ export const DropdownMenuItem = forwardRef<
       <a
         className={classNames(
           active && 'active',
+          focus && 'focus',
           !disabled && 'cursor-pointer',
         )}
         ref={ref}
