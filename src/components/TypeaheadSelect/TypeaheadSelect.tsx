@@ -5,11 +5,11 @@ import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor, UseTypeaheadQueryOptions } from '../../hooks';
 import { Badge, BadgeColor } from '../Badge';
-import { DropdownMenuItem, MenuSize } from '../DropdownMenu';
 import { FormError, FormFieldProps, FormLabel, FormValueMode } from '../Form';
 import { ComboboxMulti } from '../Form/FormComboboxMulti';
 import { ComboboxSingle } from '../Form/FormComboboxSingle';
 import { useSelectFormSync } from '../Form/useSelectFormSync';
+import { Menu, MenuItem, MenuSize } from '../Menu';
 import { useTypeaheadSelect } from './useTypeaheadSelect';
 
 export interface TypeaheadSelectProps<
@@ -166,13 +166,13 @@ export const TypeaheadSelect = <
       </div>
       {showDropdown ? (
         <Combobox.Options
-          as="ul"
+          as={Menu}
           className={classNames(
-            'menu rounded-box absolute z-50 bg-base-100 p-2 shadow-xl',
-            menuSize && `menu-${menuSize}`,
+            'rounded-box absolute z-50 bg-base-100 p-2 shadow-xl',
             menuClassName,
           )}
           ref={dropdownRef}
+          size={menuSize}
           static
         >
           {enableBadges ? (
@@ -192,17 +192,17 @@ export const TypeaheadSelect = <
           ) : null}
           {isLoading ? (
             <progress
-              className={classNames('progress w-56', enableBadges && 'mt-2')}
+              className={classNames('progress w-full', enableBadges && 'mt-2')}
             />
           ) : null}
           {!isLoading && optionsArray?.length === 0 ? (
-            <DropdownMenuItem disabled>No Results</DropdownMenuItem>
+            <MenuItem disabled>No Results</MenuItem>
           ) : null}
           {!isLoading
             ? optionsArray?.map((option, index) => (
                 <Combobox.Option as={Fragment} key={option.id} value={option}>
                   {({ active, disabled, selected }) => (
-                    <DropdownMenuItem
+                    <MenuItem
                       className={classNames(
                         index === 0 && enableBadges && 'mt-2',
                       )}
@@ -211,7 +211,7 @@ export const TypeaheadSelect = <
                       selected={multi === true ? selected : undefined}
                     >
                       {getItemText(option)}
-                    </DropdownMenuItem>
+                    </MenuItem>
                   )}
                 </Combobox.Option>
               ))

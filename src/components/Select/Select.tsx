@@ -5,12 +5,12 @@ import { FieldValues, useController } from 'react-hook-form';
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor } from '../../hooks';
 import { Button, ButtonColor } from '../Button';
-import { DropdownMenuItem, MenuSize } from '../DropdownMenu';
 import { FormFieldProps, FormLabel, FormValueMode } from '../Form';
 import { FormSelectMulti } from '../Form/FormSelectMulti';
 import { FormSelectSingle } from '../Form/FormSelectSingle';
 import { useSelectFormSync } from '../Form/useSelectFormSync';
 import { ChevronDownIcon } from '../Icons';
+import { Menu, MenuItem, MenuSize } from '../Menu';
 
 export interface SelectProps<
   DataItem extends GenericDataType,
@@ -107,23 +107,23 @@ export const Select = <
         leaveTo="transform scale-95 opacity-0"
       >
         <Listbox.Options
-          as="ul"
+          as={Menu}
+          size={menuSize}
           className={classNames(
-            'menu rounded-box absolute z-50 bg-base-100 p-2 shadow-xl',
-            menuSize && `menu-${menuSize}`,
+            'rounded-box absolute z-50 bg-base-100 p-2 shadow-xl',
             menuClassName,
           )}
         >
           {optionsArray?.map(option => (
             <Listbox.Option as={Fragment} key={option.id} value={option}>
               {({ active, disabled, selected }) => (
-                <DropdownMenuItem
+                <MenuItem
                   disabled={disabled}
                   focus={active}
                   selected={selected}
                 >
                   {getItemText(option)}
-                </DropdownMenuItem>
+                </MenuItem>
               )}
             </Listbox.Option>
           ))}
