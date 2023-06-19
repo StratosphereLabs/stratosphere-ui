@@ -12,6 +12,7 @@ export * from './Icons';
 export * from './Link';
 export * from './Loading';
 export * from './LoadingCard';
+export * from './Menu';
 export * from './Modal';
 export * from './Pagination';
 export * from './PasswordInput';

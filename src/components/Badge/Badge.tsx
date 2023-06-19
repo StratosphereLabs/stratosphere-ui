@@ -53,7 +53,7 @@ export const Badge = ({
     {...props}
   >
     {Icon !== undefined ? <Icon /> : null}
-    <div className="flex-1 truncate text-sm font-semibold">{children}</div>
+    <div className="flex-1 truncate font-semibold">{children}</div>
     {dismissable === true ? (
       <Button
         color="ghost"

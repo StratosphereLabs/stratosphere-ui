@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 1.0.7 (2023-06-18)
+
+- Added `Menu` component.
+- Fixed text size in `Badge` component.
+
 ## 1.0.6 (2023-06-18)
 
 - Fixed menu item focus color for `DropdownMenu`, `Select`, and `TypeaheadSelect` components.

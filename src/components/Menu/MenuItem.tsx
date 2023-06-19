@@ -2,11 +2,7 @@ import classNames from 'classnames';
 import { HTMLProps, ReactNode, forwardRef } from 'react';
 import { CheckIcon } from '../Icons';
 
-export const MENU_SIZES = ['xs', 'sm', 'md', 'lg'] as const;
-
-export type MenuSize = (typeof MENU_SIZES)[number];
-
-export interface DropdownMenuItemProps extends HTMLProps<HTMLAnchorElement> {
+export interface MenuItemProps extends HTMLProps<HTMLAnchorElement> {
   active?: boolean;
   bordered?: boolean;
   borderOnHover?: boolean;
@@ -16,10 +12,7 @@ export interface DropdownMenuItemProps extends HTMLProps<HTMLAnchorElement> {
   subMenu?: ReactNode;
 }
 
-export const DropdownMenuItem = forwardRef<
-  HTMLAnchorElement,
-  DropdownMenuItemProps
->(
+export const MenuItem = forwardRef<HTMLAnchorElement, MenuItemProps>(
   (
     {
       active,
@@ -64,4 +57,4 @@ export const DropdownMenuItem = forwardRef<
   ),
 );
 
-DropdownMenuItem.displayName = 'DropdownMenuItem';
+MenuItem.displayName = 'MenuItem';
