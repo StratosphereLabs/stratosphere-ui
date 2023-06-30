@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.0.8 (2023-06-29)
+
+- Added `bordered`, `color`, `dropdownInputClassName`, `inputClassName`, and `size` props to `TypeaheadSelect` component.
+
 ## 1.0.7 (2023-06-18)
 
 - Added `Menu` component.

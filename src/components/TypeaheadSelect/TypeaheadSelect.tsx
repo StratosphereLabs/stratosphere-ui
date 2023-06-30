@@ -5,7 +5,14 @@ import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor, UseTypeaheadQueryOptions } from '../../hooks';
 import { Badge, BadgeColor } from '../Badge';
-import { FormError, FormFieldProps, FormLabel, FormValueMode } from '../Form';
+import {
+  FormError,
+  FormFieldProps,
+  FormLabel,
+  FormValueMode,
+  InputColor,
+  InputSize,
+} from '../Form';
 import { ComboboxMulti } from '../Form/FormComboboxMulti';
 import { ComboboxSingle } from '../Form/FormComboboxSingle';
 import { useSelectFormSync } from '../Form/useSelectFormSync';
@@ -18,17 +25,22 @@ export interface TypeaheadSelectProps<
 > extends UseTypeaheadQueryOptions<DataItem>,
     FormFieldProps<Values> {
   badgeColor?: BadgeColor;
+  bordered?: boolean;
+  color?: InputColor;
   className?: string;
+  dropdownInputClassName?: string;
   disabled?: boolean;
   disableSingleSelectBadge?: true;
   formValueMode?: FormValueMode;
   getBadgeText?: (item: DataItem) => string;
   getItemText: (data: DataItem) => string;
+  inputClassName?: string;
   inputPlaceholder?: string;
   menuClassName?: string;
   menuSize?: MenuSize;
   multi?: true;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
+  size?: InputSize;
 }
 
 export const TypeaheadSelect = <
@@ -36,14 +48,18 @@ export const TypeaheadSelect = <
   Values extends FieldValues,
 >({
   badgeColor,
+  bordered,
   className,
+  color,
   controllerProps,
   debounceTime,
   disabled,
   disableSingleSelectBadge,
+  dropdownInputClassName,
   formValueMode,
   getBadgeText,
   getItemText,
+  inputClassName,
   inputPlaceholder,
   isRequired,
   labelText,
@@ -56,6 +72,7 @@ export const TypeaheadSelect = <
   options: optionsArray,
   placeholder,
   showDirty,
+  size,
 }: TypeaheadSelectProps<DataItem, Values>) => {
   const {
     fieldState: { error },
@@ -92,6 +109,7 @@ export const TypeaheadSelect = <
   });
   const { setFocus } = useFormContext();
   const fieldColor = useFieldColor(name, showDirty);
+  const currentColor = fieldColor ?? color ?? undefined;
   const enableBadges = disableSingleSelectBadge === undefined || multi === true;
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
   return (
@@ -114,9 +132,12 @@ export const TypeaheadSelect = <
         {enableBadges ? (
           <div
             className={classNames(
-              'input-bordered input flex items-center gap-1 overflow-x-scroll scrollbar-none',
+              'input flex items-center gap-1 overflow-x-scroll scrollbar-none',
+              bordered && `input-bordered`,
               !disabled && 'cursor-pointer',
-              fieldColor && `input-${fieldColor}`,
+              currentColor && `input-${currentColor}`,
+              size && `input-${size}`,
+              inputClassName,
             )}
             onBlur={event => {
               if (event.relatedTarget === null) setShowDropdown(false);
@@ -148,7 +169,13 @@ export const TypeaheadSelect = <
           </div>
         ) : (
           <Combobox.Input
-            className="input-bordered input w-full"
+            className={classNames(
+              'input w-full',
+              bordered && `input-bordered`,
+              currentColor && `input-${currentColor}`,
+              size && `input-${size}`,
+              inputClassName,
+            )}
             onChange={({ target: { value } }) => {
               setQuery(value);
               if (value.length > 0) {
@@ -177,7 +204,7 @@ export const TypeaheadSelect = <
         >
           {enableBadges ? (
             <Combobox.Input
-              className="input-bordered input w-full"
+              className={classNames('input w-full', dropdownInputClassName)}
               onChange={({ target: { value } }) => {
                 setQuery(value);
               }}
