@@ -19,4 +19,9 @@ module.exports = {
   core: {
     builder: '@storybook/builder-vite',
   },
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      sourcemap: false,
+    });
+  },
 };

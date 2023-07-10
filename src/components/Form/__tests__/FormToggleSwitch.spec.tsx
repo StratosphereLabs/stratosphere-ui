@@ -22,14 +22,14 @@ describe('FormToggleSwitch', () => {
     expect(screen.getByText('Test Field')).toBeInTheDocument();
   });
 
-  it('should call onChange prop when the toggle is clicked', () => {
+  it('should call onChange prop when the toggle is clicked', async () => {
     render(
       <FormProvider defaultValues={{ testField: null }}>
         <FormToggleSwitch {...defaultProps} />
       </FormProvider>,
     );
     const toggle = screen.getByRole('checkbox');
-    userEvent.click(toggle);
+    await userEvent.click(toggle);
     expect(defaultProps.onChange).toHaveBeenCalled();
   });
 

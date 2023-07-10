@@ -11,7 +11,7 @@
     "prettier",
     "plugin:mdx/recommended"
   ],
-  "ignorePatterns": ["dist", "node_modules"],
+  "ignorePatterns": ["coverage", "dist", "node_modules", "storybook-static"],
   "overrides": [
     {
       "files": "*.stories.tsx",

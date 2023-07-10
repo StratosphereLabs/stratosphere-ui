@@ -24,14 +24,14 @@ describe('FormRadio', () => {
     });
   });
 
-  it('sets the value of the selected radio button', () => {
+  it('sets the value of the selected radio button', async () => {
     const { rerender } = render(
       <FormProvider defaultValues={{ radio: null }}>
         <FormRadio name="radio" options={options} />
       </FormProvider>,
     );
     const option1 = screen.getByLabelText('Option 1');
-    userEvent.click(option1);
+    await userEvent.click(option1);
     expect(option1).toBeChecked();
     expect(option1).toHaveAttribute('value', 'option1');
     rerender(

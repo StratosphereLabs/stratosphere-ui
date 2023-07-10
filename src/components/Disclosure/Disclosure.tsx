@@ -33,7 +33,7 @@ export const Disclosure = forwardRef<HTMLDivElement, DisclosureProps>(
     <HeadlessUIDisclosure
       as="div"
       className={classNames(
-        'border border-base-300 bg-base-100',
+        'border border-base-300',
         rounded && 'rounded-box',
         className,
       )}
