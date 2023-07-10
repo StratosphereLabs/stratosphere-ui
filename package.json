@@ -32,7 +32,7 @@
     "preview": "vite preview",
     "storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 6006",
     "build-storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider build-storybook",
-    "deploy-storybook": "storybook-to-ghpages",
+    "deploy-storybook": "cross-env NODE_OPTIONS=--max-old-space-size=4096 storybook-to-ghpages",
     "prepack": "npm run build",
     "format": "prettier --config ./.prettierrc -w src vite.config.ts",
     "test": "vitest run --coverage"
