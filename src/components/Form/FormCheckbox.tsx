@@ -42,13 +42,16 @@ export const FormCheckbox = <Values extends FieldValues>({
   size,
   ...props
 }: FormCheckboxProps<Values>) => {
-  const { field } = useController({ name, ...controllerProps });
+  const {
+    field: { value, ...field },
+  } = useController({ name, ...controllerProps });
   const fieldColor = useFieldColor(name, showDirty);
   const currentColor = fieldColor ?? color ?? undefined;
   return (
     <div className={classNames('flex items-center gap-2', className)}>
       <input
         type="checkbox"
+        checked={value}
         className={classNames(
           'checkbox',
           currentColor && `checkbox-${currentColor}`,

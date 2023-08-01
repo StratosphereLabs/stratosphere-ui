@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.0.9 (2023-07-31)
+
+- Fixed issue with default value not working in `FormCheckbox` component.
+
 ## 1.0.8 (2023-06-29)
 
 - Added `bordered`, `color`, `dropdownInputClassName`, `inputClassName`, and `size` props to `TypeaheadSelect` component.
