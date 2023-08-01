@@ -4,7 +4,7 @@ import { Fragment, ReactNode, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor } from '../../hooks';
-import { Button, ButtonColor } from '../Button';
+import { Button, ButtonColor, ButtonProps } from '../Button';
 import { FormFieldProps, FormLabel, FormValueMode } from '../Form';
 import { FormSelectMulti } from '../Form/FormSelectMulti';
 import { FormSelectSingle } from '../Form/FormSelectSingle';
@@ -20,6 +20,7 @@ export interface SelectProps<
     'controllerProps' | 'placeholder' | 'showDirty'
   > {
   buttonColor?: ButtonColor;
+  buttonProps?: ButtonProps;
   className?: string;
   disabled?: boolean;
   dropdownIcon?: ReactNode;
@@ -38,6 +39,11 @@ export const Select = <
   Values extends FieldValues,
 >({
   buttonColor,
+  buttonProps: {
+    className: buttonClassName,
+    color: buttonPropsColor,
+    ...buttonProps
+  } = {},
   className,
   disabled,
   dropdownIcon,
@@ -82,10 +88,11 @@ export const Select = <
         ) : null}
         <Listbox.Button
           as={Button}
-          className="w-full flex-nowrap"
-          color={fieldColor ?? buttonColor}
+          className={classNames('w-full flex-nowrap', buttonClassName)}
+          color={fieldColor ?? buttonPropsColor ?? buttonColor}
           loading={optionsArray === undefined}
           ref={ref}
+          {...buttonProps}
         >
           <span className="flex-1 truncate">
             {selectedItems.length > 0
