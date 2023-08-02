@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.0.11 (2023-08-01)
+
+- Fixed `Badge` close button size.
+
 ## 1.0.10 (2023-08-01)
 
 - Added `buttonProps` prop to `Select` component to allow customization of underlying button in `Select` component.
