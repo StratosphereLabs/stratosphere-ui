@@ -1,7 +1,7 @@
 import { RadioGroup, RadioGroupProps } from '@headlessui/react';
 import classNames from 'classnames';
 import { ReactNode } from 'react';
-import { FieldValues, useController } from 'react-hook-form';
+import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { FormLabel } from './FormLabel';
 import { FormFieldProps } from './types';
 
@@ -24,14 +24,17 @@ export const FormRadioGroup = <Values extends FieldValues>({
   name,
   ...props
 }: FormRadioGroupProps<Values>) => {
+  const { setValue } = useFormContext();
   const {
-    field: { onChange, value },
+    field: { value },
   } = useController({ name, ...controllerProps });
   return (
     <RadioGroup
       className={classNames('join', className)}
       name={name}
-      onChange={onChange}
+      onChange={val => {
+        setValue<string>(name, val);
+      }}
       value={value}
       {...props}
     >
