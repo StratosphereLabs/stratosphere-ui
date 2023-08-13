@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.1.0 (2023-08-12)
+
+- Removed `div` surrounding `Modal` children.
+
 ## 1.0.8 (2023-06-29)
 
 - Added `bordered`, `color`, `dropdownInputClassName`, `inputClassName`, and `size` props to `TypeaheadSelect` component.
