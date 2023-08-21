@@ -1,6 +1,6 @@
 {
   "name": "stratosphere-ui",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "React component library for all Stratosphere Labs user interfaces",
   "type": "module",
   "files": [
@@ -38,7 +38,7 @@
     "test": "vitest run --coverage"
   },
   "devDependencies": {
-    "@headlessui/react": "1.7.14",
+    "@headlessui/react": "1.7.16",
     "@hookform/resolvers": "^3.1.1",
     "@mdx-js/react": "^2.3.0",
     "@storybook/addon-actions": "^6.5.15",
@@ -68,7 +68,7 @@
     "autoprefixer": "^10.4.14",
     "classnames": "^2.3.2",
     "cross-env": "^7.0.3",
-    "daisyui": "^3.2.1",
+    "daisyui": "3.5.1",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard-with-typescript": "^36.0.0",

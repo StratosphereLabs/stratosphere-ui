@@ -1,8 +1,24 @@
 # CHANGELOG.md
 
+## 1.1.1 (2023-08-21)
+
+- Added back changes from versions 1.0.9 through 1.0.11.
+
 ## 1.1.0 (2023-08-12)
 
 - Removed `div` surrounding `Modal` children.
+
+## 1.0.11 (2023-08-01)
+
+- Fixed `Badge` close button size.
+
+## 1.0.10 (2023-08-01)
+
+- Added `buttonProps` prop to `Select` component to allow customization of underlying button in `Select` component.
+
+## 1.0.9 (2023-07-31)
+
+- Fixed issue with default value not working in `FormCheckbox` component.
 
 ## 1.0.8 (2023-06-29)
 
