@@ -30,3 +30,21 @@ Default.args = {
   labelText: 'Label Text',
   name: 'field1',
 };
+
+export const WithDefaultValue: Story<FormCheckboxProps<FormValues>> = args => {
+  const methods = useForm({
+    defaultValues: {
+      field1: true,
+    },
+  });
+  return (
+    <Form methods={methods} onFormSubmit={() => null}>
+      <FormCheckbox {...args} />
+    </Form>
+  );
+};
+
+WithDefaultValue.args = {
+  labelText: 'Label Text',
+  name: 'field1',
+};

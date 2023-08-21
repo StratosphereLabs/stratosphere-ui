@@ -56,6 +56,7 @@ export const Badge = ({
     <div className="flex-1 truncate font-semibold">{children}</div>
     {dismissable === true ? (
       <Button
+        className="px-1"
         color="ghost"
         size="xs"
         onClick={event => {

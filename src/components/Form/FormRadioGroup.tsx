@@ -1,7 +1,7 @@
 import { RadioGroup, RadioGroupProps } from '@headlessui/react';
 import classNames from 'classnames';
 import { ReactNode } from 'react';
-import { FieldValues, useController } from 'react-hook-form';
+import { FieldValues, Path, PathValue, useController } from 'react-hook-form';
 import { FormLabel } from './FormLabel';
 import { FormFieldProps } from './types';
 
@@ -31,7 +31,7 @@ export const FormRadioGroup = <Values extends FieldValues>({
     <RadioGroup
       className={classNames('join', className)}
       name={name}
-      onChange={onChange}
+      onChange={(val: PathValue<Values, Path<Values>>) => onChange(val)}
       value={value}
       {...props}
     >
