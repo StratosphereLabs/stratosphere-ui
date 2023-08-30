@@ -12,7 +12,11 @@ export default {
   },
 } as Meta;
 
-export const Default: Story<MenuItemProps> = ({ ref, ...args }) => (
+export const Default: Story<MenuItemProps> = ({
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+  ref,
+  ...args
+}: MenuItemProps) => (
   <div className="flex flex-col gap-4">
     <Menu className="rounded-box bg-base-100 p-2">
       <MenuItem {...args}>Default</MenuItem>

@@ -57,7 +57,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         <Dialog.Title as="h3" className="text-lg font-bold">
           {title}
         </Dialog.Title>
-        <div className="py-4">{children}</div>
+        {children}
         {actionButtons.length > 0 ? (
           <div className="modal-action">
             {actionButtons.map((buttonProps, index) => (

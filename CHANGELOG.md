@@ -1,5 +1,18 @@
 # CHANGELOG.md
 
+## 1.2.0 (2023-08-30)
+
+- Added `ButtonArray` component that renders an array of Buttons and can collapse into a Dropdown menu.
+- Updated all dependencies.
+
+## 1.1.1 (2023-08-21)
+
+- Added back changes from versions 1.0.9 through 1.0.11.
+
+## 1.1.0 (2023-08-12)
+
+- Removed `div` surrounding `Modal` children.
+
 ## 1.0.11 (2023-08-01)
 
 - Fixed `Badge` close button size.
