@@ -9,7 +9,6 @@ exports[`FormCheckbox > renders component 1`] = `
       class="checkbox"
       name="checkbox"
       type="checkbox"
-      value="false"
     />
     <div
       class="flex flex-col"

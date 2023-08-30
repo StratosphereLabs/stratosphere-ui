@@ -13,7 +13,8 @@ export default {
   },
 } as Meta;
 
-export const Default: Story<ModalProps> = ({ ref, ...args }) => {
+/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+export const Default: Story<ModalProps> = ({ ref, ...args }: ModalProps) => {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -29,7 +30,11 @@ Default.args = {
   title: 'Title',
 };
 
-export const WithActionButtons: Story<ModalProps> = ({ ref, ...args }) => {
+export const WithActionButtons: Story<ModalProps> = ({
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+  ref,
+  ...args
+}: ModalProps) => {
   const [open, setOpen] = useState(false);
   return (
     <>
