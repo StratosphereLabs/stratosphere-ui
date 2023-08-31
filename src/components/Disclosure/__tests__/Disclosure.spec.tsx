@@ -1,4 +1,5 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Disclosure } from '../Disclosure';
 
 describe('Disclosure', () => {
@@ -13,15 +14,15 @@ describe('Disclosure', () => {
     expect(getByRole('button')).toHaveTextContent('Toggle');
   });
 
-  it('expands and collapses the content when the button is clicked', () => {
+  it('expands and collapses the content when the button is clicked', async () => {
     const { getByRole, queryByText } = render(<Disclosure {...defaultProps} />);
     expect(queryByText('Content')).not.toBeInTheDocument();
 
     const button = getByRole('button');
-    fireEvent.click(button);
+    await userEvent.click(button);
     expect(queryByText('Content')).toBeInTheDocument();
 
-    fireEvent.click(button);
+    await userEvent.click(button);
     expect(queryByText('Content')).not.toBeInTheDocument();
   });
 

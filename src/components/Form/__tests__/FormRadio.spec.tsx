@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import FormProvider from './FormProvider';
 import { FormRadio, RadioOption } from '../FormRadio';
@@ -54,7 +54,7 @@ describe('FormRadio', () => {
         <FormRadio name="radio" options={options} />
       </FormProvider>,
     );
-    fireEvent.click(screen.getByLabelText('Option 1'));
+    await userEvent.click(screen.getByLabelText('Option 1'));
     await waitFor(() =>
       expect(screen.getByText('Too short')).toBeInTheDocument(),
     );
