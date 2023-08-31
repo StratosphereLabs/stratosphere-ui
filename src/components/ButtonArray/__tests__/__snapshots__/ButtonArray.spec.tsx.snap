@@ -1,0 +1,151 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ButtonArray Component > renders tooltips when withTooltips is true 1`] = `
+<div>
+  <div>
+    <div
+      class="gap-1 flex"
+    >
+      <div
+        class="tooltip"
+        data-tip="Tooltip 1"
+      >
+        <button
+          class="btn px-1"
+          type="button"
+        >
+          <svg />
+          <span
+            class="sr-only"
+          >
+            Menu 1
+          </span>
+        </button>
+      </div>
+      <div
+        class="tooltip"
+        data-tip="Menu 2"
+      >
+        <button
+          class="btn px-1"
+          type="button"
+        >
+          <svg />
+          <span
+            class="sr-only"
+          >
+            Menu 2
+          </span>
+        </button>
+      </div>
+    </div>
+    <div
+      class="hidden"
+    >
+      <div
+        class="relative"
+        data-headlessui-state=""
+      >
+        <button
+          aria-expanded="false"
+          aria-haspopup="menu"
+          class="btn btn-ghost btn-circle btn-sm"
+          data-headlessui-state=""
+          id="headlessui-menu-button-:r3:"
+          type="button"
+        >
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span
+            class="sr-only"
+          >
+            Actions Menu
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ButtonArray Component > renders without crashing 1`] = `
+<div>
+  <div>
+    <div
+      class="gap-1 flex"
+    >
+      <button
+        class="btn px-1"
+        type="button"
+      >
+        <svg />
+        <span
+          class="sr-only"
+        >
+          Menu 1
+        </span>
+      </button>
+      <button
+        class="btn px-1"
+        type="button"
+      >
+        <svg />
+        <span
+          class="sr-only"
+        >
+          Menu 2
+        </span>
+      </button>
+    </div>
+    <div
+      class="hidden"
+    >
+      <div
+        class="relative"
+        data-headlessui-state=""
+      >
+        <button
+          aria-expanded="false"
+          aria-haspopup="menu"
+          class="btn btn-ghost btn-circle btn-sm"
+          data-headlessui-state=""
+          id="headlessui-menu-button-:r0:"
+          type="button"
+        >
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span
+            class="sr-only"
+          >
+            Actions Menu
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
