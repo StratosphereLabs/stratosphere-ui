@@ -11,6 +11,7 @@ import { Breakpoint } from '../../common';
 import { Button, ButtonProps } from '../Button';
 import { DropdownMenu, DropdownMenuProps } from '../DropdownMenu';
 import { EllipsisVerticalIcon } from '../Icons';
+import { Tooltip } from '../Tooltip';
 import { FLEX_BREAKPOINTS_MAP, HIDDEN_BREAKPOINTS_MAP } from './constants';
 
 export type ButtonOptions = Omit<ButtonProps, 'onClick'> & {
@@ -44,13 +45,7 @@ export const ButtonArray = ({
   withTooltips,
   ...props
 }: ButtonArrayProps): JSX.Element => {
-  const ButtonWrapper = withTooltips
-    ? ({ children, tooltipText }: ButtonWrapperProps) => (
-        <div className="tooltip" data-tip={tooltipText}>
-          {children}
-        </div>
-      )
-    : Fragment;
+  const ButtonWrapper = withTooltips ? Tooltip : Fragment;
   return (
     <div {...props}>
       <div
@@ -72,7 +67,7 @@ export const ButtonArray = ({
             tooltipText,
             ...buttonProps
           }) => (
-            <ButtonWrapper tooltipText={tooltipText ?? menuText} key={key}>
+            <ButtonWrapper text={tooltipText ?? menuText ?? ''} key={key}>
               <Button
                 className={classNames('px-1', buttonClassName)}
                 onClick={onClick}
