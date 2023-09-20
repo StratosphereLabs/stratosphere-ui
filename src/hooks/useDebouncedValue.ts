@@ -1,22 +1,25 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export type UseDebouncedStateValue = string | number | boolean | null;
+
+export type UseDebouncedValueResult<Value extends UseDebouncedStateValue> = {
+  debouncedValue: Value;
+  isDebouncing: boolean;
+};
 
 export const useDebouncedValue = <Value extends UseDebouncedStateValue>(
   value: Value,
   delay: number,
-): [Value, Dispatch<SetStateAction<Value>>, Value, boolean] => {
-  const [currentValue, setCurrentValue] = useState(value);
+): UseDebouncedValueResult<Value> => {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedValue(currentValue);
+      setDebouncedValue(value);
     }, delay);
     return () => {
       clearTimeout(handler);
     };
-  }, [currentValue, delay]);
-  /* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */
-  const isDebouncing = !!currentValue && currentValue !== debouncedValue;
-  return [currentValue, setCurrentValue, debouncedValue, isDebouncing];
+  }, [value, delay]);
+  const isDebouncing = !!value && value !== debouncedValue;
+  return { debouncedValue, isDebouncing };
 };

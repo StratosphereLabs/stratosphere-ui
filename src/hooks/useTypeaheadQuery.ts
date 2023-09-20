@@ -20,14 +20,15 @@ export const useTypeaheadQuery = <DataItem extends GenericDataType>({
   options,
 }: UseTypeaheadQueryOptions<DataItem>): UseTypeaheadQueryResult => {
   const [isLoading, setIsLoading] = useState(false);
-  const [query, setQuery, debouncedQuery] = useDebouncedValue<string>(
-    '',
+  const [query, setQuery] = useState('');
+  const { debouncedValue } = useDebouncedValue<string>(
+    query,
     debounceTime ?? 400,
   );
   const currentQuery = useMemo(() => {
     const formattedQuery = query.trim();
-    return formattedQuery === '' ? formattedQuery : debouncedQuery.trim();
-  }, [query, debouncedQuery]);
+    return formattedQuery === '' ? formattedQuery : debouncedValue.trim();
+  }, [query, debouncedValue]);
   useEffect(() => {
     onDebouncedChange?.(currentQuery);
   }, [currentQuery]);
