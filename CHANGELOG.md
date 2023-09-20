@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.3.0 (2023-09-19)
+
+- Refactored `useDebouncedValue` to allow current value to be passed in, rather than controlling the current value and returning it.
+
 ## 1.2.0 (2023-08-30)
 
 - Added `ButtonArray` component that renders an array of Buttons and can collapse into a Dropdown menu.
