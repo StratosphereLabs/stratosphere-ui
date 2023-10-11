@@ -102,7 +102,10 @@ export const ButtonArray = ({
           }}
           items={buttonOptions.map(
             ({ icon: Icon, key, menuText, onClick }) => ({
-              id: typeof key === 'number' ? key.toString() : key,
+              id:
+                typeof key === 'number' || typeof key === 'bigint'
+                  ? key.toString()
+                  : key,
               onClick,
               children: (
                 <>
