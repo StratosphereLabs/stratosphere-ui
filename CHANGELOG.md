@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.3.1 (2023-10-10)
+
+- Fixed null pointer issue in `Table` component.
+
 ## 1.3.0 (2023-09-19)
 
 - Refactored `useDebouncedValue` to allow current value to be passed in, rather than controlling the current value and returning it.
