@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.3.2 (2023-10-29)
+
+- Updated dependencies (no functionality changes)
+
 ## 1.3.1 (2023-10-10)
 
 - Fixed null pointer issue in `Table` component.
