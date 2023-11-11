@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.3.3 (2023-11-10)
+
+- Fixed infinite loop in `FormRangeSlider` component.
+
 ## 1.3.2 (2023-10-29)
 
 - Updated dependencies (no functionality changes)

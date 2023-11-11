@@ -1,6 +1,12 @@
 import classNames from 'classnames';
 import MultiRangeSlider, { ChangeResult } from 'multi-range-slider-react';
-import { ForwardedRef, forwardRef, ReactNode } from 'react';
+import {
+  ForwardedRef,
+  forwardRef,
+  ReactNode,
+  useEffect,
+  useState,
+} from 'react';
 import { FieldValues, Path, useFormContext } from 'react-hook-form';
 import { FormLabel } from './FormLabel';
 
@@ -45,7 +51,14 @@ export const FormRangeSlider = forwardRef(
     }: FormRangeSliderProps<Values>,
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
+    const [minValue, setMinValue] = useState(min);
+    const [maxValue, setMaxValue] = useState(max);
     const { setValue } = useFormContext<Values>();
+    useEffect(() => {
+      setValue(name, [minValue, maxValue] as never, {
+        shouldDirty: true,
+      });
+    }, [minValue, maxValue]);
     return (
       <div className={classNames('form-control', className)}>
         <div className="flex justify-between">
@@ -69,9 +82,8 @@ export const FormRangeSlider = forwardRef(
           maxValue={max}
           onChange={onChange}
           onInput={event => {
-            setValue(name, [event.minValue, event.maxValue] as never, {
-              shouldDirty: true,
-            });
+            setMinValue(event.minValue);
+            setMaxValue(event.maxValue);
             onInput?.(event);
           }}
         />
