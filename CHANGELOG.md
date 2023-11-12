@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.4.0 (2023-11-12)
+
+- Added DaisyUI 4 compatibility.
+
 ## 1.3.3 (2023-11-10)
 
 - Fixed infinite loop in `FormRangeSlider` component.

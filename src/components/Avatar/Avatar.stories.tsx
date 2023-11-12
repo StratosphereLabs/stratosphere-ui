@@ -63,7 +63,7 @@ export const AvatarGroup: Story<AvatarProps> = args => (
     <Avatar
       isPlaceholder
       shapeClassName={classNames(
-        'bg-neutral-focus text-neutral-content',
+        'bg-neutral text-neutral-content',
         args.shapeClassName,
       )}
     >

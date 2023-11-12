@@ -59,7 +59,14 @@ export const Tabs = ({
       vertical={vertical}
     >
       <Tab.List
-        className={classNames('tabs', boxed && 'tabs-boxed', className)}
+        className={classNames(
+          'tabs',
+          bordered && 'tabs-bordered',
+          boxed && 'tabs-boxed',
+          lifted && 'tabs-lifted',
+          size && `tabs-${size}`,
+          className,
+        )}
         {...props}
       >
         {tabs.map(({ className, disabled, id, ...tabProps }) => (
@@ -69,11 +76,8 @@ export const Tabs = ({
             className={({ selected }) =>
               classNames(
                 'tab',
-                bordered && 'tab-bordered',
                 disabled && 'tab-disabled',
-                lifted && 'tab-lifted',
                 selected && 'tab-active',
-                size && `tab-${size}`,
                 className,
               )
             }
