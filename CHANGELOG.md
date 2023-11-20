@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.4.1 (2023-11-20)
+
+- Added props to `FormRangeSlider` allow user to pass default values.
+
 ## 1.4.0 (2023-11-12)
 
 - Added DaisyUI 4 compatibility.

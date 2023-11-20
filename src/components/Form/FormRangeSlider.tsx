@@ -15,6 +15,8 @@ export interface FormRangeSliderProps<Values> {
   barInnerColor?: string;
   children?: ReactNode;
   className?: string;
+  defaultMinValue?: number;
+  defaultMaxValue?: number;
   labelText?: string;
   min: number;
   max: number;
@@ -36,6 +38,8 @@ export const FormRangeSlider = forwardRef(
       barInnerColor,
       children,
       className,
+      defaultMinValue,
+      defaultMaxValue,
       labelText,
       min,
       max,
@@ -51,8 +55,8 @@ export const FormRangeSlider = forwardRef(
     }: FormRangeSliderProps<Values>,
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
-    const [minValue, setMinValue] = useState(min);
-    const [maxValue, setMaxValue] = useState(max);
+    const [minValue, setMinValue] = useState(defaultMinValue ?? min);
+    const [maxValue, setMaxValue] = useState(defaultMaxValue ?? max);
     const { setValue } = useFormContext<Values>();
     useEffect(() => {
       setValue(name, [minValue, maxValue] as never, {
@@ -78,8 +82,8 @@ export const FormRangeSlider = forwardRef(
           ruler={ruler}
           step={step}
           stepOnly={stepOnly}
-          minValue={min}
-          maxValue={max}
+          minValue={minValue}
+          maxValue={maxValue}
           onChange={onChange}
           onInput={event => {
             setMinValue(event.minValue);
