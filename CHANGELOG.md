@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## 1.5.0 (2023-11-26)
+
+- Removed `paths` and `pathname` options from `Tabs` component.
+- Added `onClick` callback to tabs options in `Tabs` component.
+- Made `onChange` prop in `Tabs` component optional.
+
 ## 1.4.1 (2023-11-20)
 
 - Added props to `FormRangeSlider` allow user to pass default values.

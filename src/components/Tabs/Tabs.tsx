@@ -7,7 +7,7 @@ export interface TabData {
   className?: string;
   disabled?: boolean;
   id: string;
-  paths?: string[];
+  onClick?: () => void;
 }
 
 export const TAB_SIZES = ['xs', 'sm', 'md', 'lg'] as const;
@@ -21,8 +21,7 @@ export interface TabsProps
   className?: string;
   lifted?: boolean;
   manual?: boolean;
-  onChange: (tab: TabData) => void;
-  pathname?: string;
+  onChange?: (tab: TabData) => void;
   selectedTabId?: string;
   size?: TabSize;
   tabs: TabData[];
@@ -37,7 +36,6 @@ export const Tabs = ({
   manual,
   lifted,
   onChange,
-  pathname,
   selectedTabId,
   size,
   tabs,
@@ -45,16 +43,13 @@ export const Tabs = ({
   ...props
 }: TabsProps) => {
   const selectedIndex = useMemo(
-    () =>
-      tabs.findIndex(({ id, paths }) =>
-        pathname ? paths?.includes(pathname) : selectedTabId === id,
-      ),
-    [pathname, selectedTabId, tabs],
+    () => tabs.findIndex(({ id }) => selectedTabId === id),
+    [selectedTabId, tabs],
   );
   return (
     <Tab.Group
       manual={manual}
-      onChange={index => onChange(tabs[index])}
+      onChange={index => onChange?.(tabs[index])}
       selectedIndex={selectedIndex > -1 ? selectedIndex : undefined}
       vertical={vertical}
     >
@@ -69,7 +64,7 @@ export const Tabs = ({
         )}
         {...props}
       >
-        {tabs.map(({ className, disabled, id, ...tabProps }) => (
+        {tabs.map(({ className, disabled, id, onClick, ...tabProps }) => (
           <Tab
             key={id}
             disabled={disabled}
@@ -81,6 +76,7 @@ export const Tabs = ({
                 className,
               )
             }
+            onClick={onClick}
             {...tabProps}
           />
         ))}
