@@ -16,7 +16,7 @@ export type QueryParamValues<FormValues extends FieldValues> = Partial<
 >;
 
 export interface UseFormWithQueryParamsOptions<
-  FormValues extends FieldValues,
+  FormValues extends FieldValues = FieldValues,
   FieldNames extends
     readonly FieldPath<FormValues>[] = readonly FieldPath<FormValues>[],
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -32,7 +32,7 @@ export interface UseFormWithQueryParamsOptions<
 }
 
 export const useFormWithQueryParams = <
-  FormValues extends FieldValues,
+  FormValues extends FieldValues = FieldValues,
   FieldNames extends
     readonly FieldPath<FormValues>[] = readonly FieldPath<FormValues>[],
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -71,7 +71,7 @@ export const useFormWithQueryParams = <
     ...useFormOptions,
     defaultValues,
   });
-  const formValues = useWatch({
+  const formValues = useWatch<FormValues, FieldNames>({
     control: methods.control,
     name: includeKeys,
   });
