@@ -1,5 +1,27 @@
 # CHANGELOG.md
 
+## 1.5.1 (2023-12-31)
+
+- Made `onChange` and `selectedTabId` props required in `Tabs` component.
+
+## 1.5.0 (2023-11-26)
+
+- Removed `paths` and `pathname` options from `Tabs` component.
+- Added `onClick` callback to tabs options in `Tabs` component.
+- Made `onChange` prop in `Tabs` component optional.
+
+## 1.4.1 (2023-11-20)
+
+- Added props to `FormRangeSlider` allow user to pass default values.
+
+## 1.4.0 (2023-11-12)
+
+- Added DaisyUI 4 compatibility.
+
+## 1.3.3 (2023-11-10)
+
+- Fixed infinite loop in `FormRangeSlider` component.
+
 ## 1.3.2 (2023-10-29)
 
 - Updated dependencies (no functionality changes)

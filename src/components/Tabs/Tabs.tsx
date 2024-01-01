@@ -7,7 +7,7 @@ export interface TabData {
   className?: string;
   disabled?: boolean;
   id: string;
-  paths?: string[];
+  onClick?: () => void;
 }
 
 export const TAB_SIZES = ['xs', 'sm', 'md', 'lg'] as const;
@@ -22,8 +22,7 @@ export interface TabsProps
   lifted?: boolean;
   manual?: boolean;
   onChange: (tab: TabData) => void;
-  pathname?: string;
-  selectedTabId?: string;
+  selectedTabId: string;
   size?: TabSize;
   tabs: TabData[];
   vertical?: boolean;
@@ -37,7 +36,6 @@ export const Tabs = ({
   manual,
   lifted,
   onChange,
-  pathname,
   selectedTabId,
   size,
   tabs,
@@ -45,11 +43,8 @@ export const Tabs = ({
   ...props
 }: TabsProps) => {
   const selectedIndex = useMemo(
-    () =>
-      tabs.findIndex(({ id, paths }) =>
-        pathname ? paths?.includes(pathname) : selectedTabId === id,
-      ),
-    [pathname, selectedTabId, tabs],
+    () => tabs.findIndex(({ id }) => selectedTabId === id),
+    [selectedTabId, tabs],
   );
   return (
     <Tab.Group
@@ -59,26 +54,31 @@ export const Tabs = ({
       vertical={vertical}
     >
       <Tab.List
-        className={classNames('tabs', boxed && 'tabs-boxed', className)}
+        className={classNames(
+          'tabs',
+          bordered && 'tabs-bordered',
+          boxed && 'tabs-boxed',
+          lifted && 'tabs-lifted',
+          size && `tabs-${size}`,
+          className,
+        )}
         {...props}
       >
-        {tabs.map(({ className, disabled, id, ...tabProps }) => (
+        {tabs.map(({ children, className, disabled, id }) => (
           <Tab
             key={id}
             disabled={disabled}
             className={({ selected }) =>
               classNames(
                 'tab',
-                bordered && 'tab-bordered',
                 disabled && 'tab-disabled',
-                lifted && 'tab-lifted',
                 selected && 'tab-active',
-                size && `tab-${size}`,
                 className,
               )
             }
-            {...tabProps}
-          />
+          >
+            {children}
+          </Tab>
         ))}
       </Tab.List>
       <Tab.Panels>{children}</Tab.Panels>
