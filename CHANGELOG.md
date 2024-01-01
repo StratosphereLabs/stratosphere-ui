@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.6.0 (2024-01-01)
+
+- Added new wrapper hook around `useForm` to allow form data to be easily synced with URL params.
+
 ## 1.5.1 (2023-12-31)
 
 - Made `onChange` and `selectedTabId` props required in `Tabs` component.
