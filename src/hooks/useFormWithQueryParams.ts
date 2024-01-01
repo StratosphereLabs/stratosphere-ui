@@ -3,9 +3,8 @@ import { URLSearchParamsInit, useSearchParams } from 'react-router-dom';
 import {
   DefaultValues,
   FieldPath,
+  FieldPathValues,
   FieldValues,
-  Path,
-  PathValue,
   UseFormProps,
   UseFormReturn,
   useForm,
@@ -18,6 +17,8 @@ export type QueryParamValues<FormValues extends FieldValues> = Partial<
 
 export interface UseFormWithQueryParamsOptions<
   FormValues extends FieldValues,
+  FieldNames extends
+    readonly FieldPath<FormValues>[] = readonly FieldPath<FormValues>[],
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   FormContext = any,
 > extends Omit<UseFormProps<FormValues, FormContext>, 'defaultValues'> {
@@ -25,13 +26,15 @@ export interface UseFormWithQueryParamsOptions<
     searchParamValues: QueryParamValues<FormValues>,
   ) => DefaultValues<FormValues>;
   getSearchParams: (
-    formValues: PathValue<FormValues, Path<FormValues>>[],
+    formValues: FieldPathValues<FormValues, FieldNames>,
   ) => URLSearchParamsInit | ((prev: URLSearchParams) => URLSearchParamsInit);
-  includeKeys: readonly FieldPath<FormValues>[];
+  includeKeys: readonly [...FieldNames];
 }
 
 export const useFormWithQueryParams = <
   FormValues extends FieldValues,
+  FieldNames extends
+    readonly FieldPath<FormValues>[] = readonly FieldPath<FormValues>[],
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   FormContext = any,
   TransformedValues extends FieldValues | undefined = undefined,
@@ -40,11 +43,11 @@ export const useFormWithQueryParams = <
   getSearchParams,
   includeKeys,
   ...useFormOptions
-}: UseFormWithQueryParamsOptions<FormValues, FormContext>): UseFormReturn<
+}: UseFormWithQueryParamsOptions<
   FormValues,
-  FormContext,
-  TransformedValues
-> => {
+  FieldNames,
+  FormContext
+>): UseFormReturn<FormValues, FormContext, TransformedValues> => {
   const getDefaultValuesFn = useRef(getDefaultValues);
   const getSearchParamsFn = useRef(getSearchParams);
   const [searchParams, setSearchParams] = useSearchParams();
