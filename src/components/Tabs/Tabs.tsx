@@ -21,8 +21,8 @@ export interface TabsProps
   className?: string;
   lifted?: boolean;
   manual?: boolean;
-  onChange?: (tab: TabData) => void;
-  selectedTabId?: string;
+  onChange: (tab: TabData) => void;
+  selectedTabId: string;
   size?: TabSize;
   tabs: TabData[];
   vertical?: boolean;
@@ -49,7 +49,7 @@ export const Tabs = ({
   return (
     <Tab.Group
       manual={manual}
-      onChange={index => onChange?.(tabs[index])}
+      onChange={index => onChange(tabs[index])}
       selectedIndex={selectedIndex > -1 ? selectedIndex : undefined}
       vertical={vertical}
     >
@@ -64,7 +64,7 @@ export const Tabs = ({
         )}
         {...props}
       >
-        {tabs.map(({ className, disabled, id, onClick, ...tabProps }) => (
+        {tabs.map(({ children, className, disabled, id }) => (
           <Tab
             key={id}
             disabled={disabled}
@@ -76,9 +76,9 @@ export const Tabs = ({
                 className,
               )
             }
-            onClick={onClick}
-            {...tabProps}
-          />
+          >
+            {children}
+          </Tab>
         ))}
       </Tab.List>
       <Tab.Panels>{children}</Tab.Panels>

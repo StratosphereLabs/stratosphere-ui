@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.5.1 (2023-12-31)
+
+- Made `onChange` and `selectedTabId` props required in `Tabs` component.
+
 ## 1.5.0 (2023-11-26)
 
 - Removed `paths` and `pathname` options from `Tabs` component.

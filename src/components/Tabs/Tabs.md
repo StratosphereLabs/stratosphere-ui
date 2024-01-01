@@ -11,15 +11,15 @@ The `Tabs` component accepts the following props:
 - `className (optional)`: Additional CSS classes to be applied to the component.
 - `lifted (optional)`: A boolean indicating whether the active tab should have a lifted effect. Default: false.
 - `manual (optional)`: A boolean indicating whether the tab switching should be controlled manually. Default: false.
-- `onChange (optional)`: A callback function invoked when a tab is changed. It receives the selected tab data as a parameter.
-- `selectedTabId (optional)`: The ID of the selected tab. If provided, it overrides the selected tab based on the pathname.
+- `onChange`: A callback function invoked when a tab is changed. It receives the selected tab data as a parameter.
+- `selectedTabId`: The ID of the selected tab.
 - `size (optional)`: The size of the tabs. Must be one of the following: 'xs', 'sm', 'md', 'lg'. Default: undefined.
 - `tabs (required)`: An array of tab data objects. Each tab data object should have the following properties:
   - `children (optional)`: The content to be displayed in the tab panel.
   - `className (optional)`: Additional CSS classes to be applied to the tab.
   - `disabled (optional)`: A boolean indicating whether the tab is disabled. Default: false.
   - `id (required)`: The ID of the tab.
-  - `onClick (optional)`: Callback function that is executed when tab is clicked.
+  - `onClick (optional)`: This prop is not used in the `Tabs` component, but exists for better compatibility with the `items` prop in the `DropdownMenu` component.
 
 ## Usage
 
