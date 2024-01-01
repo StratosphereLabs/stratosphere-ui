@@ -18,7 +18,7 @@ export type QueryParamValues<FormValues extends FieldValues> = Partial<
 
 export interface UseFormWithQueryParamsOptions<
   FormValues extends FieldValues,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   FormContext = any,
 > extends Omit<UseFormProps<FormValues, FormContext>, 'defaultValues'> {
   getDefaultValues: (
@@ -32,7 +32,7 @@ export interface UseFormWithQueryParamsOptions<
 
 export const useFormWithQueryParams = <
   FormValues extends FieldValues,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   FormContext = any,
   TransformedValues extends FieldValues | undefined = undefined,
 >({
@@ -74,6 +74,6 @@ export const useFormWithQueryParams = <
   });
   useEffect(() => {
     setSearchParams(getSearchParamsFn.current(formValues));
-  }, [formValues]);
+  }, [formValues, setSearchParams]);
   return methods;
 };
