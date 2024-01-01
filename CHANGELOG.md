@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.6.1 (2024-01-01)
+
+- Improved type safety for `useFormWithQueryParams` hook.
+
 ## 1.6.0 (2024-01-01)
 
 - Added new wrapper hook around `useForm` to allow form data to be easily synced with URL params.
