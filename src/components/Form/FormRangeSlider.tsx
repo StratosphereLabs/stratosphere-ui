@@ -62,7 +62,7 @@ export const FormRangeSlider = forwardRef(
       setValue(name, [minValue, maxValue] as never, {
         shouldDirty: true,
       });
-    }, [minValue, maxValue]);
+    }, [minValue, maxValue, name, setValue]);
     return (
       <div className={classNames('form-control', className)}>
         <div className="flex justify-between">

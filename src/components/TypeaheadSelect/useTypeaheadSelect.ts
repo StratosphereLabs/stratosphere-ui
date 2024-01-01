@@ -38,7 +38,7 @@ export const useTypeaheadSelect = <
   useEffect(() => {
     if (showDropdown) searchInputRef.current?.focus();
     else setQuery('');
-  }, [showDropdown]);
+  }, [showDropdown, setQuery]);
   return {
     clearSelectedItem,
     dropdownRef,

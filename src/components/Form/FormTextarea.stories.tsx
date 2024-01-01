@@ -87,7 +87,7 @@ export const WithError: Story<FormTextareaProps<FormValues, string>> = args => {
   });
   useEffect(() => {
     methods.trigger('field1');
-  }, []);
+  }, [methods]);
   return (
     <Form methods={methods} onFormSubmit={() => null}>
       <FormTextarea {...args} />

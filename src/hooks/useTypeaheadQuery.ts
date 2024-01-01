@@ -1,4 +1,11 @@
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useDebouncedValue } from './useDebouncedValue';
 import { GenericDataType } from '../common';
 
@@ -19,6 +26,7 @@ export const useTypeaheadQuery = <DataItem extends GenericDataType>({
   onDebouncedChange,
   options,
 }: UseTypeaheadQueryOptions<DataItem>): UseTypeaheadQueryResult => {
+  const onDebouncedChangeFn = useRef(onDebouncedChange);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
   const { debouncedValue } = useDebouncedValue<string>(
@@ -30,7 +38,7 @@ export const useTypeaheadQuery = <DataItem extends GenericDataType>({
     return formattedQuery === '' ? formattedQuery : debouncedValue.trim();
   }, [query, debouncedValue]);
   useEffect(() => {
-    onDebouncedChange?.(currentQuery);
+    onDebouncedChangeFn.current(currentQuery);
   }, [currentQuery]);
   useEffect(() => {
     if (options !== undefined) setIsLoading(false);

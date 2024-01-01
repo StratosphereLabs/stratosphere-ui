@@ -11,5 +11,6 @@ export const useValueChangeEffect = <Value>(
       setCurrentValue(value);
     }
   }, [currentValue, value]);
+  /* eslint-disable-next-line react-hooks/exhaustive-deps */
   useEffect(effect, [currentValue]);
 };

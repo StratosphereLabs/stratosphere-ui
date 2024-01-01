@@ -77,7 +77,7 @@ export const WithError: Story<FormRadioProps<FormValues>> = args => {
   });
   useEffect(() => {
     methods.trigger('field1');
-  }, []);
+  }, [methods]);
   return (
     <Form className="w-60" methods={methods} onFormSubmit={() => null}>
       <FormRadio {...args} />

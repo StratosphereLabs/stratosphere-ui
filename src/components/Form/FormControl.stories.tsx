@@ -88,7 +88,7 @@ export const WithError: Story<FormControlProps<FormValues, string>> = args => {
   });
   useEffect(() => {
     methods.trigger('field1');
-  }, []);
+  }, [methods]);
   return (
     <Form methods={methods} onFormSubmit={() => null}>
       <FormControl {...args} />
