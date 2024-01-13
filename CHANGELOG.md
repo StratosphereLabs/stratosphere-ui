@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.6.4 (2024-01-12)
+
+- Fixed query params update behavior in `useFormWithQueryParams` hook.
+
 ## 1.6.3 (2024-01-12)
 
 - Fixed default font weight for form label.

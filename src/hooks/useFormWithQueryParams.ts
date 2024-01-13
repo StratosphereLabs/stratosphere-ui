@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { URLSearchParamsInit, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import {
   DefaultValues,
   FieldPath,
@@ -15,6 +15,13 @@ export type QueryParamValues<FormValues extends FieldValues> = Partial<
   Record<keyof FormValues, string | null>
 >;
 
+export type URLSearchParamsOptions =
+  | string
+  | string[][]
+  | Record<string, string>
+  | URLSearchParams
+  | undefined;
+
 export interface UseFormWithQueryParamsOptions<
   FormValues extends FieldValues = FieldValues,
   FieldNames extends
@@ -27,7 +34,9 @@ export interface UseFormWithQueryParamsOptions<
   ) => DefaultValues<FormValues>;
   getSearchParams: (
     formValues: FieldPathValues<FormValues, FieldNames>,
-  ) => URLSearchParamsInit | ((prev: URLSearchParams) => URLSearchParamsInit);
+  ) =>
+    | URLSearchParamsOptions
+    | ((prev: URLSearchParams) => URLSearchParamsOptions);
   includeKeys: readonly [...FieldNames];
 }
 
@@ -76,7 +85,19 @@ export const useFormWithQueryParams = <
     name: includeKeys,
   });
   useEffect(() => {
-    setSearchParams(getSearchParamsFn.current(formValues));
+    setSearchParams(oldSearchParams => {
+      const newSearchParams = getSearchParamsFn.current(formValues);
+      return {
+        ...Object.fromEntries(oldSearchParams),
+        ...Object.fromEntries(
+          new URLSearchParams(
+            typeof newSearchParams === 'function'
+              ? newSearchParams(oldSearchParams)
+              : newSearchParams,
+          ),
+        ),
+      };
+    });
   }, [formValues, setSearchParams]);
   return methods;
 };
