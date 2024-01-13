@@ -68,7 +68,7 @@ export const FormRadio = <Values extends FieldValues>({
       ) : null}
       {options.map(({ id, label, value: optionValue }) => (
         <label key={id} className="label cursor-pointer">
-          <FormLabelText>{label}</FormLabelText>
+          <span className="label-text">{label}</span>
           <input
             {...field}
             {...props}

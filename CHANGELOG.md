@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.6.3 (2024-01-12)
+
+- Fixed default font weight for form label.
+
 ## 1.6.2 (2024-01-12)
 
 - Fixed accessibility issues with `FormCheckbox`.

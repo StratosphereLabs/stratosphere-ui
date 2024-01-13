@@ -84,7 +84,6 @@ export const FormControl = <Values extends FieldValues, TOutput>({
         ) : null}
         <input
           {...field}
-          aria-labelledby={labelText ? `label-${name}` : undefined}
           className={classNames(
             'input w-full',
             bordered && `input-bordered`,
