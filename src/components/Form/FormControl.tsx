@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { HTMLProps, ReactNode, useMemo } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { FormError } from './FormError';
-import { FormLabel } from './FormLabel';
+import { FormLabelText } from './FormLabelText';
 import { FormFieldProps } from './types';
 import { Transform } from '../../common';
 import { useFieldColor } from '../../hooks';
@@ -70,11 +70,11 @@ export const FormControl = <Values extends FieldValues, TOutput>({
     [field.value, transform],
   );
   return (
-    <div className={classNames('form-control', className)}>
+    <label className={classNames('form-control', className)}>
       {labelText !== undefined ? (
-        <FormLabel id={`label-${name}`} isRequired={isRequired}>
-          {labelText}
-        </FormLabel>
+        <div className="label">
+          <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
+        </div>
       ) : null}
       <div className="relative inline-flex">
         {elementLeft ? (
@@ -114,6 +114,6 @@ export const FormControl = <Values extends FieldValues, TOutput>({
       {hideErrorMessage !== true && error?.message !== undefined ? (
         <FormError>{error.message}</FormError>
       ) : null}
-    </div>
+    </label>
   );
 };

@@ -8,7 +8,7 @@ import { Badge, BadgeColor } from '../Badge';
 import {
   FormError,
   FormFieldProps,
-  FormLabel,
+  FormLabelText,
   FormValueMode,
   InputColor,
   InputSize,
@@ -123,11 +123,13 @@ export const TypeaheadSelect = <
         if (multi === undefined) setFocus(name);
       }}
     >
-      <div className="form-control">
+      <label className="form-control">
         {labelText !== undefined ? (
-          <Combobox.Label as={FormLabel} isRequired={isRequired}>
-            {labelText}
-          </Combobox.Label>
+          <div className="label">
+            <Combobox.Label as={FormLabelText} isRequired={isRequired}>
+              {labelText}
+            </Combobox.Label>
+          </div>
         ) : null}
         {enableBadges ? (
           <div
@@ -190,7 +192,7 @@ export const TypeaheadSelect = <
             ref={ref}
           />
         )}
-      </div>
+      </label>
       {showDropdown ? (
         <Combobox.Options
           as={Menu}

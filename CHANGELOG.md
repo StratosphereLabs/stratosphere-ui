@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 1.6.2 (2024-01-12)
+
+- Fixed accessibility issues with `FormCheckbox`.
+- Refactored labels in other components.
+
 ## 1.6.1 (2024-01-01)
 
 - Improved type safety for `useFormWithQueryParams` hook.

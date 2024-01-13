@@ -3,7 +3,7 @@ import { HTMLProps } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { useFieldColor } from '../../hooks';
 import { FormError } from './FormError';
-import { FormLabel } from './FormLabel';
+import { FormLabelText } from './FormLabelText';
 import { FormFieldProps } from './types';
 
 export interface RadioOption {
@@ -62,11 +62,13 @@ export const FormRadio = <Values extends FieldValues>({
   return (
     <div className={classNames('form-control', className)}>
       {labelText !== undefined ? (
-        <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
+        <div className="label">
+          <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
+        </div>
       ) : null}
       {options.map(({ id, label, value: optionValue }) => (
         <label key={id} className="label cursor-pointer">
-          <span className="label-text">{label}</span>
+          <FormLabelText>{label}</FormLabelText>
           <input
             {...field}
             {...props}

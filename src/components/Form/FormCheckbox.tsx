@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { HTMLProps } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 import { useFieldColor } from '../../hooks';
-import { FormLabel } from './FormLabel';
+import { FormLabelText } from './FormLabelText';
 import { FormFieldProps } from './types';
 
 export const CHECKBOX_COLORS = [
@@ -48,27 +48,25 @@ export const FormCheckbox = <Values extends FieldValues>({
   const fieldColor = useFieldColor(name, showDirty);
   const currentColor = fieldColor ?? color ?? undefined;
   return (
-    <div className={classNames('flex items-center gap-2', className)}>
-      <input
-        type="checkbox"
-        checked={value}
-        className={classNames(
-          'checkbox',
-          currentColor && `checkbox-${currentColor}`,
-          size && `checkbox-${size}`,
-          inputClassName,
-        )}
-        {...field}
-        {...props}
-      />
-      <div className="flex flex-col">
+    <div className={classNames('form-control', className)}>
+      <label className="label cursor-pointer gap-2">
+        <input
+          type="checkbox"
+          checked={value}
+          className={classNames(
+            'checkbox',
+            currentColor && `checkbox-${currentColor}`,
+            size && `checkbox-${size}`,
+            inputClassName,
+          )}
+          {...field}
+          {...props}
+        />
         {labelText !== undefined ? (
-          <FormLabel htmlFor={props.id} isRequired={isRequired}>
-            {labelText}
-          </FormLabel>
+          <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
         ) : null}
         {children}
-      </div>
+      </label>
     </div>
   );
 };
