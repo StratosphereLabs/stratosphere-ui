@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.7.0 (2024-01-28)
+
+- Added `hideHeader` prop to `Table` component.
+
 ## 1.6.4 (2024-01-12)
 
 - Fixed query params update behavior in `useFormWithQueryParams` hook.
