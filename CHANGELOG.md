@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.7.1 (2024-02-09)
+
+- Fixed `Select` component truncating text inside button.
+
 ## 1.7.0 (2024-01-28)
 
 - Added `hideHeader` prop to `Table` component.

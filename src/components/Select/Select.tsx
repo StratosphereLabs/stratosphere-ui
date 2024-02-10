@@ -96,11 +96,9 @@ export const Select = <
           ref={ref}
           {...buttonProps}
         >
-          <span className="flex-1 truncate">
-            {selectedItems.length > 0
-              ? selectedItems.map(item => getItemText(item)).join(', ')
-              : 'Select an item'}
-          </span>
+          {selectedItems.length > 0
+            ? selectedItems.map(item => getItemText(item)).join(', ')
+            : 'Select an item'}
           {hideDropdownIcon !== true
             ? dropdownIcon ?? <ChevronDownIcon className="h-4 w-4" />
             : null}
