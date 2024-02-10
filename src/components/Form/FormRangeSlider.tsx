@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react';
 import { FieldValues, Path, useFormContext } from 'react-hook-form';
-import { FormLabel } from './FormLabel';
+import { FormLabelText } from './FormLabelText';
 
 export interface FormRangeSliderProps<Values> {
   barColor?: string;
@@ -66,7 +66,11 @@ export const FormRangeSlider = forwardRef(
     return (
       <div className={classNames('form-control', className)}>
         <div className="flex justify-between">
-          <FormLabel>{labelText}</FormLabel>
+          {labelText !== undefined ? (
+            <div className="label">
+              <FormLabelText>{labelText}</FormLabelText>
+            </div>
+          ) : null}
           {children}
         </div>
         <MultiRangeSlider

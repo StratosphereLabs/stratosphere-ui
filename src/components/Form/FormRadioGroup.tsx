@@ -2,7 +2,7 @@ import { RadioGroup, RadioGroupProps } from '@headlessui/react';
 import classNames from 'classnames';
 import { ReactNode } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
-import { FormLabel } from './FormLabel';
+import { FormLabelText } from './FormLabelText';
 import { FormFieldProps } from './types';
 
 export interface FormRadioGroupProps<Values extends FieldValues>
@@ -30,7 +30,8 @@ export const FormRadioGroup = <Values extends FieldValues>({
   } = useController({ name, ...controllerProps });
   return (
     <RadioGroup
-      className={classNames('join', className)}
+      as="label"
+      className={classNames('form-control', className)}
       name={name}
       onChange={val => {
         setValue<string>(name, val);
@@ -39,11 +40,13 @@ export const FormRadioGroup = <Values extends FieldValues>({
       {...props}
     >
       {labelText !== undefined ? (
-        <RadioGroup.Label as={FormLabel} isRequired={isRequired}>
-          {labelText}
-        </RadioGroup.Label>
+        <div className="label">
+          <RadioGroup.Label as={FormLabelText} isRequired={isRequired}>
+            {labelText}
+          </RadioGroup.Label>
+        </div>
       ) : null}
-      {children}
+      <div className="join">{children}</div>
     </RadioGroup>
   );
 };

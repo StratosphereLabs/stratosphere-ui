@@ -8,7 +8,7 @@ The `FormRadioGroup` component is a wrapper component for the `RadioGroup` compo
   An object containing additional props to pass to the useController hook from `react-hook-form`. These props will be merged with the default props provided by the FormRadioGroup component. The name prop is already provided by the FormRadioGroup component and should not be included in controllerProps.
 
 - `isRequired?: boolean`:
-  A boolean indicating whether the radio group is required or not. If set to true, the FormLabel associated with the radio group will display an asterisk to indicate that the field is required.
+  A boolean indicating whether the radio group is required or not. If set to true, the FormLabelText associated with the radio group will display an asterisk to indicate that the field is required.
 
 - `labelText?: string`:
   A string representing the label text for the radio group. If provided, the RadioGroup.Label component from @headlessui/react will be used to display the label.

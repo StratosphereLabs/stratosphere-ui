@@ -1,16 +1,16 @@
 import { render, screen } from '@testing-library/react';
-import { FormLabel } from '../FormLabel';
+import { FormLabelText } from '../FormLabelText';
 
-describe('FormLabel', () => {
+describe('FormLabelText', () => {
   it('renders the label text', () => {
     const labelText = 'Name';
-    render(<FormLabel>{labelText}</FormLabel>);
+    render(<FormLabelText>{labelText}</FormLabelText>);
     expect(screen.getByText(labelText)).toBeInTheDocument();
   });
 
   it('renders an asterisk if isRequired is true', () => {
     const labelText = 'Name';
-    render(<FormLabel isRequired>{labelText}</FormLabel>);
+    render(<FormLabelText isRequired>{labelText}</FormLabelText>);
     expect(screen.getByText('*')).toBeInTheDocument();
   });
 });

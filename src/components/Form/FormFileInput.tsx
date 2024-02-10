@@ -3,7 +3,7 @@ import { HTMLProps } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { useFieldColor } from '../../hooks';
 import { FormError } from './FormError';
-import { FormLabel } from './FormLabel';
+import { FormLabelText } from './FormLabelText';
 import { FormFieldProps } from './types';
 
 export const FILE_INPUT_COLORS = [
@@ -58,11 +58,11 @@ export const FormFileInput = <Values extends FieldValues>({
   const { setValue } = useFormContext();
   const currentColor = fieldColor ?? color ?? undefined;
   return (
-    <div className={classNames('form-control', className)}>
+    <label className={classNames('form-control', className)}>
       {labelText !== undefined ? (
-        <FormLabel id={`label-${name}`} isRequired={isRequired}>
-          {labelText}
-        </FormLabel>
+        <div className="label">
+          <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
+        </div>
       ) : null}
       <input
         className={classNames(
@@ -87,6 +87,6 @@ export const FormFileInput = <Values extends FieldValues>({
       {hideErrorMessage !== true && error?.message !== undefined ? (
         <FormError>{error.message}</FormError>
       ) : null}
-    </div>
+    </label>
   );
 };
