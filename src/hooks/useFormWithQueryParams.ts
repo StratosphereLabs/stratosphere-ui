@@ -1,5 +1,6 @@
+import pickBy from 'lodash.pickby';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { NavigateOptions, useSearchParams } from 'react-router-dom';
 import {
   DefaultValues,
   FieldPath,
@@ -15,13 +16,6 @@ export type QueryParamValues<FormValues extends FieldValues> = Partial<
   Record<keyof FormValues, string | null>
 >;
 
-export type URLSearchParamsOptions =
-  | string
-  | string[][]
-  | Record<string, string>
-  | URLSearchParams
-  | undefined;
-
 export interface UseFormWithQueryParamsOptions<
   FormValues extends FieldValues = FieldValues,
   FieldNames extends
@@ -35,9 +29,10 @@ export interface UseFormWithQueryParamsOptions<
   getSearchParams: (
     formValues: FieldPathValues<FormValues, FieldNames>,
   ) =>
-    | URLSearchParamsOptions
-    | ((prev: URLSearchParams) => URLSearchParamsOptions);
+    | Record<string, string>
+    | ((prev: URLSearchParams) => Record<string, string>);
   includeKeys: readonly [...FieldNames];
+  navigateOptions?: NavigateOptions;
 }
 
 export const useFormWithQueryParams = <
@@ -51,6 +46,7 @@ export const useFormWithQueryParams = <
   getDefaultValues,
   getSearchParams,
   includeKeys,
+  navigateOptions,
   ...useFormOptions
 }: UseFormWithQueryParamsOptions<
   FormValues,
@@ -86,18 +82,19 @@ export const useFormWithQueryParams = <
   });
   useEffect(() => {
     setSearchParams(oldSearchParams => {
-      const newSearchParams = getSearchParamsFn.current(formValues);
-      return {
-        ...Object.fromEntries(oldSearchParams),
-        ...Object.fromEntries(
-          new URLSearchParams(
-            typeof newSearchParams === 'function'
-              ? newSearchParams(oldSearchParams)
-              : newSearchParams,
-          ),
-        ),
-      };
-    });
-  }, [formValues, setSearchParams]);
+      const getNewSearchParams = getSearchParamsFn.current(formValues);
+      const newSearchParamsOptions =
+        typeof getNewSearchParams === 'function'
+          ? getNewSearchParams(oldSearchParams)
+          : getNewSearchParams;
+      return pickBy(
+        {
+          ...Object.fromEntries(oldSearchParams),
+          ...newSearchParamsOptions,
+        },
+        value => value.length > 0,
+      );
+    }, navigateOptions);
+  }, [formValues, navigateOptions, setSearchParams]);
   return methods;
 };

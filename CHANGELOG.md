@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 1.8.1 (2024-04-30)
+
+- Fixed issue with `useFormWithQueryParams` and blank values.
+- Added `navigationOptions` option to `useFormWithQueryParams` to allow customization of config object passed to `setSearchParams()`.
+
 ## 1.8.0 (2024-04-29)
 
 - Added `bodyClassName` prop to `Table` component. This is a string that allows custom classnames to be passed directly to the `<tbody>` element.
