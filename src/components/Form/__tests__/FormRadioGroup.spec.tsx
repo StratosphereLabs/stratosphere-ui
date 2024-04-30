@@ -33,7 +33,7 @@ describe('FormRadioGroup', () => {
         <FormRadioGroup {...defaultProps} />
       </FormProvider>,
     );
-    expect(container.querySelector('label')).not.toBeInTheDocument();
+    expect(container.querySelector('.label-text')).not.toBeInTheDocument();
   });
 
   it('renders with the correct class name', () => {

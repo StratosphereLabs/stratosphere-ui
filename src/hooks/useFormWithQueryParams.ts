@@ -1,5 +1,6 @@
+import pickBy from 'lodash.pickby';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { URLSearchParamsInit, useSearchParams } from 'react-router-dom';
+import { NavigateOptions, useSearchParams } from 'react-router-dom';
 import {
   DefaultValues,
   FieldPath,
@@ -27,8 +28,11 @@ export interface UseFormWithQueryParamsOptions<
   ) => DefaultValues<FormValues>;
   getSearchParams: (
     formValues: FieldPathValues<FormValues, FieldNames>,
-  ) => URLSearchParamsInit | ((prev: URLSearchParams) => URLSearchParamsInit);
+  ) =>
+    | Record<string, string>
+    | ((prev: URLSearchParams) => Record<string, string>);
   includeKeys: readonly [...FieldNames];
+  navigateOptions?: NavigateOptions;
 }
 
 export const useFormWithQueryParams = <
@@ -42,6 +46,7 @@ export const useFormWithQueryParams = <
   getDefaultValues,
   getSearchParams,
   includeKeys,
+  navigateOptions,
   ...useFormOptions
 }: UseFormWithQueryParamsOptions<
   FormValues,
@@ -76,7 +81,20 @@ export const useFormWithQueryParams = <
     name: includeKeys,
   });
   useEffect(() => {
-    setSearchParams(getSearchParamsFn.current(formValues));
-  }, [formValues, setSearchParams]);
+    setSearchParams(oldSearchParams => {
+      const getNewSearchParams = getSearchParamsFn.current(formValues);
+      const newSearchParamsOptions =
+        typeof getNewSearchParams === 'function'
+          ? getNewSearchParams(oldSearchParams)
+          : getNewSearchParams;
+      return pickBy(
+        {
+          ...Object.fromEntries(oldSearchParams),
+          ...newSearchParamsOptions,
+        },
+        value => value.length > 0,
+      );
+    }, navigateOptions);
+  }, [formValues, navigateOptions, setSearchParams]);
   return methods;
 };

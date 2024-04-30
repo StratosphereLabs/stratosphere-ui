@@ -4,7 +4,7 @@ import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { Transform } from '../../common';
 import { useFieldColor } from '../../hooks';
 import { FormError } from './FormError';
-import { FormLabel } from './FormLabel';
+import { FormLabelText } from './FormLabelText';
 import { FormFieldProps } from './types';
 
 export const TEXTAREA_COLORS = [
@@ -66,15 +66,14 @@ export const FormTextarea = <Values extends FieldValues, TOutput>({
     [field.value, transform],
   );
   return (
-    <div className={classNames('form-control', className)}>
+    <label className={classNames('form-control', className)}>
       {labelText !== undefined ? (
-        <FormLabel id={`label-${name}`} isRequired={isRequired}>
-          {labelText}
-        </FormLabel>
+        <div className="label">
+          <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
+        </div>
       ) : null}
       <textarea
         {...field}
-        aria-labelledby={labelText ? `label-${name}` : undefined}
         className={classNames(
           'textarea w-full',
           bordered !== false && 'textarea-bordered',
@@ -98,6 +97,6 @@ export const FormTextarea = <Values extends FieldValues, TOutput>({
       {hideErrorMessage !== true && error?.message !== undefined ? (
         <FormError>{error.message}</FormError>
       ) : null}
-    </div>
+    </label>
   );
 };

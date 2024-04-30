@@ -5,7 +5,7 @@ import { FieldValues, useController } from 'react-hook-form';
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor } from '../../hooks';
 import { Button, ButtonColor, ButtonProps } from '../Button';
-import { FormFieldProps, FormLabel, FormValueMode } from '../Form';
+import { FormFieldProps, FormLabelText, FormValueMode } from '../Form';
 import { FormSelectMulti } from '../Form/FormSelectMulti';
 import { FormSelectSingle } from '../Form/FormSelectSingle';
 import { useSelectFormSync } from '../Form/useSelectFormSync';
@@ -82,9 +82,11 @@ export const Select = <
       selectedItems={selectedItems}
       setSelectedItems={setSelectedItems}
     >
-      <div className="form-control">
+      <label className="form-control">
         {labelText !== undefined ? (
-          <FormLabel isRequired={isRequired}>{labelText}</FormLabel>
+          <div className="label">
+            <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
+          </div>
         ) : null}
         <Listbox.Button
           as={Button}
@@ -94,16 +96,14 @@ export const Select = <
           ref={ref}
           {...buttonProps}
         >
-          <span className="flex-1 truncate">
-            {selectedItems.length > 0
-              ? selectedItems.map(item => getItemText(item)).join(', ')
-              : 'Select an item'}
-          </span>
+          {selectedItems.length > 0
+            ? selectedItems.map(item => getItemText(item)).join(', ')
+            : 'Select an item'}
           {hideDropdownIcon !== true
             ? dropdownIcon ?? <ChevronDownIcon className="h-4 w-4" />
             : null}
         </Listbox.Button>
-      </div>
+      </label>
       <Transition
         as={Fragment}
         enter="transition duration-100 ease-out"

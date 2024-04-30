@@ -3,14 +3,18 @@ import classNames from 'classnames';
 import { Fragment } from 'react';
 import { Button, ButtonProps } from '../Button';
 
-export interface FormRadioGroupOptionProps extends ButtonProps {
+export interface FormRadioGroupOptionProps extends Omit<ButtonProps, 'color'> {
+  activeColor?: ButtonProps['color'];
+  inactiveColor?: ButtonProps['color'];
   value: string;
 }
 
 export const FormRadioGroupOption = ({
+  activeColor,
   children,
   className,
   disabled,
+  inactiveColor,
   value,
   ...props
 }: FormRadioGroupOptionProps) => (
@@ -19,7 +23,7 @@ export const FormRadioGroupOption = ({
       <Button
         active={checked}
         className={classNames('join-item', className)}
-        color={checked ? 'primary' : undefined}
+        color={checked ? activeColor ?? 'primary' : inactiveColor}
         disabled={isDisabled}
         {...props}
       >

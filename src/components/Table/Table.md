@@ -8,6 +8,7 @@ The `Table` component renders a table element that contains a header row and a b
 
 The Table component accepts the following props:
 
+- `bodyClassName?: string`: A string that allows custom classnames to be passed directly to the `<tbody>` element.
 - `cellClassNames?: Record<string, string>`: An object that maps column IDs to CSS class names to apply to the corresponding table cells.
 - `className?: string`: A string of additional CSS class names to apply to the table element.
 - `compact?: boolean`: A boolean that determines whether the table should be rendered in a compact mode.
@@ -17,6 +18,7 @@ The Table component accepts the following props:
 - `enableRowSelection?: boolean`: A boolean that determines whether rows can be selected with checkboxes.
 - `enableSelectAll?: boolean`: A boolean that determines whether a checkbox that toggles all rows should be displayed in the header.
 - `enableZebra?: boolean`: A boolean that determines whether to enable zebra striping.
+- `headerClassName?: string`: A string that allows custom classnames to be passed directly to the `<thead>` element.
 - `initialState?: TableState`: An object that represents the initial state of the table. It can be used to specify the default page size, sorting, and filtering.
 - `isLoading?: boolean`: A boolean that determines whether to show a full-screen loader while the table is being loaded.
 - `metadata?: PaginationMetadata`: An object that contains pagination metadata such as the current page, total page count, item count, and limit.

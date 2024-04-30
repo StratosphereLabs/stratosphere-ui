@@ -17,11 +17,14 @@ export type TableSize = (typeof TABLE_SIZES)[number];
 
 export interface TableProps<DataType extends GenericDataType>
   extends Omit<TableOptions<DataType>, 'getRowId'> {
+  bodyClassName?: string;
   cellClassNames?: Record<string, string>;
   className?: string;
   enableRowHover?: boolean | ((row: Row<DataType>) => boolean);
   enableSelectAll?: boolean;
   enableZebra?: boolean;
+  headerClassName?: string;
+  hideHeader?: boolean;
   highlightWhenSelected?: boolean;
   isLoading?: boolean;
   metadata?: PaginationMetadata;
@@ -31,6 +34,7 @@ export interface TableProps<DataType extends GenericDataType>
 }
 
 export const Table = <DataType extends GenericDataType>({
+  bodyClassName,
   cellClassNames,
   className,
   enableGlobalFilter,
@@ -38,6 +42,8 @@ export const Table = <DataType extends GenericDataType>({
   enableRowSelection,
   enableSelectAll,
   enableZebra,
+  headerClassName,
+  hideHeader,
   highlightWhenSelected,
   initialState,
   isLoading,
@@ -80,51 +86,53 @@ export const Table = <DataType extends GenericDataType>({
             className,
           )}
         >
-          <thead>
-            {getHeaderGroups().map(headerGroup => (
-              <tr key={headerGroup.id}>
-                {enableRowSelection ? (
-                  <th className="w-[40px]">
-                    {enableSelectAll ? (
-                      <input
-                        className="checkbox"
-                        type="checkbox"
-                        checked={getIsSomeRowsSelected()}
-                        onChange={() => toggleAllRowsSelected()}
-                      />
-                    ) : null}
-                  </th>
-                ) : null}
-                {headerGroup.headers.map(
-                  ({ column, getContext, id, isPlaceholder }) => (
-                    <th
-                      key={id}
-                      className={classNames(
-                        {
-                          'cursor-pointer': column.getCanSort(),
-                        },
-                        cellClassNames?.[column.id],
-                      )}
-                      onClick={
-                        column.getCanSort()
-                          ? column.getToggleSortingHandler()
-                          : undefined
-                      }
-                    >
-                      {isPlaceholder ? null : (
-                        <div className="flex items-center">
-                          {flexRender(column.columnDef.header, getContext())}
-                          <HeaderSortIcon column={column} />
-                        </div>
-                      )}
+          {hideHeader !== true ? (
+            <thead className={headerClassName}>
+              {getHeaderGroups().map(headerGroup => (
+                <tr key={headerGroup.id}>
+                  {enableRowSelection ? (
+                    <th className="w-[40px]">
+                      {enableSelectAll ? (
+                        <input
+                          className="checkbox"
+                          type="checkbox"
+                          checked={getIsSomeRowsSelected()}
+                          onChange={() => toggleAllRowsSelected()}
+                        />
+                      ) : null}
                     </th>
-                  ),
-                )}
-              </tr>
-            ))}
-          </thead>
+                  ) : null}
+                  {headerGroup.headers.map(
+                    ({ column, getContext, id, isPlaceholder }) => (
+                      <th
+                        key={id}
+                        className={classNames(
+                          {
+                            'cursor-pointer': column.getCanSort(),
+                          },
+                          cellClassNames?.[column.id],
+                        )}
+                        onClick={
+                          column.getCanSort()
+                            ? column.getToggleSortingHandler()
+                            : undefined
+                        }
+                      >
+                        {isPlaceholder ? null : (
+                          <div className="flex items-center">
+                            {flexRender(column.columnDef.header, getContext())}
+                            <HeaderSortIcon column={column} />
+                          </div>
+                        )}
+                      </th>
+                    ),
+                  )}
+                </tr>
+              ))}
+            </thead>
+          ) : null}
           {isLoading !== true ? (
-            <tbody>
+            <tbody className={bodyClassName}>
               {getRowModel().rows.map(row => (
                 <tr
                   className={classNames({

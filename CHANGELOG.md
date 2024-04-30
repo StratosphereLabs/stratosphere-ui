@@ -1,5 +1,38 @@
 # CHANGELOG.md
 
+## 1.8.1 (2024-04-30)
+
+- Fixed issue with `useFormWithQueryParams` and blank values.
+- Added `navigationOptions` option to `useFormWithQueryParams` to allow customization of config object passed to `setSearchParams()`.
+
+## 1.8.0 (2024-04-29)
+
+- Added `bodyClassName` prop to `Table` component. This is a string that allows custom classnames to be passed directly to the `<tbody>` element.
+- Added `headerClassName` prop to `Table` component. This is a string that allows custom classnames to be passed directly to the `<thead>` element.
+- Added `activeColor` and `inactiveColor` props to `FormRadioGroupOption` component to allow customization of button colors.
+- Changed `FullScreenLoader` component to use `Loading` component.
+
+## 1.7.1 (2024-02-09)
+
+- Fixed `Select` component truncating text inside button.
+
+## 1.7.0 (2024-01-28)
+
+- Added `hideHeader` prop to `Table` component.
+
+## 1.6.4 (2024-01-12)
+
+- Fixed query params update behavior in `useFormWithQueryParams` hook.
+
+## 1.6.3 (2024-01-12)
+
+- Fixed default font weight for form label.
+
+## 1.6.2 (2024-01-12)
+
+- Fixed accessibility issues with `FormCheckbox`.
+- Refactored labels in other components.
+
 ## 1.6.1 (2024-01-01)
 
 - Improved type safety for `useFormWithQueryParams` hook.
