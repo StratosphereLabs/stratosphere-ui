@@ -17,11 +17,13 @@ export type TableSize = (typeof TABLE_SIZES)[number];
 
 export interface TableProps<DataType extends GenericDataType>
   extends Omit<TableOptions<DataType>, 'getRowId'> {
+  bodyClassName?: string;
   cellClassNames?: Record<string, string>;
   className?: string;
   enableRowHover?: boolean | ((row: Row<DataType>) => boolean);
   enableSelectAll?: boolean;
   enableZebra?: boolean;
+  headerClassName?: string;
   hideHeader?: boolean;
   highlightWhenSelected?: boolean;
   isLoading?: boolean;
@@ -32,6 +34,7 @@ export interface TableProps<DataType extends GenericDataType>
 }
 
 export const Table = <DataType extends GenericDataType>({
+  bodyClassName,
   cellClassNames,
   className,
   enableGlobalFilter,
@@ -39,6 +42,7 @@ export const Table = <DataType extends GenericDataType>({
   enableRowSelection,
   enableSelectAll,
   enableZebra,
+  headerClassName,
   hideHeader,
   highlightWhenSelected,
   initialState,
@@ -83,7 +87,7 @@ export const Table = <DataType extends GenericDataType>({
           )}
         >
           {hideHeader !== true ? (
-            <thead>
+            <thead className={headerClassName}>
               {getHeaderGroups().map(headerGroup => (
                 <tr key={headerGroup.id}>
                   {enableRowSelection ? (
@@ -128,7 +132,7 @@ export const Table = <DataType extends GenericDataType>({
             </thead>
           ) : null}
           {isLoading !== true ? (
-            <tbody>
+            <tbody className={bodyClassName}>
               {getRowModel().rows.map(row => (
                 <tr
                   className={classNames({

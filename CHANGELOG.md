@@ -1,5 +1,12 @@
 # CHANGELOG.md
 
+## 1.8.0 (2024-04-29)
+
+- Added `bodyClassName` prop to `Table` component. This is a string that allows custom classnames to be passed directly to the `<tbody>` element.
+- Added `headerClassName` prop to `Table` component. This is a string that allows custom classnames to be passed directly to the `<thead>` element.
+- Added `activeColor` and `inactiveColor` props to `FormRadioGroupOption` component to allow customization of button colors.
+- Changed `FullScreenLoader` component to use `Loading` component.
+
 ## 1.7.1 (2024-02-09)
 
 - Fixed `Select` component truncating text inside button.
