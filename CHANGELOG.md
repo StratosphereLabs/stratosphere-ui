@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 1.8.3 (2024-07-26)
+
+- Added ability to override `children` prop of button in `Select` component.
+
 ## 1.8.2 (2024-06-26)
 
 - Added `rowClassName` and `cellClassName` props to allow passing custom classname as either a string or a function that accepts the current row data object and returns a string.

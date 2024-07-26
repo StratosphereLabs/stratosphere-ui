@@ -40,6 +40,7 @@ export const Select = <
 >({
   buttonColor,
   buttonProps: {
+    children: buttonChildren,
     className: buttonClassName,
     color: buttonPropsColor,
     ...buttonProps
@@ -96,9 +97,10 @@ export const Select = <
           ref={ref}
           {...buttonProps}
         >
-          {selectedItems.length > 0
-            ? selectedItems.map(item => getItemText(item)).join(', ')
-            : 'Select an item'}
+          {buttonChildren ??
+            (selectedItems.length > 0
+              ? selectedItems.map(item => getItemText(item)).join(', ')
+              : 'Select an item')}
           {hideDropdownIcon !== true
             ? dropdownIcon ?? <ChevronDownIcon className="h-4 w-4" />
             : null}
