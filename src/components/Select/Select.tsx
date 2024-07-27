@@ -25,7 +25,7 @@ export interface SelectProps<
   disabled?: boolean;
   dropdownIcon?: ReactNode;
   formValueMode?: FormValueMode;
-  getItemText: (data: DataItem) => string;
+  getItemText: (data: DataItem) => ReactNode;
   hideDropdownIcon?: true;
   menuClassName?: string;
   menuSize?: MenuSize;

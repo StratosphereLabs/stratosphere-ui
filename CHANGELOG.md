@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 1.8.4 (2024-07-26)
+
+- Changed return type of `getItemText` prop to `ReactNode` in `Select` and `TypeaheadSelect` components, allowing for custom menu items.
+- Changed return type of `getBadgeText` prop to `ReactNode` in `TypeaheadSelect` component, allowing for custom badge content.
+
 ## 1.8.3 (2024-07-26)
 
 - Added ability to override `children` prop of button in `Select` component.
