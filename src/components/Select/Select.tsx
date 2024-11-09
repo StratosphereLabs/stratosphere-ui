@@ -100,7 +100,7 @@ export const Select = <
             ? selectedItems.map(item => getItemText(item)).join(', ')
             : 'Select an item'}
           {hideDropdownIcon !== true
-            ? dropdownIcon ?? <ChevronDownIcon className="h-4 w-4" />
+            ? (dropdownIcon ?? <ChevronDownIcon className="h-4 w-4" />)
             : null}
         </Listbox.Button>
       </label>
