@@ -48,3 +48,4 @@ export const decorators = [
     </Decorator>
   ),
 ];
+export const tags = ['autodocs'];
