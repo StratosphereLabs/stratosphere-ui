@@ -1,10 +1,11 @@
 import {
+  Column,
   flexRender,
   Row,
   TableOptions,
   useReactTable,
 } from '@tanstack/react-table';
-import classNames from 'classnames';
+import classNames, { Argument } from 'classnames';
 import { GenericDataType } from '../../common';
 import { FullScreenLoader } from '../FullScreenLoader';
 import { Pagination } from '../Pagination';
@@ -18,6 +19,9 @@ export type TableSize = (typeof TABLE_SIZES)[number];
 export interface TableProps<DataType extends GenericDataType>
   extends Omit<TableOptions<DataType>, 'getRowId'> {
   bodyClassName?: string;
+  cellClassName?:
+    | Argument
+    | ((row: Row<DataType>, col: Column<DataType, unknown>) => Argument);
   cellClassNames?: Record<string, string>;
   className?: string;
   enableRowHover?: boolean | ((row: Row<DataType>) => boolean);
@@ -30,11 +34,13 @@ export interface TableProps<DataType extends GenericDataType>
   metadata?: PaginationMetadata;
   pinCols?: boolean;
   pinRows?: boolean;
+  rowClassName?: Argument | ((row: Row<DataType>) => Argument);
   size?: TableSize;
 }
 
 export const Table = <DataType extends GenericDataType>({
   bodyClassName,
+  cellClassName,
   cellClassNames,
   className,
   enableGlobalFilter,
@@ -50,6 +56,7 @@ export const Table = <DataType extends GenericDataType>({
   metadata,
   pinCols,
   pinRows,
+  rowClassName,
   size,
   ...props
 }: TableProps<DataType>) => {
@@ -135,13 +142,18 @@ export const Table = <DataType extends GenericDataType>({
             <tbody className={bodyClassName}>
               {getRowModel().rows.map(row => (
                 <tr
-                  className={classNames({
-                    hover:
-                      typeof enableRowHover === 'function'
-                        ? enableRowHover(row)
-                        : enableRowHover,
-                    active: highlightWhenSelected && row.getIsSelected(),
-                  })}
+                  className={classNames(
+                    {
+                      hover:
+                        typeof enableRowHover === 'function'
+                          ? enableRowHover(row)
+                          : enableRowHover,
+                      active: highlightWhenSelected && row.getIsSelected(),
+                    },
+                    typeof rowClassName === 'function'
+                      ? rowClassName(row)
+                      : rowClassName,
+                  )}
                   key={row.id}
                 >
                   {enableRowSelection ? (
@@ -158,7 +170,15 @@ export const Table = <DataType extends GenericDataType>({
                     </td>
                   ) : null}
                   {row.getVisibleCells().map(({ column, getContext }) => (
-                    <td className={cellClassNames?.[column.id]} key={column.id}>
+                    <td
+                      className={classNames(
+                        cellClassNames?.[column.id],
+                        typeof cellClassName === 'function'
+                          ? cellClassName(row, column)
+                          : cellClassName,
+                      )}
+                      key={column.id}
+                    >
                       {flexRender(column.columnDef.cell, getContext())}
                     </td>
                   ))}
