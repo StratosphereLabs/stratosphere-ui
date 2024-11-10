@@ -1,5 +1,19 @@
 # CHANGELOG.md
 
+## 1.8.4 (2024-07-26)
+
+- Changed return type of `getItemText` prop to `ReactNode` in `Select` and `TypeaheadSelect` components, allowing for custom menu items.
+- Changed return type of `getBadgeText` prop to `ReactNode` in `TypeaheadSelect` component, allowing for custom badge content.
+
+## 1.8.3 (2024-07-26)
+
+- Added ability to override `children` prop of button in `Select` component.
+
+## 1.8.2 (2024-06-26)
+
+- Added `rowClassName` and `cellClassName` props to allow passing custom classname as either a string or a function that accepts the current row data object and returns a string.
+- Fixed issue with `TypeaheadSelect` component not focusing on input consistently.
+
 ## 1.8.1 (2024-04-30)
 
 - Fixed issue with `useFormWithQueryParams` and blank values.

@@ -1,6 +1,11 @@
 import { Combobox } from '@headlessui/react';
 import classNames from 'classnames';
-import { Fragment, KeyboardEvent, KeyboardEventHandler } from 'react';
+import {
+  Fragment,
+  KeyboardEvent,
+  KeyboardEventHandler,
+  ReactNode,
+} from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor, UseTypeaheadQueryOptions } from '../../hooks';
@@ -32,8 +37,9 @@ export interface TypeaheadSelectProps<
   disabled?: boolean;
   disableSingleSelectBadge?: true;
   formValueMode?: FormValueMode;
-  getBadgeText?: (item: DataItem) => string;
-  getItemText: (data: DataItem) => string;
+  getBadgeClassName?: (item: DataItem) => string;
+  getBadgeText?: (item: DataItem) => ReactNode;
+  getItemText: (data: DataItem) => ReactNode;
   inputClassName?: string;
   inputPlaceholder?: string;
   menuClassName?: string;
@@ -57,6 +63,7 @@ export const TypeaheadSelect = <
   disableSingleSelectBadge,
   dropdownInputClassName,
   formValueMode,
+  getBadgeClassName,
   getBadgeText,
   getItemText,
   inputClassName,
@@ -159,6 +166,7 @@ export const TypeaheadSelect = <
             {selectedItems.length > 0
               ? selectedItems.map((item, index) => (
                   <Badge
+                    className={getBadgeClassName?.(item)}
                     color={badgeColor ?? 'neutral'}
                     dismissable
                     key={item.id}
