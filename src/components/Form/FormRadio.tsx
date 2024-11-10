@@ -7,6 +7,7 @@ import { FormLabelText } from './FormLabelText';
 import { FormFieldProps } from './types';
 
 export interface RadioOption {
+  className?: string;
   id: string | number;
   label: string;
   value: string;
@@ -66,24 +67,29 @@ export const FormRadio = <Values extends FieldValues>({
           <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
         </div>
       ) : null}
-      {options.map(({ id, label, value: optionValue }) => (
-        <label key={id} className="label cursor-pointer">
-          <span className="label-text">{label}</span>
-          <input
-            {...field}
-            {...props}
-            checked={value === optionValue}
-            className={classNames(
-              'radio',
-              currentColor && `radio-${currentColor}`,
-              size && `radio-${size}`,
-              inputClassName,
-            )}
-            type="radio"
-            value={optionValue}
-          />
-        </label>
-      ))}
+      {options.map(
+        ({ className: optionClassName, id, label, value: optionValue }) => (
+          <label
+            key={id}
+            className={classNames('label cursor-pointer', optionClassName)}
+          >
+            <span className="label-text">{label}</span>
+            <input
+              {...field}
+              {...props}
+              checked={value === optionValue}
+              className={classNames(
+                'radio',
+                currentColor && `radio-${currentColor}`,
+                size && `radio-${size}`,
+                inputClassName,
+              )}
+              type="radio"
+              value={optionValue}
+            />
+          </label>
+        ),
+      )}
       {error?.message !== undefined ? (
         <FormError>{error.message}</FormError>
       ) : null}

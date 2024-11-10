@@ -1,5 +1,13 @@
 # CHANGELOG.md
 
+## 1.8.6 (2024-08-08)
+
+- Added `optionClassName` property to `options` object in `FormRadio` component.
+
+## 1.8.5 (2024-08-08)
+
+- Fixed `TypeaheadSelect` dropdown not opening when typing with input focused.
+
 ## 1.8.4 (2024-07-26)
 
 - Changed return type of `getItemText` prop to `ReactNode` in `Select` and `TypeaheadSelect` components, allowing for custom menu items.
