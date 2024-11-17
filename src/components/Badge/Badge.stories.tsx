@@ -1,34 +1,28 @@
-import { Story, Meta } from '@storybook/react';
-
-import { Badge, BadgeProps } from './Badge';
+import { StoryObj } from '@storybook/react';
 import { CheckIcon } from '../Icons';
+import { Badge } from './Badge';
 
-export default {
+const meta = {
   title: 'Badge',
   component: Badge,
-  argTypes: {
-    icon: {
-      control: false,
-    },
-  },
-} as Meta;
-
-export const Default: Story<BadgeProps> = args => (
-  <Badge {...args}>Badge</Badge>
-);
-
-export const WithIcon: Story<BadgeProps> = args => (
-  <Badge {...args}>Badge</Badge>
-);
-
-WithIcon.args = {
-  icon: () => <CheckIcon className="mr-1 h-4 w-4" />,
 };
 
-export const Dismissable: Story<BadgeProps> = args => (
-  <Badge {...args}>Badge</Badge>
-);
+export default meta;
 
-Dismissable.args = {
-  dismissable: true,
+type Story = StoryObj<typeof Badge>;
+
+export const Default: Story = {
+  args: {},
+};
+
+export const WithIcon: Story = {
+  args: {
+    icon: () => <CheckIcon className="mr-1 h-4 w-4" />,
+  },
+};
+
+export const Dismissable: Story = {
+  args: {
+    dismissable: true,
+  },
 };

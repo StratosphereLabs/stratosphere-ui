@@ -1,33 +1,32 @@
-import { Story, Meta } from '@storybook/react';
-import { Popover, PopoverProps } from './Popover';
+import { Meta, StoryObj } from '@storybook/react';
+import { Popover } from './Popover';
 
-export default {
+const meta: Meta<typeof Popover> = {
   title: 'Popover',
   component: Popover,
-  argTypes: {
-    icon: {
-      control: false,
-    },
-  },
-} as Meta;
-
-export const Default: Story<PopoverProps> = args => <Popover {...args} />;
-
-Default.args = {
-  buttonProps: {
-    children: 'Open Popover',
-  },
-  className: 'mb-24',
-  popoverComponent: () => <div className="w-64">Test Lmao</div>,
 };
 
-export const WithBackdrop: Story<PopoverProps> = args => <Popover {...args} />;
+export default meta;
 
-WithBackdrop.args = {
-  buttonProps: {
-    children: 'Open Popover',
+export const Default: Story = {
+  args: {
+    buttonProps: {
+      children: 'Open Popover',
+    },
+    className: 'mb-24',
+    popoverComponent: () => <div className="w-64">Test Lmao</div>,
   },
-  className: 'mb-24',
-  popoverComponent: () => <div className="w-64">Test Lmao</div>,
-  withBackdrop: true,
+};
+
+type Story = StoryObj<typeof Popover>;
+
+export const WithBackdrop: Story = {
+  args: {
+    buttonProps: {
+      children: 'Open Popover',
+    },
+    className: 'mb-24',
+    popoverComponent: () => <div className="w-64">Test Lmao</div>,
+    withBackdrop: true,
+  },
 };

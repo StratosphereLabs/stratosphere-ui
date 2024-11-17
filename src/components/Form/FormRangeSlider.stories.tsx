@@ -1,40 +1,36 @@
-import { Story, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { useForm } from 'react-hook-form';
 import { Form } from './Form';
-import { FormRangeSlider, FormRangeSliderProps } from './FormRangeSlider';
+import { FormRangeSlider } from './FormRangeSlider';
 
 import './multi-range-slider.css';
 
-export default {
+const meta: Meta<typeof FormRangeSlider> = {
   title: 'FormRangeSlider',
   component: FormRangeSlider,
-  argTypes: {
-    icon: {
-      control: false,
-    },
-  },
-} as Meta;
-
-interface FormValues {
-  field1: [number, number];
-}
-
-export const Default: Story<FormRangeSliderProps<FormValues>> = args => {
-  const methods = useForm({
-    defaultValues: {
-      field1: [0, 100],
-    },
-  });
-  return (
-    <Form className="w-full" methods={methods} onFormSubmit={() => null}>
-      <FormRangeSlider {...args} />
-    </Form>
-  );
 };
 
-Default.args = {
-  name: 'field1',
-  labelText: 'Label Text',
-  min: 0,
-  max: 100,
+export default meta;
+
+type Story = StoryObj<typeof FormRangeSlider>;
+
+export const Default: Story = {
+  args: {
+    name: 'field1',
+    labelText: 'Label Text',
+    min: 0,
+    max: 100,
+  },
+  render: args => {
+    const methods = useForm({
+      defaultValues: {
+        field1: [0, 100],
+      },
+    });
+    return (
+      <Form className="w-full" methods={methods} onFormSubmit={() => null}>
+        <FormRangeSlider {...args} />
+      </Form>
+    );
+  },
 };

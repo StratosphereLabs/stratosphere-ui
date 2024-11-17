@@ -1,60 +1,52 @@
-import { Story, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { Button } from '../Button';
-import { Modal, ModalProps } from './Modal';
+import { Modal } from './Modal';
 
-export default {
+const meta: Meta<typeof Modal> = {
   title: 'Modal',
   component: Modal,
-  argTypes: {
-    icon: {
-      control: false,
-    },
+};
+
+export default meta;
+
+type Story = StoryObj<typeof Modal>;
+
+const WithButtonTemplate: Story = {
+  render: args => {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <Button onClick={() => setOpen(true)}>Open</Button>
+        <Modal {...args} onClose={() => setOpen(false)} open={open} />
+      </>
+    );
   },
-} as Meta;
-
-/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-export const Default: Story<ModalProps> = ({ ref, ...args }: ModalProps) => {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>Open</Button>
-      <Modal {...args} onClose={() => setOpen(false)} open={open} />
-    </>
-  );
 };
 
-Default.args = {
-  actionButtons: [],
-  children: 'Modal Content',
-  title: 'Title',
+export const Default: Story = {
+  ...WithButtonTemplate,
+  args: {
+    actionButtons: [],
+    children: 'Modal Content',
+    title: 'Title',
+  },
 };
 
-export const WithActionButtons: Story<ModalProps> = ({
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-  ref,
-  ...args
-}: ModalProps) => {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>Open</Button>
-      <Modal {...args} onClose={() => setOpen(false)} open={open} />
-    </>
-  );
-};
-
-WithActionButtons.args = {
-  actionButtons: [
-    {
-      color: 'error',
-      children: 'Cancel',
-    },
-    {
-      color: 'success',
-      children: 'Okay',
-    },
-  ],
-  children: 'Modal Content',
-  title: 'Title',
+export const WithActionButtons: Story = {
+  ...WithButtonTemplate,
+  args: {
+    actionButtons: [
+      {
+        color: 'error',
+        children: 'Cancel',
+      },
+      {
+        color: 'success',
+        children: 'Okay',
+      },
+    ],
+    children: 'Modal Content',
+    title: 'Title',
+  },
 };

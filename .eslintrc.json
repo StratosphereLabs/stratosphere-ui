@@ -23,7 +23,8 @@
     {
       "files": "*.stories.tsx",
       "rules": {
-        "@typescript-eslint/no-floating-promises": "off"
+        "@typescript-eslint/no-floating-promises": "off",
+        "react-hooks/rules-of-hooks": "off"
       }
     }
   ],

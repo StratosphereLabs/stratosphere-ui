@@ -1,11 +1,8 @@
-import React from 'react';
 import { DEFAULT_THEME, STORAGE_KEY, THEME_PICKER_LIST } from './constants';
-import { Decorator } from './decorator';
 import { docsTheme } from './theme';
 import '../src/index.css';
 
 export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
       color: /(background|color)$/i,
@@ -35,17 +32,4 @@ export const parameters = {
   },
 };
 
-export const decorators = [
-  (Story, options) => (
-    <Decorator
-      title={options.title}
-      description={options.story}
-      source={options.parameters.storySource.source
-        .replace(/\(.*args.*\)\s*=>\s*\{\s*\n/, '')
-        .replace(/}([^}]*)$/, '$1')}
-    >
-      <Story />
-    </Decorator>
-  ),
-];
 export const tags = ['autodocs'];

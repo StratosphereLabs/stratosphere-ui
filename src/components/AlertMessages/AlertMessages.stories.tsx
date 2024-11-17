@@ -1,58 +1,38 @@
-import { Story, Meta } from '@storybook/react';
-import { AlertMessages, AlertMessagesProps } from './AlertMessages';
-import {
-  AlertMessagesProvider,
-  AlertMessagesProviderProps,
-} from './AlertMessagesProvider';
+import { Meta, StoryObj } from '@storybook/react';
+import { AlertMessages } from './AlertMessages';
+import { AlertMessagesProvider } from './AlertMessagesProvider';
 
-export default {
+const meta: Meta<typeof AlertMessages> = {
   title: 'AlertMessages',
   component: AlertMessages,
-  argTypes: {
-    icon: {
-      control: false,
-    },
-  },
-} as Meta;
-
-export interface StoryProps
-  extends AlertMessagesProps,
-    Pick<AlertMessagesProviderProps, 'initialData'> {}
-
-export const Default: Story<StoryProps> = ({
-  initialData,
-  maxMessages,
-}: StoryProps) => (
-  <AlertMessagesProvider initialData={initialData}>
-    <AlertMessages maxMessages={maxMessages} />
-  </AlertMessagesProvider>
-);
-
-Default.args = {
-  initialData: [
-    { color: 'info', title: 'Info' },
-    { color: 'warning', title: 'Warning' },
-    { color: 'success', title: 'Success' },
-    { color: 'error', title: 'Error' },
+  decorators: [
+    Story => (
+      <AlertMessagesProvider>
+        <Story />
+      </AlertMessagesProvider>
+    ),
   ],
-  maxMessages: 5,
 };
 
-export const SingleRow: Story<StoryProps> = ({
-  initialData,
-  maxMessages,
-}: StoryProps) => (
-  <AlertMessagesProvider initialData={initialData}>
-    <AlertMessages maxMessages={maxMessages} />
-  </AlertMessagesProvider>
-);
+export default meta;
 
-SingleRow.args = {
-  initialData: [
-    { color: 'info', title: 'Info' },
-    { color: 'warning', title: 'Warning' },
-    { color: 'success', title: 'Success' },
-    { color: 'error', title: 'Error' },
-  ],
-  maxMessages: 1,
+type Story = StoryObj<typeof AlertMessages>;
+
+export const Default: Story = {
+  args: {
+    maxMessages: 5,
+  },
+};
+
+// [
+//   { color: 'info', title: 'Info' },
+//   { color: 'warning', title: 'Warning' },
+//   { color: 'success', title: 'Success' },
+//   { color: 'error', title: 'Error' },
+// ]
+
+export const SingleRow: Story = {
+  args: {
+    maxMessages: 1,
+  },
 };

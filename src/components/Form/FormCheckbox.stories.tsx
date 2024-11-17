@@ -1,50 +1,47 @@
-import { Story, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { useForm } from 'react-hook-form';
 import { Form } from './Form';
-import { FormCheckbox, FormCheckboxProps } from './FormCheckbox';
+import { FormCheckbox } from './FormCheckbox';
 
-export default {
+const meta: Meta<typeof FormCheckbox> = {
   title: 'FormCheckbox',
   component: FormCheckbox,
-  argTypes: {
-    icon: {
-      control: false,
-    },
+};
+
+export default meta;
+
+type Story = StoryObj<typeof FormCheckbox>;
+
+export const Default: Story = {
+  args: {
+    labelText: 'Label Text',
+    name: 'field1',
   },
-} as Meta;
-
-interface FormValues {
-  field1: boolean;
-}
-
-export const Default: Story<FormCheckboxProps<FormValues>> = args => {
-  const methods = useForm();
-  return (
-    <Form methods={methods} onFormSubmit={() => null}>
-      <FormCheckbox {...args} />
-    </Form>
-  );
+  render: args => {
+    const methods = useForm();
+    return (
+      <Form methods={methods} onFormSubmit={() => null}>
+        <FormCheckbox {...args} />
+      </Form>
+    );
+  },
 };
 
-Default.args = {
-  labelText: 'Label Text',
-  name: 'field1',
-};
-
-export const WithDefaultValue: Story<FormCheckboxProps<FormValues>> = args => {
-  const methods = useForm({
-    defaultValues: {
-      field1: true,
-    },
-  });
-  return (
-    <Form methods={methods} onFormSubmit={() => null}>
-      <FormCheckbox {...args} />
-    </Form>
-  );
-};
-
-WithDefaultValue.args = {
-  labelText: 'Label Text',
-  name: 'field1',
+export const WithDefaultValue: Story = {
+  args: {
+    labelText: 'Label Text',
+    name: 'field1',
+  },
+  render: args => {
+    const methods = useForm({
+      defaultValues: {
+        field1: true,
+      },
+    });
+    return (
+      <Form methods={methods} onFormSubmit={() => null}>
+        <FormCheckbox {...args} />
+      </Form>
+    );
+  },
 };
