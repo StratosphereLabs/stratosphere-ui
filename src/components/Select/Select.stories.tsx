@@ -10,7 +10,9 @@ const meta: Meta<typeof Select> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Select>;
+type Story = StoryObj<
+  typeof Select<{ id: string; label: string }, { field1: string }>
+>;
 
 export const Default: Story = {
   args: {

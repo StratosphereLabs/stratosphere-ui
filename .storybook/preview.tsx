@@ -1,5 +1,5 @@
 import { DEFAULT_THEME, STORAGE_KEY, THEME_PICKER_LIST } from './constants';
-import { docsTheme } from './theme';
+import theme from './theme';
 import '../src/index.css';
 
 export const parameters = {
@@ -10,7 +10,7 @@ export const parameters = {
     },
   },
   docs: {
-    theme: docsTheme,
+    theme,
     options: {
       layout: 'fullscreen',
     },
