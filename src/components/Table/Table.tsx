@@ -151,7 +151,7 @@ export const Table = <DataType extends GenericDataType>({
                       active: highlightWhenSelected && row.getIsSelected(),
                     },
                     typeof rowClassName === 'function'
-                      ? rowClassName(row)
+                      ? (rowClassName(row) as Argument)
                       : rowClassName,
                   )}
                   key={row.id}
@@ -174,7 +174,7 @@ export const Table = <DataType extends GenericDataType>({
                       className={classNames(
                         cellClassNames?.[column.id],
                         typeof cellClassName === 'function'
-                          ? cellClassName(row, column)
+                          ? (cellClassName(row, column) as Argument)
                           : cellClassName,
                       )}
                       key={column.id}
