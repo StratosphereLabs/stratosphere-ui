@@ -10,7 +10,8 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier",
-    "plugin:mdx/recommended"
+    "plugin:mdx/recommended",
+    "plugin:storybook/recommended"
   ],
   "ignorePatterns": [
     "coverage",
@@ -21,7 +22,7 @@
   ],
   "overrides": [
     {
-      "files": "*.stories.tsx",
+      "files": "**/*.stories.@(ts|tsx|js|jsx|mjs|cjs)",
       "rules": {
         "@typescript-eslint/no-floating-promises": "off",
         "react-hooks/rules-of-hooks": "off"

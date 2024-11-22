@@ -1,7 +1,6 @@
 import { Highlight, themes } from 'prism-react-renderer';
 import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Tabs, TabContent } from '../src/components';
-import { useGlobalTheme } from './useGlobalTheme';
 
 type DecoratorProps = {
   children: ReactNode | ReactNode[];
@@ -17,12 +16,6 @@ export const Decorator = ({
   source,
 }: DecoratorProps) => {
   const [tab, setTab] = useState('preview');
-  const globalTheme = useGlobalTheme();
-  useEffect(() => {
-    document
-      .getElementsByTagName('html')[0]
-      .setAttribute('data-theme', globalTheme);
-  }, [globalTheme]);
   const Code = () =>
     useMemo(
       () => (
@@ -43,7 +36,7 @@ export const Decorator = ({
       [source],
     );
   return (
-    <div data-theme={globalTheme} className="w-full h-screen p-8 bg-base-100">
+    <div className="w-full h-screen p-8 bg-base-100">
       <div className="navbar p-0 border-b border-neutral text-base-content">
         <div className="navbar-start">
           <span className="text-lg font-bold">react-daisyui</span>
