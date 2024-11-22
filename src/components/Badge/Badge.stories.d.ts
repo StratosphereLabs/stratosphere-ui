@@ -7,5 +7,8 @@ declare const meta: {
 export default meta;
 type Story = StoryObj<typeof Badge>;
 export declare const Default: Story;
+export declare const Colors: Story;
+export declare const Sizes: Story;
+export declare const WithOutline: Story;
 export declare const WithIcon: Story;
 export declare const Dismissable: Story;
