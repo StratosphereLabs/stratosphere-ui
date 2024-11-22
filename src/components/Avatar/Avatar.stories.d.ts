@@ -5,5 +5,7 @@ export default meta;
 type Story = StoryObj<typeof Avatar>;
 export declare const Default: Story;
 export declare const Rounded: Story;
+export declare const Sizes: Story;
+export declare const WithRing: Story;
 export declare const WithOnlineStatus: Story;
 export declare const WithOfflineStatus: Story;

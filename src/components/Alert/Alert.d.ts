@@ -8,7 +8,8 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'childr
     } & ButtonProps)[];
     color?: AlertColor;
     description?: string;
-    icon: FC<ComponentProps<'svg'>>;
+    icon?: FC<ComponentProps<'svg'>>;
+    iconClassName?: string;
     title: string;
 }
-export declare const Alert: ({ actionButtons, className, color, description, icon: Icon, title, ...props }: AlertProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Alert: ({ actionButtons, className, color, description, icon: Icon, iconClassName, title, ...props }: AlertProps) => import("react/jsx-runtime").JSX.Element;
