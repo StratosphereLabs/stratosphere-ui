@@ -1,0 +1,12 @@
+import { Meta, StoryObj } from '@storybook/react';
+import { FormControl } from './FormControl';
+declare const meta: Meta<typeof FormControl>;
+export default meta;
+type Story = StoryObj<typeof FormControl>;
+export declare const Default: Story;
+export declare const WithLabel: Story;
+export declare const Required: Story;
+export declare const WithPlaceholder: Story;
+export declare const WithError: Story;
+export declare const WithElementOnLeft: Story;
+export declare const WithElementOnRight: Story;

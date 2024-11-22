@@ -1,0 +1,1 @@
+import{j as e}from"./jsx-runtime-DR9Q75dM.js";import{L as s}from"./Loading-BEIpVwnz.js";const o=()=>e.jsx("div",{className:"flex flex-1 items-center justify-center",children:e.jsx(s,{})});o.__docgenInfo={description:"",methods:[],displayName:"FullScreenLoader"};export{o as F};

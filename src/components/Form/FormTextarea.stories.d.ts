@@ -1,0 +1,10 @@
+import { Meta, StoryObj } from '@storybook/react';
+import { FormTextarea } from './FormTextarea';
+declare const meta: Meta<typeof FormTextarea>;
+export default meta;
+type Story = StoryObj<typeof FormTextarea>;
+export declare const Default: Story;
+export declare const WithLabel: Story;
+export declare const Required: Story;
+export declare const WithPlaceholder: Story;
+export declare const WithError: Story;
