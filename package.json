@@ -32,7 +32,6 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "deploy-storybook": "cross-env NODE_OPTIONS=--max-old-space-size=6144 storybook-to-ghpages",
     "prepack": "npm run build",
     "format": "prettier --config ./.prettierrc -w src vite.config.ts",
     "test": "vitest run --coverage"
@@ -52,7 +51,6 @@
     "@storybook/manager-api": "^8.4.5",
     "@storybook/react": "^8.4.2",
     "@storybook/react-vite": "^8.4.5",
-    "@storybook/storybook-deployer": "^2.8.16",
     "@storybook/test": "^8.4.2",
     "@storybook/theming": "^8.4.5",
     "@tailwindcss/typography": "^0.5.15",
