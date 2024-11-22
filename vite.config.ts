@@ -35,6 +35,14 @@ export default defineConfig({
     setupFiles: './vitest/setup.ts',
     coverage: {
       provider: 'v8',
+      include: ['src/**'],
+      exclude: [
+        '**/__tests__/**',
+        '**/*.stories.ts',
+        '**/*.stories.tsx',
+        '**/index.ts',
+        '**/types.ts',
+      ],
     },
   },
 });

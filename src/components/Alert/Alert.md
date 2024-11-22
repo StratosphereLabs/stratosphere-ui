@@ -10,6 +10,7 @@ The `Alert` component is a React component that renders an alert box with custom
 - `color?: AlertColor`: An optional color for the alert. The value should be one of the predefined `AlertColor` options: `info`, `success`, `warning`, or `error`.
 - `description?: string`: An optional description text to be displayed below the title.
 - `icon: FC<ComponentProps<'svg'>>`: A required React functional component that represents the icon to be displayed in the alert.
+- `iconClassName?: string`: An optional additional CSS class anme to be passed into the `icon` component.
 - `title: string`: A required title for the alert.
 
 The `AlertProps` interface extends `Omit<HTMLAttributes<HTMLDivElement>, 'children'>`, which includes props that can be passed directly into the HTML `div` element.
@@ -44,6 +45,7 @@ export const CustomAlert = () => {
         color="success"
         description="This is a success alert."
         icon={SuccessIcon}
+        iconClassName="stroke-info"
         title="Success Alert"
         className="my-alert"
       />

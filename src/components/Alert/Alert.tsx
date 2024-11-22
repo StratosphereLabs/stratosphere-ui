@@ -11,7 +11,8 @@ export interface AlertProps
   actionButtons?: ({ id: string } & ButtonProps)[];
   color?: AlertColor;
   description?: string;
-  icon: FC<ComponentProps<'svg'>>;
+  icon?: FC<ComponentProps<'svg'>>;
+  iconClassName?: string;
   title: string;
 }
 
@@ -21,21 +22,25 @@ export const Alert = ({
   color,
   description,
   icon: Icon,
+  iconClassName,
   title,
   ...props
 }: AlertProps) => (
   <div
     className={classNames('alert', color && `alert-${color}`, className)}
+    role="alert"
     {...props}
   >
-    <Icon className="h-5 w-5" />
+    {Icon !== undefined ? (
+      <Icon className={classNames('h-6 w-6 shrink-0', iconClassName)} />
+    ) : null}
     <div className="flex-1">
       <h3 className={description?.length ? 'font-bold' : undefined}>{title}</h3>
       {description?.length ? (
         <div className="text-xs">{description}</div>
       ) : null}
     </div>
-    {actionButtons !== undefined ? (
+    {actionButtons ? (
       <div className="flex flex-col items-end gap-1">
         {actionButtons.map(({ id, ...buttonProps }) => (
           <Button key={id} {...buttonProps} />

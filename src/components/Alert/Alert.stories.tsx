@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { InfoIcon } from '../Icons';
+import { ErrorIcon, InfoIcon, SuccessIcon, WarningIcon } from '../Icons';
 import { Alert } from './Alert';
 
 const meta: Meta<typeof Alert> = {
@@ -19,6 +19,19 @@ export const Default: Story = {
   },
 };
 
+export const WithColors: Story = {
+  args: {},
+  render: args => (
+    <div className="flex flex-col gap-2">
+      <Alert {...args} title="Default" />
+      <Alert {...args} color="info" icon={InfoIcon} title="Info" />
+      <Alert {...args} color="success" icon={SuccessIcon} title="Success" />
+      <Alert {...args} color="warning" icon={WarningIcon} title="Warning" />
+      <Alert {...args} color="error" icon={ErrorIcon} title="Error" />
+    </div>
+  ),
+};
+
 export const WithDescription: Story = {
   args: {
     color: 'info',
@@ -28,7 +41,7 @@ export const WithDescription: Story = {
   },
 };
 
-export const WithCloseButton: Story = {
+export const WithActionButtons: Story = {
   args: {
     color: 'info',
     icon: InfoIcon,
@@ -38,11 +51,20 @@ export const WithCloseButton: Story = {
       {
         id: 'close',
         'aria-label': 'Close Alert',
+        className: 'mt-[-10px] mr-[-10px]',
         color: 'ghost',
         onClick: () => null,
         shape: 'circle',
         size: 'xs',
         children: '✕',
+      },
+      {
+        id: 'info',
+        'aria-label': 'More Info',
+        color: 'neutral',
+        onClick: () => null,
+        size: 'xs',
+        children: 'More Info',
       },
     ],
   },
