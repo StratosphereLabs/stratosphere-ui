@@ -36,9 +36,8 @@ export const useTypeaheadSelect = <
     );
   useOutsideClick(dropdownRef, () => setShowDropdown(false));
   useEffect(() => {
-    if (showDropdown) {
-      setTimeout(() => searchInputRef.current?.focus());
-    } else setQuery('');
+    if (showDropdown) searchInputRef.current?.focus();
+    else setQuery('');
   }, [showDropdown, setQuery]);
   return {
     clearSelectedItem,

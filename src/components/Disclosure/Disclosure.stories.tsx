@@ -1,62 +1,61 @@
-import { Story, Meta } from '@storybook/react';
-import { Disclosure, DisclosureProps } from './Disclosure';
+import { Meta, StoryObj } from '@storybook/react';
+import { Disclosure } from './Disclosure';
 
-export default {
+const meta: Meta<typeof Disclosure> = {
   title: 'Disclosure',
   component: Disclosure,
-  argTypes: {
-    icon: {
-      control: false,
+};
+
+export default meta;
+
+type Story = StoryObj<typeof Disclosure>;
+
+export const Default: Story = {
+  args: {
+    buttonProps: {
+      color: 'ghost',
+      children: 'Disclosure Label',
     },
+    children: <div className="flex-1 text-center">Disclosure Content</div>,
+    className: 'w-64',
   },
-} as Meta;
-
-export const Default: Story<DisclosureProps> = args => <Disclosure {...args} />;
-
-Default.args = {
-  buttonProps: {
-    color: 'ghost',
-    children: 'Disclosure Label',
-  },
-  children: <div className="flex-1 text-center">Disclosure Content</div>,
-  className: 'w-64',
 };
 
-export const Rounded: Story<DisclosureProps> = args => <Disclosure {...args} />;
-
-Rounded.args = {
-  buttonProps: {
-    color: 'ghost',
-    children: 'Disclosure Label',
+export const Rounded: Story = {
+  args: {
+    buttonProps: {
+      color: 'ghost',
+      children: 'Disclosure Label',
+    },
+    children: <div className="flex-1 text-center">Disclosure Content</div>,
+    className: 'w-64',
+    rounded: true,
   },
-  children: <div className="flex-1 text-center">Disclosure Content</div>,
-  className: 'w-64',
-  rounded: true,
 };
 
-export const Large: Story<DisclosureProps> = args => <Disclosure {...args} />;
-
-Large.args = {
-  buttonProps: {
-    color: 'ghost',
-    children: 'Disclosure Label',
-    size: 'lg',
+export const Large: Story = {
+  args: {
+    buttonProps: {
+      color: 'ghost',
+      children: 'Disclosure Label',
+      size: 'lg',
+    },
+    children: <div className="flex-1 text-center">Disclosure Content</div>,
+    className: 'w-64',
+    rounded: true,
   },
-  children: <div className="flex-1 text-center">Disclosure Content</div>,
-  className: 'w-64',
-  rounded: true,
 };
 
-export const Open: Story<DisclosureProps> = args => <Disclosure {...args} />;
-
-Open.args = {
-  buttonProps: {
-    color: 'ghost',
-    children: 'Disclosure Label',
-    size: 'lg',
+export const Open: Story = {
+  args: {
+    buttonProps: {
+      color: 'ghost',
+      children: 'Disclosure Label',
+      size: 'lg',
+    },
+    children: <div className="flex-1 text-center">Disclosure Content</div>,
+    className: 'w-64',
+    defaultOpen: true,
+    rounded: true,
   },
-  children: <div className="flex-1 text-center">Disclosure Content</div>,
-  className: 'w-64',
-  defaultOpen: true,
-  rounded: true,
 };

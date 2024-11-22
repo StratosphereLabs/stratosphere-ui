@@ -1,31 +1,31 @@
-import { Story, Meta } from '@storybook/react';
-import { Progress, ProgressProps } from './Progress';
+import { Meta, StoryObj } from '@storybook/react';
+import { Progress } from './Progress';
 
-export default {
+const meta: Meta<typeof Progress> = {
   title: 'Progress',
   component: Progress,
-  argTypes: {
-    icon: {
-      control: false,
-    },
-  },
-} as Meta;
+};
 
-export const Default: Story<ProgressProps> = args => <Progress {...args} />;
+export default meta;
 
-Default.args = {};
+type Story = StoryObj<typeof Progress>;
 
-export const CustomColor: Story<ProgressProps> = args => (
-  <div className="flex w-full flex-col gap-8">
-    <Progress {...args} />
-    <Progress color="accent" {...args} />
-    <Progress color="error" {...args} />
-    <Progress color="info" {...args} />
-    <Progress color="primary" {...args} />
-    <Progress color="secondary" {...args} />
-    <Progress color="success" {...args} />
-    <Progress color="warning" {...args} />
-  </div>
-);
+export const Default: Story = {
+  args: {},
+};
 
-CustomColor.args = {};
+export const CustomColor: Story = {
+  args: {},
+  render: args => (
+    <div className="flex w-full flex-col gap-8">
+      <Progress {...args} />
+      <Progress color="accent" {...args} />
+      <Progress color="error" {...args} />
+      <Progress color="info" {...args} />
+      <Progress color="primary" {...args} />
+      <Progress color="secondary" {...args} />
+      <Progress color="success" {...args} />
+      <Progress color="warning" {...args} />
+    </div>
+  ),
+};

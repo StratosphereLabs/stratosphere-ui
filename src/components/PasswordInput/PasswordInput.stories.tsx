@@ -1,33 +1,39 @@
-import { Story, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { useForm } from 'react-hook-form';
 import { Form } from '../Form';
-import { PasswordInput, PasswordInputProps } from './PasswordInput';
-
-export default {
-  title: 'PasswordInput',
-  component: PasswordInput,
-  argTypes: {
-    icon: {
-      control: false,
-    },
-  },
-} as Meta;
+import { PasswordInput } from './PasswordInput';
 
 interface FormValues {
   field1: string;
 }
 
-export const Default: Story<PasswordInputProps<FormValues, string>> = args => {
-  const methods = useForm();
-  return (
-    <Form methods={methods} onFormSubmit={() => null}>
-      <PasswordInput {...args} />
-    </Form>
-  );
+const meta: Meta<typeof PasswordInput> = {
+  title: 'PasswordInput',
+  component: PasswordInput,
+  decorators: [
+    Story => {
+      const methods = useForm<FormValues>();
+      return (
+        <Form<FormValues>
+          className="w-60"
+          methods={methods}
+          onFormSubmit={() => null}
+        >
+          <Story />
+        </Form>
+      );
+    },
+  ],
 };
 
-Default.args = {
-  isRequired: true,
-  labelText: 'Password',
-  name: 'field1',
+export default meta;
+
+type Story = StoryObj<typeof PasswordInput>;
+
+export const Default: Story = {
+  args: {
+    isRequired: true,
+    labelText: 'Password',
+    name: 'field1',
+  },
 };

@@ -1,6 +1,6 @@
-import { create, ThemeVars } from '@storybook/theming';
+import { create } from '@storybook/theming';
 
-const baseTheme: ThemeVars = {
+export default create({
   base: 'dark',
   brandTitle: 'StratosphereUI',
   brandUrl: 'https://github.com/StratosphereLabs/stratosphere-ui',
@@ -13,11 +13,4 @@ const baseTheme: ThemeVars = {
   barTextColor: '#A6ADBA',
   barSelectedColor: '#C3D0EA',
   barBg: '#191D24',
-};
-
-export const docsTheme = {
-  ...baseTheme,
-  maxWidth: '100%',
-};
-
-export default create(baseTheme);
+});

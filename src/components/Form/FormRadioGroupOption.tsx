@@ -23,7 +23,7 @@ export const FormRadioGroupOption = ({
       <Button
         active={checked}
         className={classNames('join-item', className)}
-        color={checked ? activeColor ?? 'primary' : inactiveColor}
+        color={checked ? (activeColor ?? 'primary') : inactiveColor}
         disabled={isDisabled}
         {...props}
       >

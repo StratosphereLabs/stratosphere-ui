@@ -1,36 +1,32 @@
-import { Story, Meta } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import { useForm } from 'react-hook-form';
 import { Form } from './Form';
-import { FormToggleSwitch, FormToggleSwitchProps } from './FormToggleSwitch';
+import { FormToggleSwitch } from './FormToggleSwitch';
 
-export default {
+const meta: Meta<typeof FormToggleSwitch> = {
   title: 'FormToggleSwitch',
   component: FormToggleSwitch,
-  argTypes: {
-    icon: {
-      control: false,
-    },
-  },
-} as Meta;
-
-interface FormValues {
-  field1: boolean;
-}
-
-export const Default: Story<FormToggleSwitchProps<FormValues>> = args => {
-  const methods = useForm();
-  return (
-    <Form
-      className="flex w-full items-center gap-2"
-      methods={methods}
-      onFormSubmit={() => null}
-    >
-      <FormToggleSwitch {...args} />
-    </Form>
-  );
 };
 
-Default.args = {
-  name: 'field1',
-  labelText: 'Label Text',
+export default meta;
+
+type Story = StoryObj<typeof FormToggleSwitch>;
+
+export const Default: Story = {
+  args: {
+    name: 'field1',
+    labelText: 'Label Text',
+  },
+  render: args => {
+    const methods = useForm();
+    return (
+      <Form
+        className="flex w-full items-center gap-2"
+        methods={methods}
+        onFormSubmit={() => null}
+      >
+        <FormToggleSwitch {...args} />
+      </Form>
+    );
+  },
 };
