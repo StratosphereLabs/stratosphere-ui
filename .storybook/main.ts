@@ -23,7 +23,6 @@ const config: StorybookConfig = {
     },
     '@storybook/addon-storysource',
     '@storybook/addon-themes',
-    '@chromatic-com/storybook',
   ],
   framework: {
     name: '@storybook/react-vite',
@@ -31,9 +30,6 @@ const config: StorybookConfig = {
   },
   docs: {
     autodocs: 'tag',
-  },
-  typescript: {
-    reactDocgen: 'react-docgen-typescript',
   },
 };
 
