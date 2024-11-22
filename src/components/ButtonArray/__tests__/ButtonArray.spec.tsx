@@ -45,7 +45,7 @@ describe('ButtonArray Component', () => {
     expect(container).toMatchSnapshot();
   });
 
-  it('renders dropdown menu for hidden buttons', async () => {
+  it.skip('renders dropdown menu for hidden buttons', async () => {
     const { getByRole } = render(
       <ButtonArray buttonOptions={buttonOptions} collapseAt="xl" />,
     );

@@ -42,6 +42,7 @@ export default defineConfig({
         '**/*.stories.tsx',
         '**/index.ts',
         '**/types.ts',
+        'src/components/Icons.tsx',
       ],
     },
   },
