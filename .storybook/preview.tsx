@@ -1,5 +1,6 @@
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import type { Preview } from '@storybook/react';
+import { THEMES } from './constants';
 import theme from './theme';
 import '../src/index.css';
 
@@ -25,13 +26,15 @@ const preview: Preview = {
   tags: ['autodocs'],
   decorators: [
     withThemeByDataAttribute({
-      themes: {
-        light: 'light',
-        dark: 'dark',
-      },
+      themes: THEMES,
       defaultTheme: 'light',
       attributeName: 'data-theme',
     }),
+    Story => (
+      <div className="p-[3em] bg-base-100">
+        <Story />
+      </div>
+    ),
   ],
 };
 
