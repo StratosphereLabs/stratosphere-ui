@@ -4,5 +4,9 @@ import { HTMLAttributes } from 'react';
 export type AvatarGroupProps = HTMLAttributes<HTMLDivElement>;
 
 export const AvatarGroup = ({ className, ...props }: AvatarGroupProps) => (
-  <div className={classNames('avatar-group', className)} {...props} />
+  <div
+    className={classNames('avatar-group', className)}
+    role="group"
+    {...props}
+  />
 );

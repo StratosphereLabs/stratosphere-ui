@@ -56,8 +56,9 @@ export const Badge = ({
     <div className="flex-1 truncate font-semibold">{children}</div>
     {dismissable === true ? (
       <Button
-        className="px-1"
+        as="a"
         color="ghost"
+        shape="circle"
         size="xs"
         onClick={event => {
           event.stopPropagation();

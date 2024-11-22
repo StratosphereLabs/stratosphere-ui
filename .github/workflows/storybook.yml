@@ -21,10 +21,14 @@ jobs:
         with:
           node-version: '20.x'
       - name: Install all dependencies
-        run: npm install
-      - name: Build
+        run: npm ci
+      - name: Run unit tests
+        run: npm test
+      - name: Build package
+        run: npm run build
+      - name: Build Storybook
         run: npm run build-storybook
-      - name: Push
+      - name: Push Storybook build
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self

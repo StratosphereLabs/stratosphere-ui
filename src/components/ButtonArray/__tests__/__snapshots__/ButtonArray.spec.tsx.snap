@@ -51,7 +51,7 @@ exports[`ButtonArray Component > renders tooltips when withTooltips is true 1`] 
           aria-haspopup="menu"
           class="btn btn-ghost btn-circle btn-sm"
           data-headlessui-state=""
-          id="headlessui-menu-button-:r3:"
+          id="headlessui-menu-button-:rb:"
           type="button"
         >
           <svg
@@ -121,7 +121,7 @@ exports[`ButtonArray Component > renders without crashing 1`] = `
           aria-haspopup="menu"
           class="btn btn-ghost btn-circle btn-sm"
           data-headlessui-state=""
-          id="headlessui-menu-button-:r0:"
+          id="headlessui-menu-button-:r2:"
           type="button"
         >
           <svg
