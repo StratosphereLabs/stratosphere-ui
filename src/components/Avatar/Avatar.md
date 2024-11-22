@@ -6,12 +6,15 @@ The `Avatar` component is a reusable React component that displays an avatar ima
 
 The `Avatar` component accepts the following props:
 
-- `children (ReactNode)`: The content to be rendered within the avatar. It can be an image, an icon, or any other valid React element.
-- `className (string)`: Additional CSS class(es) to be applied to the outer `<div>` element of the avatar.
-- `isOffline (boolean)`: If set to true, adds the "offline" class to the avatar. This can be used to indicate that the user is currently offline.
-- `isOnline (boolean)`: If set to true, adds the "online" class to the avatar. This can be used to indicate that the user is currently online.
-- `isPlaceholder (boolean)`: If set to true, adds the "placeholder" class to the avatar. This can be used to display a placeholder avatar image when the actual image is not available.
-- `shapeClassName (string)`: Additional CSS class(es) to be applied to the inner `<div>` element that wraps the avatar content. This can be used to customize the shape or add specific styles to the avatar content.
+- `alt?: string`: Alt text for avatar image element.
+- `className?: string`: Additional CSS class(es) to be applied to the outer `<div>` element of the avatar.
+- `isOffline?: boolean`: If set to true, adds the "offline" class to the avatar. This can be used to indicate that the user is currently offline.
+- `isOnline?: boolean`: If set to true, adds the "online" class to the avatar. This can be used to indicate that the user is currently online.
+- `placeholderClassName?: string`: If passed, adds the classname to the placeholder text element.
+- `placeholderText?: string`: If passed, adds the "placeholder" class to the avatar and renders a text node inside of the avatar shape. This can be used to display a placeholder avatar image when the actual image is not available.
+- `shapeClassName?: string`: Additional CSS class(es) to be applied to the inner `<div>` element that wraps the avatar content. This can be used to customize the shape or add specific styles to the avatar content.
+- `size?: string`: Specifies the size of the avatar. It accepts one of the predefined sizes: 'sm', 'md', 'lg', or 'xl'.
+- `src?: string`: Source (URL) of Avatar image. Renders image component inside shape element if passed.
 
 All other props (`HTMLAttributes<HTMLDivElement>`): Any additional props supported by the HTML `<div>` element can be passed to the `Avatar` component and will be forwarded to the underlying `<div>` element.
 

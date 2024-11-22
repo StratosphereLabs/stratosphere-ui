@@ -31,7 +31,7 @@ const preview: Preview = {
       attributeName: 'data-theme',
     }),
     Story => (
-      <div className="p-[3em] bg-base-100">
+      <div className="p-[3em] bg-base-100 flex justify-center">
         <Story />
       </div>
     ),
