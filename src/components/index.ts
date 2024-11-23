@@ -3,6 +3,7 @@ export * from './AlertMessages';
 export * from './Avatar';
 export * from './Badge';
 export * from './Breadcrumbs';
+export * from './Browser';
 export * from './Button';
 export * from './ButtonArray';
 export * from './Card';
