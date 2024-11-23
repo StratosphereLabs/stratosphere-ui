@@ -7,6 +7,7 @@ export declare const EllipsisVerticalIcon: (props: SVGProps<SVGSVGElement>) => J
 export declare const ErrorIcon: (props: SVGProps<SVGSVGElement>) => import("react/jsx-runtime").JSX.Element;
 export declare const EyeIcon: (props: SVGProps<SVGSVGElement>) => import("react/jsx-runtime").JSX.Element;
 export declare const EyeSlashIcon: (props: SVGProps<SVGSVGElement>) => import("react/jsx-runtime").JSX.Element;
+export declare const HomeIcon: (props: SVGProps<SVGSVGElement>) => import("react/jsx-runtime").JSX.Element;
 export declare const InfoIcon: (props: SVGProps<SVGSVGElement>) => import("react/jsx-runtime").JSX.Element;
 export declare const SortAscendingIcon: () => import("react/jsx-runtime").JSX.Element;
 export declare const SortDescendingIcon: () => import("react/jsx-runtime").JSX.Element;
