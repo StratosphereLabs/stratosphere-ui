@@ -54,7 +54,7 @@ export const useSelectFormSync = <
         const itemIds =
           multi === true
             ? selectedItems.map(({ id }) => id)
-            : (selectedItem?.id ?? '');
+            : (selectedItem?.id ?? null);
         setValue<string>(name, itemIds, setValueConfig);
       } else {
         const items = multi === true ? selectedItems : selectedItem;
