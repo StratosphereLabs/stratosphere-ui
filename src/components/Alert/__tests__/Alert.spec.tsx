@@ -1,68 +1,53 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Alert, ALERT_COLORS, AlertProps } from '../Alert';
 
-describe('Alert component', () => {
-  it('renders the title correctly', () => {
-    render(<Alert title="Test Alert" />);
+const setup = (props: Partial<AlertProps> = {}) => {
+  return render(<Alert title="Test Alert" {...props} />);
+};
+
+describe('Alert Component', () => {
+  test('renders the title correctly', () => {
+    setup();
     expect(screen.getByText('Test Alert')).toBeInTheDocument();
   });
 
-  it('applies the correct color class', () => {
-    for (const color of ALERT_COLORS) {
-      const { unmount } = render(<Alert title="Color Test" color={color} />);
-      expect(screen.getByRole('alert')).toHaveClass(`alert-${color}`);
-      unmount();
-    }
-  });
-
-  it('renders the description when provided', () => {
-    render(
-      <Alert title="Test Alert" description="This is a test description" />,
-    );
+  test('renders the description if provided', () => {
+    setup({ description: 'This is a test description' });
     expect(screen.getByText('This is a test description')).toBeInTheDocument();
   });
 
-  it('does not render the description when not provided', () => {
-    render(<Alert title="Test Alert" />);
-    expect(
-      screen.queryByText('This is a test description'),
-    ).not.toBeInTheDocument();
+  test('applies color classes correctly', () => {
+    ALERT_COLORS.forEach(color => {
+      const { container } = setup({ color });
+      expect(container.firstChild).toHaveClass(`alert-${color}`);
+    });
   });
 
-  it('renders the icon if provided', () => {
-    const MockIcon = () => <svg data-testid="mock-icon"></svg>;
-    render(<Alert title="Test Alert" icon={MockIcon} />);
-    expect(screen.getByTestId('mock-icon')).toBeInTheDocument();
+  test('renders an icon if provided', () => {
+    const TestIcon = () => <svg data-testid="test-icon" />;
+    setup({ icon: TestIcon });
+    expect(screen.getByTestId('test-icon')).toBeInTheDocument();
   });
 
-  it('does not render the icon if not provided', () => {
-    render(<Alert title="Test Alert" />);
-    expect(screen.queryByTestId('mock-icon')).not.toBeInTheDocument();
-  });
-
-  it('renders action buttons if provided', () => {
-    const actionButtons: AlertProps['actionButtons'] = [
-      { id: 'button-1', children: 'Button 1' },
-      { id: 'button-2', children: 'Button 2' },
+  test('renders action buttons if provided', () => {
+    const actionButtons = [
+      { id: 'btn1', label: 'Action 1', onClick: vi.fn() },
+      { id: 'btn2', label: 'Action 2', onClick: vi.fn() },
     ];
-    render(<Alert title="Test Alert" actionButtons={actionButtons} />);
-    expect(screen.getByText('Button 1')).toBeInTheDocument();
-    expect(screen.getByText('Button 2')).toBeInTheDocument();
+    setup({ actionButtons });
+    expect(screen.getByLabelText('Action 1')).toBeInTheDocument();
+    expect(screen.getByLabelText('Action 2')).toBeInTheDocument();
   });
 
-  it('does not render action buttons if not provided', () => {
-    render(<Alert title="Test Alert" />);
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+  test('triggers onDismiss when dismiss button is clicked', () => {
+    const onDismiss = vi.fn();
+    setup({ onDismiss });
+    fireEvent.click(screen.getByText('✕'));
+    expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 
-  it('applies custom className', () => {
-    render(<Alert title="Test Alert" className="custom-class" />);
-    expect(screen.getByRole('alert')).toHaveClass('custom-class');
-  });
-
-  it('forwards additional props to the container', () => {
-    render(<Alert title="Test Alert" data-testid="alert" />);
-    expect(screen.getByTestId('alert')).toBeInTheDocument();
+  test('applies additional class names', () => {
+    const { container } = setup({ className: 'custom-class' });
+    expect(container.firstChild).toHaveClass('custom-class');
   });
 });

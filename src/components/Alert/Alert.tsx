@@ -8,11 +8,15 @@ export type AlertColor = (typeof ALERT_COLORS)[number];
 
 export interface AlertProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
-  actionButtons?: ({ id: string } & ButtonProps)[];
+  actionButtons?: ({ id: string; label: string } & ButtonProps)[];
   color?: AlertColor;
+  dash?: boolean;
   description?: string;
   icon?: FC<ComponentProps<'svg'>>;
   iconClassName?: string;
+  onDismiss?: () => void;
+  outline?: boolean;
+  soft?: boolean;
   title: string;
 }
 
@@ -20,32 +24,56 @@ export const Alert = ({
   actionButtons,
   className,
   color,
+  dash,
   description,
   icon: Icon,
   iconClassName,
+  onDismiss,
+  outline,
+  soft,
   title,
   ...props
 }: AlertProps) => (
   <div
-    className={classNames('alert', color && `alert-${color}`, className)}
+    className={classNames(
+      'alert relative',
+      color && `alert-${color}`,
+      soft && 'alert-soft',
+      outline && 'alert-outline',
+      dash && 'alert-dash',
+      className,
+    )}
     role="alert"
     {...props}
   >
     {Icon !== undefined ? (
-      <Icon className={classNames('h-6 w-6 shrink-0', iconClassName)} />
+      <Icon
+        className={classNames('h-6 w-6 shrink-0 stroke-current', iconClassName)}
+      />
     ) : null}
-    <div className="flex-1">
+    <span>
       <h3 className={description?.length ? 'font-bold' : undefined}>{title}</h3>
       {description?.length ? (
         <div className="text-xs">{description}</div>
       ) : null}
-    </div>
+    </span>
     {actionButtons ? (
-      <div className="flex flex-col items-end gap-1">
-        {actionButtons.map(({ id, ...buttonProps }) => (
-          <Button key={id} {...buttonProps} />
+      <div className="flex flex-wrap gap-1">
+        {actionButtons.map(({ id, label, ...buttonProps }) => (
+          <Button key={id} aria-label={label} {...buttonProps} />
         ))}
       </div>
+    ) : null}
+    {onDismiss ? (
+      <Button
+        className="absolute top-0 right-0 mt-[-2px] mr-[-2px] font-bold"
+        color="ghost"
+        onClick={onDismiss}
+        shape="circle"
+        size="xs"
+      >
+        ✕
+      </Button>
     ) : null}
   </div>
 );
