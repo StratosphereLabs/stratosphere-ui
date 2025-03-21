@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { getCoreRowModel } from '@tanstack/react-table';
+
 import { Table } from './Table';
 
 const meta: Meta<typeof Table> = {

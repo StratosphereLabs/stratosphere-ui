@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import { FullScreenLoader } from './FullScreenLoader';
 
 const meta: Meta<typeof FullScreenLoader> = {

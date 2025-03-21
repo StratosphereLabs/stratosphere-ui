@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { FC } from 'react';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+
 import { Breadcrumbs, BreadcrumbsProps } from '../Breadcrumbs';
 
 const MockIcon: FC = () => <svg data-testid="mock-icon">Mock Icon</svg>;

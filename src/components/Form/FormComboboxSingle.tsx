@@ -1,5 +1,6 @@
 import { Combobox } from '@headlessui/react';
 import { FieldValues } from 'react-hook-form';
+
 import { GenericDataType } from '../../common';
 import { ComboboxProps } from './types';
 

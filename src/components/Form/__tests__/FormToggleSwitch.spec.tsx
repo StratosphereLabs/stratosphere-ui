@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
+
 import { FormToggleSwitch, FormToggleSwitchProps } from '../FormToggleSwitch';
 import FormProvider from './FormProvider';
 

@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { FieldValues, SetValueConfig, useFormContext } from 'react-hook-form';
+
 import { GenericDataType } from '../../common';
 import { useValueChangeEffect } from '../../hooks';
 import { SelectSyncOptions } from './types';

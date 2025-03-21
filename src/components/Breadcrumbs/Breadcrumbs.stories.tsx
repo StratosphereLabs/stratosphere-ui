@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import { HomeIcon, InfoIcon } from '../Icons';
 import { Breadcrumbs } from './Breadcrumbs';
 

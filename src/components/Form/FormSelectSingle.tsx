@@ -1,5 +1,6 @@
 import { Listbox } from '@headlessui/react';
 import { FieldValues } from 'react-hook-form';
+
 import { GenericDataType } from '../../common';
 import { ListboxProps } from './types';
 

@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { HTMLProps, ReactNode, forwardRef } from 'react';
+
 import { CheckIcon } from '../Icons';
 
 export interface MenuItemProps extends HTMLProps<HTMLAnchorElement> {

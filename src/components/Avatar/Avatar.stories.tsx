@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import { Avatar } from './Avatar';
 
 const meta: Meta<typeof Avatar> = {
@@ -29,7 +30,7 @@ export const Sizes: Story = {
     src: 'https://pbs.twimg.com/profile_images/1419725933649465344/XFTBtqmk_400x400.jpg',
   },
   render: args => (
-    <div className="flex flex-row gap-2 items-center">
+    <div className="flex flex-row items-center gap-2">
       <Avatar {...args} size="xl" />
       <Avatar {...args} size="lg" />
       <Avatar {...args} size="md" />

@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Avatar, AVATAR_SIZE_MAP, AvatarSizes } from '../Avatar';
+import { describe, expect, it } from 'vitest';
+
+import { AVATAR_SIZE_MAP, Avatar, AvatarSizes } from '../Avatar';
 
 describe('Avatar Component', () => {
   it('renders an image when src is provided', () => {

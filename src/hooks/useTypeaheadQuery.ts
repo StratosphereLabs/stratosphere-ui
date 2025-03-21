@@ -6,8 +6,9 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useDebouncedValue } from './useDebouncedValue';
+
 import { GenericDataType } from '../common';
+import { useDebouncedValue } from './useDebouncedValue';
 
 export interface UseTypeaheadQueryOptions<DataItem> {
   debounceTime?: number;

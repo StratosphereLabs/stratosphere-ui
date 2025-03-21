@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { HTMLProps } from 'react';
+
 import { FullScreenLoader } from '../FullScreenLoader';
 
 export interface LoadingCardProps extends HTMLProps<HTMLDivElement> {

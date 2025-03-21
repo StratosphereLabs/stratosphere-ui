@@ -2,6 +2,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { Fragment, ReactNode, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
+
 import { GenericDataType, getGroupedDataItems } from '../../common';
 import { useFieldColor } from '../../hooks';
 import { Button, ButtonColor, ButtonProps } from '../Button';
@@ -119,7 +120,7 @@ export const Select = <
           as={Menu}
           size={menuSize}
           className={classNames(
-            'rounded-box absolute z-50 bg-base-100 p-2 shadow-xl',
+            'absolute z-50 rounded-box bg-base-100 p-2 shadow-xl',
             menuClassName,
           )}
         >

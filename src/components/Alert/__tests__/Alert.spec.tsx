@@ -1,5 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Alert, ALERT_COLORS, AlertProps } from '../Alert';
+import { fireEvent, render, screen } from '@testing-library/react';
+
+import { ALERT_COLORS, Alert, AlertProps } from '../Alert';
 
 const setup = (props: Partial<AlertProps> = {}) => {
   return render(<Alert title="Test Alert" {...props} />);

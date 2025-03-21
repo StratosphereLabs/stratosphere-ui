@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import { Menu } from './Menu';
 import { MenuItem } from './MenuItem';
 

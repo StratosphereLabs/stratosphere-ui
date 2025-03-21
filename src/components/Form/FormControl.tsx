@@ -1,11 +1,12 @@
 import classNames from 'classnames';
 import { HTMLProps, ReactNode, useMemo } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
+
+import { Transform } from '../../common';
+import { useFieldColor } from '../../hooks';
 import { FormError } from './FormError';
 import { FormLabelText } from './FormLabelText';
 import { FormFieldProps } from './types';
-import { Transform } from '../../common';
-import { useFieldColor } from '../../hooks';
 
 export const INPUT_COLORS = [
   'ghost',

@@ -1,8 +1,8 @@
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
-import { defineConfig } from 'vitest/config';
 import dts from 'vite-plugin-dts';
 import eslint from 'vite-plugin-eslint';
+import { defineConfig } from 'vitest/config';
 
 // https://vitejs.dev/config/
 export default defineConfig({

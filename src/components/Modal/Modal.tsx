@@ -1,6 +1,7 @@
 import { Dialog } from '@headlessui/react';
 import classNames from 'classnames';
-import { forwardRef, HTMLProps } from 'react';
+import { HTMLProps, forwardRef } from 'react';
+
 import { Button, ButtonProps } from '../Button';
 
 export const MODAL_POSITIONS = ['top', 'bottom', 'middle'] as const;

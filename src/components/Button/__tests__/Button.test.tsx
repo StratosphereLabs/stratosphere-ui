@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect } from 'vitest';
-import { Button, BUTTON_COLORS, BUTTON_SIZES, BUTTON_SHAPES } from '../Button';
+import { describe, expect, it } from 'vitest';
+
+import { BUTTON_COLORS, BUTTON_SHAPES, BUTTON_SIZES, Button } from '../Button';
 
 describe('Button component', () => {
   it('renders the button with default properties', () => {

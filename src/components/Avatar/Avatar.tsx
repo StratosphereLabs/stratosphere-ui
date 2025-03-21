@@ -51,7 +51,7 @@ export const Avatar = ({
     <div
       className={classNames(
         AVATAR_SIZE_MAP[size ?? 'md'],
-        hasRing && 'ring-offset-base-100 rounded-full ring ring-offset-2',
+        hasRing && 'rounded-full ring ring-offset-2 ring-offset-base-100',
         shapeClassName,
       )}
     >

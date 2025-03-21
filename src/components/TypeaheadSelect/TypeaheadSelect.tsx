@@ -7,8 +7,9 @@ import {
   ReactNode,
 } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
+
 import { GenericDataType, getGroupedDataItems } from '../../common';
-import { useFieldColor, UseTypeaheadQueryOptions } from '../../hooks';
+import { UseTypeaheadQueryOptions, useFieldColor } from '../../hooks';
 import { Badge, BadgeColor } from '../Badge';
 import {
   FormError,
@@ -205,7 +206,7 @@ export const TypeaheadSelect = <
         <Combobox.Options
           as={Menu}
           className={classNames(
-            'rounded-box absolute z-50 bg-base-100 p-2 shadow-xl',
+            'absolute z-50 rounded-box bg-base-100 p-2 shadow-xl',
             menuClassName,
           )}
           ref={dropdownRef}

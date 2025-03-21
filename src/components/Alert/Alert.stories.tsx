@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import { ErrorIcon, InfoIcon, SuccessIcon, WarningIcon } from '../Icons';
 import { Alert } from './Alert';
 
@@ -23,7 +24,7 @@ export const Default: Story = {
 export const WithColors: Story = {
   args: {},
   render: args => (
-    <div className="flex-1 flex flex-col gap-2">
+    <div className="flex flex-1 flex-col gap-2">
       <Alert {...args} title="Default" />
       <Alert {...args} color="info" icon={InfoIcon} title="Info" />
       <Alert {...args} color="success" icon={SuccessIcon} title="Success" />
@@ -67,7 +68,7 @@ export const WithActionButtons: Story = {
 export const Soft: Story = {
   args: {},
   render: args => (
-    <div className="flex-1 flex flex-col gap-2">
+    <div className="flex flex-1 flex-col gap-2">
       <Alert {...args} soft title="Default" />
       <Alert {...args} soft color="info" icon={InfoIcon} title="Info" />
       <Alert
@@ -92,7 +93,7 @@ export const Soft: Story = {
 export const Outline: Story = {
   args: {},
   render: args => (
-    <div className="flex-1 flex flex-col gap-2">
+    <div className="flex flex-1 flex-col gap-2">
       <Alert {...args} outline title="Default" />
       <Alert {...args} outline color="info" icon={InfoIcon} title="Info" />
       <Alert
@@ -117,7 +118,7 @@ export const Outline: Story = {
 export const Dash: Story = {
   args: {},
   render: args => (
-    <div className="flex-1 flex flex-col gap-2">
+    <div className="flex flex-1 flex-col gap-2">
       <Alert {...args} dash title="Default" />
       <Alert {...args} dash color="info" icon={InfoIcon} title="Info" />
       <Alert

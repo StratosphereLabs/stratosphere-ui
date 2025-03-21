@@ -2,12 +2,13 @@ import classNames from 'classnames';
 import MultiRangeSlider, { ChangeResult } from 'multi-range-slider-react';
 import {
   ForwardedRef,
-  forwardRef,
   ReactNode,
+  forwardRef,
   useEffect,
   useState,
 } from 'react';
 import { FieldValues, Path, useFormContext } from 'react-hook-form';
+
 import { FormLabelText } from './FormLabelText';
 
 export interface FormRangeSliderProps<Values> {

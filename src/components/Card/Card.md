@@ -18,9 +18,9 @@ In addition to these props, the `Card` component also accepts any valid HTML att
 ## Usage
 
 ```tsx
-import React from 'react';
 import classNames from 'classnames';
-import { Card, CardBody, CardTitle, CardActions } from 'stratosphere-ui';
+import React from 'react';
+import { Card, CardActions, CardBody, CardTitle } from 'stratosphere-ui';
 
 export const ExampleCard = () => (
   <Card bordered compact imageFull>

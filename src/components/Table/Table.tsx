@@ -1,11 +1,12 @@
 import {
   Column,
-  flexRender,
   Row,
   TableOptions,
+  flexRender,
   useReactTable,
 } from '@tanstack/react-table';
 import classNames, { Argument } from 'classnames';
+
 import { GenericDataType } from '../../common';
 import { FullScreenLoader } from '../FullScreenLoader';
 import { Pagination } from '../Pagination';

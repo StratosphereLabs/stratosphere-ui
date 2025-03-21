@@ -1,4 +1,5 @@
 import { StoryObj } from '@storybook/react';
+
 import { CheckIcon } from '../Icons';
 import { Badge } from './Badge';
 
@@ -20,7 +21,7 @@ export const Default: Story = {
 export const Colors: Story = {
   args: {},
   render: args => (
-    <div className="flex flex-col gap-8 items-center">
+    <div className="flex flex-col items-center gap-8">
       <div className="flex gap-2">
         <Badge {...args}>default</Badge>
         <Badge {...args} color="neutral">
@@ -62,7 +63,7 @@ export const Sizes: Story = {
     color: 'neutral',
   },
   render: args => (
-    <div className="flex gap-2 items-center">
+    <div className="flex items-center gap-2">
       <Badge {...args} size="lg">
         Large
       </Badge>

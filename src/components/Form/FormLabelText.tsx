@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { forwardRef, HTMLProps } from 'react';
+import { HTMLProps, forwardRef } from 'react';
 
 export interface FormLabelTextProps extends HTMLProps<HTMLSpanElement> {
   isRequired?: boolean;

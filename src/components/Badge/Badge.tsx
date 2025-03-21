@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { ComponentProps, FC, HTMLProps, MouseEvent } from 'react';
+
 import { Button } from '../Button';
 import { CloseIcon } from '../Icons';
 

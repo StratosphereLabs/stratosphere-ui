@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import FormProvider from './FormProvider';
-import { FormRadioGroupOption } from '../FormRadioGroupOption';
+
 import { FormRadioGroup } from '../FormRadioGroup';
+import { FormRadioGroupOption } from '../FormRadioGroupOption';
+import FormProvider from './FormProvider';
 
 describe('FormRadioGroup', () => {
   const name = 'radio';

@@ -1,6 +1,7 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Badge, BADGE_COLORS, BADGE_SIZES } from '../Badge';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+
+import { BADGE_COLORS, BADGE_SIZES, Badge } from '../Badge';
 
 describe('Badge Component', () => {
   it('renders children content', () => {

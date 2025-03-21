@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import { Browser } from './Browser';
 
 const meta: Meta<typeof Browser> = {

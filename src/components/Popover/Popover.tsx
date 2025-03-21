@@ -4,7 +4,8 @@ import {
   Transition,
 } from '@headlessui/react';
 import classNames from 'classnames';
-import { forwardRef, Fragment, MutableRefObject } from 'react';
+import { Fragment, MutableRefObject, forwardRef } from 'react';
+
 import { Button, ButtonProps } from '../Button';
 
 export interface PopoverPanelRenderProps {

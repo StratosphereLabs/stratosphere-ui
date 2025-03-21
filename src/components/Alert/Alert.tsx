@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { ComponentProps, FC, HTMLAttributes } from 'react';
+
 import { Button, ButtonProps } from '../Button';
 
 export const ALERT_COLORS = ['info', 'success', 'warning', 'error'] as const;
@@ -66,7 +67,7 @@ export const Alert = ({
     ) : null}
     {onDismiss ? (
       <Button
-        className="absolute top-0 right-0 mt-[-2px] mr-[-2px] font-bold"
+        className="absolute right-0 top-0 mr-[-2px] mt-[-2px] font-bold"
         color="ghost"
         onClick={onDismiss}
         shape="circle"
