@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { ButtonArray } from './ButtonArray';
+
 import { EyeIcon, InfoIcon, WarningIcon } from '../Icons';
+import { ButtonArray } from './ButtonArray';
 
 const meta: Meta<typeof ButtonArray> = {
   title: 'ButtonArray',

@@ -1,7 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { useForm } from 'react-hook-form';
-import { Form } from '../Form';
+
 import { TypeaheadSelect } from '.';
+import { Form } from '../Form';
 
 interface DataItem {
   [x: string]: string;

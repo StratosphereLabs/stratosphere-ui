@@ -1,64 +1,68 @@
-import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { ButtonArray } from '../ButtonArray';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { FC } from 'react';
+
+import { ButtonArray, ButtonOptions } from '../ButtonArray';
+
+const MockIcon: FC = () => <svg data-testid="mock-icon" />;
+
+class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
 
 describe('ButtonArray Component', () => {
-  const buttonOptions = [
+  window.ResizeObserver = ResizeObserver;
+
+  const buttonOptions: ButtonOptions[] = [
     {
-      key: '1',
-      icon: () => <svg />,
+      key: 'button1',
+      icon: MockIcon,
       onClick: vi.fn(),
-      menuText: 'Menu 1',
-      tooltipText: 'Tooltip 1',
+      menuText: 'Button 1',
     },
     {
-      key: '2',
-      icon: () => <svg />,
+      key: 'button2',
+      icon: MockIcon,
       onClick: vi.fn(),
-      menuText: 'Menu 2',
+      menuText: 'Button 2',
     },
   ];
 
-  it('renders without crashing', () => {
-    const { container } = render(<ButtonArray buttonOptions={buttonOptions} />);
-    expect(container).toMatchSnapshot();
+  test('renders buttons when collapseAt is undefined', () => {
+    render(<ButtonArray buttonOptions={buttonOptions} />);
+
+    expect(screen.getByText('Button 1')).toBeInTheDocument();
+    expect(screen.getByText('Button 2')).toBeInTheDocument();
   });
 
-  it('renders buttons correctly', () => {
-    const { getByRole } = render(<ButtonArray buttonOptions={buttonOptions} />);
-    expect(getByRole('button', { name: 'Menu 1' })).toBeInTheDocument();
-    expect(getByRole('button', { name: 'Menu 2' })).toBeInTheDocument();
+  test('calls onClick when button is clicked', () => {
+    render(<ButtonArray buttonOptions={buttonOptions} />);
+
+    const button1 = screen.getByText('Button 1');
+    fireEvent.click(button1);
+
+    expect(buttonOptions[0].onClick).toHaveBeenCalled();
   });
 
-  it('calls onClick when a button is clicked', async () => {
-    const { getAllByText } = render(
-      <ButtonArray buttonOptions={buttonOptions} />,
-    );
-    await userEvent.click(getAllByText('Menu 1')[0]);
-    expect(buttonOptions[0].onClick).toHaveBeenCalledTimes(1);
+  test('renders tooltips when withTooltips is true', () => {
+    render(<ButtonArray buttonOptions={buttonOptions} withTooltips />);
+
+    expect(screen.getByText('Button 1')).toBeInTheDocument();
+    expect(screen.getByText('Button 2')).toBeInTheDocument();
   });
 
-  it('renders tooltips when withTooltips is true', () => {
-    const { container } = render(
-      <ButtonArray buttonOptions={buttonOptions} withTooltips={true} />,
-    );
-    expect(container).toMatchSnapshot();
+  test('renders dropdown when collapseAt is set', () => {
+    render(<ButtonArray buttonOptions={buttonOptions} collapseAt="sm" />);
+
+    expect(screen.getByText('Actions Menu')).toBeInTheDocument();
   });
 
-  it.skip('renders dropdown menu for hidden buttons', async () => {
-    const { getByRole } = render(
-      <ButtonArray buttonOptions={buttonOptions} collapseAt="xl" />,
-    );
-    await userEvent.click(getByRole('button', { name: 'Actions Menu' }));
-    expect(getByRole('menuitem', { name: 'Menu 1' })).toBeInTheDocument();
-    expect(getByRole('menuitem', { name: 'Menu 2' })).toBeInTheDocument();
-  });
+  test('dropdown button click triggers menu options', () => {
+    render(<ButtonArray buttonOptions={buttonOptions} collapseAt="sm" />);
 
-  it('calls onClick when a dropdown item is clicked', async () => {
-    const { getAllByText } = render(
-      <ButtonArray buttonOptions={buttonOptions} />,
-    );
-    await userEvent.click(getAllByText('Menu 1')[1]);
-    expect(buttonOptions[0].onClick).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByText('Actions Menu'));
+    expect(screen.getAllByText('Button 1')[1]).toBeInTheDocument();
+    expect(screen.getAllByText('Button 2')[1]).toBeInTheDocument();
   });
 });

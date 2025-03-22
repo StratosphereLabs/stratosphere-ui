@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { useForm } from 'react-hook-form';
+
 import { Form } from './Form';
 import { FormRangeSlider } from './FormRangeSlider';
-
 import './multi-range-slider.css';
 
 const meta: Meta<typeof FormRangeSlider> = {

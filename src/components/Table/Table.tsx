@@ -1,18 +1,19 @@
 import {
   Column,
-  flexRender,
   Row,
   TableOptions,
+  flexRender,
   useReactTable,
 } from '@tanstack/react-table';
 import classNames, { Argument } from 'classnames';
+
 import { GenericDataType } from '../../common';
 import { FullScreenLoader } from '../FullScreenLoader';
 import { Pagination } from '../Pagination';
 import { PaginationMetadata } from '../Pagination/types';
 import { HeaderSortIcon } from './HeaderSortIcon';
 
-export const TABLE_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+export const TABLE_SIZES = ['xl', 'lg', 'md', 'sm', 'xs'] as const;
 
 export type TableSize = (typeof TABLE_SIZES)[number];
 
@@ -26,7 +27,6 @@ export interface TableProps<DataType extends GenericDataType>
   className?: string;
   enableRowHover?: boolean | ((row: Row<DataType>) => boolean);
   enableSelectAll?: boolean;
-  enableZebra?: boolean;
   headerClassName?: string;
   hideHeader?: boolean;
   highlightWhenSelected?: boolean;
@@ -36,6 +36,7 @@ export interface TableProps<DataType extends GenericDataType>
   pinRows?: boolean;
   rowClassName?: Argument | ((row: Row<DataType>) => Argument);
   size?: TableSize;
+  zebra?: boolean;
 }
 
 export const Table = <DataType extends GenericDataType>({
@@ -47,7 +48,6 @@ export const Table = <DataType extends GenericDataType>({
   enableRowHover,
   enableRowSelection,
   enableSelectAll,
-  enableZebra,
   headerClassName,
   hideHeader,
   highlightWhenSelected,
@@ -58,6 +58,7 @@ export const Table = <DataType extends GenericDataType>({
   pinRows,
   rowClassName,
   size,
+  zebra,
   ...props
 }: TableProps<DataType>) => {
   const tableInstance = useReactTable<DataType>({
@@ -86,9 +87,9 @@ export const Table = <DataType extends GenericDataType>({
             'table w-full',
             size && `table-${size}`,
             {
-              'table-zebra': enableZebra,
               'table-pin-cols': pinCols,
               'table-pin-rows': pinRows,
+              'table-zebra': zebra,
             },
             className,
           )}

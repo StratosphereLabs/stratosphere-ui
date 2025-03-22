@@ -1,14 +1,16 @@
 import classNames from 'classnames';
 import { HTMLProps, ReactNode, useMemo } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
+
+import { Transform } from '../../common';
+import { useFieldColor } from '../../hooks';
 import { FormError } from './FormError';
 import { FormLabelText } from './FormLabelText';
 import { FormFieldProps } from './types';
-import { Transform } from '../../common';
-import { useFieldColor } from '../../hooks';
 
 export const INPUT_COLORS = [
   'ghost',
+  'neutral',
   'primary',
   'secondary',
   'accent',
@@ -18,7 +20,7 @@ export const INPUT_COLORS = [
   'error',
 ] as const;
 
-export const INPUT_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+export const INPUT_SIZES = ['xl', 'lg', 'md', 'sm', 'xs'] as const;
 
 export type InputColor = (typeof INPUT_COLORS)[number];
 
@@ -76,7 +78,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
           <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
         </div>
       ) : null}
-      <div className="relative inline-flex">
+      <div className="relative inline-flex w-full">
         {elementLeft ? (
           <div className="absolute left-0 top-0 z-20 flex h-full items-center pl-2">
             {elementLeft}

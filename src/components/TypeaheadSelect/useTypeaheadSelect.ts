@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { FieldValues } from 'react-hook-form';
+
 import { GenericDataType } from '../../common';
 import { useOutsideClick, useTypeaheadQuery } from '../../hooks';
 import { TypeaheadSelectProps } from './TypeaheadSelect';

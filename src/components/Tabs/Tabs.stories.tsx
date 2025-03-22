@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import { Tabs } from './Tabs';
 
 const meta: Meta<typeof Tabs> = {
@@ -29,9 +30,9 @@ export const Default: Story = {
   },
 };
 
-export const Bordered: Story = {
+export const Border: Story = {
   args: {
-    bordered: true,
+    border: true,
     tabs: [
       {
         id: '1',
@@ -49,9 +50,9 @@ export const Bordered: Story = {
   },
 };
 
-export const Lifted: Story = {
+export const Lift: Story = {
   args: {
-    lifted: true,
+    lift: true,
     tabs: [
       {
         id: '1',
@@ -69,9 +70,9 @@ export const Lifted: Story = {
   },
 };
 
-export const Boxed: Story = {
+export const Box: Story = {
   args: {
-    boxed: true,
+    box: true,
     tabs: [
       {
         id: '1',
@@ -91,7 +92,7 @@ export const Boxed: Story = {
 
 export const Controlled: Story = {
   args: {
-    boxed: true,
+    box: true,
     selectedTabId: '2',
     tabs: [
       {
@@ -112,7 +113,7 @@ export const Controlled: Story = {
 
 export const Disabled: Story = {
   args: {
-    boxed: true,
+    box: true,
     tabs: [
       {
         id: '1',
@@ -133,7 +134,7 @@ export const Disabled: Story = {
 
 export const Sizes: Story = {
   args: {
-    boxed: true,
+    box: true,
     tabs: [
       {
         id: '1',

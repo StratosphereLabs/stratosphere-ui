@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { HTMLProps } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
+
 import { useFieldColor } from '../../hooks';
 import { FormLabelText } from './FormLabelText';
 import { FormFieldProps } from './types';
@@ -15,7 +16,7 @@ export const TOGGLE_COLORS = [
   'error',
 ] as const;
 
-export const TOGGLE_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+export const TOGGLE_SIZES = ['xl', 'lg', 'md', 'sm', 'xs'] as const;
 
 export type ToggleColor = (typeof TOGGLE_COLORS)[number];
 

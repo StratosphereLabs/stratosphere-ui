@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { ReactNode, useState } from 'react';
 import { FieldValues } from 'react-hook-form';
+
 import { Button } from '../Button';
 import { FormControl, FormControlProps } from '../Form';
 import { EyeIcon, EyeSlashIcon } from '../Icons';
@@ -26,7 +27,10 @@ export const PasswordInput = <Values extends FieldValues, TOutput>({
         <Button
           className="w-8"
           color="ghost"
-          onClick={() => setShowPassword(show => !show)}
+          onClick={event => {
+            event.preventDefault();
+            setShowPassword(show => !show);
+          }}
           shape="circle"
           size="sm"
         >

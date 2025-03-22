@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import { Progress } from './Progress';
 
 const meta: Meta<typeof Progress> = {
@@ -19,6 +20,7 @@ export const CustomColor: Story = {
   render: args => (
     <div className="flex w-full flex-col gap-8">
       <Progress {...args} />
+      <Progress color="neutral" {...args} />
       <Progress color="accent" {...args} />
       <Progress color="error" {...args} />
       <Progress color="info" {...args} />

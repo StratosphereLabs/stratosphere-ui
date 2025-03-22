@@ -20,7 +20,7 @@ export const BUTTON_COLORS = [
 
 export const BUTTON_SHAPES = ['circle', 'square'] as const;
 
-export const BUTTON_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+export const BUTTON_SIZES = ['xl', 'lg', 'md', 'sm', 'xs'] as const;
 
 export type ButtonColor = (typeof BUTTON_COLORS)[number];
 
@@ -33,6 +33,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   as?: 'a' | 'button';
   block?: boolean;
   color?: ButtonColor;
+  dash?: boolean;
   disabled?: boolean;
   glass?: boolean;
   link?: boolean;
@@ -41,6 +42,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   outline?: boolean;
   shape?: ButtonShape;
   size?: ButtonSize;
+  soft?: boolean;
   wide?: boolean;
 }
 
@@ -56,6 +58,7 @@ export const Button = forwardRef<
       children,
       className,
       color,
+      dash,
       disabled,
       glass,
       link,
@@ -64,6 +67,7 @@ export const Button = forwardRef<
       outline,
       shape,
       size,
+      soft,
       wide,
       ...props
     },
@@ -76,6 +80,7 @@ export const Button = forwardRef<
           active && 'btn-active',
           block && 'btn-block',
           color && `btn-${color}`,
+          dash && 'btn-dash',
           disabled && 'btn-disabled',
           glass && 'glass',
           link && 'btn-link',
@@ -83,6 +88,7 @@ export const Button = forwardRef<
           outline && 'btn-outline',
           shape && `btn-${shape}`,
           size && `btn-${size}`,
+          soft && 'btn-soft',
           wide && 'btn-wide',
           className,
         ),
@@ -93,7 +99,9 @@ export const Button = forwardRef<
       [
         active,
         block,
+        className,
         color,
+        dash,
         disabled,
         glass,
         link,
@@ -103,8 +111,8 @@ export const Button = forwardRef<
         ref,
         shape,
         size,
+        soft,
         wide,
-        className,
       ],
     );
     return createElement(

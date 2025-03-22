@@ -1,4 +1,4 @@
-import { Tab } from '@headlessui/react';
+import { Tab, TabGroup, TabList, TabPanels } from '@headlessui/react';
 import classNames from 'classnames';
 import { HTMLProps, ReactNode, useMemo } from 'react';
 
@@ -10,16 +10,16 @@ export interface TabData {
   onClick?: () => void;
 }
 
-export const TAB_SIZES = ['xs', 'sm', 'md', 'lg'] as const;
+export const TAB_SIZES = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
 export type TabSize = (typeof TAB_SIZES)[number];
 
 export interface TabsProps
   extends Omit<HTMLProps<HTMLDivElement>, 'as' | 'onChange' | 'ref' | 'size'> {
-  bordered?: boolean;
-  boxed?: boolean;
+  border?: boolean;
+  box?: boolean;
   className?: string;
-  lifted?: boolean;
+  lift?: boolean;
   manual?: boolean;
   onChange: (tab: TabData) => void;
   selectedTabId: string;
@@ -29,12 +29,12 @@ export interface TabsProps
 }
 
 export const Tabs = ({
-  bordered,
-  boxed,
+  border,
+  box,
   children,
   className,
+  lift,
   manual,
-  lifted,
   onChange,
   selectedTabId,
   size,
@@ -47,18 +47,18 @@ export const Tabs = ({
     [selectedTabId, tabs],
   );
   return (
-    <Tab.Group
+    <TabGroup
       manual={manual}
       onChange={index => onChange(tabs[index])}
       selectedIndex={selectedIndex > -1 ? selectedIndex : undefined}
       vertical={vertical}
     >
-      <Tab.List
+      <TabList
         className={classNames(
           'tabs',
-          bordered && 'tabs-bordered',
-          boxed && 'tabs-boxed',
-          lifted && 'tabs-lifted',
+          border && 'tabs-border',
+          box && 'tabs-box',
+          lift && 'tabs-lift',
           size && `tabs-${size}`,
           className,
         )}
@@ -80,8 +80,8 @@ export const Tabs = ({
             {children}
           </Tab>
         ))}
-      </Tab.List>
-      <Tab.Panels>{children}</Tab.Panels>
-    </Tab.Group>
+      </TabList>
+      <TabPanels>{children}</TabPanels>
+    </TabGroup>
   );
 };

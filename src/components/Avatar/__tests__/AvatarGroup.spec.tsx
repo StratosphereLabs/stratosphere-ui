@@ -1,34 +1,36 @@
-import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+
+import { Avatar } from '../Avatar';
 import { AvatarGroup } from '../AvatarGroup';
 
 describe('AvatarGroup Component', () => {
-  it('renders a div with the "avatar-group" class', () => {
+  it('renders without crashing', () => {
     render(<AvatarGroup />);
-    const groupElement = screen.getByRole('group', { hidden: true });
-    expect(groupElement).toHaveClass('avatar-group');
+    expect(screen.getByRole('group')).toBeInTheDocument();
   });
 
-  it('applies additional custom classes passed via the className prop', () => {
-    render(<AvatarGroup className="custom-class" />);
-    const groupElement = screen.getByRole('group', { hidden: true });
-    expect(groupElement).toHaveClass('avatar-group custom-class');
-  });
-
-  it('forwards other HTML attributes to the root element', () => {
-    render(<AvatarGroup data-testid="avatar-group" />);
-    const groupElement = screen.getByTestId('avatar-group');
-    expect(groupElement).toBeInTheDocument();
-  });
-
-  it('renders child components passed as children', () => {
+  it('renders child avatars', () => {
     render(
       <AvatarGroup>
-        <div data-testid="child">Child Content</div>
+        <Avatar src="test1.jpg" />
+        <Avatar src="test2.jpg" />
       </AvatarGroup>,
     );
-    const childElement = screen.getByTestId('child');
-    expect(childElement).toBeInTheDocument();
-    expect(childElement).toHaveTextContent('Child Content');
+    expect(screen.getAllByRole('img')).toHaveLength(2);
+  });
+
+  it('applies spacing class based on space prop', () => {
+    render(<AvatarGroup space={4} />);
+    expect(screen.getByRole('group')).toHaveClass('-space-x-4');
+  });
+
+  it('renders remaining count avatar when remainingCount is provided', () => {
+    render(<AvatarGroup remainingCount={5} />);
+    expect(screen.getByText('+5')).toBeInTheDocument();
+  });
+
+  it('applies custom className', () => {
+    render(<AvatarGroup className="custom-class" />);
+    expect(screen.getByRole('group')).toHaveClass('custom-class');
   });
 });

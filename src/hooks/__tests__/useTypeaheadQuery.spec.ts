@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { vi } from 'vitest';
+
 import { useTypeaheadQuery } from '../useTypeaheadQuery';
 
 describe('useTypeaheadQuery', () => {

@@ -12,7 +12,7 @@ export const LOADING_SHAPES = [
 
 export type LoadingShape = (typeof LOADING_SHAPES)[number];
 
-export const LOADING_SIZES = ['xs', 'sm', 'md', 'lg'] as const;
+export const LOADING_SIZES = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
 export type LoadingSize = (typeof LOADING_SIZES)[number];
 

@@ -1,9 +1,10 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import FormProvider from './FormProvider';
-import { FormRadio, RadioOption } from '../FormRadio';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+
+import { FormRadio, RadioOption } from '../FormRadio';
+import FormProvider from './FormProvider';
 
 const options: RadioOption[] = [
   { id: 1, label: 'Option 1', value: 'option1' },

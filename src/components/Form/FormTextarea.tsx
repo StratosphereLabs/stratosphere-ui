@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { HTMLProps, useMemo } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
+
 import { Transform } from '../../common';
 import { useFieldColor } from '../../hooks';
 import { FormError } from './FormError';
@@ -9,6 +10,7 @@ import { FormFieldProps } from './types';
 
 export const TEXTAREA_COLORS = [
   'ghost',
+  'neutral',
   'primary',
   'secondary',
   'accent',
@@ -18,7 +20,7 @@ export const TEXTAREA_COLORS = [
   'error',
 ] as const;
 
-export const TEXTAREA_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+export const TEXTAREA_SIZES = ['xl', 'lg', 'md', 'sm', 'xs'] as const;
 
 export type TextareaColor = (typeof TEXTAREA_COLORS)[number];
 

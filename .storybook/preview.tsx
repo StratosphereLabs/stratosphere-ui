@@ -1,8 +1,9 @@
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import type { Preview } from '@storybook/react';
+
+import '../src/index.css';
 import { THEMES } from './constants';
 import theme from './theme';
-import '../src/index.css';
 
 const preview: Preview = {
   parameters: {
@@ -27,11 +28,11 @@ const preview: Preview = {
   decorators: [
     withThemeByDataAttribute({
       themes: THEMES,
-      defaultTheme: 'light',
+      defaultTheme: 'dark',
       attributeName: 'data-theme',
     }),
     Story => (
-      <div className="p-[3em] bg-base-100 flex justify-center">
+      <div className="flex justify-center bg-base-100 p-[3em]">
         <Story />
       </div>
     ),

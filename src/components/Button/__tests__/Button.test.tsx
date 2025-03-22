@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect } from 'vitest';
-import { Button, BUTTON_COLORS, BUTTON_SIZES, BUTTON_SHAPES } from '../Button';
+import { describe, expect, it } from 'vitest';
+
+import { BUTTON_COLORS, BUTTON_SHAPES, BUTTON_SIZES, Button } from '../Button';
 
 describe('Button component', () => {
   it('renders the button with default properties', () => {
@@ -28,6 +29,24 @@ describe('Button component', () => {
       expect(button).toHaveClass(`btn-${size}`);
       unmount();
     }
+  });
+
+  it('applies the outline class based on the "outline" prop', () => {
+    render(<Button outline>Button</Button>);
+    const button = screen.getByText('Button');
+    expect(button).toHaveClass(`btn-outline`);
+  });
+
+  it('applies the soft class based on the "soft" prop', () => {
+    render(<Button soft>Button</Button>);
+    const button = screen.getByText('Button');
+    expect(button).toHaveClass(`btn-soft`);
+  });
+
+  it('applies the dash class based on the "dash" prop', () => {
+    render(<Button dash>Button</Button>);
+    const button = screen.getByText('Button');
+    expect(button).toHaveClass(`btn-dash`);
   });
 
   it('applies the shape class based on the "shape" prop', () => {

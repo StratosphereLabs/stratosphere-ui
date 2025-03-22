@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import { LoadingCard } from './LoadingCard';
 
 const meta: Meta<typeof LoadingCard> = {

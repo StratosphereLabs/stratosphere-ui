@@ -1,12 +1,13 @@
 import classNames from 'classnames';
 import {
-  type Key,
   type ComponentProps,
   type FC,
   Fragment,
   HTMLProps,
+  type Key,
   ReactNode,
 } from 'react';
+
 import { Breakpoint } from '../../common';
 import { Button, ButtonProps } from '../Button';
 import { DropdownMenu, DropdownMenuProps } from '../DropdownMenu';

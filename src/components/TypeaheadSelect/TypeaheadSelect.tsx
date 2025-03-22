@@ -1,4 +1,9 @@
-import { Combobox } from '@headlessui/react';
+import {
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
+  Label,
+} from '@headlessui/react';
 import classNames from 'classnames';
 import {
   Fragment,
@@ -7,8 +12,9 @@ import {
   ReactNode,
 } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
+
 import { GenericDataType, getGroupedDataItems } from '../../common';
-import { useFieldColor, UseTypeaheadQueryOptions } from '../../hooks';
+import { UseTypeaheadQueryOptions, useFieldColor } from '../../hooks';
 import { Badge, BadgeColor } from '../Badge';
 import {
   FormError,
@@ -133,15 +139,15 @@ export const TypeaheadSelect = <
       <label className="form-control">
         {labelText !== undefined ? (
           <div className="label">
-            <Combobox.Label as={FormLabelText} isRequired={isRequired}>
+            <Label as={FormLabelText} isRequired={isRequired}>
               {labelText}
-            </Combobox.Label>
+            </Label>
           </div>
         ) : null}
         {enableBadges ? (
           <div
             className={classNames(
-              'input flex items-center gap-1 overflow-x-scroll scrollbar-none',
+              'input flex w-full items-center gap-1 overflow-x-scroll scrollbar-none',
               bordered && `input-bordered`,
               !disabled && 'cursor-pointer',
               currentColor && `input-${currentColor}`,
@@ -178,7 +184,7 @@ export const TypeaheadSelect = <
               : placeholder}
           </div>
         ) : (
-          <Combobox.Input
+          <ComboboxInput
             className={classNames(
               'input w-full',
               bordered && `input-bordered`,
@@ -202,10 +208,10 @@ export const TypeaheadSelect = <
         )}
       </label>
       {showDropdown ? (
-        <Combobox.Options
+        <ComboboxOptions
           as={Menu}
           className={classNames(
-            'rounded-box absolute z-50 bg-base-100 p-2 shadow-xl',
+            'absolute rounded-box p-2 shadow-xl',
             menuClassName,
           )}
           ref={dropdownRef}
@@ -213,7 +219,7 @@ export const TypeaheadSelect = <
           static
         >
           {enableBadges ? (
-            <Combobox.Input
+            <ComboboxInput
               className={classNames('input w-full', dropdownInputClassName)}
               onChange={({ target: { value } }) => {
                 setQuery(value);
@@ -237,23 +243,22 @@ export const TypeaheadSelect = <
           ) : null}
           {!isLoading
             ? optionsArray?.map((option, index) => (
-                <Combobox.Option as={Fragment} key={option.id} value={option}>
-                  {({ active, disabled, selected }) => (
+                <ComboboxOption as={Fragment} key={option.id} value={option}>
+                  {({ disabled, selected }) => (
                     <MenuItem
                       className={classNames(
                         index === 0 && enableBadges && 'mt-2',
                       )}
                       disabled={disabled}
-                      focus={active}
                       selected={multi === true ? selected : undefined}
                     >
                       {getItemText(option)}
                     </MenuItem>
                   )}
-                </Combobox.Option>
+                </ComboboxOption>
               ))
             : null}
-        </Combobox.Options>
+        </ComboboxOptions>
       ) : null}
       {error?.message !== undefined ? (
         <FormError>{error.message}</FormError>

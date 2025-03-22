@@ -1,10 +1,13 @@
 import {
   Popover as HeadlessUIPopover,
   PopoverProps as HeadlessUIPopoverProps,
-  Transition,
+  PopoverButton,
+  PopoverPanel,
 } from '@headlessui/react';
+import { AnchorProps } from '@headlessui/react/dist/internal/floating';
 import classNames from 'classnames';
-import { forwardRef, Fragment, MutableRefObject } from 'react';
+import { MutableRefObject, forwardRef } from 'react';
+
 import { Button, ButtonProps } from '../Button';
 
 export interface PopoverPanelRenderProps {
@@ -16,54 +19,41 @@ export interface PopoverPanelRenderProps {
 
 export interface PopoverProps
   extends Omit<HeadlessUIPopoverProps<'div'>, 'as' | 'className'> {
+  anchor?: AnchorProps;
   buttonProps: ButtonProps;
   className?: string;
   popoverClassName?: string;
   popoverComponent: ({ open, close }: PopoverPanelRenderProps) => JSX.Element;
-  withBackdrop?: boolean;
 }
 
 export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
   (
     {
+      anchor,
       buttonProps,
       className,
       popoverClassName,
       popoverComponent,
-      withBackdrop,
-      ...props
     }: PopoverProps,
     ref,
   ) => (
-    <HeadlessUIPopover
-      as="div"
-      className={classNames('relative', className)}
-      ref={ref}
-      {...props}
-    >
-      <HeadlessUIPopover.Button as={Button} {...buttonProps} />
-      {withBackdrop ? (
-        <HeadlessUIPopover.Overlay className="fixed inset-0 bg-black opacity-30" />
-      ) : null}
-      <Transition
-        as={Fragment}
-        enter="transition duration-100 ease-out"
-        enterFrom="transform scale-95 opacity-0"
-        enterTo="transform scale-100 opacity-100"
-        leave="transition duration-75 ease-out"
-        leaveFrom="transform scale-100 opacity-100"
-        leaveTo="transform scale-95 opacity-0"
+    <HeadlessUIPopover ref={ref}>
+      <PopoverButton
+        as={Button}
+        className={classNames(className, buttonProps.className)}
+        {...buttonProps}
+      />
+      <PopoverPanel
+        as="div"
+        anchor={anchor ?? 'bottom start'}
+        transition
+        className={classNames(
+          'flex origin-top flex-col p-2 shadow-xl transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0',
+          popoverClassName,
+        )}
       >
-        <HeadlessUIPopover.Panel
-          as="div"
-          className={classNames(
-            'absolute z-50 bg-base-100 p-2 shadow-xl',
-            popoverClassName,
-          )}
-        >
-          {popoverComponent}
-        </HeadlessUIPopover.Panel>
-      </Transition>
+        {popoverComponent}
+      </PopoverPanel>
     </HeadlessUIPopover>
   ),
 );

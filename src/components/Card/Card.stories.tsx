@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import { Card } from './Card';
 import { CardActions } from './CardActions';
 import { CardBody } from './CardBody';
@@ -30,17 +31,10 @@ export const Default: Story = {
   args: {},
 };
 
-export const Bordered: Story = {
+export const WithBorder: Story = {
   ...CardTemplate,
   args: {
-    bordered: true,
-  },
-};
-
-export const Compact: Story = {
-  ...CardTemplate,
-  args: {
-    compact: true,
+    border: true,
   },
 };
 

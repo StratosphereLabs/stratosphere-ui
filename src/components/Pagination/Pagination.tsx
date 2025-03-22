@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { HTMLProps } from 'react';
+
 import { Button, ButtonProps } from '../Button';
 import { PaginationMetadata } from './types';
 import { getPageNumbers } from './utils';

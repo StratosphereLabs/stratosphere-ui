@@ -1,7 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { useForm } from 'react-hook-form';
-import { Select } from './Select';
+
 import { Form } from '../Form';
+import { Select } from './Select';
 
 const meta: Meta<typeof Select> = {
   title: 'Select',

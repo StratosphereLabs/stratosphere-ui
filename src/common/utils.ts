@@ -1,4 +1,5 @@
 import { Dictionary, groupBy } from 'lodash';
+
 import { GenericDataType } from './types';
 
 export const dataItemComparator = <DataItem extends GenericDataType>(

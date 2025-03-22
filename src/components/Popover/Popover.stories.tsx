@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+
 import { Popover } from './Popover';
 
 const meta: Meta<typeof Popover> = {
@@ -19,14 +20,3 @@ export const Default: Story = {
 };
 
 type Story = StoryObj<typeof Popover>;
-
-export const WithBackdrop: Story = {
-  args: {
-    buttonProps: {
-      children: 'Open Popover',
-    },
-    className: 'mb-24',
-    popoverComponent: () => <div className="w-64">Test Lmao</div>,
-    withBackdrop: true,
-  },
-};

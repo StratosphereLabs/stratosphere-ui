@@ -1,6 +1,13 @@
-import { Menu as HeadlessUIMenu, Transition } from '@headlessui/react';
+import {
+  Menu as HeadlessUIMenu,
+  MenuItem as HeadlessUIMenuItem,
+  MenuButton,
+  MenuItems,
+} from '@headlessui/react';
+import { AnchorProps } from '@headlessui/react/dist/internal/floating';
 import classNames from 'classnames';
-import { Fragment, HTMLProps, forwardRef } from 'react';
+import { Fragment, forwardRef } from 'react';
+
 import { Button, ButtonProps } from '../Button';
 import { Menu, MenuItem, MenuItemProps, MenuSize } from '../Menu';
 
@@ -9,56 +16,34 @@ export interface DropdownItemProps
   id: string;
 }
 
-export interface DropdownMenuProps
-  extends Omit<
-    HTMLProps<HTMLDivElement>,
-    'as' | 'children' | 'className' | 'ref'
-  > {
+export interface DropdownMenuProps {
+  anchor?: AnchorProps;
   buttonProps?: ButtonProps;
-  className?: string;
   items: DropdownItemProps[];
   menuClassName?: string;
   menuSize?: MenuSize;
 }
 
 export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
-  (
-    { buttonProps, className, items, menuClassName, menuSize, ...props },
-    ref,
-  ) => (
-    <HeadlessUIMenu
-      as="div"
-      className={classNames('relative', className)}
-      ref={ref}
-      {...props}
-    >
-      <HeadlessUIMenu.Button as={Button} {...buttonProps} />
-      <Transition
-        as={Fragment}
-        enter="transition duration-100 ease-out"
-        enterFrom="transform scale-95 opacity-0"
-        enterTo="transform scale-100 opacity-100"
-        leave="transition duration-75 ease-out"
-        leaveFrom="transform scale-100 opacity-100"
-        leaveTo="transform scale-95 opacity-0"
+  ({ anchor, buttonProps, items, menuClassName, menuSize }, ref) => (
+    <HeadlessUIMenu ref={ref}>
+      <MenuButton as={Button} {...buttonProps} />
+      <MenuItems
+        anchor={anchor ?? 'bottom start'}
+        as={Menu}
+        size={menuSize}
+        transition
+        className={classNames(
+          'origin-top shadow-xl transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0',
+          menuClassName,
+        )}
       >
-        <HeadlessUIMenu.Items
-          as={Menu}
-          size={menuSize}
-          className={classNames(
-            'absolute z-50 bg-base-100 shadow-xl',
-            menuClassName,
-          )}
-        >
-          {items.map(({ id, ...itemProps }) => (
-            <HeadlessUIMenu.Item as={Fragment} key={id}>
-              {({ active, disabled }) => (
-                <MenuItem disabled={disabled} focus={active} {...itemProps} />
-              )}
-            </HeadlessUIMenu.Item>
-          ))}
-        </HeadlessUIMenu.Items>
-      </Transition>
+        {items.map(({ id, ...itemProps }) => (
+          <HeadlessUIMenuItem as={Fragment} key={id}>
+            {({ disabled }) => <MenuItem disabled={disabled} {...itemProps} />}
+          </HeadlessUIMenuItem>
+        ))}
+      </MenuItems>
     </HeadlessUIMenu>
   ),
 );

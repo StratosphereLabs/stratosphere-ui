@@ -4,7 +4,7 @@ import { CSSProperties, HTMLAttributes } from 'react';
 export interface RadialProgressProps extends HTMLAttributes<HTMLDivElement> {
   size?: string;
   thickness?: string;
-  value: number;
+  value: string | number;
 }
 
 export const RadialProgress = ({

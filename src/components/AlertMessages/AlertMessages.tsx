@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+
 import { Alert } from '../Alert';
 import { useAlertMessages } from './AlertMessagesProvider';
 import { statusToIconMap } from './constants';
@@ -21,21 +22,11 @@ export const AlertMessages = ({
         const Icon = statusToIconMap[color];
         return (
           <Alert
-            actionButtons={[
-              {
-                id: 'close',
-                'aria-label': 'Close Alert',
-                color: 'ghost',
-                onClick: () => dismissAlertMessage(index),
-                shape: 'circle',
-                size: 'xs',
-                children: '✕',
-              },
-            ]}
             className={classNames('flex w-full', alertClassName)}
             color={color}
             description={alertMessages[index].description}
             icon={Icon}
+            onDismiss={() => dismissAlertMessage(index)}
             key={`error_message_${index}`}
             title={alertMessages[index].title}
           />

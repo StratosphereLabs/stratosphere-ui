@@ -6,12 +6,13 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useDebouncedValue } from './useDebouncedValue';
+
 import { GenericDataType } from '../common';
+import { useDebouncedValue } from './useDebouncedValue';
 
 export interface UseTypeaheadQueryOptions<DataItem> {
   debounceTime?: number;
-  onDebouncedChange: (value: string) => void;
+  onDebouncedChange?: (value: string) => void;
   options?: DataItem[];
 }
 
@@ -38,7 +39,7 @@ export const useTypeaheadQuery = <DataItem extends GenericDataType>({
     return formattedQuery === '' ? formattedQuery : debouncedValue.trim();
   }, [query, debouncedValue]);
   useEffect(() => {
-    onDebouncedChangeFn.current(currentQuery);
+    onDebouncedChangeFn.current?.(currentQuery);
   }, [currentQuery]);
   useEffect(() => {
     if (options !== undefined) setIsLoading(false);

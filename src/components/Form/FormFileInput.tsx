@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { HTMLProps } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
+
 import { useFieldColor } from '../../hooks';
 import { FormError } from './FormError';
 import { FormLabelText } from './FormLabelText';
@@ -8,6 +9,7 @@ import { FormFieldProps } from './types';
 
 export const FILE_INPUT_COLORS = [
   'ghost',
+  'neutral',
   'primary',
   'secondary',
   'accent',
@@ -17,7 +19,7 @@ export const FILE_INPUT_COLORS = [
   'error',
 ] as const;
 
-export const FILE_INPUT_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+export const FILE_INPUT_SIZES = ['xl', 'lg', 'md', 'sm', 'xs'] as const;
 
 export type FileInputColor = (typeof FILE_INPUT_COLORS)[number];
 

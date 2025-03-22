@@ -14,9 +14,9 @@ The following props can be passed to the `Progress` component:
 ## Usage
 
 ```tsx
-import React from 'react';
 import classNames from 'classnames';
-import { Progress, PROGRESS_COLORS } from 'stratosphere-ui';
+import React from 'react';
+import { PROGRESS_COLORS, Progress } from 'stratosphere-ui';
 
 const App = () => {
   const randomColor =
