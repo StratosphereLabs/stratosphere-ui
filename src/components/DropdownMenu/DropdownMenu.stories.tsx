@@ -13,8 +13,7 @@ type Story = StoryObj<typeof DropdownMenu>;
 
 export const Default: Story = {
   args: {
-    buttonProps: { children: 'Open Dropdown' },
-    className: 'mb-40',
+    buttonProps: { children: 'Open Dropdown', className: 'mb-40' },
     items: [
       {
         id: '1',
@@ -30,8 +29,7 @@ export const Default: Story = {
 
 export const Rounded: Story = {
   args: {
-    buttonProps: { children: 'Open Dropdown' },
-    className: 'mb-40',
+    buttonProps: { children: 'Open Dropdown', className: 'mb-40' },
     items: [
       {
         id: '1',
@@ -48,8 +46,7 @@ export const Rounded: Story = {
 
 export const RoundedWithPadding: Story = {
   args: {
-    buttonProps: { children: 'Open Dropdown' },
-    className: 'mb-40',
+    buttonProps: { children: 'Open Dropdown', className: 'mb-40' },
     items: [
       {
         id: '1',
