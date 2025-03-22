@@ -1,19 +1,14 @@
-import classNames from 'classnames';
-import { HTMLProps } from 'react';
-
+import { Card, CardProps } from '../Card';
 import { FullScreenLoader } from '../FullScreenLoader';
 
-export interface LoadingCardProps extends HTMLProps<HTMLDivElement> {
+export interface LoadingCardProps extends CardProps {
   isLoading?: boolean;
 }
 
 export const LoadingCard = ({
   children,
-  className,
   isLoading,
   ...props
 }: LoadingCardProps) => (
-  <div className={classNames('card', className)} {...props}>
-    {isLoading === true ? <FullScreenLoader /> : children}
-  </div>
+  <Card {...props}>{isLoading === true ? <FullScreenLoader /> : children}</Card>
 );
