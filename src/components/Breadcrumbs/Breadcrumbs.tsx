@@ -19,7 +19,7 @@ export const Breadcrumbs = ({
   items,
   ...props
 }: BreadcrumbsProps): JSX.Element => (
-  <div className={classNames('breadcrumbs text-sm', className)} {...props}>
+  <div className={classNames('breadcrumbs', className)} {...props}>
     <ul>
       {items.map(
         ({
