@@ -1,46 +1,57 @@
-import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import { Disclosure } from '../Disclosure';
 
-describe('Disclosure', () => {
-  const defaultProps = {
-    children: <div>Content</div>,
-  };
-
-  it('renders the button with the provided children', () => {
-    const { getByRole } = render(
-      <Disclosure {...defaultProps} buttonProps={{ children: 'Toggle' }} />,
+describe('Disclosure Component', () => {
+  test('renders button with provided text', () => {
+    render(
+      <Disclosure buttonProps={{ children: 'Toggle' }}>Content</Disclosure>,
     );
-    expect(getByRole('button')).toHaveTextContent('Toggle');
+
+    expect(screen.getByRole('button', { name: /toggle/i })).toBeInTheDocument();
   });
 
-  it.skip('expands and collapses the content when the button is clicked', async () => {
-    const { getByRole, queryByText } = render(<Disclosure {...defaultProps} />);
-    expect(queryByText('Content')).not.toBeInTheDocument();
-
-    const button = getByRole('button');
-    await userEvent.click(button);
-    expect(queryByText('Content')).toBeInTheDocument();
-
-    await userEvent.click(button);
-    expect(queryByText('Content')).not.toBeInTheDocument();
-  });
-
-  it('applies the provided className to the container element', () => {
-    const { container } = render(
-      <Disclosure {...defaultProps} className="custom-class" />,
+  test('renders content when defaultOpen is true', () => {
+    render(
+      <Disclosure buttonProps={{ children: 'Toggle' }} defaultOpen>
+        Content
+      </Disclosure>,
     );
-    expect(container.firstChild).toHaveClass('custom-class');
+
+    expect(screen.getByText('Content')).toBeInTheDocument();
   });
 
-  it('applies the rounded class to the container element when rounded prop is true', () => {
-    const { container } = render(<Disclosure {...defaultProps} rounded />);
-    expect(container.firstChild).toHaveClass('rounded-box');
+  test('does not render content when defaultOpen is false', () => {
+    render(
+      <Disclosure buttonProps={{ children: 'Toggle' }}>Content</Disclosure>,
+    );
+
+    expect(screen.queryByText('Content')).not.toBeInTheDocument();
   });
 
-  it('renders the content when defaultOpen is true', () => {
-    const { getByText } = render(<Disclosure {...defaultProps} defaultOpen />);
-    expect(getByText('Content')).toBeInTheDocument();
+  test('toggles content visibility on button click', () => {
+    render(
+      <Disclosure buttonProps={{ children: 'Toggle' }}>Content</Disclosure>,
+    );
+    const button = screen.getByRole('button', { name: /toggle/i });
+
+    expect(screen.queryByText('Content')).not.toBeInTheDocument();
+
+    fireEvent.click(button);
+    expect(screen.getByText('Content')).toBeInTheDocument();
+
+    fireEvent.click(button);
+    expect(screen.queryByText('Content')).not.toBeInTheDocument();
+  });
+
+  test('displays rounded-box classname', () => {
+    render(
+      <Disclosure buttonProps={{ children: 'Toggle' }} rounded>
+        Content
+      </Disclosure>,
+    );
+    const button = screen.getByRole('button');
+
+    expect(button).toHaveClass('rounded-box');
   });
 });

@@ -52,7 +52,6 @@ export const Open: Story = {
     buttonProps: {
       color: 'ghost',
       children: 'Disclosure Label',
-      size: 'lg',
     },
     children: <div className="flex-1 text-center">Disclosure Content</div>,
     className: 'w-64',
