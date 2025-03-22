@@ -31,6 +31,24 @@ describe('Button component', () => {
     }
   });
 
+  it('applies the outline class based on the "outline" prop', () => {
+    render(<Button outline>Button</Button>);
+    const button = screen.getByText('Button');
+    expect(button).toHaveClass(`btn-outline`);
+  });
+
+  it('applies the soft class based on the "soft" prop', () => {
+    render(<Button soft>Button</Button>);
+    const button = screen.getByText('Button');
+    expect(button).toHaveClass(`btn-soft`);
+  });
+
+  it('applies the dash class based on the "dash" prop', () => {
+    render(<Button dash>Button</Button>);
+    const button = screen.getByText('Button');
+    expect(button).toHaveClass(`btn-dash`);
+  });
+
   it('applies the shape class based on the "shape" prop', () => {
     for (const shape of BUTTON_SHAPES) {
       const { unmount } = render(<Button shape={shape}>Button</Button>);

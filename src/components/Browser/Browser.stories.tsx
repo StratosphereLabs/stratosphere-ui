@@ -14,13 +14,14 @@ type Story = StoryObj<typeof Browser>;
 export const Default: Story = {
   args: {
     children: 'Browser Content',
+    className: 'w-full',
   },
 };
 
 export const WithBorder: Story = {
   args: {
     children: 'Browser Content',
-    className: 'border border-base-300',
+    className: 'border border-base-300 w-full',
     contentClassName: 'border-t border-base-300',
     searchInputClassName: 'border border-base-300',
   },
@@ -29,7 +30,7 @@ export const WithBorder: Story = {
 export const WithBackgroundColor: Story = {
   args: {
     children: 'Browser Content',
-    className: 'border bg-base-300',
+    className: 'border bg-base-300 w-full',
     contentClassName: 'bg-base-200',
   },
 };
