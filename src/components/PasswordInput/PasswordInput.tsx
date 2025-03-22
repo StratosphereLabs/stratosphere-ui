@@ -27,7 +27,10 @@ export const PasswordInput = <Values extends FieldValues, TOutput>({
         <Button
           className="w-8"
           color="ghost"
-          onClick={() => setShowPassword(show => !show)}
+          onClick={event => {
+            event.preventDefault();
+            setShowPassword(show => !show);
+          }}
           shape="circle"
           size="sm"
         >

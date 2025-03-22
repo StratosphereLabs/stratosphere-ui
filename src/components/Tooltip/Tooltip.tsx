@@ -6,6 +6,7 @@ export const TOOLTIP_POSITIONS = ['top', 'bottom', 'left', 'right'] as const;
 export type TooltipPosition = (typeof TOOLTIP_POSITIONS)[number];
 
 export const TOOLTIP_COLORS = [
+  'neutral',
   'primary',
   'secondary',
   'accent',
@@ -21,7 +22,7 @@ export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
   color?: TooltipColor;
   open?: boolean;
   position?: TooltipPosition;
-  text: string;
+  text?: string;
 }
 
 export const Tooltip = ({

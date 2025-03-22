@@ -1,4 +1,10 @@
-import { Listbox, Transition } from '@headlessui/react';
+import {
+  Label,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from '@headlessui/react';
+import { AnchorProps } from '@headlessui/react/dist/internal/floating';
 import classNames from 'classnames';
 import { Fragment, ReactNode, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
@@ -20,6 +26,7 @@ export interface SelectProps<
     FormFieldProps<Values>,
     'controllerProps' | 'placeholder' | 'showDirty'
   > {
+  anchor?: AnchorProps;
   buttonColor?: ButtonColor;
   buttonProps?: ButtonProps;
   className?: string;
@@ -39,6 +46,7 @@ export const Select = <
   DataItem extends GenericDataType,
   Values extends FieldValues,
 >({
+  anchor,
   buttonColor,
   buttonProps: {
     children: buttonChildren,
@@ -87,10 +95,12 @@ export const Select = <
       <label className="form-control">
         {labelText !== undefined ? (
           <div className="label">
-            <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
+            <Label as={FormLabelText} isRequired={isRequired}>
+              {labelText}
+            </Label>
           </div>
         ) : null}
-        <Listbox.Button
+        <ListboxButton
           as={Button}
           className={classNames('w-full flex-nowrap', buttonClassName)}
           color={fieldColor ?? buttonPropsColor ?? buttonColor}
@@ -105,40 +115,28 @@ export const Select = <
           {hideDropdownIcon !== true
             ? (dropdownIcon ?? <ChevronDownIcon className="h-4 w-4" />)
             : null}
-        </Listbox.Button>
+        </ListboxButton>
       </label>
-      <Transition
-        as={Fragment}
-        enter="transition duration-100 ease-out"
-        enterFrom="transform scale-95 opacity-0"
-        enterTo="transform scale-100 opacity-100"
-        leave="transition duration-75 ease-out"
-        leaveFrom="transform scale-100 opacity-100"
-        leaveTo="transform scale-95 opacity-0"
+      <ListboxOptions
+        as={Menu}
+        anchor={anchor ?? 'bottom start'}
+        size={menuSize}
+        transition
+        className={classNames(
+          'origin-top p-2 shadow-xl transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0',
+          menuClassName,
+        )}
       >
-        <Listbox.Options
-          as={Menu}
-          size={menuSize}
-          className={classNames(
-            'absolute z-50 rounded-box bg-base-100 p-2 shadow-xl',
-            menuClassName,
-          )}
-        >
-          {optionsArray?.map(option => (
-            <Listbox.Option as={Fragment} key={option.id} value={option}>
-              {({ active, disabled, selected }) => (
-                <MenuItem
-                  disabled={disabled}
-                  focus={active}
-                  selected={selected}
-                >
-                  {getItemText(option)}
-                </MenuItem>
-              )}
-            </Listbox.Option>
-          ))}
-        </Listbox.Options>
-      </Transition>
+        {optionsArray?.map(option => (
+          <ListboxOption as={Fragment} key={option.id} value={option}>
+            {({ disabled, selected }) => (
+              <MenuItem disabled={disabled} selected={selected}>
+                {getItemText(option)}
+              </MenuItem>
+            )}
+          </ListboxOption>
+        ))}
+      </ListboxOptions>
     </Component>
   );
 };

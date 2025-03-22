@@ -10,6 +10,7 @@ import { FormFieldProps } from './types';
 
 export const INPUT_COLORS = [
   'ghost',
+  'neutral',
   'primary',
   'secondary',
   'accent',
@@ -19,7 +20,7 @@ export const INPUT_COLORS = [
   'error',
 ] as const;
 
-export const INPUT_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+export const INPUT_SIZES = ['xl', 'lg', 'md', 'sm', 'xs'] as const;
 
 export type InputColor = (typeof INPUT_COLORS)[number];
 

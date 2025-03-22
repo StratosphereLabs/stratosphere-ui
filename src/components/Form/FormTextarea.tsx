@@ -10,6 +10,7 @@ import { FormFieldProps } from './types';
 
 export const TEXTAREA_COLORS = [
   'ghost',
+  'neutral',
   'primary',
   'secondary',
   'accent',
@@ -19,7 +20,7 @@ export const TEXTAREA_COLORS = [
   'error',
 ] as const;
 
-export const TEXTAREA_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+export const TEXTAREA_SIZES = ['xl', 'lg', 'md', 'sm', 'xs'] as const;
 
 export type TextareaColor = (typeof TEXTAREA_COLORS)[number];
 

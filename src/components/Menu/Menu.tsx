@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { HTMLProps, forwardRef } from 'react';
 
-export const MENU_SIZES = ['xs', 'sm', 'md', 'lg'] as const;
+export const MENU_SIZES = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 
 export const MENU_LAYOUTS = ['horizontal', 'vertical'] as const;
 

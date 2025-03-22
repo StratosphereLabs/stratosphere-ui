@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { HTMLAttributes } from 'react';
 
 export const PROGRESS_COLORS = [
+  'neutral',
   'primary',
   'secondary',
   'accent',

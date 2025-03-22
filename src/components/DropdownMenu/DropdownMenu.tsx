@@ -29,12 +29,12 @@ export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
     <HeadlessUIMenu ref={ref}>
       <MenuButton as={Button} {...buttonProps} />
       <MenuItems
-        anchor={anchor ?? 'bottom end'}
+        anchor={anchor ?? 'bottom start'}
         as={Menu}
         size={menuSize}
         transition
         className={classNames(
-          'origin-top bg-base-100 shadow-xl transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0',
+          'origin-top shadow-xl transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0',
           menuClassName,
         )}
       >

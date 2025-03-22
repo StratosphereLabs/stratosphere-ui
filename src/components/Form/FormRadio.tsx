@@ -15,6 +15,7 @@ export interface RadioOption {
 }
 
 export const RADIO_COLORS = [
+  'neutral',
   'primary',
   'secondary',
   'accent',
@@ -24,7 +25,7 @@ export const RADIO_COLORS = [
   'error',
 ] as const;
 
-export const RADIO_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+export const RADIO_SIZES = ['xl', 'lg', 'md', 'sm', 'xs'] as const;
 
 export type RadioColor = (typeof RADIO_COLORS)[number];
 

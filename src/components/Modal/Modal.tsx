@@ -1,4 +1,4 @@
-import { Dialog } from '@headlessui/react';
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import classNames from 'classnames';
 import { HTMLProps, forwardRef } from 'react';
 
@@ -40,7 +40,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       open={open}
       static
     >
-      <Dialog.Panel
+      <DialogPanel
         as="div"
         className={classNames('modal-box', className)}
         ref={ref}
@@ -55,9 +55,9 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
         >
           ✕
         </Button>
-        <Dialog.Title as="h3" className="text-lg font-bold">
+        <DialogTitle as="h3" className="text-lg font-bold">
           {title}
-        </Dialog.Title>
+        </DialogTitle>
         {children}
         {actionButtons.length > 0 ? (
           <div className="modal-action">
@@ -66,7 +66,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             ))}
           </div>
         ) : null}
-      </Dialog.Panel>
+      </DialogPanel>
     </Dialog>
   ),
 );

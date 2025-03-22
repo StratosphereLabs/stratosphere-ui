@@ -7,6 +7,7 @@ import { FormLabelText } from './FormLabelText';
 import { FormFieldProps } from './types';
 
 export const CHECKBOX_COLORS = [
+  'neutral',
   'primary',
   'secondary',
   'accent',
@@ -16,7 +17,7 @@ export const CHECKBOX_COLORS = [
   'error',
 ] as const;
 
-export const CHECKBOX_SIZES = ['lg', 'md', 'sm', 'xs'] as const;
+export const CHECKBOX_SIZES = ['xl', 'lg', 'md', 'sm', 'xs'] as const;
 
 export type CheckboxColor = (typeof CHECKBOX_COLORS)[number];
 

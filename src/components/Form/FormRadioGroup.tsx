@@ -1,4 +1,4 @@
-import { RadioGroup, RadioGroupProps } from '@headlessui/react';
+import { Label, RadioGroup, RadioGroupProps } from '@headlessui/react';
 import classNames from 'classnames';
 import { ReactNode } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
@@ -42,9 +42,9 @@ export const FormRadioGroup = <Values extends FieldValues>({
     >
       {labelText !== undefined ? (
         <div className="label">
-          <RadioGroup.Label as={FormLabelText} isRequired={isRequired}>
+          <Label as={FormLabelText} isRequired={isRequired}>
             {labelText}
-          </RadioGroup.Label>
+          </Label>
         </div>
       ) : null}
       <div className="join">{children}</div>

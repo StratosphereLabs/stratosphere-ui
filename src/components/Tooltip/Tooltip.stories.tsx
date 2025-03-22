@@ -1,7 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
 
+import { Badge } from '../Badge';
 import { Button } from '../Button';
 import { Tooltip } from './Tooltip';
+import { TooltipContent } from './TooltipContent';
 
 const meta: Meta<typeof Tooltip> = {
   title: 'Tooltip',
@@ -78,5 +80,17 @@ export const CustomPosition: Story = {
         <Button color="info">Left</Button>
       </Tooltip>
     </div>
+  ),
+};
+
+export const WithCustomContent: Story = {
+  args: {},
+  render: args => (
+    <Tooltip {...args}>
+      <TooltipContent>
+        <Badge color="primary">Custom Tooltip Content</Badge>
+      </TooltipContent>
+      <Button color="info">Toggle Tooltip</Button>
+    </Tooltip>
   ),
 };
