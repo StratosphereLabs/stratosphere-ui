@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import { Avatar } from './Avatar';
+import { AvatarGroup } from './AvatarGroup';
 
 const meta: Meta<typeof Avatar> = {
   title: 'Avatar',
@@ -41,7 +42,7 @@ export const Sizes: Story = {
 
 export const WithRing: Story = {
   args: {
-    hasRing: true,
+    ringColor: 'primary',
     src: 'https://pbs.twimg.com/profile_images/1419725933649465344/XFTBtqmk_400x400.jpg',
   },
 };
@@ -60,4 +61,28 @@ export const WithOfflineStatus: Story = {
     shapeClassName: 'rounded-full',
     src: 'https://pbs.twimg.com/profile_images/1419725933649465344/XFTBtqmk_400x400.jpg',
   },
+};
+
+export const WithPlaceholderText: Story = {
+  args: {
+    isOffline: true,
+    shapeClassName: 'rounded-full',
+    placeholderText: 'ES',
+  },
+};
+
+export const WithAvatarGroup: Story = {
+  args: {
+    shapeClassName: 'rounded',
+    size: 'md',
+    src: 'https://pbs.twimg.com/profile_images/1419725933649465344/XFTBtqmk_400x400.jpg',
+  },
+  render: args => (
+    <AvatarGroup remainingCount={99}>
+      <Avatar {...args} />
+      <Avatar {...args} />
+      <Avatar {...args} />
+      <Avatar {...args} />
+    </AvatarGroup>
+  ),
 };

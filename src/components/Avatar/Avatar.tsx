@@ -1,25 +1,27 @@
 import classNames from 'classnames';
 import { HTMLAttributes } from 'react';
 
+import { Color } from '../../common';
+
 export const AvatarSizes = ['sm', 'md', 'lg', 'xl'] as const;
 
 export type AvatarSize = (typeof AvatarSizes)[number];
 
 export const AVATAR_SIZE_MAP: Record<AvatarSize, string> = {
-  sm: 'h-8 w-8',
-  md: 'h-16 w-16',
-  lg: 'h-20 w-20',
-  xl: 'h-32 w-32',
+  sm: 'w-8',
+  md: 'w-16',
+  lg: 'w-20',
+  xl: 'w-32',
 };
 
 export interface AvatarProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   alt?: string;
-  hasRing?: boolean;
   isOffline?: boolean;
   isOnline?: boolean;
   placeholderClassName?: string;
   placeholderText?: string;
+  ringColor?: Color;
   shapeClassName?: string;
   size?: AvatarSize;
   src?: string;
@@ -28,30 +30,32 @@ export interface AvatarProps
 export const Avatar = ({
   alt,
   className,
-  hasRing,
   isOffline,
   isOnline,
   placeholderClassName,
   placeholderText,
+  ringColor,
   shapeClassName,
-  size,
+  size = 'md',
   src,
   ...props
 }: AvatarProps) => (
   <div
     className={classNames(
       'avatar',
-      isOffline && 'offline',
-      isOnline && 'online',
-      placeholderText !== undefined && 'placeholder',
+      isOffline && 'avatar-offline',
+      isOnline && 'avatar-online',
+      placeholderText !== undefined && 'avatar-placeholder',
       className,
     )}
     {...props}
   >
     <div
       className={classNames(
-        AVATAR_SIZE_MAP[size ?? 'md'],
-        hasRing && 'rounded-full ring ring-offset-2 ring-offset-base-100',
+        AVATAR_SIZE_MAP[size],
+        ringColor &&
+          `rounded-full ring ring-offset-2 ring-offset-base-100 ring-${ringColor}`,
+        placeholderText && 'bg-neutral text-neutral-content',
         shapeClassName,
       )}
     >
