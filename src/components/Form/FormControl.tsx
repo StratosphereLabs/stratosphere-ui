@@ -78,7 +78,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
           <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
         </div>
       ) : null}
-      <div className="relative inline-flex">
+      <div className="relative inline-flex w-full">
         {elementLeft ? (
           <div className="absolute left-0 top-0 z-20 flex h-full items-center pl-2">
             {elementLeft}

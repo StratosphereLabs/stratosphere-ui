@@ -36,7 +36,7 @@ export const Avatar = ({
   placeholderText,
   ringColor,
   shapeClassName,
-  size = 'md',
+  size,
   src,
   ...props
 }: AvatarProps) => (
@@ -52,7 +52,7 @@ export const Avatar = ({
   >
     <div
       className={classNames(
-        AVATAR_SIZE_MAP[size],
+        size && AVATAR_SIZE_MAP[size],
         ringColor &&
           `rounded-full ring ring-offset-2 ring-offset-base-100 ring-${ringColor}`,
         placeholderText && 'bg-neutral text-neutral-content',

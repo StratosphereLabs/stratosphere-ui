@@ -147,7 +147,7 @@ export const TypeaheadSelect = <
         {enableBadges ? (
           <div
             className={classNames(
-              'input flex items-center gap-1 overflow-x-scroll scrollbar-none',
+              'input flex w-full items-center gap-1 overflow-x-scroll scrollbar-none',
               bordered && `input-bordered`,
               !disabled && 'cursor-pointer',
               currentColor && `input-${currentColor}`,
