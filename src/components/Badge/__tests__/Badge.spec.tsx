@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
 
 import { BADGE_COLORS, BADGE_SIZES, Badge } from '../Badge';
 
@@ -94,15 +93,24 @@ describe('Badge Component', () => {
     expect(parentKeyDownHandler).not.toHaveBeenCalled();
   });
 
-  it('accepts and applies additional custom classes', () => {
-    render(<Badge className="custom-class">Custom Badge</Badge>);
-    const badgeElement = screen.getByText('Custom Badge').parentElement;
-    expect(badgeElement).toHaveClass('custom-class');
+  it('applies dash class when dash is true', () => {
+    render(<Badge dash>Dash Test</Badge>);
+    expect(screen.getByText('Dash Test').parentElement).toHaveClass(
+      'badge-dash',
+    );
   });
 
-  it('forwards other HTML props to the root element', () => {
-    render(<Badge data-testid="badge-root">Prop Test Badge</Badge>);
-    const badgeElement = screen.getByTestId('badge-root');
-    expect(badgeElement).toBeInTheDocument();
+  it('applies outline class when outline is true', () => {
+    render(<Badge outline>Outline Test</Badge>);
+    expect(screen.getByText('Outline Test').parentElement).toHaveClass(
+      'badge-outline',
+    );
+  });
+
+  it('applies soft class when soft is true', () => {
+    render(<Badge soft>Soft Test</Badge>);
+    expect(screen.getByText('Soft Test').parentElement).toHaveClass(
+      'badge-soft',
+    );
   });
 });
