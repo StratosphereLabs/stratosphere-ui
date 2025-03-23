@@ -113,5 +113,9 @@
     "react": "^18.0.0",
     "react-hook-form": "^7.0.0",
     "react-router-dom": "^6.0.0"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.36.0",
+    "sass-embedded-linux-x64": "^1.86.0"
   }
 }
