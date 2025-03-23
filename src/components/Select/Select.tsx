@@ -86,19 +86,17 @@ export const Select = <
   const Component = multi === true ? FormSelectMulti : FormSelectSingle;
   return (
     <Component
-      className={classNames('relative', className)}
+      className={className}
       disabled={disabled}
       name={name}
       selectedItems={selectedItems}
       setSelectedItems={setSelectedItems}
     >
-      <label className="form-control">
+      <fieldset className="fieldset py-0">
         {labelText !== undefined ? (
-          <div className="label">
-            <Label as={FormLabelText} isRequired={isRequired}>
-              {labelText}
-            </Label>
-          </div>
+          <Label as={FormLabelText} isRequired={isRequired}>
+            {labelText}
+          </Label>
         ) : null}
         <ListboxButton
           as={Button}
@@ -116,7 +114,7 @@ export const Select = <
             ? (dropdownIcon ?? <ChevronDownIcon className="h-4 w-4" />)
             : null}
         </ListboxButton>
-      </label>
+      </fieldset>
       <ListboxOptions
         as={Menu}
         anchor={anchor ?? 'bottom start'}

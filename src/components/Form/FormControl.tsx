@@ -72,11 +72,9 @@ export const FormControl = <Values extends FieldValues, TOutput>({
     [field.value, transform],
   );
   return (
-    <label className={classNames('form-control', className)}>
+    <fieldset className={classNames('fieldset py-0', className)}>
       {labelText !== undefined ? (
-        <div className="label">
-          <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
-        </div>
+        <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
       ) : null}
       <div className="relative inline-flex w-full">
         {elementLeft ? (
@@ -115,6 +113,6 @@ export const FormControl = <Values extends FieldValues, TOutput>({
       {hideErrorMessage !== true && error?.message !== undefined ? (
         <FormError>{error.message}</FormError>
       ) : null}
-    </label>
+    </fieldset>
   );
 };

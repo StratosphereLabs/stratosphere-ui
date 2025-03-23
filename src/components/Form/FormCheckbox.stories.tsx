@@ -17,6 +17,7 @@ export const Default: Story = {
   args: {
     labelText: 'Label Text',
     name: 'field1',
+    children: 'Option 1',
   },
   render: args => {
     const methods = useForm();
@@ -32,6 +33,7 @@ export const WithDefaultValue: Story = {
   args: {
     labelText: 'Label Text',
     name: 'field1',
+    children: 'Option 1',
   },
   render: args => {
     const methods = useForm({

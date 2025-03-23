@@ -50,8 +50,11 @@ export const FormCheckbox = <Values extends FieldValues>({
   const fieldColor = useFieldColor(name, showDirty);
   const currentColor = fieldColor ?? color ?? undefined;
   return (
-    <div className={classNames('form-control', className)}>
-      <label className="label cursor-pointer gap-2">
+    <fieldset className={classNames('fieldset py-0', className)}>
+      {labelText ? (
+        <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
+      ) : null}
+      <label className="fieldset-label">
         <input
           type="checkbox"
           checked={value}
@@ -64,11 +67,8 @@ export const FormCheckbox = <Values extends FieldValues>({
           {...field}
           {...props}
         />
-        {labelText !== undefined ? (
-          <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
-        ) : null}
         {children}
       </label>
-    </div>
+    </fieldset>
   );
 };

@@ -25,7 +25,7 @@ describe('FormRadioGroup', () => {
       </FormProvider>,
     );
     expect(screen.getByText(labelText)).toBeInTheDocument();
-    expect(container.querySelector('label')).toBeInTheDocument();
+    expect(container.querySelector('legend')).toBeInTheDocument();
   });
 
   it('does not render the label when labelText is not provided', () => {

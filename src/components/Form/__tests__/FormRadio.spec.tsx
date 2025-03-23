@@ -13,16 +13,12 @@ const options: RadioOption[] = [
 
 describe('FormRadio', () => {
   it('renders radio buttons with the provided options', () => {
-    render(
+    const { container } = render(
       <FormProvider defaultValues={{ radio: null }}>
         <FormRadio labelText="Test Radio" name="radio" options={options} />
       </FormProvider>,
     );
-    options.forEach(option => {
-      const radio = screen.getByLabelText(option.label);
-      expect(radio).toBeInTheDocument();
-      expect(radio).toHaveAttribute('value', option.value);
-    });
+    expect(container).toMatchSnapshot();
   });
 
   it('sets the value of the selected radio button', async () => {
@@ -31,7 +27,7 @@ describe('FormRadio', () => {
         <FormRadio name="radio" options={options} />
       </FormProvider>,
     );
-    const option1 = screen.getByLabelText('Option 1');
+    const option1 = screen.getAllByRole('radio')[0];
     await userEvent.click(option1);
     expect(option1).toBeChecked();
     expect(option1).toHaveAttribute('value', 'option1');
@@ -40,7 +36,7 @@ describe('FormRadio', () => {
         <FormRadio name="radio" options={options} />
       </FormProvider>,
     );
-    expect(screen.getByLabelText('Option 1')).toBeChecked();
+    expect(screen.getAllByRole('radio')[0]).toBeChecked();
   });
 
   it('renders an error message when an error is present', async () => {
@@ -55,7 +51,7 @@ describe('FormRadio', () => {
         <FormRadio name="radio" options={options} />
       </FormProvider>,
     );
-    await userEvent.click(screen.getByLabelText('Option 1'));
+    await userEvent.click(screen.getAllByRole('radio')[0]);
     await waitFor(() =>
       expect(screen.getByText('Too short')).toBeInTheDocument(),
     );

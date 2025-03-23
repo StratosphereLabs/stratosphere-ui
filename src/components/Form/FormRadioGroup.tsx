@@ -31,8 +31,8 @@ export const FormRadioGroup = <Values extends FieldValues>({
   } = useController({ name, ...controllerProps });
   return (
     <RadioGroup
-      as="label"
-      className={classNames('form-control', className)}
+      as="fieldset"
+      className={classNames('fieldset py-0', className)}
       name={name}
       onChange={val => {
         setValue<string>(name, val);
@@ -41,11 +41,9 @@ export const FormRadioGroup = <Values extends FieldValues>({
       {...props}
     >
       {labelText !== undefined ? (
-        <div className="label">
-          <Label as={FormLabelText} isRequired={isRequired}>
-            {labelText}
-          </Label>
-        </div>
+        <Label as={FormLabelText} isRequired={isRequired}>
+          {labelText}
+        </Label>
       ) : null}
       <div className="join">{children}</div>
     </RadioGroup>

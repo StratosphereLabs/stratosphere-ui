@@ -5,8 +5,12 @@ export type FormErrorProps = HTMLProps<HTMLLabelElement>;
 
 export const FormError = forwardRef<HTMLLabelElement, FormErrorProps>(
   ({ children, className, ...props }, ref) => (
-    <label className={classNames('label', className)} ref={ref} {...props}>
-      <span className="label-text-alt text-error">{children}</span>
+    <label
+      className={classNames('fieldset-label', className)}
+      ref={ref}
+      {...props}
+    >
+      <span className="text-error">{children}</span>
     </label>
   ),
 );

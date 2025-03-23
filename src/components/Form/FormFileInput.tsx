@@ -60,11 +60,9 @@ export const FormFileInput = <Values extends FieldValues>({
   const { setValue } = useFormContext();
   const currentColor = fieldColor ?? color ?? undefined;
   return (
-    <label className={classNames('form-control', className)}>
+    <fieldset className={classNames('fieldset py-0', className)}>
       {labelText !== undefined ? (
-        <div className="label">
-          <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
-        </div>
+        <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
       ) : null}
       <input
         className={classNames(
@@ -89,6 +87,6 @@ export const FormFileInput = <Values extends FieldValues>({
       {hideErrorMessage !== true && error?.message !== undefined ? (
         <FormError>{error.message}</FormError>
       ) : null}
-    </label>
+    </fieldset>
   );
 };
