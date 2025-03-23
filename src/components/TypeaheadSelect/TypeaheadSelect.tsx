@@ -136,13 +136,11 @@ export const TypeaheadSelect = <
         if (multi === undefined) setFocus(name);
       }}
     >
-      <label className="form-control">
+      <fieldset className="fieldset py-0">
         {labelText !== undefined ? (
-          <div className="label">
-            <Label as={FormLabelText} isRequired={isRequired}>
-              {labelText}
-            </Label>
-          </div>
+          <Label as={FormLabelText} isRequired={isRequired}>
+            {labelText}
+          </Label>
         ) : null}
         {enableBadges ? (
           <div
@@ -206,7 +204,7 @@ export const TypeaheadSelect = <
             ref={ref}
           />
         )}
-      </label>
+      </fieldset>
       {showDropdown ? (
         <ComboboxOptions
           as={Menu}

@@ -63,19 +63,20 @@ export const FormRadio = <Values extends FieldValues>({
   const fieldColor = useFieldColor(name, showDirty);
   const currentColor = fieldColor ?? color ?? undefined;
   return (
-    <div className={classNames('form-control', className)}>
+    <fieldset className={classNames('fieldset py-0', className)}>
       {labelText !== undefined ? (
-        <div className="label">
-          <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
-        </div>
+        <FormLabelText isRequired={isRequired}>{labelText}</FormLabelText>
       ) : null}
       {options.map(
         ({ className: optionClassName, id, label, value: optionValue }) => (
-          <label
+          <div
             key={id}
-            className={classNames('label cursor-pointer', optionClassName)}
+            className={classNames(
+              'flex cursor-pointer items-center justify-between',
+              optionClassName,
+            )}
           >
-            <span className="label-text">{label}</span>
+            <span>{label}</span>
             <input
               {...field}
               {...props}
@@ -89,12 +90,12 @@ export const FormRadio = <Values extends FieldValues>({
               type="radio"
               value={optionValue}
             />
-          </label>
+          </div>
         ),
       )}
       {error?.message !== undefined ? (
         <FormError>{error.message}</FormError>
       ) : null}
-    </div>
+    </fieldset>
   );
 };

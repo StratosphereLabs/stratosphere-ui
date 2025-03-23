@@ -65,12 +65,10 @@ export const FormRangeSlider = forwardRef(
       });
     }, [minValue, maxValue, name, setValue]);
     return (
-      <div className={classNames('form-control', className)}>
+      <fieldset className={classNames('fieldset py-0', className)}>
         <div className="flex justify-between">
           {labelText !== undefined ? (
-            <div className="label">
-              <FormLabelText>{labelText}</FormLabelText>
-            </div>
+            <FormLabelText>{labelText}</FormLabelText>
           ) : null}
           {children}
         </div>
@@ -96,7 +94,7 @@ export const FormRangeSlider = forwardRef(
             onInput?.(event);
           }}
         />
-      </div>
+      </fieldset>
     );
   },
 );
