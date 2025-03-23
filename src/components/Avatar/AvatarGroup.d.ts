@@ -1,3 +1,8 @@
 import { HTMLAttributes } from '../../../node_modules/react';
-export type AvatarGroupProps = HTMLAttributes<HTMLDivElement>;
-export declare const AvatarGroup: ({ className, ...props }: AvatarGroupProps) => import("react/jsx-runtime").JSX.Element;
+import { AvatarSize } from './Avatar';
+export type AvatarGroupProps = HTMLAttributes<HTMLDivElement> & {
+    countSize?: AvatarSize;
+    remainingCount?: number;
+    space?: number;
+};
+export declare const AvatarGroup: ({ children, className, countSize, remainingCount, space, ...props }: AvatarGroupProps) => import("react/jsx-runtime").JSX.Element;

@@ -1,12 +1,12 @@
-import { HTMLProps } from '../../../node_modules/react';
+import { AnchorProps } from '@headlessui/react/dist/internal/floating';
 import { ButtonProps } from '../Button';
 import { MenuItemProps, MenuSize } from '../Menu';
 export interface DropdownItemProps extends Omit<MenuItemProps, 'disabled' | 'focus' | 'ref'> {
     id: string;
 }
-export interface DropdownMenuProps extends Omit<HTMLProps<HTMLDivElement>, 'as' | 'children' | 'className' | 'ref'> {
+export interface DropdownMenuProps {
+    anchor?: AnchorProps;
     buttonProps?: ButtonProps;
-    className?: string;
     items: DropdownItemProps[];
     menuClassName?: string;
     menuSize?: MenuSize;

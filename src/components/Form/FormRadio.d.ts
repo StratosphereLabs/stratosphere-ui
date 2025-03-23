@@ -7,8 +7,8 @@ export interface RadioOption {
     label: string;
     value: string;
 }
-export declare const RADIO_COLORS: readonly ["primary", "secondary", "accent", "success", "warning", "info", "error"];
-export declare const RADIO_SIZES: readonly ["lg", "md", "sm", "xs"];
+export declare const RADIO_COLORS: readonly ["neutral", "primary", "secondary", "accent", "success", "warning", "info", "error"];
+export declare const RADIO_SIZES: readonly ["xl", "lg", "md", "sm", "xs"];
 export type RadioColor = (typeof RADIO_COLORS)[number];
 export type RadioSize = (typeof RADIO_SIZES)[number];
 export interface FormRadioProps<Values extends FieldValues> extends Omit<FormFieldProps<Values>, 'placeholder'>, Omit<HTMLProps<HTMLInputElement>, 'name' | 'size'> {

@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from '../../node_modules/react';
 import { GenericDataType } from '../common';
 export interface UseTypeaheadQueryOptions<DataItem> {
     debounceTime?: number;
-    onDebouncedChange: (value: string) => void;
+    onDebouncedChange?: (value: string) => void;
     options?: DataItem[];
 }
 export interface UseTypeaheadQueryResult {

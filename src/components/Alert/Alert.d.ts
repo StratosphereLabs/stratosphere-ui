@@ -5,11 +5,16 @@ export type AlertColor = (typeof ALERT_COLORS)[number];
 export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
     actionButtons?: ({
         id: string;
+        label: string;
     } & ButtonProps)[];
     color?: AlertColor;
+    dash?: boolean;
     description?: string;
     icon?: FC<ComponentProps<'svg'>>;
     iconClassName?: string;
+    onDismiss?: () => void;
+    outline?: boolean;
+    soft?: boolean;
     title: string;
 }
-export declare const Alert: ({ actionButtons, className, color, description, icon: Icon, iconClassName, title, ...props }: AlertProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Alert: ({ actionButtons, className, color, dash, description, icon: Icon, iconClassName, onDismiss, outline, soft, title, ...props }: AlertProps) => import("react/jsx-runtime").JSX.Element;

@@ -7,3 +7,7 @@ export declare const Default: Story;
 export declare const Loading: Story;
 export declare const CustomColor: Story;
 export declare const CustomSize: Story;
+export declare const Outline: Story;
+export declare const Soft: Story;
+export declare const Dash: Story;
+export declare const Shapes: Story;

@@ -2,8 +2,8 @@ import { HTMLProps } from '../../../node_modules/react';
 import { FieldValues } from 'react-hook-form';
 import { Transform } from '../../common';
 import { FormFieldProps } from './types';
-export declare const TEXTAREA_COLORS: readonly ["ghost", "primary", "secondary", "accent", "info", "success", "warning", "error"];
-export declare const TEXTAREA_SIZES: readonly ["lg", "md", "sm", "xs"];
+export declare const TEXTAREA_COLORS: readonly ["ghost", "neutral", "primary", "secondary", "accent", "info", "success", "warning", "error"];
+export declare const TEXTAREA_SIZES: readonly ["xl", "lg", "md", "sm", "xs"];
 export type TextareaColor = (typeof TEXTAREA_COLORS)[number];
 export type TextareaSize = (typeof TEXTAREA_SIZES)[number];
 export interface FormTextareaProps<Values extends FieldValues, TOutput> extends FormFieldProps<Values>, Omit<HTMLProps<HTMLTextAreaElement>, 'name' | 'size'> {

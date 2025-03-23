@@ -6,3 +6,4 @@ type Story = StoryObj<typeof Breadcrumbs>;
 export declare const Default: Story;
 export declare const WithLinks: Story;
 export declare const WithIconsAndLinks: Story;
+export declare const WithSizes: Story;

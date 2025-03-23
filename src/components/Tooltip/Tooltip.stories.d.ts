@@ -6,3 +6,4 @@ type Story = StoryObj<typeof Tooltip>;
 export declare const Default: Story;
 export declare const CustomColor: Story;
 export declare const CustomPosition: Story;
+export declare const WithCustomContent: Story;

@@ -1,5 +1,5 @@
 import { HTMLProps } from '../../../node_modules/react';
-export declare const MENU_SIZES: readonly ["xs", "sm", "md", "lg"];
+export declare const MENU_SIZES: readonly ["xs", "sm", "md", "lg", "xl"];
 export declare const MENU_LAYOUTS: readonly ["horizontal", "vertical"];
 export type MenuSize = (typeof MENU_SIZES)[number];
 export type MenuLayout = (typeof MENU_LAYOUTS)[number];

@@ -1,4 +1,4 @@
-import { Key, ComponentProps, FC, HTMLProps, ReactNode } from '../../../node_modules/react';
+import { ComponentProps, FC, HTMLProps, Key, ReactNode } from '../../../node_modules/react';
 import { Breakpoint } from '../../common';
 import { ButtonProps } from '../Button';
 import { DropdownMenuProps } from '../DropdownMenu';

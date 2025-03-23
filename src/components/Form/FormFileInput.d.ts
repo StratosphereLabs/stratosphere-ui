@@ -1,8 +1,8 @@
 import { HTMLProps } from '../../../node_modules/react';
 import { FieldValues } from 'react-hook-form';
 import { FormFieldProps } from './types';
-export declare const FILE_INPUT_COLORS: readonly ["ghost", "primary", "secondary", "accent", "info", "warning", "success", "error"];
-export declare const FILE_INPUT_SIZES: readonly ["lg", "md", "sm", "xs"];
+export declare const FILE_INPUT_COLORS: readonly ["ghost", "neutral", "primary", "secondary", "accent", "info", "warning", "success", "error"];
+export declare const FILE_INPUT_SIZES: readonly ["xl", "lg", "md", "sm", "xs"];
 export type FileInputColor = (typeof FILE_INPUT_COLORS)[number];
 export type FileInputSize = (typeof FILE_INPUT_SIZES)[number];
 export interface FormFileInputProps<Values extends FieldValues> extends FormFieldProps<Values>, Omit<HTMLProps<HTMLInputElement>, 'name' | 'size'> {

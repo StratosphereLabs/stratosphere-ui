@@ -9,3 +9,5 @@ export declare const Sizes: Story;
 export declare const WithRing: Story;
 export declare const WithOnlineStatus: Story;
 export declare const WithOfflineStatus: Story;
+export declare const WithPlaceholderText: Story;
+export declare const WithAvatarGroup: Story;

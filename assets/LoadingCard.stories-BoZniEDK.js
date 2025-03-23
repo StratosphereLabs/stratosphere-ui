@@ -1,0 +1,6 @@
+import{j as r}from"./jsx-runtime-DiklIkkE.js";import{C as p}from"./CardTitle-CMaJxa1n.js";import{F as m}from"./FullScreenLoader-DRP_nxTi.js";import"./index-DRjF_FHU.js";import"./index-lhGYx47h.js";import"./Loading-BFl0P_kD.js";const n=({children:t,isLoading:i,...d})=>r.jsx(p,{...d,children:i===!0?r.jsx(m,{}):t});n.__docgenInfo={description:"",methods:[],displayName:"LoadingCard",props:{border:{required:!1,tsType:{name:"boolean"},description:""},dash:{required:!1,tsType:{name:"boolean"},description:""},imageFull:{required:!1,tsType:{name:"boolean"},description:""},side:{required:!1,tsType:{name:"boolean"},description:""},size:{required:!1,tsType:{name:"unknown[number]",raw:"(typeof CARD_SIZES)[number]"},description:""},isLoading:{required:!1,tsType:{name:"boolean"},description:""}},composes:["HTMLAttributes"]};const y={title:"LoadingCard",component:n},e={args:{className:"w-60 h-48 bg-base-100",isLoading:!0}};var s,a,o;e.parameters={...e.parameters,docs:{...(s=e.parameters)==null?void 0:s.docs,source:{originalSource:`{
+  args: {
+    className: 'w-60 h-48 bg-base-100',
+    isLoading: true
+  }
+}`,...(o=(a=e.parameters)==null?void 0:a.docs)==null?void 0:o.source}}};const L=["Default"];export{e as Default,L as __namedExportsOrder,y as default};

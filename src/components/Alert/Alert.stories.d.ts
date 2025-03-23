@@ -7,3 +7,6 @@ export declare const Default: Story;
 export declare const WithColors: Story;
 export declare const WithDescription: Story;
 export declare const WithActionButtons: Story;
+export declare const Soft: Story;
+export declare const Outline: Story;
+export declare const Dash: Story;

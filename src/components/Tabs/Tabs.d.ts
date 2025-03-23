@@ -6,13 +6,13 @@ export interface TabData {
     id: string;
     onClick?: () => void;
 }
-export declare const TAB_SIZES: readonly ["xs", "sm", "md", "lg"];
+export declare const TAB_SIZES: readonly ["xs", "sm", "md", "lg", "xl"];
 export type TabSize = (typeof TAB_SIZES)[number];
 export interface TabsProps extends Omit<HTMLProps<HTMLDivElement>, 'as' | 'onChange' | 'ref' | 'size'> {
-    bordered?: boolean;
-    boxed?: boolean;
+    border?: boolean;
+    box?: boolean;
     className?: string;
-    lifted?: boolean;
+    lift?: boolean;
     manual?: boolean;
     onChange: (tab: TabData) => void;
     selectedTabId: string;
@@ -20,4 +20,4 @@ export interface TabsProps extends Omit<HTMLProps<HTMLDivElement>, 'as' | 'onCha
     tabs: TabData[];
     vertical?: boolean;
 }
-export declare const Tabs: ({ bordered, boxed, children, className, manual, lifted, onChange, selectedTabId, size, tabs, vertical, ...props }: TabsProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Tabs: ({ border, box, children, className, lift, manual, onChange, selectedTabId, size, tabs, vertical, ...props }: TabsProps) => import("react/jsx-runtime").JSX.Element;
