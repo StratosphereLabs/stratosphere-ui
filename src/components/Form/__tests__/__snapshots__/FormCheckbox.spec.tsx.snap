@@ -2,11 +2,11 @@
 
 exports[`FormCheckbox > renders component 1`] = `
 <div>
-  <div
-    class="form-control"
+  <fieldset
+    class="fieldset py-0"
   >
     <label
-      class="label cursor-pointer gap-2"
+      class="fieldset-label"
     >
       <input
         class="checkbox"
@@ -14,6 +14,6 @@ exports[`FormCheckbox > renders component 1`] = `
         type="checkbox"
       />
     </label>
-  </div>
+  </fieldset>
 </div>
 `;
