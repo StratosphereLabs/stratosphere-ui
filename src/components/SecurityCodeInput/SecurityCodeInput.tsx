@@ -8,6 +8,7 @@ import { getKeyUpHandler } from './utils';
 
 export interface SecurityCodeInputProps<NextElement> {
   className?: string;
+  inputRef: RefObject<HTMLInputElement>;
   inputClassName?: string;
   name: string;
   nextFocusRef: RefObject<NextElement>;
@@ -15,12 +16,14 @@ export interface SecurityCodeInputProps<NextElement> {
 
 export const SecurityCodeInput = <NextElement extends HTMLElement>({
   className,
+  inputRef,
   inputClassName,
   name,
   nextFocusRef,
 }: SecurityCodeInputProps<NextElement>) => {
   const { setValue } = useFormContext();
   const digit1Ref = useRef<HTMLInputElement>(null);
+  const firstInputRef = inputRef ?? digit1Ref;
   const digit2Ref = useRef<HTMLInputElement>(null);
   const digit3Ref = useRef<HTMLInputElement>(null);
   const digit4Ref = useRef<HTMLInputElement>(null);
@@ -30,7 +33,7 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
     <div className={classNames('flex gap-2', className)}>
       <FormControl
         hideErrorMessage
-        inputRef={digit1Ref}
+        inputRef={firstInputRef}
         onKeyUp={getKeyUpHandler(digit2Ref)}
         onPaste={event => {
           const data = event.clipboardData.getData('text');
