@@ -39,6 +39,7 @@ export interface SelectProps<
   menuSize?: MenuSize;
   multi?: true;
   options?: DataItem[];
+  portal?: boolean;
   showDirty?: boolean;
 }
 
@@ -67,6 +68,7 @@ export const Select = <
   multi,
   name,
   options: optionsArray,
+  portal,
   showDirty,
 }: SelectProps<DataItem, Values>) => {
   const {
@@ -118,6 +120,7 @@ export const Select = <
       <ListboxOptions
         as={Menu}
         anchor={anchor ?? 'bottom start'}
+        portal={portal}
         size={menuSize}
         transition
         className={classNames(

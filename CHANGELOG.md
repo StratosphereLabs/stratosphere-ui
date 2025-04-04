@@ -1,5 +1,13 @@
 # CHANGELOG.md
 
+## 2.1.0 (2025-04-04)
+
+- Added `SecurityCodeInput` component for two-factor authentication implementations.
+
+## 2.0.0 (2025-03-22)
+
+- Updated all components for DaisyUI 5 compatibility.
+
 ## 1.8.6 (2024-08-08)
 
 - Added `optionClassName` property to `options` object in `FormRadio` component.

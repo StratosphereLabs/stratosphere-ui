@@ -21,6 +21,7 @@ export * from './Pagination';
 export * from './PasswordInput';
 export * from './Popover';
 export * from './Progress';
+export * from './SecurityCodeInput';
 export * from './Select';
 export * from './Stat';
 export * from './Steps';

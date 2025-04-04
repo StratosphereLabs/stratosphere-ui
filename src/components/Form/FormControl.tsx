@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { HTMLProps, ReactNode, useMemo } from 'react';
+import { HTMLProps, ReactNode, RefObject, useMemo } from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
 
 import { Transform } from '../../common';
@@ -35,6 +35,7 @@ export interface FormControlProps<Values extends FieldValues, TOutput>
   elementRight?: ReactNode;
   hideErrorMessage?: boolean;
   inputClassName?: string;
+  inputRef?: RefObject<HTMLInputElement>;
   size?: InputSize;
   transform?: Transform<TOutput>;
 }
@@ -48,6 +49,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
   elementRight,
   hideErrorMessage,
   inputClassName,
+  inputRef,
   isRequired,
   labelText,
   name,
@@ -101,6 +103,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
               });
             }
           }}
+          ref={inputRef}
           value={inputValue}
           {...props}
         />

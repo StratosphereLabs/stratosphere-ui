@@ -20,3 +20,5 @@ export const COLORS = [
   'error',
   'error-content',
 ] as const;
+
+export const DIGIT_REGEX = /^\d$/;

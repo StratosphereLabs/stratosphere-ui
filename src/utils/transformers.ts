@@ -1,5 +1,15 @@
 import { Transform } from '../common/types';
 
+export const digitInputTransformer: Transform<string> = {
+  input: value => value,
+  output: value => {
+    if (value.length === 0) return '';
+    const num = parseInt(value.charAt(0));
+    if (Number.isNaN(num)) return '';
+    return num.toString();
+  },
+};
+
 export const integerInputTransformer: Transform<number | null> = {
   input: value => (value !== null ? value.toString() : ''),
   output: value => {
