@@ -19,6 +19,7 @@ export interface SelectProps<DataItem extends GenericDataType, Values extends Fi
     menuSize?: MenuSize;
     multi?: true;
     options?: DataItem[];
+    portal?: boolean;
     showDirty?: boolean;
 }
-export declare const Select: <DataItem extends GenericDataType, Values extends FieldValues>({ anchor, buttonColor, buttonProps: { children: buttonChildren, className: buttonClassName, color: buttonPropsColor, ...buttonProps }, className, disabled, dropdownIcon, formValueMode, getItemText, hideDropdownIcon, isRequired, labelText, menuClassName, menuSize, multi, name, options: optionsArray, showDirty, }: SelectProps<DataItem, Values>) => import("react/jsx-runtime").JSX.Element;
+export declare const Select: <DataItem extends GenericDataType, Values extends FieldValues>({ anchor, buttonColor, buttonProps: { children: buttonChildren, className: buttonClassName, color: buttonPropsColor, ...buttonProps }, className, disabled, dropdownIcon, formValueMode, getItemText, hideDropdownIcon, isRequired, labelText, menuClassName, menuSize, multi, name, options: optionsArray, portal, showDirty, }: SelectProps<DataItem, Values>) => import("react/jsx-runtime").JSX.Element;

@@ -1,4 +1,4 @@
-import { HTMLProps, ReactNode } from '../../../node_modules/react';
+import { HTMLProps, ReactNode, RefObject } from '../../../node_modules/react';
 import { FieldValues } from 'react-hook-form';
 import { Transform } from '../../common';
 import { FormFieldProps } from './types';
@@ -13,7 +13,8 @@ export interface FormControlProps<Values extends FieldValues, TOutput> extends F
     elementRight?: ReactNode;
     hideErrorMessage?: boolean;
     inputClassName?: string;
+    inputRef?: RefObject<HTMLInputElement>;
     size?: InputSize;
     transform?: Transform<TOutput>;
 }
-export declare const FormControl: <Values extends FieldValues, TOutput>({ bordered, className, color, controllerProps, elementLeft, elementRight, hideErrorMessage, inputClassName, isRequired, labelText, name, showDirty, size, transform, ...props }: FormControlProps<Values, TOutput>) => import("react/jsx-runtime").JSX.Element;
+export declare const FormControl: <Values extends FieldValues, TOutput>({ bordered, className, color, controllerProps, elementLeft, elementRight, hideErrorMessage, inputClassName, inputRef, isRequired, labelText, name, showDirty, size, transform, ...props }: FormControlProps<Values, TOutput>) => import("react/jsx-runtime").JSX.Element;
