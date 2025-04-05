@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { digitInputTransformer } from '../../utils';
 import { FormControl } from '../Form';
-import { getKeyUpHandler } from './utils';
+import { getOnChangeHandler } from './utils';
 
 export interface SecurityCodeInputProps<NextElement> {
   className?: string;
@@ -34,7 +34,7 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
       <FormControl
         hideErrorMessage
         inputRef={firstInputRef}
-        onChange={getKeyUpHandler(digit2Ref)}
+        onChange={getOnChangeHandler(digit2Ref)}
         onPaste={event => {
           const data = event.clipboardData.getData('text');
           const digits = data.split('');
@@ -53,7 +53,7 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
       <FormControl
         hideErrorMessage
         inputRef={digit2Ref}
-        onChange={getKeyUpHandler(digit3Ref)}
+        onChange={getOnChangeHandler(digit3Ref)}
         inputClassName={inputClassName}
         name={`${name}.digit2`}
         transform={digitInputTransformer}
@@ -61,7 +61,7 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
       <FormControl
         hideErrorMessage
         inputRef={digit3Ref}
-        onChange={getKeyUpHandler(digit4Ref)}
+        onChange={getOnChangeHandler(digit4Ref)}
         inputClassName={inputClassName}
         name={`${name}.digit3`}
         transform={digitInputTransformer}
@@ -69,7 +69,7 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
       <FormControl
         hideErrorMessage
         inputRef={digit4Ref}
-        onChange={getKeyUpHandler(digit5Ref)}
+        onChange={getOnChangeHandler(digit5Ref)}
         inputClassName={inputClassName}
         name={`${name}.digit4`}
         transform={digitInputTransformer}
@@ -77,7 +77,7 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
       <FormControl
         hideErrorMessage
         inputRef={digit5Ref}
-        onChange={getKeyUpHandler(digit6Ref)}
+        onChange={getOnChangeHandler(digit6Ref)}
         inputClassName={inputClassName}
         name={`${name}.digit5`}
         transform={digitInputTransformer}
@@ -85,7 +85,7 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
       <FormControl
         hideErrorMessage
         inputRef={digit6Ref}
-        onChange={getKeyUpHandler(nextFocusRef)}
+        onChange={getOnChangeHandler(nextFocusRef)}
         inputClassName={inputClassName}
         name={`${name}.digit6`}
         transform={digitInputTransformer}

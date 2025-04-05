@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import { Form } from '../Form';
 import { SecurityCodeInput } from './SecurityCodeInput';
+import { defaultSecurityCodeInputValues } from './constants';
 
 const meta: Meta<typeof SecurityCodeInput> = {
   title: 'SecurityCodeInput',
@@ -20,14 +21,7 @@ export const Default: Story = {
   render: args => {
     const methods = useForm({
       defaultValues: {
-        code: {
-          digit1: '',
-          digit2: '',
-          digit3: '',
-          digit4: '',
-          digit5: '',
-          digit6: '',
-        },
+        code: defaultSecurityCodeInputValues,
       },
     });
     return (
