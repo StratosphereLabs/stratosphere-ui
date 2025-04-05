@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.1.4 (2025-04-05)
+
+- Fixed behavior of `SecurityCodeInput` component when pasting code into first input on mobile.
+
 ## 2.1.3 (2025-04-05)
 
 - Fixed keyboard behavior on mobile for `SecurityCodeInput` component.

@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { RefObject, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+import { DIGIT_REGEX, SECURITY_CODE_REGEX } from '../../common/constants';
 import { digitInputTransformer } from '../../utils';
 import { FormControl } from '../Form';
 import { getOnChangeHandler } from './utils';
@@ -34,17 +35,15 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
       <FormControl
         hideErrorMessage
         inputRef={firstInputRef}
-        onChange={getOnChangeHandler(digit2Ref)}
-        onPaste={event => {
-          const data = event.clipboardData.getData('text');
-          const digits = data.split('');
-          setValue(`${name}.digit1`, digits[0] ?? '');
-          setValue(`${name}.digit2`, digits[1] ?? '');
-          setValue(`${name}.digit3`, digits[2] ?? '');
-          setValue(`${name}.digit4`, digits[3] ?? '');
-          setValue(`${name}.digit5`, digits[4] ?? '');
-          setValue(`${name}.digit6`, digits[5] ?? '');
-          nextFocusRef?.current?.focus();
+        onChange={({ target: { value } }) => {
+          if (value.match(SECURITY_CODE_REGEX) !== null) {
+            value.split('').forEach((digit, index) => {
+              setValue(`${name}.digit${index + 1}`, digit ?? '');
+            });
+            nextFocusRef?.current?.focus();
+          } else if (value.match(DIGIT_REGEX) !== null) {
+            digit2Ref.current?.focus();
+          }
         }}
         inputClassName={inputClassName}
         inputMode="numeric"

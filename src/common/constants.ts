@@ -22,3 +22,5 @@ export const COLORS = [
 ] as const;
 
 export const DIGIT_REGEX = /^\d$/;
+
+export const SECURITY_CODE_REGEX = /^\d\d\d\d\d\d$/;
