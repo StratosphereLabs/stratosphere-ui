@@ -1,4 +1,4 @@
-import { HTMLProps, ReactNode, RefObject } from '../../../node_modules/react';
+import { ChangeEventHandler, HTMLProps, ReactNode, RefObject } from '../../../node_modules/react';
 import { FieldValues } from 'react-hook-form';
 import { Transform } from '../../common';
 import { FormFieldProps } from './types';
@@ -6,7 +6,7 @@ export declare const INPUT_COLORS: readonly ["ghost", "neutral", "primary", "sec
 export declare const INPUT_SIZES: readonly ["xl", "lg", "md", "sm", "xs"];
 export type InputColor = (typeof INPUT_COLORS)[number];
 export type InputSize = (typeof INPUT_SIZES)[number];
-export interface FormControlProps<Values extends FieldValues, TOutput> extends FormFieldProps<Values>, Omit<HTMLProps<HTMLInputElement>, 'name' | 'size'> {
+export interface FormControlProps<Values extends FieldValues, TOutput> extends FormFieldProps<Values>, Omit<HTMLProps<HTMLInputElement>, 'name' | 'onChange' | 'size'> {
     bordered?: boolean;
     color?: InputColor;
     elementLeft?: ReactNode;
@@ -14,6 +14,7 @@ export interface FormControlProps<Values extends FieldValues, TOutput> extends F
     hideErrorMessage?: boolean;
     inputClassName?: string;
     inputRef?: RefObject<HTMLInputElement>;
+    onChange?: ChangeEventHandler<HTMLInputElement>;
     size?: InputSize;
     transform?: Transform<TOutput>;
 }
