@@ -1,5 +1,11 @@
 import classNames from 'classnames';
-import { HTMLProps, ReactNode, RefObject, useMemo } from 'react';
+import {
+  ChangeEventHandler,
+  HTMLProps,
+  ReactNode,
+  RefObject,
+  useMemo,
+} from 'react';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
 
 import { Transform } from '../../common';
@@ -28,7 +34,7 @@ export type InputSize = (typeof INPUT_SIZES)[number];
 
 export interface FormControlProps<Values extends FieldValues, TOutput>
   extends FormFieldProps<Values>,
-    Omit<HTMLProps<HTMLInputElement>, 'name' | 'size'> {
+    Omit<HTMLProps<HTMLInputElement>, 'name' | 'onChange' | 'size'> {
   bordered?: boolean;
   color?: InputColor;
   elementLeft?: ReactNode;
@@ -36,6 +42,7 @@ export interface FormControlProps<Values extends FieldValues, TOutput>
   hideErrorMessage?: boolean;
   inputClassName?: string;
   inputRef?: RefObject<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   size?: InputSize;
   transform?: Transform<TOutput>;
 }
