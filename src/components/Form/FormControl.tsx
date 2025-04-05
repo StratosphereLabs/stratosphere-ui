@@ -53,6 +53,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
   isRequired,
   labelText,
   name,
+  onChange,
   showDirty,
   size,
   transform,
@@ -93,15 +94,18 @@ export const FormControl = <Values extends FieldValues, TOutput>({
             size && `input-${size}`,
             inputClassName,
           )}
-          onChange={({ target: { value } }) => {
+          onChange={event => {
             const output =
-              transform === undefined ? value : transform.output(value);
+              transform === undefined
+                ? event.target.value
+                : transform.output(event.target.value);
             if (output !== undefined) {
               setValue<string>(name, output, {
                 shouldDirty: true,
                 shouldTouch: true,
               });
             }
+            onChange?.(event);
           }}
           ref={inputRef}
           value={inputValue}

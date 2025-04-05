@@ -18,7 +18,18 @@ export const Default: Story = {
     name: 'code',
   },
   render: args => {
-    const methods = useForm();
+    const methods = useForm({
+      defaultValues: {
+        code: {
+          digit1: '',
+          digit2: '',
+          digit3: '',
+          digit4: '',
+          digit5: '',
+          digit6: '',
+        },
+      },
+    });
     return (
       <Form methods={methods} onFormSubmit={() => null}>
         <SecurityCodeInput {...args} />

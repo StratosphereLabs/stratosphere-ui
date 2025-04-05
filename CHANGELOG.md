@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.1.2 (2025-04-05)
+
+- Fixed issue with `SecurityCodeInput` not auto-focusing on next input in mobile.
+
 ## 2.1.1 (2025-04-04)
 
 - Added `inputRef` prop to `SecurityCodeInput` component.
