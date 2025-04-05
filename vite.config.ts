@@ -21,7 +21,13 @@ export default defineConfig({
       fileName: 'stratosphere-ui',
     },
     rollupOptions: {
-      external: ['daisyui', 'react', 'react-hook-form', 'react-router-dom'],
+      external: [
+        'daisyui',
+        'react',
+        'react-hook-form',
+        'react-router-dom',
+        'zod',
+      ],
       output: {
         globals: {
           react: 'React',
