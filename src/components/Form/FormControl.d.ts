@@ -17,4 +17,4 @@ export interface FormControlProps<Values extends FieldValues, TOutput> extends F
     size?: InputSize;
     transform?: Transform<TOutput>;
 }
-export declare const FormControl: <Values extends FieldValues, TOutput>({ bordered, className, color, controllerProps, elementLeft, elementRight, hideErrorMessage, inputClassName, inputRef, isRequired, labelText, name, showDirty, size, transform, ...props }: FormControlProps<Values, TOutput>) => import("react/jsx-runtime").JSX.Element;
+export declare const FormControl: <Values extends FieldValues, TOutput>({ bordered, className, color, controllerProps, elementLeft, elementRight, hideErrorMessage, inputClassName, inputRef, isRequired, labelText, name, onChange, showDirty, size, transform, ...props }: FormControlProps<Values, TOutput>) => import("react/jsx-runtime").JSX.Element;
