@@ -47,6 +47,7 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
           nextFocusRef?.current?.focus();
         }}
         inputClassName={inputClassName}
+        inputMode="numeric"
         name={`${name}.digit1`}
         transform={digitInputTransformer}
       />
@@ -55,6 +56,7 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
         inputRef={digit2Ref}
         onChange={getOnChangeHandler(digit3Ref)}
         inputClassName={inputClassName}
+        inputMode="numeric"
         name={`${name}.digit2`}
         transform={digitInputTransformer}
       />
@@ -63,6 +65,7 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
         inputRef={digit3Ref}
         onChange={getOnChangeHandler(digit4Ref)}
         inputClassName={inputClassName}
+        inputMode="numeric"
         name={`${name}.digit3`}
         transform={digitInputTransformer}
       />
@@ -71,6 +74,7 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
         inputRef={digit4Ref}
         onChange={getOnChangeHandler(digit5Ref)}
         inputClassName={inputClassName}
+        inputMode="numeric"
         name={`${name}.digit4`}
         transform={digitInputTransformer}
       />
@@ -79,6 +83,7 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
         inputRef={digit5Ref}
         onChange={getOnChangeHandler(digit6Ref)}
         inputClassName={inputClassName}
+        inputMode="numeric"
         name={`${name}.digit5`}
         transform={digitInputTransformer}
       />
@@ -87,6 +92,7 @@ export const SecurityCodeInput = <NextElement extends HTMLElement>({
         inputRef={digit6Ref}
         onChange={getOnChangeHandler(nextFocusRef)}
         inputClassName={inputClassName}
+        inputMode="numeric"
         name={`${name}.digit6`}
         transform={digitInputTransformer}
       />

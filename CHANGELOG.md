@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.1.3 (2025-04-05)
+
+- Fixed keyboard behavior on mobile for `SecurityCodeInput` component.
+
 ## 2.1.2 (2025-04-05)
 
 - Fixed issue with `SecurityCodeInput` not auto-focusing on next input in mobile.
