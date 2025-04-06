@@ -4,7 +4,6 @@ import {
   ComboboxOptions,
   Label,
 } from '@headlessui/react';
-import { AnchorProps } from '@headlessui/react/dist/internal/floating';
 import classNames from 'classnames';
 import {
   Fragment,
@@ -36,7 +35,6 @@ export interface TypeaheadSelectProps<
   Values extends FieldValues,
 > extends UseTypeaheadQueryOptions<DataItem>,
     FormFieldProps<Values> {
-  anchor?: AnchorProps;
   badgeColor?: BadgeColor;
   bordered?: boolean;
   color?: InputColor;
@@ -54,7 +52,6 @@ export interface TypeaheadSelectProps<
   menuSize?: MenuSize;
   multi?: true;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
-  portal?: boolean;
   size?: InputSize;
 }
 
@@ -62,7 +59,6 @@ export const TypeaheadSelect = <
   DataItem extends GenericDataType,
   Values extends FieldValues,
 >({
-  anchor,
   badgeColor,
   bordered,
   className,
@@ -88,7 +84,6 @@ export const TypeaheadSelect = <
   onKeyDown,
   options: optionsArray,
   placeholder,
-  portal,
   showDirty,
   size,
 }: TypeaheadSelectProps<DataItem, Values>) => {
@@ -132,7 +127,7 @@ export const TypeaheadSelect = <
   const Component = multi === true ? ComboboxMulti : ComboboxSingle;
   return (
     <Component
-      className={className}
+      className={classNames('relative', className)}
       disabled={disabled}
       name={name}
       selectedItems={selectedItems}
@@ -212,10 +207,11 @@ export const TypeaheadSelect = <
       </fieldset>
       {showDropdown ? (
         <ComboboxOptions
-          anchor={anchor}
           as={Menu}
-          className={classNames('rounded-box p-2 shadow-lg', menuClassName)}
-          portal={portal}
+          className={classNames(
+            'absolute rounded-box p-2 shadow-lg',
+            menuClassName,
+          )}
           ref={dropdownRef}
           size={menuSize}
           static
@@ -228,6 +224,9 @@ export const TypeaheadSelect = <
               }}
               onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
                 if (event.key === 'Tab') setShowDropdown(false);
+                if (event.key === 'ArrowDown') {
+                  console.log('test lmao');
+                }
                 onKeyDown?.(event);
               }}
               placeholder={inputPlaceholder}
@@ -246,12 +245,13 @@ export const TypeaheadSelect = <
           {!isLoading
             ? optionsArray?.map((option, index) => (
                 <ComboboxOption as={Fragment} key={option.id} value={option}>
-                  {({ disabled, selected }) => (
+                  {({ disabled, focus, selected }) => (
                     <MenuItem
                       className={classNames(
                         index === 0 && enableBadges && 'mt-2',
                       )}
                       disabled={disabled}
+                      focus={focus}
                       selected={multi === true ? selected : undefined}
                     >
                       {getItemText(option)}
