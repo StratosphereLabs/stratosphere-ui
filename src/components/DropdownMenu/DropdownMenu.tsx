@@ -19,22 +19,28 @@ export interface DropdownItemProps
 export interface DropdownMenuProps {
   anchor?: AnchorProps;
   buttonProps?: ButtonProps;
+  className?: string;
   items: DropdownItemProps[];
   menuClassName?: string;
   menuSize?: MenuSize;
+  portal?: boolean;
 }
 
 export const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuProps>(
-  ({ anchor, buttonProps, items, menuClassName, menuSize }, ref) => (
-    <HeadlessUIMenu ref={ref}>
+  (
+    { anchor, buttonProps, className, items, menuClassName, menuSize, portal },
+    ref,
+  ) => (
+    <HeadlessUIMenu as="div" className={className} ref={ref}>
       <MenuButton as={Button} {...buttonProps} />
       <MenuItems
-        anchor={anchor ?? 'bottom start'}
+        anchor={anchor}
         as={Menu}
+        portal={portal}
         size={menuSize}
         transition
         className={classNames(
-          'origin-top shadow-xl transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0',
+          'origin-top rounded-box p-2 shadow-lg transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0',
           menuClassName,
         )}
       >
