@@ -12,5 +12,6 @@ export interface PopoverProps extends Omit<HeadlessUIPopoverProps<'div'>, 'as' |
     className?: string;
     popoverClassName?: string;
     popoverComponent: ({ open, close }: PopoverPanelRenderProps) => JSX.Element;
+    portal?: boolean;
 }
 export declare const Popover: import('../../../node_modules/react').ForwardRefExoticComponent<PopoverProps & import('../../../node_modules/react').RefAttributes<HTMLDivElement>>;

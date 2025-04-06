@@ -7,8 +7,10 @@ export interface DropdownItemProps extends Omit<MenuItemProps, 'disabled' | 'foc
 export interface DropdownMenuProps {
     anchor?: AnchorProps;
     buttonProps?: ButtonProps;
+    className?: string;
     items: DropdownItemProps[];
     menuClassName?: string;
     menuSize?: MenuSize;
+    portal?: boolean;
 }
 export declare const DropdownMenu: import('../../../node_modules/react').ForwardRefExoticComponent<DropdownMenuProps & import('../../../node_modules/react').RefAttributes<HTMLDivElement>>;
