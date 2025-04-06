@@ -11,6 +11,7 @@ export default meta;
 
 export const Default: Story = {
   args: {
+    anchor: 'bottom start',
     buttonProps: {
       children: 'Open Popover',
     },

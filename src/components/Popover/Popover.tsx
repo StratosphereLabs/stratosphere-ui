@@ -24,6 +24,7 @@ export interface PopoverProps
   className?: string;
   popoverClassName?: string;
   popoverComponent: ({ open, close }: PopoverPanelRenderProps) => JSX.Element;
+  portal?: boolean;
 }
 
 export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
@@ -34,21 +35,19 @@ export const Popover = forwardRef<HTMLDivElement, PopoverProps>(
       className,
       popoverClassName,
       popoverComponent,
+      portal,
     }: PopoverProps,
     ref,
   ) => (
-    <HeadlessUIPopover ref={ref}>
-      <PopoverButton
-        as={Button}
-        className={classNames(className, buttonProps.className)}
-        {...buttonProps}
-      />
+    <HeadlessUIPopover className={className} ref={ref}>
+      <PopoverButton as={Button} {...buttonProps} />
       <PopoverPanel
         as="div"
-        anchor={anchor ?? 'bottom start'}
+        anchor={anchor}
+        portal={portal}
         transition
         className={classNames(
-          'flex origin-top flex-col p-2 shadow-xl transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0',
+          'flex origin-top flex-col rounded-box p-2 shadow-lg transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0',
           popoverClassName,
         )}
       >

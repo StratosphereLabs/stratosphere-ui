@@ -209,7 +209,7 @@ export const TypeaheadSelect = <
         <ComboboxOptions
           as={Menu}
           className={classNames(
-            'absolute rounded-box p-2 shadow-xl',
+            'absolute rounded-box p-2 shadow-lg',
             menuClassName,
           )}
           ref={dropdownRef}
@@ -242,12 +242,13 @@ export const TypeaheadSelect = <
           {!isLoading
             ? optionsArray?.map((option, index) => (
                 <ComboboxOption as={Fragment} key={option.id} value={option}>
-                  {({ disabled, selected }) => (
+                  {({ disabled, focus, selected }) => (
                     <MenuItem
                       className={classNames(
                         index === 0 && enableBadges && 'mt-2',
                       )}
                       disabled={disabled}
+                      focus={focus}
                       selected={multi === true ? selected : undefined}
                     >
                       {getItemText(option)}

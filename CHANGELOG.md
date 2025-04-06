@@ -1,5 +1,19 @@
 # CHANGELOG.md
 
+## 2.2.1 (2025-04-06)
+
+- Removed `anchor` and `portal` props from `TypeaheadSelect` to fix dropdown menu behavior.
+- Fixed styling when using arrow keys for navigation in `TypeaheadSelect` component.
+
+## 2.2.0 (2025-04-06)
+
+- Removed default value for `anchor` prop in `Select`, `DropdownMenu`, and `Popover` components.
+- Added `anchor` prop to `TypeaheadSelect` component.
+- Added `portal` prop to `DropdownMenu`, `Popover`, and `TypeaheadSelect` components.
+- Added `className` prop to `DropdownMenu` component.
+- Removed default `className` on `TypeaheadSelect` component.
+- Tweaked default styling for floating menu element in `Select`, `TypeaheadSelect`, `DropdownMenu`, and `Popover` components.
+
 ## 2.1.4 (2025-04-05)
 
 - Fixed behavior of `SecurityCodeInput` component when pasting code into first input on mobile.

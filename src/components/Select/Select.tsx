@@ -119,12 +119,12 @@ export const Select = <
       </fieldset>
       <ListboxOptions
         as={Menu}
-        anchor={anchor ?? 'bottom start'}
+        anchor={anchor}
         portal={portal}
         size={menuSize}
         transition
         className={classNames(
-          'origin-top p-2 shadow-xl transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0',
+          'origin-top rounded-box p-2 shadow-lg transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0',
           menuClassName,
         )}
       >
