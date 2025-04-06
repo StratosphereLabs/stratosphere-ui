@@ -224,9 +224,6 @@ export const TypeaheadSelect = <
               }}
               onKeyDown={(event: KeyboardEvent<HTMLInputElement>) => {
                 if (event.key === 'Tab') setShowDropdown(false);
-                if (event.key === 'ArrowDown') {
-                  console.log('test lmao');
-                }
                 onKeyDown?.(event);
               }}
               placeholder={inputPlaceholder}
