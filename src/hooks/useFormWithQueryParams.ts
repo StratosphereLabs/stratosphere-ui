@@ -1,3 +1,4 @@
+import isEqual from 'lodash.isequal';
 import pickBy from 'lodash.pickby';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -80,7 +81,13 @@ export const useFormWithQueryParams = <
     control: methods.control,
     name: includeKeys,
   });
+  const prevFormValuesRef = useRef(formValues);
   useEffect(() => {
+    const prevFormValues = prevFormValuesRef.current;
+    if (isEqual(prevFormValues, formValues)) {
+      return;
+    }
+    prevFormValuesRef.current = formValues;
     setSearchParams(oldSearchParams => {
       const getNewSearchParams = getSearchParamsFn.current(formValues);
       const newSearchParamsOptions =

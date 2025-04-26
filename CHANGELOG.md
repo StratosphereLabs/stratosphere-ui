@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.2.2 (2025-04-26)
+
+- Added deep comparison for form values in `useFormWithQueryParams` hook to prevent extra history updates.
+
 ## 2.2.1 (2025-04-06)
 
 - Removed `anchor` and `portal` props from `TypeaheadSelect` to fix dropdown menu behavior.
