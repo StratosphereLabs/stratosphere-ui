@@ -1,6 +1,12 @@
 import classNames from 'classnames';
 import { HTMLProps } from 'react';
-import { FieldValues, useController } from 'react-hook-form';
+import {
+  FieldValues,
+  Path,
+  PathValue,
+  useController,
+  useFormContext,
+} from 'react-hook-form';
 
 import { useFieldColor } from '../../hooks';
 import { FormError } from './FormError';
@@ -60,6 +66,7 @@ export const FormRadio = <Values extends FieldValues>({
     name,
     ...controllerProps,
   });
+  const { setValue } = useFormContext<Values>();
   const fieldColor = useFieldColor(name, showDirty);
   const currentColor = fieldColor ?? color ?? undefined;
   return (
@@ -75,6 +82,12 @@ export const FormRadio = <Values extends FieldValues>({
               'flex cursor-pointer items-center justify-between',
               optionClassName,
             )}
+            onClick={() => {
+              setValue(name, optionValue as PathValue<Values, Path<Values>>, {
+                shouldDirty: true,
+                shouldTouch: true,
+              });
+            }}
           >
             <span>{label}</span>
             <input
@@ -87,6 +100,7 @@ export const FormRadio = <Values extends FieldValues>({
                 size && `radio-${size}`,
                 inputClassName,
               )}
+              onChange={undefined}
               type="radio"
               value={optionValue}
             />

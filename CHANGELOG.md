@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.2.3 (2025-06-30)
+
+- Improve click area of `FormRadio` options.
+
 ## 2.2.2 (2025-04-26)
 
 - Added deep comparison for form values in `useFormWithQueryParams` hook to prevent extra history updates.
