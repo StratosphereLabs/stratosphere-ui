@@ -14,6 +14,7 @@ import {
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
 
 import { GenericDataType, getGroupedDataItems } from '../../common';
+import { HIDE_SCROLLBAR_CLASSNAME } from '../../common/constants';
 import { UseTypeaheadQueryOptions, useFieldColor } from '../../hooks';
 import { Badge, BadgeColor } from '../Badge';
 import {
@@ -90,10 +91,7 @@ export const TypeaheadSelect = <
   const {
     fieldState: { error },
     field: { ref },
-  } = useController({
-    ...controllerProps,
-    name,
-  });
+  } = useController({ ...controllerProps, name });
   const {
     clearSelectedItem,
     dropdownRef,
@@ -146,6 +144,7 @@ export const TypeaheadSelect = <
           <div
             className={classNames(
               'input flex w-full items-center gap-1 overflow-x-scroll scrollbar-none',
+              HIDE_SCROLLBAR_CLASSNAME,
               bordered && `input-bordered`,
               !disabled && 'cursor-pointer',
               currentColor && `input-${currentColor}`,

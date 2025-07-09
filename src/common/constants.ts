@@ -21,6 +21,9 @@ export const COLORS = [
   'error-content',
 ] as const;
 
+export const HIDE_SCROLLBAR_CLASSNAME =
+  '[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden';
+
 export const DIGIT_REGEX = /^\d$/;
 
 export const SECURITY_CODE_REGEX = /^\d\d\d\d\d\d$/;

@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.2.4 (2025-07-08)
+
+- Fixed appearance of `TypeaheadSelect` component on Windows machines.
+
 ## 2.2.3 (2025-06-30)
 
 - Improve click area of `FormRadio` options.
