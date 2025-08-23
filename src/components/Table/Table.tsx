@@ -32,6 +32,7 @@ export interface TableProps<DataType extends GenericDataType>
   highlightWhenSelected?: boolean;
   isLoading?: boolean;
   metadata?: PaginationMetadata;
+  onRowClick?: (row: Row<DataType>) => void;
   pinCols?: boolean;
   pinRows?: boolean;
   rowClassName?: Argument | ((row: Row<DataType>) => Argument);
@@ -54,6 +55,7 @@ export const Table = <DataType extends GenericDataType>({
   initialState,
   isLoading,
   metadata,
+  onRowClick,
   pinCols,
   pinRows,
   rowClassName,
@@ -155,6 +157,7 @@ export const Table = <DataType extends GenericDataType>({
                       ? (rowClassName(row) as Argument)
                       : rowClassName,
                   )}
+                  onClick={() => onRowClick?.(row)}
                   key={row.id}
                 >
                   {enableRowSelection ? (

@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.2.5 (2025-08-23)
+
+- Added `onRowClick` prop to `Table` component.
+
 ## 2.2.4 (2025-07-08)
 
 - Fixed appearance of `TypeaheadSelect` component on Windows machines.
