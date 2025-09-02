@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.2.6 (2025-09-02)
+
+- Added `listItemProps` prop to `DropdownMenu` component to allow customization of `<li>` element.
+
 ## 2.2.5 (2025-08-23)
 
 - Added `onRowClick` prop to `Table` component.
