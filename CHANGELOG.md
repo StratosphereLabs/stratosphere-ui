@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.3.0 (2025-09-07)
+
+- Added `defaultShowDropdown` prop to `TypeaheadSelect` component to allow dropdown to be opened by default on render.
+- Added `isQueryLoading` prop to `TypeaheadSelect` component to control loading state.
+
 ## 2.2.6 (2025-09-02)
 
 - Added `listItemProps` prop to `DropdownMenu` component to allow customization of `<li>` element.

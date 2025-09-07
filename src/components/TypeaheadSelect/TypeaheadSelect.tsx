@@ -34,15 +34,16 @@ import { useTypeaheadSelect } from './useTypeaheadSelect';
 export interface TypeaheadSelectProps<
   DataItem extends GenericDataType,
   Values extends FieldValues,
-> extends UseTypeaheadQueryOptions<DataItem>,
+> extends UseTypeaheadQueryOptions,
     FormFieldProps<Values> {
   badgeColor?: BadgeColor;
   bordered?: boolean;
   color?: InputColor;
   className?: string;
-  dropdownInputClassName?: string;
+  defaultShowDropdown?: boolean;
   disabled?: boolean;
   disableSingleSelectBadge?: true;
+  dropdownInputClassName?: string;
   formValueMode?: FormValueMode;
   getBadgeClassName?: (item: DataItem) => string;
   getBadgeText?: (item: DataItem) => ReactNode;
@@ -53,6 +54,7 @@ export interface TypeaheadSelectProps<
   menuSize?: MenuSize;
   multi?: true;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
+  options?: DataItem[];
   size?: InputSize;
 }
 
@@ -66,6 +68,7 @@ export const TypeaheadSelect = <
   color,
   controllerProps,
   debounceTime,
+  defaultShowDropdown,
   disabled,
   disableSingleSelectBadge,
   dropdownInputClassName,
@@ -75,6 +78,7 @@ export const TypeaheadSelect = <
   getItemText,
   inputClassName,
   inputPlaceholder,
+  isQueryLoading,
   isRequired,
   labelText,
   menuClassName,
@@ -105,8 +109,9 @@ export const TypeaheadSelect = <
     setQuery,
   } = useTypeaheadSelect<HTMLUListElement, DataItem, Values>({
     debounceTime,
+    defaultShowDropdown,
+    isQueryLoading,
     onDebouncedChange,
-    options: optionsArray,
   });
   const options = getGroupedDataItems(optionsArray ?? []);
   useSelectFormSync({

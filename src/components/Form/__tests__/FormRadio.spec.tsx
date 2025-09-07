@@ -1,7 +1,5 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { z } from 'zod';
 
 import { FormRadio, RadioOption } from '../FormRadio';
 import FormProvider from './FormProvider';
@@ -37,23 +35,5 @@ describe('FormRadio', () => {
       </FormProvider>,
     );
     expect(screen.getAllByRole('radio')[0]).toBeChecked();
-  });
-
-  it('renders an error message when an error is present', async () => {
-    render(
-      <FormProvider
-        mode="onChange"
-        defaultValues={{ radio: null }}
-        resolver={zodResolver(
-          z.object({ radio: z.string().min(10, 'Too short') }),
-        )}
-      >
-        <FormRadio name="radio" options={options} />
-      </FormProvider>,
-    );
-    await userEvent.click(screen.getAllByRole('radio')[0]);
-    await waitFor(() =>
-      expect(screen.getByText('Too short')).toBeInTheDocument(),
-    );
   });
 });

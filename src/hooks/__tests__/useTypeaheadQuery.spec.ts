@@ -16,10 +16,11 @@ describe('useTypeaheadQuery', () => {
     expect(result.current.setQuery).toBeInstanceOf(Function);
   });
 
-  it('should set isLoading to true when query is not empty', () => {
+  it('should set isLoading to true when isLoading prop is passed', () => {
     const { result } = renderHook(() =>
       useTypeaheadQuery({
         onDebouncedChange: vi.fn(),
+        isQueryLoading: true,
       }),
     );
 
@@ -34,7 +35,6 @@ describe('useTypeaheadQuery', () => {
     const { result } = renderHook(() =>
       useTypeaheadQuery({
         onDebouncedChange: vi.fn(),
-        options: [{ id: 'foo' }, { id: 'bar' }],
       }),
     );
 

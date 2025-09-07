@@ -7,13 +7,12 @@ import {
   useState,
 } from 'react';
 
-import { GenericDataType } from '../common';
 import { useDebouncedValue } from './useDebouncedValue';
 
-export interface UseTypeaheadQueryOptions<DataItem> {
+export interface UseTypeaheadQueryOptions {
   debounceTime?: number;
+  isQueryLoading?: boolean;
   onDebouncedChange?: (value: string) => void;
-  options?: DataItem[];
 }
 
 export interface UseTypeaheadQueryResult {
@@ -22,15 +21,14 @@ export interface UseTypeaheadQueryResult {
   setQuery: Dispatch<SetStateAction<string>>;
 }
 
-export const useTypeaheadQuery = <DataItem extends GenericDataType>({
+export const useTypeaheadQuery = ({
   debounceTime,
+  isQueryLoading,
   onDebouncedChange,
-  options,
-}: UseTypeaheadQueryOptions<DataItem>): UseTypeaheadQueryResult => {
+}: UseTypeaheadQueryOptions): UseTypeaheadQueryResult => {
   const onDebouncedChangeFn = useRef(onDebouncedChange);
-  const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
-  const { debouncedValue } = useDebouncedValue<string>(
+  const { debouncedValue, isDebouncing } = useDebouncedValue<string>(
     query,
     debounceTime ?? 400,
   );
@@ -41,14 +39,8 @@ export const useTypeaheadQuery = <DataItem extends GenericDataType>({
   useEffect(() => {
     onDebouncedChangeFn.current?.(currentQuery);
   }, [currentQuery]);
-  useEffect(() => {
-    if (options !== undefined) setIsLoading(false);
-  }, [options]);
-  useEffect(() => {
-    setIsLoading(query !== '');
-  }, [query]);
   return {
-    isLoading,
+    isLoading: isQueryLoading || isDebouncing,
     query,
     setQuery,
   };
