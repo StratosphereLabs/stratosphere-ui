@@ -12,8 +12,8 @@ export type UseTypeaheadSelectOptions<
   TypeaheadSelectProps<DataItem, Values>,
   | 'debounceTime'
   | 'defaultShowDropdown'
-  | 'isQueryLoading'
   | 'onDebouncedChange'
+  | 'onShowDropdown'
 >;
 
 export const useTypeaheadSelect = <
@@ -23,18 +23,18 @@ export const useTypeaheadSelect = <
 >({
   debounceTime,
   defaultShowDropdown,
-  isQueryLoading,
   onDebouncedChange,
+  onShowDropdown,
 }: UseTypeaheadSelectOptions<DataItem, Values>) => {
+  const onShowDropdownFn = useRef(onShowDropdown);
   const [selectedItems, setSelectedItems] = useState<DataItem[]>([]);
   const [showDropdown, setShowDropdown] = useState(
     defaultShowDropdown ?? false,
   );
   const dropdownRef = useRef<DropdownElement>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
-  const { isLoading, query, setQuery } = useTypeaheadQuery({
+  const { query, setQuery } = useTypeaheadQuery({
     debounceTime,
-    isQueryLoading,
     onDebouncedChange,
   });
   const clearSelectedItem = (index: number) =>
@@ -43,13 +43,13 @@ export const useTypeaheadSelect = <
     );
   useOutsideClick(dropdownRef, () => setShowDropdown(false));
   useEffect(() => {
+    onShowDropdownFn.current?.(showDropdown);
     if (showDropdown) setTimeout(() => searchInputRef.current?.focus(), 50);
     else setQuery('');
   }, [showDropdown, setQuery]);
   return {
     clearSelectedItem,
     dropdownRef,
-    isLoading,
     query,
     showDropdown,
     searchInputRef,

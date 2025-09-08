@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 2.3.1 (2025-09-07)
+
+- Added `onShowDropdown` prop to `TypeaheadSelect` component to allow side-effect when dropdown is opened.
+- Renamed `isQueryLoading` prop to `isLoading` in `TypeaheadSelect` component.
+
 ## 2.3.0 (2025-09-07)
 
 - Added `defaultShowDropdown` prop to `TypeaheadSelect` component to allow dropdown to be opened by default on render.

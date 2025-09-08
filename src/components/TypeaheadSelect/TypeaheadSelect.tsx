@@ -50,10 +50,12 @@ export interface TypeaheadSelectProps<
   getItemText: (data: DataItem) => ReactNode;
   inputClassName?: string;
   inputPlaceholder?: string;
+  isLoading?: boolean;
   menuClassName?: string;
   menuSize?: MenuSize;
   multi?: true;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
+  onShowDropdown?: (showDropdown: boolean) => void;
   options?: DataItem[];
   size?: InputSize;
 }
@@ -78,7 +80,7 @@ export const TypeaheadSelect = <
   getItemText,
   inputClassName,
   inputPlaceholder,
-  isQueryLoading,
+  isLoading,
   isRequired,
   labelText,
   menuClassName,
@@ -87,6 +89,7 @@ export const TypeaheadSelect = <
   name,
   onDebouncedChange,
   onKeyDown,
+  onShowDropdown,
   options: optionsArray,
   placeholder,
   showDirty,
@@ -99,7 +102,6 @@ export const TypeaheadSelect = <
   const {
     clearSelectedItem,
     dropdownRef,
-    isLoading,
     query,
     showDropdown,
     searchInputRef,
@@ -110,8 +112,8 @@ export const TypeaheadSelect = <
   } = useTypeaheadSelect<HTMLUListElement, DataItem, Values>({
     debounceTime,
     defaultShowDropdown,
-    isQueryLoading,
     onDebouncedChange,
+    onShowDropdown,
   });
   const options = getGroupedDataItems(optionsArray ?? []);
   useSelectFormSync({
