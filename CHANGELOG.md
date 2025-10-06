@@ -1,5 +1,39 @@
 # CHANGELOG.md
 
+## 2.3.2 (2025-10-05)
+
+- Fixed issue with character not appearing inside search input in the `TypeaheadSelect` component when typing while focused inside of the outer input.
+
+## 2.3.1 (2025-09-07)
+
+- Added `onShowDropdown` prop to `TypeaheadSelect` component to allow side-effect when dropdown is opened.
+- Renamed `isQueryLoading` prop to `isLoading` in `TypeaheadSelect` component.
+
+## 2.3.0 (2025-09-07)
+
+- Added `defaultShowDropdown` prop to `TypeaheadSelect` component to allow dropdown to be opened by default on render.
+- Added `isQueryLoading` prop to `TypeaheadSelect` component to control loading state.
+
+## 2.2.6 (2025-09-02)
+
+- Added `listItemProps` prop to `DropdownMenu` component to allow customization of `<li>` element.
+
+## 2.2.5 (2025-08-23)
+
+- Added `onRowClick` prop to `Table` component.
+
+## 2.2.4 (2025-07-08)
+
+- Fixed appearance of `TypeaheadSelect` component on Windows machines.
+
+## 2.2.3 (2025-06-30)
+
+- Improve click area of `FormRadio` options.
+
+## 2.2.2 (2025-04-26)
+
+- Added deep comparison for form values in `useFormWithQueryParams` hook to prevent extra history updates.
+
 ## 2.2.1 (2025-04-06)
 
 - Removed `anchor` and `portal` props from `TypeaheadSelect` to fix dropdown menu behavior.

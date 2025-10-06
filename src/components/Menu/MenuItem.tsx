@@ -8,6 +8,7 @@ export interface MenuItemProps
   active?: boolean;
   disabled?: boolean;
   focus?: boolean;
+  listItemProps?: Omit<HTMLProps<HTMLLIElement>, 'className'>;
   selected?: boolean;
   subMenu?: ReactNode;
   title?: boolean;
@@ -21,6 +22,7 @@ export const MenuItem = forwardRef<HTMLAnchorElement, MenuItemProps>(
       className,
       disabled,
       focus,
+      listItemProps,
       selected,
       subMenu,
       title,
@@ -34,6 +36,7 @@ export const MenuItem = forwardRef<HTMLAnchorElement, MenuItemProps>(
         title && 'menu-title',
         className,
       )}
+      {...listItemProps}
     >
       <a
         className={classNames(

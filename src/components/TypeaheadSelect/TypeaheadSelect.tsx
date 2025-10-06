@@ -14,6 +14,7 @@ import {
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
 
 import { GenericDataType, getGroupedDataItems } from '../../common';
+import { HIDE_SCROLLBAR_CLASSNAME } from '../../common/constants';
 import { UseTypeaheadQueryOptions, useFieldColor } from '../../hooks';
 import { Badge, BadgeColor } from '../Badge';
 import {
@@ -33,25 +34,29 @@ import { useTypeaheadSelect } from './useTypeaheadSelect';
 export interface TypeaheadSelectProps<
   DataItem extends GenericDataType,
   Values extends FieldValues,
-> extends UseTypeaheadQueryOptions<DataItem>,
+> extends UseTypeaheadQueryOptions,
     FormFieldProps<Values> {
   badgeColor?: BadgeColor;
   bordered?: boolean;
   color?: InputColor;
   className?: string;
-  dropdownInputClassName?: string;
+  defaultShowDropdown?: boolean;
   disabled?: boolean;
   disableSingleSelectBadge?: true;
+  dropdownInputClassName?: string;
   formValueMode?: FormValueMode;
   getBadgeClassName?: (item: DataItem) => string;
   getBadgeText?: (item: DataItem) => ReactNode;
   getItemText: (data: DataItem) => ReactNode;
   inputClassName?: string;
   inputPlaceholder?: string;
+  isLoading?: boolean;
   menuClassName?: string;
   menuSize?: MenuSize;
   multi?: true;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
+  onShowDropdown?: (showDropdown: boolean) => void;
+  options?: DataItem[];
   size?: InputSize;
 }
 
@@ -65,6 +70,7 @@ export const TypeaheadSelect = <
   color,
   controllerProps,
   debounceTime,
+  defaultShowDropdown,
   disabled,
   disableSingleSelectBadge,
   dropdownInputClassName,
@@ -74,6 +80,7 @@ export const TypeaheadSelect = <
   getItemText,
   inputClassName,
   inputPlaceholder,
+  isLoading,
   isRequired,
   labelText,
   menuClassName,
@@ -82,6 +89,7 @@ export const TypeaheadSelect = <
   name,
   onDebouncedChange,
   onKeyDown,
+  onShowDropdown,
   options: optionsArray,
   placeholder,
   showDirty,
@@ -90,14 +98,10 @@ export const TypeaheadSelect = <
   const {
     fieldState: { error },
     field: { ref },
-  } = useController({
-    ...controllerProps,
-    name,
-  });
+  } = useController({ ...controllerProps, name });
   const {
     clearSelectedItem,
     dropdownRef,
-    isLoading,
     query,
     showDropdown,
     searchInputRef,
@@ -107,8 +111,9 @@ export const TypeaheadSelect = <
     setQuery,
   } = useTypeaheadSelect<HTMLUListElement, DataItem, Values>({
     debounceTime,
+    defaultShowDropdown,
     onDebouncedChange,
-    options: optionsArray,
+    onShowDropdown,
   });
   const options = getGroupedDataItems(optionsArray ?? []);
   useSelectFormSync({
@@ -146,6 +151,7 @@ export const TypeaheadSelect = <
           <div
             className={classNames(
               'input flex w-full items-center gap-1 overflow-x-scroll scrollbar-none',
+              HIDE_SCROLLBAR_CLASSNAME,
               bordered && `input-bordered`,
               !disabled && 'cursor-pointer',
               currentColor && `input-${currentColor}`,
@@ -161,6 +167,7 @@ export const TypeaheadSelect = <
                 event.preventDefault();
                 setShowDropdown(true);
               } else if (event.key.length === 1) {
+                setQuery(event.key);
                 setShowDropdown(true);
               }
             }}
