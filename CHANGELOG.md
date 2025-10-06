@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.3.2 (2025-10-05)
+
+- Fixed issue with character not appearing inside search input in the `TypeaheadSelect` component when typing while focused inside of the outer input.
+
 ## 2.3.1 (2025-09-07)
 
 - Added `onShowDropdown` prop to `TypeaheadSelect` component to allow side-effect when dropdown is opened.

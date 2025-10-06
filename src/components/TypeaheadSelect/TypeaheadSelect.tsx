@@ -167,6 +167,7 @@ export const TypeaheadSelect = <
                 event.preventDefault();
                 setShowDropdown(true);
               } else if (event.key.length === 1) {
+                setQuery(event.key);
                 setShowDropdown(true);
               }
             }}
