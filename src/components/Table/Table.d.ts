@@ -16,10 +16,11 @@ export interface TableProps<DataType extends GenericDataType> extends Omit<Table
     highlightWhenSelected?: boolean;
     isLoading?: boolean;
     metadata?: PaginationMetadata;
+    onRowClick?: (row: Row<DataType>) => void;
     pinCols?: boolean;
     pinRows?: boolean;
     rowClassName?: Argument | ((row: Row<DataType>) => Argument);
     size?: TableSize;
     zebra?: boolean;
 }
-export declare const Table: <DataType extends GenericDataType>({ bodyClassName, cellClassName, cellClassNames, className, enableGlobalFilter, enableRowHover, enableRowSelection, enableSelectAll, headerClassName, hideHeader, highlightWhenSelected, initialState, isLoading, metadata, pinCols, pinRows, rowClassName, size, zebra, ...props }: TableProps<DataType>) => import("react/jsx-runtime").JSX.Element;
+export declare const Table: <DataType extends GenericDataType>({ bodyClassName, cellClassName, cellClassNames, className, enableGlobalFilter, enableRowHover, enableRowSelection, enableSelectAll, headerClassName, hideHeader, highlightWhenSelected, initialState, isLoading, metadata, onRowClick, pinCols, pinRows, rowClassName, size, zebra, ...props }: TableProps<DataType>) => import("react/jsx-runtime").JSX.Element;

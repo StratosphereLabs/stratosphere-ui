@@ -3,6 +3,7 @@ export interface MenuItemProps extends Omit<HTMLProps<HTMLAnchorElement>, 'title
     active?: boolean;
     disabled?: boolean;
     focus?: boolean;
+    listItemProps?: Omit<HTMLProps<HTMLLIElement>, 'className'>;
     selected?: boolean;
     subMenu?: ReactNode;
     title?: boolean;

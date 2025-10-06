@@ -5,24 +5,28 @@ import { UseTypeaheadQueryOptions } from '../../hooks';
 import { BadgeColor } from '../Badge';
 import { FormFieldProps, FormValueMode, InputColor, InputSize } from '../Form';
 import { MenuSize } from '../Menu';
-export interface TypeaheadSelectProps<DataItem extends GenericDataType, Values extends FieldValues> extends UseTypeaheadQueryOptions<DataItem>, FormFieldProps<Values> {
+export interface TypeaheadSelectProps<DataItem extends GenericDataType, Values extends FieldValues> extends UseTypeaheadQueryOptions, FormFieldProps<Values> {
     badgeColor?: BadgeColor;
     bordered?: boolean;
     color?: InputColor;
     className?: string;
-    dropdownInputClassName?: string;
+    defaultShowDropdown?: boolean;
     disabled?: boolean;
     disableSingleSelectBadge?: true;
+    dropdownInputClassName?: string;
     formValueMode?: FormValueMode;
     getBadgeClassName?: (item: DataItem) => string;
     getBadgeText?: (item: DataItem) => ReactNode;
     getItemText: (data: DataItem) => ReactNode;
     inputClassName?: string;
     inputPlaceholder?: string;
+    isLoading?: boolean;
     menuClassName?: string;
     menuSize?: MenuSize;
     multi?: true;
     onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
+    onShowDropdown?: (showDropdown: boolean) => void;
+    options?: DataItem[];
     size?: InputSize;
 }
-export declare const TypeaheadSelect: <DataItem extends GenericDataType, Values extends FieldValues>({ badgeColor, bordered, className, color, controllerProps, debounceTime, disabled, disableSingleSelectBadge, dropdownInputClassName, formValueMode, getBadgeClassName, getBadgeText, getItemText, inputClassName, inputPlaceholder, isRequired, labelText, menuClassName, menuSize, multi, name, onDebouncedChange, onKeyDown, options: optionsArray, placeholder, showDirty, size, }: TypeaheadSelectProps<DataItem, Values>) => import("react/jsx-runtime").JSX.Element;
+export declare const TypeaheadSelect: <DataItem extends GenericDataType, Values extends FieldValues>({ badgeColor, bordered, className, color, controllerProps, debounceTime, defaultShowDropdown, disabled, disableSingleSelectBadge, dropdownInputClassName, formValueMode, getBadgeClassName, getBadgeText, getItemText, inputClassName, inputPlaceholder, isLoading, isRequired, labelText, menuClassName, menuSize, multi, name, onDebouncedChange, onKeyDown, onShowDropdown, options: optionsArray, placeholder, showDirty, size, }: TypeaheadSelectProps<DataItem, Values>) => import("react/jsx-runtime").JSX.Element;
