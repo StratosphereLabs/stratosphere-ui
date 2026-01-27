@@ -28,6 +28,7 @@ export interface TableProps<DataType extends GenericDataType>
   enableRowHover?: boolean | ((row: Row<DataType>) => boolean);
   enableSelectAll?: boolean;
   headerClassName?: string;
+  hideDividers?: boolean;
   hideHeader?: boolean;
   highlightWhenSelected?: boolean;
   isLoading?: boolean;
@@ -50,6 +51,7 @@ export const Table = <DataType extends GenericDataType>({
   enableRowSelection,
   enableSelectAll,
   headerClassName,
+  hideDividers,
   hideHeader,
   highlightWhenSelected,
   initialState,
@@ -101,7 +103,12 @@ export const Table = <DataType extends GenericDataType>({
               {getHeaderGroups().map(headerGroup => (
                 <tr key={headerGroup.id}>
                   {enableRowSelection ? (
-                    <th className="w-[40px]">
+                    <th
+                      className={classNames(
+                        'w-[40px]',
+                        hideDividers && 'border-none',
+                      )}
+                    >
                       {enableSelectAll ? (
                         <input
                           className="checkbox"
@@ -120,6 +127,7 @@ export const Table = <DataType extends GenericDataType>({
                           {
                             'cursor-pointer': column.getCanSort(),
                           },
+                          hideDividers && 'border-none',
                           cellClassNames?.[column.id],
                         )}
                         onClick={
@@ -161,7 +169,7 @@ export const Table = <DataType extends GenericDataType>({
                   key={row.id}
                 >
                   {enableRowSelection ? (
-                    <td>
+                    <td className={classNames(hideDividers && 'border-none')}>
                       <div className="flex h-full w-[40px] items-center">
                         <input
                           className="checkbox"
@@ -176,6 +184,7 @@ export const Table = <DataType extends GenericDataType>({
                   {row.getVisibleCells().map(({ column, getContext }) => (
                     <td
                       className={classNames(
+                        hideDividers && 'border-none',
                         cellClassNames?.[column.id],
                         typeof cellClassName === 'function'
                           ? (cellClassName(row, column) as Argument)

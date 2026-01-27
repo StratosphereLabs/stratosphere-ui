@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 3.0.1 (2026-01-27)
+
+- Added `hideDividers` prop to the `Table` component to hide the dividing borders between rows.
+
 ## 3.0.0 (2025-12-06)
 
 - Removed `react-router-dom` from required dependencies
