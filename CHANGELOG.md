@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 3.1.1 (2026-02-20)
+
+- Fixed focus issue in `TypeaheadSelect` on iOS.
+
 ## 3.0.0 (2025-12-06)
 
 - Removed `react-router-dom` from required dependencies
