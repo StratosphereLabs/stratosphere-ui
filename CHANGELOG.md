@@ -1,5 +1,14 @@
 # CHANGELOG.md
 
+## 3.1.1 (2026-02-20)
+
+- Fixed focus issue in `TypeaheadSelect` on iOS.
+
+## 3.0.0 (2025-12-06)
+
+- Removed `react-router-dom` from required dependencies
+- Removed custom `useFormWithQueryParams` hook.
+
 ## 2.3.2 (2025-10-05)
 
 - Fixed issue with character not appearing inside search input in the `TypeaheadSelect` component when typing while focused inside of the outer input.

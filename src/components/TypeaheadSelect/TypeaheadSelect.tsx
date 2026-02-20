@@ -11,6 +11,7 @@ import {
   KeyboardEventHandler,
   ReactNode,
 } from 'react';
+import { flushSync } from 'react-dom';
 import { FieldValues, useController, useFormContext } from 'react-hook-form';
 
 import { GenericDataType, getGroupedDataItems } from '../../common';
@@ -161,7 +162,12 @@ export const TypeaheadSelect = <
             onBlur={event => {
               if (event.relatedTarget === null) setShowDropdown(false);
             }}
-            onClick={() => !disabled && setShowDropdown(true)}
+            onClick={() => {
+              if (!disabled) {
+                flushSync(() => setShowDropdown(true));
+                searchInputRef.current?.focus();
+              }
+            }}
             onKeyDown={event => {
               if (event.key === 'Enter') {
                 event.preventDefault();
