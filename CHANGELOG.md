@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 3.1.2 (2026-02-27)
+
+- Fixed width of FormRadioGroup.
+
 ## 3.1.1 (2026-02-20)
 
 - Fixed focus issue in `TypeaheadSelect` on iOS.
