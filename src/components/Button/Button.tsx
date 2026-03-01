@@ -127,7 +127,7 @@ export const Button = forwardRef<
             )}
           ></span>
         ) : null}
-        {children}
+        {!loading ? <>{children}</> : null}
       </>,
     );
   },

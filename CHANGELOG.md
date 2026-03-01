@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 3.1.4 (2026-03-01)
+
+- Hide `Button` children while `loading` state is `true`.
+
 ## 3.1.3 (2026-03-01)
 
 - Fixed `FormRadioGroup` not setting field to `isDirty` and `isTouched`.
