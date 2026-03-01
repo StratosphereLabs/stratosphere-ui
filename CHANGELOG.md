@@ -1,8 +1,12 @@
 # CHANGELOG.md
 
+## 3.1.3 (2026-03-01)
+
+- Fixed `FormRadioGroup` not setting field to `isDirty` and `isTouched`.
+
 ## 3.1.2 (2026-02-27)
 
-- Fixed width of FormRadioGroup.
+- Fixed width of `FormRadioGroup`.
 
 ## 3.1.1 (2026-02-20)
 
