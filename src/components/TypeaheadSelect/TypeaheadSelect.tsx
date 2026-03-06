@@ -260,6 +260,7 @@ export const TypeaheadSelect = <
                   {({ disabled, focus, selected }) => (
                     <MenuItem
                       className={classNames(
+                        'w-full',
                         index === 0 && enableBadges && 'mt-2',
                         menuItemClassName,
                       )}

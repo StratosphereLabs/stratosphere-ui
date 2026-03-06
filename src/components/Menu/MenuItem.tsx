@@ -40,6 +40,7 @@ export const MenuItem = forwardRef<HTMLAnchorElement, MenuItemProps>(
     >
       <a
         className={classNames(
+          'flex w-full gap-1',
           active && 'menu-active',
           focus && 'menu-focus',
           !disabled && 'cursor-pointer',

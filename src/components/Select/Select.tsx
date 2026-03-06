@@ -134,7 +134,7 @@ export const Select = <
           <ListboxOption as={Fragment} key={option.id} value={option}>
             {({ disabled, selected }) => (
               <MenuItem
-                className={menuItemClassName}
+                className={classNames('w-full', menuItemClassName)}
                 disabled={disabled}
                 selected={selected}
               >
