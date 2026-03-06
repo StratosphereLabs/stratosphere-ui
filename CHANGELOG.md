@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 3.1.5 (2026-03-05)
+
+- Added new prop `menuItemClassName` to `TypeaheadSelect` and `Select` components.
+
 ## 3.1.4 (2026-03-01)
 
 - Hide `Button` children while `loading` state is `true`.

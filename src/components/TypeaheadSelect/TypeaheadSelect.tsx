@@ -53,6 +53,7 @@ export interface TypeaheadSelectProps<
   inputPlaceholder?: string;
   isLoading?: boolean;
   menuClassName?: string;
+  menuItemClassName?: string;
   menuSize?: MenuSize;
   multi?: true;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
@@ -85,6 +86,7 @@ export const TypeaheadSelect = <
   isRequired,
   labelText,
   menuClassName,
+  menuItemClassName,
   menuSize,
   multi,
   name,
@@ -259,6 +261,7 @@ export const TypeaheadSelect = <
                     <MenuItem
                       className={classNames(
                         index === 0 && enableBadges && 'mt-2',
+                        menuItemClassName,
                       )}
                       disabled={disabled}
                       focus={focus}
