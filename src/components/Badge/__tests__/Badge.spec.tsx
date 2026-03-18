@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 
 import { BADGE_COLORS, BADGE_SIZES, Badge } from '../Badge';
 
@@ -74,23 +75,20 @@ describe('Badge Component', () => {
     expect(parentClickHandler).not.toHaveBeenCalled();
   });
 
-  it('stops event propagation on onKeyDown in dismiss button', () => {
+  it('stops event propagation and calls onDismiss on touchEnd', () => {
     const onDismissMock = vi.fn();
-    const parentKeyDownHandler = vi.fn();
+    const parentTouchEndHandler = vi.fn();
     render(
-      <div onKeyDown={parentKeyDownHandler}>
+      <div onTouchEnd={parentTouchEndHandler}>
         <Badge dismissable onDismiss={onDismissMock}>
           Dismissable Badge
         </Badge>
       </div>,
     );
     const dismissButton = screen.getByText('Remove badge');
-    fireEvent.keyDown(dismissButton, {
-      key: 'Enter',
-      code: 'Enter',
-      charCode: 13,
-    });
-    expect(parentKeyDownHandler).not.toHaveBeenCalled();
+    fireEvent.touchEnd(dismissButton);
+    expect(onDismissMock).toHaveBeenCalledTimes(1);
+    expect(parentTouchEndHandler).not.toHaveBeenCalled();
   });
 
   it('applies dash class when dash is true', () => {

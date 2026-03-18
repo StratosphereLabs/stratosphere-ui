@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 3.1.9 (2026-03-18)
+
+- More fixes for `TypeaheadSelect` on mobile devices.
+
 ## 3.1.8 (2026-03-18)
 
 - Third fix for focus issue in `TypeaheadSelect` on iOS.
