@@ -32,6 +32,7 @@ export const useTypeaheadSelect = <
     defaultShowDropdown ?? false,
   );
   const dropdownRef = useRef<DropdownElement>(null);
+  const dummyInputRef = useRef<HTMLInputElement | null>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const { query, setQuery } = useTypeaheadQuery({
     debounceTime,
@@ -44,12 +45,12 @@ export const useTypeaheadSelect = <
   useOutsideClick(dropdownRef, () => setShowDropdown(false));
   useEffect(() => {
     onShowDropdownFn.current?.(showDropdown);
-    if (showDropdown) setTimeout(() => searchInputRef.current?.focus(), 50);
-    else setQuery('');
+    if (!showDropdown) setQuery('');
   }, [showDropdown, setQuery]);
   return {
     clearSelectedItem,
     dropdownRef,
+    dummyInputRef,
     query,
     showDropdown,
     searchInputRef,

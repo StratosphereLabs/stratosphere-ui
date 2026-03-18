@@ -105,6 +105,7 @@ export const TypeaheadSelect = <
   const {
     clearSelectedItem,
     dropdownRef,
+    dummyInputRef,
     query,
     showDropdown,
     searchInputRef,
@@ -151,58 +152,78 @@ export const TypeaheadSelect = <
           </Label>
         ) : null}
         {enableBadges ? (
-          <div
-            className={classNames(
-              'input flex w-full items-center gap-1 overflow-x-scroll scrollbar-none',
-              HIDE_SCROLLBAR_CLASSNAME,
-              bordered && `input-bordered`,
-              !disabled && 'cursor-pointer',
-              currentColor && `input-${currentColor}`,
-              size && `input-${size}`,
-              inputClassName,
-            )}
-            onBlur={event => {
-              if (event.relatedTarget === null) setShowDropdown(false);
-            }}
-            onClick={() => {
-              if (!disabled) {
-                flushSync(() => setShowDropdown(true));
-                searchInputRef.current?.focus();
-              }
-            }}
-            onTouchEnd={e => {
-              e.preventDefault();
-              if (!disabled) {
-                flushSync(() => setShowDropdown(true));
-                searchInputRef.current?.focus();
-              }
-            }}
-            onKeyDown={event => {
-              if (event.key === 'Enter') {
-                event.preventDefault();
-                setShowDropdown(true);
-              } else if (event.key.length === 1) {
-                setQuery(event.key);
-                setShowDropdown(true);
-              }
-            }}
-            ref={ref}
-            tabIndex={disabled ? -1 : 0}
-          >
-            {selectedItems.length > 0
-              ? selectedItems.map((item, index) => (
-                  <Badge
-                    className={getBadgeClassName?.(item)}
-                    color={badgeColor ?? 'neutral'}
-                    dismissable
-                    key={item.id}
-                    onDismiss={() => clearSelectedItem(index)}
-                  >
-                    {getBadgeText?.(item) ?? getItemText(item)}
-                  </Badge>
-                ))
-              : placeholder}
-          </div>
+          <>
+            {/* Hidden input always in the DOM so iOS can focus a pre-existing
+                element on touchEnd before transferring focus to the search
+                input. fontSize: 16px prevents iOS Safari from zooming in. */}
+            <input
+              aria-hidden="true"
+              ref={dummyInputRef}
+              readOnly
+              style={{
+                fontSize: '16px',
+                left: '-9999px',
+                opacity: 0,
+                pointerEvents: 'none',
+                position: 'fixed',
+                top: '-9999px',
+              }}
+              tabIndex={-1}
+            />
+            <div
+              className={classNames(
+                'input flex w-full items-center gap-1 overflow-x-scroll scrollbar-none',
+                HIDE_SCROLLBAR_CLASSNAME,
+                bordered && `input-bordered`,
+                !disabled && 'cursor-pointer',
+                currentColor && `input-${currentColor}`,
+                size && `input-${size}`,
+                inputClassName,
+              )}
+              onBlur={event => {
+                if (event.relatedTarget === null) setShowDropdown(false);
+              }}
+              onClick={() => {
+                if (!disabled) {
+                  flushSync(() => setShowDropdown(true));
+                  searchInputRef.current?.focus();
+                }
+              }}
+              onTouchEnd={e => {
+                e.preventDefault();
+                if (!disabled) {
+                  dummyInputRef.current?.focus();
+                  flushSync(() => setShowDropdown(true));
+                  searchInputRef.current?.focus();
+                }
+              }}
+              onKeyDown={event => {
+                if (event.key === 'Enter') {
+                  event.preventDefault();
+                  setShowDropdown(true);
+                } else if (event.key.length === 1) {
+                  setQuery(event.key);
+                  setShowDropdown(true);
+                }
+              }}
+              ref={ref}
+              tabIndex={disabled ? -1 : 0}
+            >
+              {selectedItems.length > 0
+                ? selectedItems.map((item, index) => (
+                    <Badge
+                      className={getBadgeClassName?.(item)}
+                      color={badgeColor ?? 'neutral'}
+                      dismissable
+                      key={item.id}
+                      onDismiss={() => clearSelectedItem(index)}
+                    >
+                      {getBadgeText?.(item) ?? getItemText(item)}
+                    </Badge>
+                  ))
+                : placeholder}
+            </div>
+          </>
         ) : (
           <ComboboxInput
             className={classNames(
