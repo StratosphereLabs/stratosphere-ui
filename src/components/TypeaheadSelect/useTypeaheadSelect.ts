@@ -32,6 +32,7 @@ export const useTypeaheadSelect = <
     defaultShowDropdown ?? false,
   );
   const dropdownRef = useRef<DropdownElement>(null);
+  const dummyInputRef = useRef<HTMLInputElement | null>(null);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const { query, setQuery } = useTypeaheadQuery({
     debounceTime,
@@ -50,6 +51,7 @@ export const useTypeaheadSelect = <
   return {
     clearSelectedItem,
     dropdownRef,
+    dummyInputRef,
     query,
     showDropdown,
     searchInputRef,
