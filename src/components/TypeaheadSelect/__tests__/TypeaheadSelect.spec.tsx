@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, vi } from 'vitest';
 
 import { TypeaheadSelect } from '..';
 import FormProvider from '../../Form/__tests__/FormProvider';
@@ -41,6 +42,14 @@ const renderComponent = (props = {}) =>
 describe('TypeaheadSelect', () => {
   window.ResizeObserver = ResizeObserver;
 
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('renders without crashing', () => {
     renderComponent();
     expect(screen.getByText('Select...')).toBeInTheDocument();
@@ -80,5 +89,19 @@ describe('TypeaheadSelect', () => {
   it('shows options when dropdown is open by default', () => {
     renderComponent({ defaultShowDropdown: true });
     expect(screen.getByText('Item 1')).toBeInTheDocument();
+  });
+
+  it('focuses the search input after a deferred timeout when the dropdown is opened', async () => {
+    renderComponent();
+    fireEvent.click(screen.getByText('Select...'));
+    expect(screen.getByText('Item 1')).toBeInTheDocument();
+    await act(() => vi.runAllTimersAsync());
+    expect(document.activeElement?.tagName).toBe('INPUT');
+  });
+
+  it('focuses the search input via deferred timeout when defaultShowDropdown is true', async () => {
+    renderComponent({ defaultShowDropdown: true });
+    await act(() => vi.runAllTimersAsync());
+    expect(document.activeElement?.tagName).toBe('INPUT');
   });
 });
