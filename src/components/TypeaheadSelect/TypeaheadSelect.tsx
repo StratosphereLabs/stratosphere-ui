@@ -170,6 +170,13 @@ export const TypeaheadSelect = <
                 searchInputRef.current?.focus();
               }
             }}
+            onTouchEnd={e => {
+              e.preventDefault();
+              if (!disabled) {
+                flushSync(() => setShowDropdown(true));
+                searchInputRef.current?.focus();
+              }
+            }}
             onKeyDown={event => {
               if (event.key === 'Enter') {
                 event.preventDefault();
