@@ -5,6 +5,7 @@ export type UseTypeaheadSelectOptions<DataItem extends GenericDataType, Values e
 export declare const useTypeaheadSelect: <DropdownElement extends HTMLElement, DataItem extends GenericDataType, Values extends FieldValues>({ debounceTime, defaultShowDropdown, onDebouncedChange, onShowDropdown, }: UseTypeaheadSelectOptions<DataItem, Values>) => {
     clearSelectedItem: (index: number) => void;
     dropdownRef: import('../../../node_modules/react').RefObject<DropdownElement>;
+    dummyInputRef: import('../../../node_modules/react').MutableRefObject<HTMLInputElement | null>;
     query: string;
     showDropdown: boolean;
     searchInputRef: import('../../../node_modules/react').MutableRefObject<HTMLInputElement | null>;

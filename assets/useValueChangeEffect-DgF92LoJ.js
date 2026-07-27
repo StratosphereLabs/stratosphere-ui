@@ -1,0 +1,1 @@
+import{l as f}from"./lodash-C1F-7-Ro.js";import{r as s}from"./index-DRjF_FHU.js";const c=(t,r)=>{const[e,o]=s.useState(t);s.useEffect(()=>{f.isEqual(e,t)||o(t)},[e,t]),s.useEffect(r,[e])};export{c as u};

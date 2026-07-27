@@ -1,6 +1,9 @@
 import { SVGProps } from '../../node_modules/react';
+export declare const CalendarIcon: (props: SVGProps<SVGSVGElement>) => import("react/jsx-runtime").JSX.Element;
 export declare const CheckIcon: (props: SVGProps<SVGSVGElement>) => import("react/jsx-runtime").JSX.Element;
 export declare const ChevronDownIcon: (props: SVGProps<SVGSVGElement>) => import("react/jsx-runtime").JSX.Element;
+export declare const ChevronLeftIcon: (props: SVGProps<SVGSVGElement>) => import("react/jsx-runtime").JSX.Element;
+export declare const ChevronRightIcon: (props: SVGProps<SVGSVGElement>) => import("react/jsx-runtime").JSX.Element;
 export declare const ChevronUpIcon: (props: SVGProps<SVGSVGElement>) => import("react/jsx-runtime").JSX.Element;
 export declare const CloseIcon: (props: SVGProps<SVGSVGElement>) => import("react/jsx-runtime").JSX.Element;
 export declare const EllipsisVerticalIcon: (props: SVGProps<SVGSVGElement>) => JSX.Element;

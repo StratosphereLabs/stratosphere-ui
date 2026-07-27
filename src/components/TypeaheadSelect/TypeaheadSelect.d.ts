@@ -22,6 +22,7 @@ export interface TypeaheadSelectProps<DataItem extends GenericDataType, Values e
     inputPlaceholder?: string;
     isLoading?: boolean;
     menuClassName?: string;
+    menuItemClassName?: string;
     menuSize?: MenuSize;
     multi?: true;
     onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
@@ -29,4 +30,4 @@ export interface TypeaheadSelectProps<DataItem extends GenericDataType, Values e
     options?: DataItem[];
     size?: InputSize;
 }
-export declare const TypeaheadSelect: <DataItem extends GenericDataType, Values extends FieldValues>({ badgeColor, bordered, className, color, controllerProps, debounceTime, defaultShowDropdown, disabled, disableSingleSelectBadge, dropdownInputClassName, formValueMode, getBadgeClassName, getBadgeText, getItemText, inputClassName, inputPlaceholder, isLoading, isRequired, labelText, menuClassName, menuSize, multi, name, onDebouncedChange, onKeyDown, onShowDropdown, options: optionsArray, placeholder, showDirty, size, }: TypeaheadSelectProps<DataItem, Values>) => import("react/jsx-runtime").JSX.Element;
+export declare const TypeaheadSelect: <DataItem extends GenericDataType, Values extends FieldValues>({ badgeColor, bordered, className, color, controllerProps, debounceTime, defaultShowDropdown, disabled, disableSingleSelectBadge, dropdownInputClassName, formValueMode, getBadgeClassName, getBadgeText, getItemText, inputClassName, inputPlaceholder, isLoading, isRequired, labelText, menuClassName, menuItemClassName, menuSize, multi, name, onDebouncedChange, onKeyDown, onShowDropdown, options: optionsArray, placeholder, showDirty, size, }: TypeaheadSelectProps<DataItem, Values>) => import("react/jsx-runtime").JSX.Element;
