@@ -88,7 +88,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
       ) : null}
       <div className="relative inline-flex w-full">
         {elementLeft ? (
-          <div className="absolute left-0 top-0 z-20 flex h-full items-center pl-2">
+          <div className="absolute top-0 left-0 z-20 flex h-full items-center pl-2">
             {elementLeft}
           </div>
         ) : null}
@@ -119,7 +119,7 @@ export const FormControl = <Values extends FieldValues, TOutput>({
           {...props}
         />
         {elementRight ? (
-          <div className="absolute right-0 top-0 z-20 flex h-full items-center pr-2">
+          <div className="absolute top-0 right-0 z-20 flex h-full items-center pr-2">
             {elementRight}
           </div>
         ) : null}

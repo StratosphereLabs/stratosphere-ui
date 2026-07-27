@@ -1,5 +1,42 @@
 # CHANGELOG.md
 
+## 3.2.0 (2026-07-27)
+
+- Added new `DatePicker` component, a form field that selects a single date, a date range or a single month from a calendar popover.
+- Added new `Calendar` component, the controlled calendar used by `DatePicker`. Both are styled by daisyUI's calendar component.
+- Added new `CalendarIcon`, `ChevronLeftIcon` and `ChevronRightIcon` icons.
+- Fixed `Button` losing its accessible name while `loading`. The children are now hidden visually instead of removed, and the button reports `aria-busy`.
+- Updated `daisyui` to 5.7.4. daisyUI 5.3 and newer emit nested cascade layers that require `tailwindcss` 4, so consumers still on `tailwindcss` 3 should stay on `daisyui` 5.2.
+- Migrated Storybook to `tailwindcss` 4, replacing `tailwind.config.cjs` with the CSS config in `src/index.css`.
+
+## 3.1.9 (2026-03-18)
+
+- More fixes for `TypeaheadSelect` on mobile devices.
+
+## 3.1.8 (2026-03-18)
+
+- Third fix for focus issue in `TypeaheadSelect` on iOS.
+
+## 3.1.7 (2026-03-18)
+
+- Second fix for focus issue in `TypeaheadSelect` on iOS.
+
+## 3.1.5 (2026-03-05)
+
+- Added new prop `menuItemClassName` to `TypeaheadSelect` and `Select` components.
+
+## 3.1.4 (2026-03-01)
+
+- Hide `Button` children while `loading` state is `true`.
+
+## 3.1.3 (2026-03-01)
+
+- Fixed `FormRadioGroup` not setting field to `isDirty` and `isTouched`.
+
+## 3.1.2 (2026-02-27)
+
+- Fixed width of `FormRadioGroup`.
+
 ## 3.1.1 (2026-02-20)
 
 - Fixed focus issue in `TypeaheadSelect` on iOS.

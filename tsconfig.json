@@ -22,7 +22,6 @@
     "vitest",
     "./postcss.config.cjs",
     "./prettier.config.cjs",
-    "./tailwind.config.cjs",
     "./vite.config.ts",
     "./.storybook/**/*.ts",
     "./.storybook/**/*.tsx"

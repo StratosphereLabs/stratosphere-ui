@@ -35,7 +35,10 @@ export const FormRadioGroup = <Values extends FieldValues>({
       className={classNames('fieldset py-0', className)}
       name={name}
       onChange={val => {
-        setValue<string>(name, val);
+        setValue<string>(name, val, {
+          shouldDirty: true,
+          shouldTouch: true,
+        });
       }}
       value={value}
       {...props}
@@ -45,7 +48,7 @@ export const FormRadioGroup = <Values extends FieldValues>({
           {labelText}
         </Label>
       ) : null}
-      <div className="join">{children}</div>
+      <div className="join w-full">{children}</div>
     </RadioGroup>
   );
 };

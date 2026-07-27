@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ComponentProps, FC, HTMLProps, MouseEvent } from 'react';
+import { ComponentProps, FC, HTMLProps, MouseEvent, TouchEvent } from 'react';
 
 import { Button } from '../Button';
 import { CloseIcon } from '../Icons';
@@ -27,7 +27,9 @@ export interface BadgeProps extends Omit<HTMLProps<HTMLDivElement>, 'size'> {
   dash?: boolean;
   dismissable?: boolean;
   icon?: FC<ComponentProps<'svg'>>;
-  onDismiss?: (event: MouseEvent<HTMLButtonElement>) => void;
+  onDismiss?: (
+    event: MouseEvent<HTMLButtonElement> | TouchEvent<HTMLButtonElement>,
+  ) => void;
   outline?: boolean;
   size?: BadgeSize;
   soft?: boolean;
@@ -73,6 +75,11 @@ export const Badge = ({
         }}
         onKeyDown={event => {
           event.stopPropagation();
+        }}
+        onTouchEnd={event => {
+          event.stopPropagation();
+          event.preventDefault();
+          onDismiss?.(event);
         }}
       >
         <CloseIcon className="h-4 w-4" />

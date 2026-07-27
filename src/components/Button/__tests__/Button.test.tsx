@@ -77,6 +77,25 @@ describe('Button component', () => {
     ).toHaveClass('loading-spinner');
   });
 
+  it('hides the children visually while loading, but keeps the label', () => {
+    const { rerender } = render(<Button loading>Loading</Button>);
+    expect(screen.getByText('Loading')).toHaveClass('sr-only');
+    rerender(<Button>Loading</Button>);
+    expect(screen.getByText('Loading')).not.toHaveClass('sr-only');
+  });
+
+  it('marks the button as busy while loading', () => {
+    const { rerender } = render(<Button loading>Loading</Button>);
+    expect(screen.getByRole('button', { name: 'Loading' })).toHaveAttribute(
+      'aria-busy',
+      'true',
+    );
+    rerender(<Button>Loading</Button>);
+    expect(screen.getByRole('button', { name: 'Loading' })).not.toHaveAttribute(
+      'aria-busy',
+    );
+  });
+
   it('applies additional classes based on props', () => {
     render(
       <Button

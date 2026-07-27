@@ -36,6 +36,7 @@ export interface SelectProps<
   getItemText: (data: DataItem) => ReactNode;
   hideDropdownIcon?: true;
   menuClassName?: string;
+  menuItemClassName?: string;
   menuSize?: MenuSize;
   multi?: true;
   options?: DataItem[];
@@ -64,6 +65,7 @@ export const Select = <
   isRequired,
   labelText,
   menuClassName,
+  menuItemClassName,
   menuSize,
   multi,
   name,
@@ -131,7 +133,11 @@ export const Select = <
         {optionsArray?.map(option => (
           <ListboxOption as={Fragment} key={option.id} value={option}>
             {({ disabled, selected }) => (
-              <MenuItem disabled={disabled} selected={selected}>
+              <MenuItem
+                className={classNames('w-full', menuItemClassName)}
+                disabled={disabled}
+                selected={selected}
+              >
                 {getItemText(option)}
               </MenuItem>
             )}

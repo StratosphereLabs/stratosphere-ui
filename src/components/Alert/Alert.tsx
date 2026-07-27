@@ -37,7 +37,7 @@ export const Alert = ({
 }: AlertProps) => (
   <div
     className={classNames(
-      'alert relative',
+      'relative alert',
       color && `alert-${color}`,
       soft && 'alert-soft',
       outline && 'alert-outline',
@@ -67,7 +67,7 @@ export const Alert = ({
     ) : null}
     {onDismiss ? (
       <Button
-        className="absolute right-0 top-0 mr-[-2px] mt-[-2px] font-bold"
+        className="absolute top-0 right-0 mt-[-2px] mr-[-2px] font-bold"
         color="ghost"
         onClick={onDismiss}
         shape="circle"

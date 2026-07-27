@@ -27,4 +27,34 @@ describe('useOutsideClick', () => {
 
     expect(onClick).not.toHaveBeenCalled();
   });
+
+  test('should call onClick when touching outside the ref', () => {
+    const onClick = vi.fn();
+    const ref = { current: document.createElement('div') };
+
+    renderHook(() => useOutsideClick(ref, onClick));
+
+    const event = new TouchEvent('touchstart', {
+      bubbles: true,
+      touches: [],
+    });
+    document.dispatchEvent(event);
+
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  test('should not call onClick when touching inside the ref', () => {
+    const onClick = vi.fn();
+    const ref = { current: document.createElement('div') };
+
+    renderHook(() => useOutsideClick(ref, onClick));
+
+    const event = new TouchEvent('touchstart', {
+      bubbles: true,
+      touches: [],
+    });
+    ref.current.dispatchEvent(event);
+
+    expect(onClick).not.toHaveBeenCalled();
+  });
 });
