@@ -1,5 +1,14 @@
 # CHANGELOG.md
 
+## 3.2.0 (2026-07-27)
+
+- Added new `DatePicker` component, a form field that selects a single date, a date range or a single month from a calendar popover.
+- Added new `Calendar` component, the controlled calendar used by `DatePicker`. Both are styled by daisyUI's calendar component.
+- Added new `CalendarIcon`, `ChevronLeftIcon` and `ChevronRightIcon` icons.
+- Fixed `Button` losing its accessible name while `loading`. The children are now hidden visually instead of removed, and the button reports `aria-busy`.
+- Updated `daisyui` to 5.7.4. daisyUI 5.3 and newer emit nested cascade layers that require `tailwindcss` 4, so consumers still on `tailwindcss` 3 should stay on `daisyui` 5.2.
+- Migrated Storybook to `tailwindcss` 4, replacing `tailwind.config.cjs` with the CSS config in `src/index.css`.
+
 ## 3.1.9 (2026-03-18)
 
 - More fixes for `TypeaheadSelect` on mobile devices.

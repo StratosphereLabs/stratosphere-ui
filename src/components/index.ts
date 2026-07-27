@@ -7,6 +7,7 @@ export * from './Browser';
 export * from './Button';
 export * from './ButtonArray';
 export * from './Card';
+export * from './DatePicker';
 export * from './Disclosure';
 export * from './DropdownMenu';
 export * from './Form';

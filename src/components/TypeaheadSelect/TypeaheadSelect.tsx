@@ -172,7 +172,7 @@ export const TypeaheadSelect = <
             />
             <div
               className={classNames(
-                'input flex w-full items-center gap-1 overflow-x-scroll scrollbar-none',
+                'input scrollbar-none flex w-full items-center gap-1 overflow-x-scroll',
                 HIDE_SCROLLBAR_CLASSNAME,
                 bordered && `input-bordered`,
                 !disabled && 'cursor-pointer',

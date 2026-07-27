@@ -1,3 +1,40 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss' source(none);
+
+@plugin 'daisyui' {
+  themes: all;
+}
+@plugin '@tailwindcss/typography';
+@plugin 'tailwind-scrollbar';
+
+/* This stylesheet only exists for the Storybook preview - consumers compile the
+   component class names themselves - so only the component and story sources are
+   scanned. */
+@source './**/*.{ts,tsx}';
+@source '../.storybook/**/*.{ts,tsx}';
+
+/* Variant class names are built from template literals (e.g. `btn-${color}`),
+   which the source scanner cannot see. Every list below matches a variant
+   constant exported from `src` exactly, and `safelist.spec.ts` fails if the two
+   ever drift apart. */
+@source inline(
+  '{badge,btn,file-input,input,textarea}-{accent,error,ghost,info,neutral,primary,secondary,success,warning}'
+);
+@source inline(
+  '{checkbox,link,progress,radio,step,tooltip}-{accent,error,info,neutral,primary,secondary,success,warning}'
+);
+@source inline('toggle-{accent,error,info,primary,secondary,success,warning}');
+@source inline('alert-{error,info,success,warning}');
+@source inline(
+  '{badge,btn,card,checkbox,file-input,input,loading,menu,radio,table,tabs,textarea,toggle}-{xs,sm,md,lg,xl}'
+);
+@source inline('btn-{circle,square}');
+@source inline('loading-{ball,bars,dots,infinity,ring,spinner}');
+@source inline('{menu,stats,steps}-{horizontal,vertical}');
+@source inline('modal-{bottom,middle,top}');
+@source inline('tooltip-{bottom,left,right,top}');
+@source inline(
+  'ring-{accent,error,info,neutral,primary,secondary,success,warning}{,-content}'
+);
+@source inline('ring-base-{100,200,300,content}');
+/* `AvatarGroup` takes an arbitrary `space` number; 8 is the default. */
+@source inline('-space-x-{0..12}');

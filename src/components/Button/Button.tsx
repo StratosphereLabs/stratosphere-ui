@@ -75,6 +75,7 @@ export const Button = forwardRef<
   ) => {
     const componentProps = useMemo(
       () => ({
+        'aria-busy': loading === true ? true : undefined,
         className: classNames(
           'btn',
           active && 'btn-active',
@@ -105,6 +106,7 @@ export const Button = forwardRef<
         disabled,
         glass,
         link,
+        loading,
         noAnimation,
         outline,
         props,
@@ -119,15 +121,21 @@ export const Button = forwardRef<
       as ?? 'button',
       componentProps,
       <>
-        {loading ? (
-          <span
-            className={classNames(
-              'loading loading-spinner',
-              size && `loading-${size}`,
-            )}
-          ></span>
-        ) : null}
-        {!loading ? <>{children}</> : null}
+        {loading === true ? (
+          <>
+            <span
+              className={classNames(
+                'loading loading-spinner',
+                size && `loading-${size}`,
+              )}
+            ></span>
+            {/* The label stays hidden but reachable, so the button keeps its
+                accessible name while it is loading. */}
+            <span className="sr-only">{children}</span>
+          </>
+        ) : (
+          <>{children}</>
+        )}
       </>,
     );
   },

@@ -50,7 +50,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
           color="ghost"
           size="sm"
           shape="circle"
-          className="absolute right-2 top-2"
+          className="absolute top-2 right-2"
           onClick={onClose}
         >
           ✕

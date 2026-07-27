@@ -48,7 +48,7 @@ export const FormRadioGroup = <Values extends FieldValues>({
           {labelText}
         </Label>
       ) : null}
-      <div className="w-full join">{children}</div>
+      <div className="join w-full">{children}</div>
     </RadioGroup>
   );
 };
