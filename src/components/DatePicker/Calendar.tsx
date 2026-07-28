@@ -306,27 +306,30 @@ export const Calendar = (props: CalendarProps) => {
       className={classNames('react-day-picker', className)}
       ref={containerRef}
     >
-      <nav className="rdp-nav">
-        <button
-          aria-label={mode === 'month' ? 'Previous year' : 'Previous month'}
-          className="rdp-button_previous"
-          disabled={isPreviousDisabled}
-          onClick={() => changeMonth(previousMonth)}
-          type="button"
-        >
-          <ChevronLeftIcon className="rdp-chevron" />
-        </button>
-        <button
-          aria-label={mode === 'month' ? 'Next year' : 'Next month'}
-          className="rdp-button_next"
-          disabled={isNextDisabled}
-          onClick={() => changeMonth(nextMonth)}
-          type="button"
-        >
-          <ChevronRightIcon className="rdp-chevron" />
-        </button>
-      </nav>
       <div className="rdp-months">
+        {/* daisyUI positions the nav absolutely against `.rdp-months`, so it has
+            to be a child of it - as a sibling it renders underneath the months
+            and its buttons stop receiving clicks. */}
+        <nav className="rdp-nav">
+          <button
+            aria-label={mode === 'month' ? 'Previous year' : 'Previous month'}
+            className="rdp-button_previous"
+            disabled={isPreviousDisabled}
+            onClick={() => changeMonth(previousMonth)}
+            type="button"
+          >
+            <ChevronLeftIcon className="rdp-chevron" />
+          </button>
+          <button
+            aria-label={mode === 'month' ? 'Next year' : 'Next month'}
+            className="rdp-button_next"
+            disabled={isNextDisabled}
+            onClick={() => changeMonth(nextMonth)}
+            type="button"
+          >
+            <ChevronRightIcon className="rdp-chevron" />
+          </button>
+        </nav>
         <div className="rdp-month">
           <div className="rdp-month_caption">
             <span className="rdp-caption_label" id={captionId}>

@@ -13,6 +13,17 @@ export interface CalendarMonthGridProps {
 }
 
 /**
+ * The colors of a month cell. Exactly one background utility is returned, since
+ * Tailwind emits `bg-transparent` after the theme colors and it would win over
+ * the selected background, hiding the label.
+ */
+const getColorClass = ({ disabled, isCurrent, selected }: CalendarCell) => {
+  if (selected) return 'bg-base-content text-base-100';
+  if (isCurrent) return 'bg-primary text-primary-content';
+  return disabled ? 'bg-transparent' : 'bg-transparent hover:bg-base-200';
+};
+
+/**
  * Renders the twelve months of the displayed year. daisyUI only styles day
  * cells, which are too narrow for month names, so the cells are styled with
  * the same theme tokens the day cells use (`base-content` for the selection,
@@ -48,15 +59,11 @@ export const CalendarMonthGrid = ({
                 <button
                   aria-label={cell.label}
                   className={classNames(
-                    'flex h-9 w-16 items-center justify-center rounded-field border-none bg-transparent',
+                    'flex h-9 w-16 items-center justify-center rounded-field border-none',
                     cell.disabled
                       ? 'cursor-not-allowed opacity-50'
                       : 'cursor-pointer',
-                    cell.selected && 'bg-base-content text-base-100',
-                    cell.isCurrent &&
-                      !cell.selected &&
-                      'bg-primary text-primary-content',
-                    !cell.selected && !cell.disabled && 'hover:bg-base-200',
+                    getColorClass(cell),
                   )}
                   disabled={cell.disabled}
                   onClick={() => onSelect(cell.date)}

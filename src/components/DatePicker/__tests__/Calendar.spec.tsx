@@ -74,6 +74,16 @@ describe('Calendar', () => {
       expect(screen.getByText('July 2013')).toBeInTheDocument();
     });
 
+    it('renders the nav inside the months container', () => {
+      const { container } = render(
+        <Calendar locale="en-US" value="2013-08-12" />,
+      );
+      // daisyUI positions `.rdp-nav` absolutely against `.rdp-months`; outside
+      // of it the nav is painted underneath and the arrows are not clickable.
+      const nav = container.querySelector('.rdp-months > .rdp-nav');
+      expect(nav).toBeInTheDocument();
+    });
+
     it('disables dates outside of the min and max bounds', () => {
       render(
         <Calendar
@@ -248,9 +258,11 @@ describe('Calendar', () => {
     it('marks the selected month', () => {
       render(<Calendar locale="en-US" mode="month" value="2013-08" />);
       expect(getSelectedCells()).toHaveLength(1);
-      expect(screen.getByRole('button', { name: 'August 2013' })).toHaveClass(
-        'bg-base-content',
-      );
+      const selected = screen.getByRole('button', { name: 'August 2013' });
+      expect(selected).toHaveClass('bg-base-content');
+      // `bg-transparent` is emitted after the theme colors, so it would win and
+      // leave the label unreadable.
+      expect(selected).not.toHaveClass('bg-transparent');
     });
 
     it('calls onChange with the first of the selected month', async () => {
