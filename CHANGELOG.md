@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 3.2.2 (2026-07-27)
+
+- Fixed the current month being indistinguishable from the selected month in `Calendar` and `DatePicker` `month` mode. Both were drawn as a solid fill, so the fill is now reserved for the selection and the current month is marked with a `primary` outline, which also lets the two states stack when the current month is the selected one.
+- Fixed `Modal` shifting upwards when a `DatePicker` inside it is opened. daisyUI lays `.modal` out as a grid, and the mount point Headless UI portals an anchored panel into was auto-placing into a second row, halving the row `.modal-box` is centred in.
+
 ## 3.2.1 (2026-07-27)
 
 - Fixed the selected month being unreadable in `Calendar` and `DatePicker` `month` mode. The cell combined `bg-transparent` with the selected background, and Tailwind emits `bg-transparent` last, so the label was drawn in the background color.
