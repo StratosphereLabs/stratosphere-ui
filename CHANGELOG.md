@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## 3.2.1 (2026-07-27)
+
+- Fixed the selected month being unreadable in `Calendar` and `DatePicker` `month` mode. The cell combined `bg-transparent` with the selected background, and Tailwind emits `bg-transparent` last, so the label was drawn in the background color.
+- Fixed the previous and next buttons in `Calendar` and `DatePicker` not responding to clicks. daisyUI positions the nav absolutely against `.rdp-months`, which painted over it while it was rendered as a sibling.
+
 ## 3.2.0 (2026-07-27)
 
 - Added new `DatePicker` component, a form field that selects a single date, a date range or a single month from a calendar popover.
