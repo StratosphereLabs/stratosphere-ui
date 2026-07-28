@@ -33,6 +33,13 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       as="dialog"
       className={classNames(
         'modal',
+        // daisyUI lays `.modal` out as a grid and pins `.modal-box` to row 1.
+        // Headless UI portals anchored panels (the `DatePicker` calendar, for
+        // example) into the dialog element, and that mount point would
+        // otherwise auto-place into a second row and knock the box off centre.
+        // `display: contents` keeps it out of the grid; the panel it holds is
+        // absolutely positioned, so it stays exactly where it was anchored.
+        '[&>[data-headlessui-portal]]:contents',
         open && 'modal-open',
         responsivePosition && `modal-${responsivePosition}`,
       )}

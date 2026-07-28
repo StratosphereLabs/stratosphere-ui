@@ -265,6 +265,28 @@ describe('Calendar', () => {
       expect(selected).not.toHaveClass('bg-transparent');
     });
 
+    it('outlines the current month instead of filling it', () => {
+      render(<Calendar locale="en-US" mode="month" value="2013-03" />);
+      const current = screen.getByRole('button', { name: 'August 2013' });
+      const selected = screen.getByRole('button', { name: 'March 2013' });
+      // The fill is reserved for the selection, so an unselected current month
+      // cannot be mistaken for the selected one.
+      expect(current).toHaveClass(
+        'bg-primary/20',
+        'text-primary',
+        'ring-primary',
+      );
+      expect(current).not.toHaveClass('bg-primary');
+      expect(selected).toHaveClass('bg-base-content');
+      expect(selected).not.toHaveClass('ring-primary');
+    });
+
+    it('keeps the outline when the current month is selected', () => {
+      render(<Calendar locale="en-US" mode="month" value="2013-08" />);
+      const cell = screen.getByRole('button', { name: 'August 2013' });
+      expect(cell).toHaveClass('bg-base-content', 'ring-primary');
+    });
+
     it('calls onChange with the first of the selected month', async () => {
       const user = userEvent.setup();
       const onChange = vi.fn();

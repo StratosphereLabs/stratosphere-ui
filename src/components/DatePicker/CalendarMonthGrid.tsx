@@ -16,12 +16,22 @@ export interface CalendarMonthGridProps {
  * The colors of a month cell. Exactly one background utility is returned, since
  * Tailwind emits `bg-transparent` after the theme colors and it would win over
  * the selected background, hiding the label.
+ *
+ * Only the selection is filled - the current month is marked with a `primary`
+ * outline instead, so a filled cell always means "selected" and the two states
+ * can be told apart (and stack, when the current month is the selected one).
  */
-const getColorClass = ({ disabled, isCurrent, selected }: CalendarCell) => {
-  if (selected) return 'bg-base-content text-base-100';
-  if (isCurrent) return 'bg-primary text-primary-content';
-  return disabled ? 'bg-transparent' : 'bg-transparent hover:bg-base-200';
-};
+const getColorClass = ({ disabled, isCurrent, selected }: CalendarCell) =>
+  classNames(
+    selected
+      ? 'bg-base-content text-base-100'
+      : classNames(
+          !isCurrent && 'bg-transparent',
+          !disabled && 'hover:bg-base-200',
+          isCurrent && 'bg-primary/20 text-primary',
+        ),
+    isCurrent && 'ring-1 ring-primary ring-inset',
+  );
 
 /**
  * Renders the twelve months of the displayed year. daisyUI only styles day
