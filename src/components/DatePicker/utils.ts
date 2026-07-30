@@ -4,15 +4,22 @@ import {
   DateRangeInput,
   DateSelectionMode,
   DateValueMode,
-  WeekDay,
 } from './types';
 
 export const ISO_DATE_REGEX = /^(\d{4})-(\d{2})-(\d{2})$/;
 
+/**
+ * The hours, minutes and seconds are bounded so that an out of range time is
+ * rejected rather than overflowing into the next day when it is applied to a
+ * `Date`.
+ */
+export const ISO_DATE_TIME_REGEX =
+  /^(\d{4})-(\d{2})-(\d{2})[T ]([01]\d|2[0-3]):([0-5]\d)(?::([0-5]\d))?$/;
+
 export const ISO_MONTH_REGEX = /^(\d{4})-(\d{2})$/;
 
-/** Sunday of an arbitrary week, used to generate localized weekday labels. */
-const REFERENCE_SUNDAY = new Date(2024, 0, 7);
+/** An `HH:mm[:ss]` time, with an optional leading zero on the hours. */
+export const TIME_REGEX = /^([01]?\d|2[0-3]):([0-5]\d)(?::([0-5]\d))?$/;
 
 /** An arbitrary non-leap year, used to generate localized month labels. */
 const REFERENCE_YEAR = 2023;
@@ -22,9 +29,6 @@ export const startOfDay = (date: Date): Date =>
 
 export const startOfMonth = (date: Date): Date =>
   new Date(date.getFullYear(), date.getMonth(), 1);
-
-export const addDays = (date: Date, amount: number): Date =>
-  new Date(date.getFullYear(), date.getMonth(), date.getDate() + amount);
 
 export const addMonths = (date: Date, amount: number): Date =>
   new Date(date.getFullYear(), date.getMonth() + amount, 1);
@@ -73,6 +77,40 @@ export const parseDate = (value?: DateInput | null): Date | null => {
   return Number.isNaN(parsed.getTime()) ? null : startOfDay(parsed);
 };
 
+/**
+ * Resolves a date-like value to a local `Date`, keeping its time of day. ISO
+ * date and time strings are parsed as local times, matching the value of a
+ * native `datetime-local` input. ISO date and month strings have no time of day
+ * and resolve to midnight, and every other string is left to the `Date`
+ * constructor, which keeps the time of day of formats that carry one.
+ */
+export const parseDateTime = (value?: DateInput | null): Date | null => {
+  if (value === null || value === undefined || value === '') return null;
+  if (value instanceof Date) {
+    return Number.isNaN(value.getTime()) ? null : new Date(value.getTime());
+  }
+  if (typeof value === 'number') {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+  const isoDateTime = ISO_DATE_TIME_REGEX.exec(value);
+  if (isoDateTime !== null) {
+    return new Date(
+      Number(isoDateTime[1]),
+      Number(isoDateTime[2]) - 1,
+      Number(isoDateTime[3]),
+      Number(isoDateTime[4]),
+      Number(isoDateTime[5]),
+      isoDateTime[6] !== undefined ? Number(isoDateTime[6]) : 0,
+    );
+  }
+  if (ISO_DATE_REGEX.test(value) || ISO_MONTH_REGEX.test(value)) {
+    return parseDate(value);
+  }
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+};
+
 export const parseDateRange = (value?: DateRangeInput | null): DateRange => ({
   from: parseDate(value?.from),
   to: parseDate(value?.to),
@@ -92,6 +130,42 @@ export const formatISODate = (date: Date): string =>
 export const formatISOMonth = (date: Date): string =>
   `${padNumber(date.getFullYear(), 4)}-${padNumber(date.getMonth() + 1, 2)}`;
 
+/** Formats the time of a date as `HH:mm`, or as `HH:mm:ss` with `showSeconds`. */
+export const formatTimeValue = (date: Date, showSeconds = false): string =>
+  [
+    date.getHours(),
+    date.getMinutes(),
+    ...(showSeconds ? [date.getSeconds()] : []),
+  ]
+    .map(value => padNumber(value, 2))
+    .join(':');
+
+/**
+ * Formats a date as `yyyy-MM-ddTHH:mm`, matching the value of a native
+ * `datetime-local` input. Seconds are only included when they are set.
+ */
+export const formatISODateTime = (date: Date): string =>
+  `${formatISODate(date)}T${formatTimeValue(date, date.getSeconds() > 0)}`;
+
+/**
+ * Applies an `HH:mm` or `HH:mm:ss` time to a date. Values that are not a time
+ * leave the date unchanged, since `time` inputs report an empty string while
+ * they are being edited, and an out of range time is not a time - it would
+ * otherwise overflow the date into the following day.
+ */
+export const withTimeValue = (date: Date, time: string): Date => {
+  const parsed = TIME_REGEX.exec(time);
+  if (parsed === null) return date;
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    Number(parsed[1]),
+    Number(parsed[2]),
+    parsed[3] !== undefined ? Number(parsed[3]) : 0,
+  );
+};
+
 /** Long date, e.g. `August 12, 2013`. Used for accessible day labels. */
 export const formatDateLabel = (date: Date, locale?: string): string =>
   date.toLocaleDateString(locale, {
@@ -108,6 +182,16 @@ export const formatDateText = (date: Date, locale?: string): string =>
     year: 'numeric',
   });
 
+/** Short date and time, e.g. `Aug 12, 2013, 2:30 PM`. */
+export const formatDateTimeText = (date: Date, locale?: string): string =>
+  date.toLocaleString(locale, {
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+
 /** Short month, e.g. `Aug 2013`. Used for the month picker button text. */
 export const formatMonthText = (date: Date, locale?: string): string =>
   date.toLocaleDateString(locale, { month: 'short', year: 'numeric' });
@@ -116,17 +200,21 @@ export const formatMonthText = (date: Date, locale?: string): string =>
 export const formatMonthLabel = (date: Date, locale?: string): string =>
   date.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
 
-export const getWeekdayLabels = (
-  weekStartsOn: WeekDay = 0,
-  locale?: string,
-): Array<{ long: string; short: string }> =>
-  [...Array(7).keys()].map(index => {
-    const date = addDays(REFERENCE_SUNDAY, (weekStartsOn + index) % 7);
-    return {
-      long: date.toLocaleDateString(locale, { weekday: 'long' }),
-      short: date.toLocaleDateString(locale, { weekday: 'short' }),
-    };
-  });
+/** Short month name, e.g. `Aug`. Used for the month dropdown of a day grid. */
+export const formatMonthName = (date: Date, locale?: string): string =>
+  date.toLocaleDateString(locale, { month: 'short' });
+
+/** Long month name, e.g. `August`. */
+export const formatMonthLongName = (date: Date, locale?: string): string =>
+  date.toLocaleDateString(locale, { month: 'long' });
+
+/** Short weekday name, e.g. `Sun`. Used for the weekday headers. */
+export const formatWeekdayName = (date: Date, locale?: string): string =>
+  date.toLocaleDateString(locale, { weekday: 'short' });
+
+/** Long weekday name, e.g. `Sunday`. Used for accessible weekday labels. */
+export const formatWeekdayLabel = (date: Date, locale?: string): string =>
+  date.toLocaleDateString(locale, { weekday: 'long' });
 
 export const getMonthLabels = (
   locale?: string,
@@ -134,30 +222,10 @@ export const getMonthLabels = (
   [...Array(12).keys()].map(month => {
     const date = new Date(REFERENCE_YEAR, month, 1);
     return {
-      long: date.toLocaleDateString(locale, { month: 'long' }),
-      short: date.toLocaleDateString(locale, { month: 'short' }),
+      long: formatMonthLongName(date, locale),
+      short: formatMonthName(date, locale),
     };
   });
-
-/**
- * Returns the weeks of the month that `month` belongs to, including the
- * outside days needed to fill the first and last week.
- */
-export const getCalendarWeeks = (
-  month: Date,
-  weekStartsOn: WeekDay = 0,
-  fixedWeeks = false,
-): Date[][] => {
-  const firstOfMonth = startOfMonth(month);
-  const offset = (firstOfMonth.getDay() - weekStartsOn + 7) % 7;
-  const firstDay = addDays(firstOfMonth, -offset);
-  const numWeeks = fixedWeeks
-    ? 6
-    : Math.ceil((offset + getDaysInMonth(month)) / 7);
-  return [...Array(numWeeks).keys()].map(week =>
-    [...Array(7).keys()].map(day => addDays(firstDay, week * 7 + day)),
-  );
-};
 
 export interface DateBoundsOptions {
   isDateDisabled?: (date: Date) => boolean;
@@ -202,37 +270,6 @@ export const isMonthUnavailable = (
 };
 
 /**
- * Applies a day click to the current range. Selecting a day while a complete
- * range is selected starts a new range, and selecting a day before the current
- * start date flips the range around.
- */
-export const getNextDateRange = (
-  { from, to }: DateRange,
-  date: Date,
-): DateRange => {
-  if (from === null || to !== null) return { from: date, to: null };
-  if (date.getTime() < from.getTime()) return { from: date, to: from };
-  return { from, to: date };
-};
-
-export const getRangePosition = (
-  date: Date,
-  { from, to }: DateRange,
-): 'start' | 'middle' | 'end' | null => {
-  if (from !== null && isSameDay(date, from)) return 'start';
-  if (to !== null && isSameDay(date, to)) return 'end';
-  if (
-    from !== null &&
-    to !== null &&
-    date.getTime() > from.getTime() &&
-    date.getTime() < to.getTime()
-  ) {
-    return 'middle';
-  }
-  return null;
-};
-
-/**
  * Converts a selected date to the value stored in form state. Empty selections
  * are stored as an empty string in `iso` mode so that they stay compatible with
  * string schemas, and as `null` in `date` mode.
@@ -244,9 +281,11 @@ export const serializeDateValue = (
 ): string | Date | null => {
   if (date === null) return valueMode === 'iso' ? '' : null;
   if (valueMode === 'date') {
-    return mode === 'month' ? startOfMonth(date) : startOfDay(date);
+    if (mode === 'month') return startOfMonth(date);
+    return mode === 'datetime' ? new Date(date.getTime()) : startOfDay(date);
   }
-  return mode === 'month' ? formatISOMonth(date) : formatISODate(date);
+  if (mode === 'month') return formatISOMonth(date);
+  return mode === 'datetime' ? formatISODateTime(date) : formatISODate(date);
 };
 
 /** Restricts a date to the min/max bounds, keeping keyboard navigation valid. */

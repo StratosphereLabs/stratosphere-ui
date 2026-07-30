@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { FieldValues, useWatch } from 'react-hook-form';
 import { afterEach, beforeEach, vi } from 'vitest';
 
+import { mockMatchMedia } from '../../../../vitest/mockMatchMedia';
 import FormProvider from '../../Form/__tests__/FormProvider';
 import { DatePicker, DatePickerProps } from '../DatePicker';
 
@@ -13,6 +14,7 @@ class ResizeObserver {
 }
 
 interface FormValues extends FieldValues {
+  dateTime: string;
   fromDate: string;
   month: string;
   singleDate: string;
@@ -20,6 +22,7 @@ interface FormValues extends FieldValues {
 }
 
 const DEFAULT_VALUES: FormValues = {
+  dateTime: '',
   fromDate: '',
   month: '',
   singleDate: '',
@@ -29,7 +32,7 @@ const DEFAULT_VALUES: FormValues = {
 /** Renders the current form state so assertions can read it from the DOM. */
 const FormValuesOutput = () => {
   const values = useWatch<FormValues>();
-  return <output>{JSON.stringify(values)}</output>;
+  return <output aria-label="Form values">{JSON.stringify(values)}</output>;
 };
 
 const renderComponent = (
@@ -45,8 +48,14 @@ const renderComponent = (
     </FormProvider>,
   );
 
+/**
+ * The calendar caption is a live region of its own, so the form state output is
+ * matched by its accessible name.
+ */
 const getFormValues = (): FormValues =>
-  JSON.parse(screen.getByRole('status').textContent ?? '{}') as FormValues;
+  JSON.parse(
+    screen.getByRole('status', { name: 'Form values' }).textContent ?? '{}',
+  ) as FormValues;
 
 /**
  * The popover trigger is the only button with `aria-expanded`, which keeps it
@@ -59,18 +68,21 @@ const openCalendar = async (
   user: ReturnType<typeof userEvent.setup>,
 ): Promise<void> => {
   await user.click(getTrigger());
-  expect(await screen.findByRole('grid')).toBeInTheDocument();
+  // `range` mode renders one grid per displayed month.
+  expect((await screen.findAllByRole('grid')).length).toBeGreaterThan(0);
 };
 
 describe('DatePicker', () => {
   window.ResizeObserver = ResizeObserver;
 
   beforeEach(() => {
+    mockMatchMedia(false);
     vi.useFakeTimers({ shouldAdvanceTime: true });
     vi.setSystemTime(new Date(2013, 7, 12, 12));
   });
 
   afterEach(() => {
+    vi.unstubAllGlobals();
     vi.useRealTimers();
   });
 
@@ -78,8 +90,11 @@ describe('DatePicker', () => {
     const { unmount } = renderComponent();
     expect(getTrigger()).toHaveTextContent('Select date');
     unmount();
-    renderComponent({ mode: 'month' });
+    const { unmount: unmountMonth } = renderComponent({ mode: 'month' });
     expect(getTrigger()).toHaveTextContent('Select month');
+    unmountMonth();
+    renderComponent({ mode: 'datetime' });
+    expect(getTrigger()).toHaveTextContent('Select date and time');
   });
 
   it('renders a custom placeholder and label text', () => {
@@ -136,6 +151,28 @@ describe('DatePicker', () => {
     expect(getTrigger()).toHaveTextContent('Mar 2013');
   });
 
+  it('selects a date and a time as a yyyy-MM-ddTHH:mm value', async () => {
+    const user = userEvent.setup();
+    renderComponent(
+      { mode: 'datetime', name: 'dateTime' },
+      { dateTime: '2013-08-12T14:30' },
+    );
+    expect(getTrigger()).toHaveTextContent('Aug 12, 2013, 2:30 PM');
+    await openCalendar(user);
+    await user.click(screen.getByRole('button', { name: 'August 20, 2013' }));
+    expect(getFormValues().dateTime).toBe('2013-08-20T14:30');
+    // The calendar stays open so that the time can be set after the date.
+    expect(screen.getByRole('grid')).toBeInTheDocument();
+    await user.clear(screen.getByLabelText('Time'));
+    await user.type(screen.getByLabelText('Time'), '09:15');
+    expect(getFormValues().dateTime).toBe('2013-08-20T09:15');
+    await user.click(screen.getByRole('button', { name: 'Done' }));
+    await waitFor(() =>
+      expect(screen.queryByRole('grid')).not.toBeInTheDocument(),
+    );
+    expect(getTrigger()).toHaveTextContent('Aug 20, 2013, 9:15 AM');
+  });
+
   it('writes a range to two separate fields', async () => {
     const user = userEvent.setup();
     renderComponent({
@@ -179,6 +216,15 @@ describe('DatePicker', () => {
       { fromDate: '2013-08-12', toDate: '2013-08-20' },
     );
     expect(getTrigger()).toHaveTextContent('Aug 12, 2013 – Aug 20, 2013');
+  });
+
+  it('shows two months of a range on wide screens', async () => {
+    mockMatchMedia(true);
+    const user = userEvent.setup();
+    renderComponent({ endName: 'toDate', mode: 'range', name: 'fromDate' });
+    await openCalendar(user);
+    expect(screen.getByText('August 2013')).toBeInTheDocument();
+    expect(screen.getByText('September 2013')).toBeInTheDocument();
   });
 
   it('clears the value from the calendar footer', async () => {
