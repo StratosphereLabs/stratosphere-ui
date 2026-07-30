@@ -80,7 +80,9 @@ export const parseDate = (value?: DateInput | null): Date | null => {
 /**
  * Resolves a date-like value to a local `Date`, keeping its time of day. ISO
  * date and time strings are parsed as local times, matching the value of a
- * native `datetime-local` input.
+ * native `datetime-local` input. ISO date and month strings have no time of day
+ * and resolve to midnight, and every other string is left to the `Date`
+ * constructor, which keeps the time of day of formats that carry one.
  */
 export const parseDateTime = (value?: DateInput | null): Date | null => {
   if (value === null || value === undefined || value === '') return null;
@@ -102,7 +104,11 @@ export const parseDateTime = (value?: DateInput | null): Date | null => {
       isoDateTime[6] !== undefined ? Number(isoDateTime[6]) : 0,
     );
   }
-  return parseDate(value);
+  if (ISO_DATE_REGEX.test(value) || ISO_MONTH_REGEX.test(value)) {
+    return parseDate(value);
+  }
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
 };
 
 export const parseDateRange = (value?: DateRangeInput | null): DateRange => ({

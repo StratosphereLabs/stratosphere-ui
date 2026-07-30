@@ -12,7 +12,7 @@
 - Changed `range` mode to complete a range only on a second, different day. Clicking a day before the start still flips the range around, and clicking the start again now clears it.
 - Changed the `Calendar` nav buttons to be marked with `aria-disabled` instead of `disabled` at the `min` and `max` bounds, which is what `react-day-picker` does and what daisyUI dims.
 - Removed `CalendarDayGrid`, the `CalendarCell` and `RangePosition` types and the `addDays`, `getCalendarWeeks`, `getNextDateRange`, `getRangePosition` and `getWeekdayLabels` utilities, which `react-day-picker` now does. `CalendarCell` is replaced by `CalendarMonthCell`, which only describes a `month` mode cell.
-- Added `react-day-picker` as a dependency. It is bundled into the package, so consumers do not need to install it.
+- Added `react-day-picker` as a build time dependency. It is bundled into the package rather than being a peer dependency, so consumers do not need to install it.
 
 ## 3.2.2 (2026-07-27)
 

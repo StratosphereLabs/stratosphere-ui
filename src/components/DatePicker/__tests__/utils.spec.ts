@@ -67,6 +67,15 @@ describe('parseDateTime', () => {
 
   it('falls back to midnight for date-only values', () => {
     expect(parseDateTime('2013-08-12')?.getHours()).toBe(0);
+    expect(parseDateTime('2013-08')?.getHours()).toBe(0);
+  });
+
+  it('keeps the time of strings the Date constructor understands', () => {
+    // A zoned date-time is not an ISO date-time input value, so it is parsed by
+    // the `Date` constructor and is only shifted by the local UTC offset.
+    const utc = parseDateTime('2013-08-12T14:30:45Z');
+    expect(utc?.getTime()).toBe(Date.UTC(2013, 7, 12, 14, 30, 45));
+    expect(parseDateTime('Aug 12, 2013 14:30:45')?.getHours()).toBe(14);
   });
 
   it('returns null for empty and invalid values', () => {
