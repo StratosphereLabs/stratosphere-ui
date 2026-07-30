@@ -1,5 +1,19 @@
 # CHANGELOG.md
 
+## 3.4.0 (2026-07-30)
+
+- Changed the `DatePicker` trigger to a text input, following shadcn/ui's date picker composition of an input, a popover and a calendar, so a value can be typed as well as picked. Text is read leniently - a named or numbered month, free separators, a two digit or missing year, and a 12 or 24 hour time in `datetime` mode - and is written to the form as soon as it resolves to a date the calendar would allow, which keeps the open calendar on the month that is being typed. Text that cannot be read leaves the value alone and is replaced by the value the field holds once it is left.
+- Added typed ranges to `range` mode. The two dates are separated by a dash or by `to`, a range typed backwards is flipped around, and one with only a start is written once the field is left.
+- Changed how the calendar is opened. Clicking the field or the calendar button opens it, as does the down arrow key while the field is focused, and Enter closes it rather than submitting the form while it is open.
+- Changed `hideCalendarIcon` to hide the calendar button rather than drop it, since it is what the popover anchors to. It leaves the tab order with it, so that it is not an invisible stop for a sighted keyboard user, but stays readable by a screen reader, which has no other announcement that a calendar exists.
+- Changed the default `captionLayout` of `DatePicker` to `'dropdown'`, so a month is one click away from the field. Pass `'label'` for the arrows alone. `Calendar` still defaults to `'label'`.
+- Added `captionLayout` to `month` mode of `Calendar` and `DatePicker`, which navigates the year with a dropdown instead of the arrows. The months are the grid itself, so `dropdown-months` is the same as `label` there.
+- Changed the caption dropdowns to reach a hundred years back and ten years forward from today while `min` and `max` leave them open. `react-day-picker` falls back to the hundred years up to the current one, which cannot reach a date in the future.
+- Changed the default popover anchor of `DatePicker` to `{ gap: 8, offset: 12, to: 'bottom end' }`, and an `anchor` object is now merged into it instead of replacing it. The popover is anchored to the calendar button at the end of the field, so the offset lines the panel up with the edge of the field rather than with the button inside it.
+- Added new `inputClassName` prop to `DatePicker`, which is applied to the input.
+- Added new `PanelAnchor` type, which replaces Headless UI's `AnchorProps` in the `anchor` prop of `DatePicker`, `DropdownMenu`, `Popover` and `Select`. `AnchorProps` is only reachable through a deep path into `@headlessui/react`'s `dist` that its package exports do not expose, and importing it wrote that path into this package's declarations, where it fails to resolve for anyone whose module resolution honors package exports.
+- Added new `parseDateText` and `parseDateRangeText` utilities, which read typed date and range text, along with `getDropdownMonthRange`, `hasYearDropdown` and `isMonthBeforeDay`.
+
 ## 3.3.1 (2026-07-29)
 
 - Fixed the day grid of `Calendar` and `DatePicker` opening on the current month while a value outside it was selected. `react-day-picker` only falls back to today, so the displayed month is tracked again and a selection anchors it, as `month` mode already did. A range anchors on its start, and a selection that is already on screen leaves the grid where it is, so completing a range in the second of two months no longer scrolls it away.
