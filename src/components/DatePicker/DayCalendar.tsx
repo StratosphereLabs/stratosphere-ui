@@ -25,6 +25,8 @@ import {
   formatTimeValue,
   formatWeekdayLabel,
   formatWeekdayName,
+  getDropdownMonthRange,
+  hasYearDropdown,
   isSameDay,
   parseDate,
   parseDateRange,
@@ -268,13 +270,18 @@ export const DayCalendar = (props: CalendarDayModeProps) => {
         {footer}
       </div>
     ) : undefined;
+  // The year dropdown can only reach the months the calendar navigates to, so
+  // the bounds are widened around today while `min` and `max` leave them open.
+  const dropdownRange = hasYearDropdown(captionLayout)
+    ? getDropdownMonthRange({ max, min })
+    : null;
   const dayPickerProps: PropsBase = {
     autoFocus,
     captionLayout,
     className: classNames('react-day-picker', className),
     components: { Chevron: CalendarChevron, Footer: CalendarFooter },
     disabled,
-    endMonth: max ?? undefined,
+    endMonth: dropdownRange?.end ?? max ?? undefined,
     fixedWeeks,
     footer: footerContent,
     formatters,
@@ -285,7 +292,7 @@ export const DayCalendar = (props: CalendarDayModeProps) => {
     onMonthChange: changeMonth,
     showOutsideDays,
     showWeekNumber,
-    startMonth: min ?? undefined,
+    startMonth: dropdownRange?.start ?? min ?? undefined,
     weekStartsOn,
   };
   if (props.mode === 'range') {

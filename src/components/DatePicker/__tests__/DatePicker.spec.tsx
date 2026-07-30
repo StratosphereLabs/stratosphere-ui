@@ -57,12 +57,30 @@ const getFormValues = (): FormValues =>
     screen.getByRole('status', { name: 'Form values' }).textContent ?? '{}',
   ) as FormValues;
 
+/** The field itself, which the value can be typed into. */
+const getInput = (): HTMLInputElement => screen.getByRole('textbox');
+
+/** The box around the input, which carries the field colors. */
+const getField = (): HTMLElement => getInput().parentElement as HTMLElement;
+
 /**
- * The popover trigger is the only button with `aria-expanded`, which keeps it
+ * The calendar button is the only button with `aria-expanded`, which keeps it
  * distinguishable from the calendar buttons while the calendar is open.
  */
 const getTrigger = (isOpen = false): HTMLElement =>
   screen.getByRole('button', { expanded: isOpen });
+
+/** Replaces the text of the field, as selecting all of it and typing would. */
+const typeIntoInput = async (
+  user: ReturnType<typeof userEvent.setup>,
+  text: string,
+): Promise<void> => {
+  const input = getInput();
+  await user.type(input, text, {
+    initialSelectionEnd: input.value.length,
+    initialSelectionStart: 0,
+  });
+};
 
 const openCalendar = async (
   user: ReturnType<typeof userEvent.setup>,
@@ -88,24 +106,24 @@ describe('DatePicker', () => {
 
   it('renders the placeholder for each mode', () => {
     const { unmount } = renderComponent();
-    expect(getTrigger()).toHaveTextContent('Select date');
+    expect(getInput()).toHaveAttribute('placeholder', 'Select date');
     unmount();
     const { unmount: unmountMonth } = renderComponent({ mode: 'month' });
-    expect(getTrigger()).toHaveTextContent('Select month');
+    expect(getInput()).toHaveAttribute('placeholder', 'Select month');
     unmountMonth();
     renderComponent({ mode: 'datetime' });
-    expect(getTrigger()).toHaveTextContent('Select date and time');
+    expect(getInput()).toHaveAttribute('placeholder', 'Select date and time');
   });
 
   it('renders a custom placeholder and label text', () => {
     renderComponent({ labelText: 'Departure Date', placeholder: 'Any date' });
     expect(screen.getByText('Departure Date')).toBeInTheDocument();
-    expect(getTrigger()).toHaveTextContent('Any date');
+    expect(getInput()).toHaveAttribute('placeholder', 'Any date');
   });
 
   it('renders the current value as text', () => {
     renderComponent({}, { singleDate: '2013-08-12' });
-    expect(getTrigger()).toHaveTextContent('Aug 12, 2013');
+    expect(getInput()).toHaveValue('Aug 12, 2013');
   });
 
   it('does not open the calendar when disabled', async () => {
@@ -122,7 +140,7 @@ describe('DatePicker', () => {
     await openCalendar(user);
     await user.click(screen.getByRole('button', { name: 'August 20, 2013' }));
     expect(getFormValues().singleDate).toBe('2013-08-20');
-    expect(getTrigger()).toHaveTextContent('Aug 20, 2013');
+    expect(getInput()).toHaveValue('Aug 20, 2013');
     expect(onChange).toHaveBeenCalledTimes(1);
     await waitFor(() =>
       expect(screen.queryByRole('grid')).not.toBeInTheDocument(),
@@ -144,11 +162,11 @@ describe('DatePicker', () => {
   it('selects a month as a yyyy-MM value', async () => {
     const user = userEvent.setup();
     renderComponent({ mode: 'month', name: 'month' }, { month: '2013-08' });
-    expect(getTrigger()).toHaveTextContent('Aug 2013');
+    expect(getInput()).toHaveValue('Aug 2013');
     await openCalendar(user);
     await user.click(screen.getByRole('button', { name: 'March 2013' }));
     expect(getFormValues().month).toBe('2013-03');
-    expect(getTrigger()).toHaveTextContent('Mar 2013');
+    expect(getInput()).toHaveValue('Mar 2013');
   });
 
   it('selects a date and a time as a yyyy-MM-ddTHH:mm value', async () => {
@@ -157,7 +175,7 @@ describe('DatePicker', () => {
       { mode: 'datetime', name: 'dateTime' },
       { dateTime: '2013-08-12T14:30' },
     );
-    expect(getTrigger()).toHaveTextContent('Aug 12, 2013, 2:30 PM');
+    expect(getInput()).toHaveValue('Aug 12, 2013, 2:30 PM');
     await openCalendar(user);
     await user.click(screen.getByRole('button', { name: 'August 20, 2013' }));
     expect(getFormValues().dateTime).toBe('2013-08-20T14:30');
@@ -170,7 +188,7 @@ describe('DatePicker', () => {
     await waitFor(() =>
       expect(screen.queryByRole('grid')).not.toBeInTheDocument(),
     );
-    expect(getTrigger()).toHaveTextContent('Aug 20, 2013, 9:15 AM');
+    expect(getInput()).toHaveValue('Aug 20, 2013, 9:15 AM');
   });
 
   it('writes a range to two separate fields', async () => {
@@ -192,7 +210,7 @@ describe('DatePicker', () => {
       fromDate: '2013-08-12',
       toDate: '2013-08-20',
     });
-    expect(getTrigger()).toHaveTextContent('Aug 12, 2013 – Aug 20, 2013');
+    expect(getInput()).toHaveValue('Aug 12, 2013 – Aug 20, 2013');
     await waitFor(() =>
       expect(screen.queryByRole('grid')).not.toBeInTheDocument(),
     );
@@ -237,7 +255,7 @@ describe('DatePicker', () => {
       { endName: 'toDate', mode: 'range', name: 'fromDate' },
       { fromDate: '2013-08-12', toDate: '2013-08-20' },
     );
-    expect(getTrigger()).toHaveTextContent('Aug 12, 2013 – Aug 20, 2013');
+    expect(getInput()).toHaveValue('Aug 12, 2013 – Aug 20, 2013');
   });
 
   it('opens the calendar on the month of the stored value', async () => {
@@ -275,7 +293,7 @@ describe('DatePicker', () => {
     await openCalendar(user);
     await user.click(screen.getByRole('button', { name: 'Clear' }));
     expect(getFormValues().singleDate).toBe('');
-    expect(getTrigger()).toHaveTextContent('Select date');
+    expect(getInput()).toHaveValue('');
   });
 
   it('clears both fields of a range', async () => {
@@ -313,12 +331,180 @@ describe('DatePicker', () => {
     ).toBeDisabled();
   });
 
+  it('writes a date typed into the field', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    renderComponent({ onChange });
+    await user.type(getInput(), '8/20/2013');
+    expect(getFormValues().singleDate).toBe('2013-08-20');
+    expect(onChange).toHaveBeenLastCalledWith(new Date(2013, 7, 20));
+    // The text is replaced by the formatted value once the field is left.
+    await user.tab();
+    expect(getInput()).toHaveValue('Aug 20, 2013');
+  });
+
+  it('reads a typed month name and a two digit year', async () => {
+    const user = userEvent.setup();
+    renderComponent();
+    await user.type(getInput(), 'sept 5 13');
+    expect(getFormValues().singleDate).toBe('2013-09-05');
+  });
+
+  it('keeps the value when the typed text is not a date', async () => {
+    const user = userEvent.setup();
+    renderComponent({}, { singleDate: '2013-08-12' });
+    await typeIntoInput(user, 'not a date');
+    expect(getFormValues().singleDate).toBe('2013-08-12');
+    await user.tab();
+    expect(getInput()).toHaveValue('Aug 12, 2013');
+  });
+
+  it('clears the value when the field is emptied', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    renderComponent({ onChange }, { singleDate: '2013-08-12' });
+    await user.clear(getInput());
+    expect(getFormValues().singleDate).toBe('');
+    expect(onChange).toHaveBeenCalledWith(null);
+  });
+
+  it('does not write a typed date outside the bounds', async () => {
+    const user = userEvent.setup();
+    renderComponent(
+      { max: '2013-08-20', min: '2013-08-10' },
+      { singleDate: '2013-08-12' },
+    );
+    await typeIntoInput(user, '8/25/2013');
+    expect(getFormValues().singleDate).toBe('2013-08-12');
+  });
+
+  it('writes a typed date and time, keeping a time it is not given', async () => {
+    const user = userEvent.setup();
+    renderComponent(
+      { mode: 'datetime', name: 'dateTime' },
+      { dateTime: '2013-08-12T14:30' },
+    );
+    await typeIntoInput(user, '8/20/2013');
+    expect(getFormValues().dateTime).toBe('2013-08-20T14:30');
+    await typeIntoInput(user, 'Aug 20, 2013, 9:15 AM');
+    expect(getFormValues().dateTime).toBe('2013-08-20T09:15');
+  });
+
+  it('writes a typed month', async () => {
+    const user = userEvent.setup();
+    renderComponent({ mode: 'month', name: 'month' }, { month: '2013-08' });
+    await typeIntoInput(user, 'mar 2011');
+    expect(getFormValues().month).toBe('2011-03');
+  });
+
+  it('writes a typed range', async () => {
+    const user = userEvent.setup();
+    renderComponent({ endName: 'toDate', mode: 'range', name: 'fromDate' });
+    await user.type(getInput(), '8/12/2013 - 8/20/2013');
+    expect(getFormValues()).toMatchObject({
+      fromDate: '2013-08-12',
+      toDate: '2013-08-20',
+    });
+  });
+
+  it('waits for the field to be left to write a lone range start', async () => {
+    const user = userEvent.setup();
+    renderComponent({ endName: 'toDate', mode: 'range', name: 'fromDate' });
+    await user.type(getInput(), '8/12/2013');
+    expect(getFormValues()).toMatchObject({ fromDate: '', toDate: '' });
+    await user.tab();
+    expect(getFormValues()).toMatchObject({
+      fromDate: '2013-08-12',
+      toDate: '',
+    });
+    expect(getInput()).toHaveValue('Aug 12, 2013 – …');
+  });
+
+  it('lets the calendar win over text left in the field', async () => {
+    const user = userEvent.setup();
+    renderComponent({}, { singleDate: '2013-08-12' });
+    await typeIntoInput(user, '9');
+    await user.click(screen.getByRole('button', { name: 'August 20, 2013' }));
+    expect(getFormValues().singleDate).toBe('2013-08-20');
+    expect(getInput()).toHaveValue('Aug 20, 2013');
+  });
+
+  it('opens the calendar when the field is clicked', async () => {
+    const user = userEvent.setup();
+    renderComponent();
+    await user.click(getInput());
+    expect(await screen.findByRole('grid')).toBeInTheDocument();
+  });
+
+  it('opens the calendar with the down arrow key', async () => {
+    const user = userEvent.setup();
+    renderComponent();
+    await user.tab();
+    expect(getInput()).toHaveFocus();
+    expect(screen.queryByRole('grid')).not.toBeInTheDocument();
+    await user.keyboard('{ArrowDown}');
+    expect(await screen.findByRole('grid')).toBeInTheDocument();
+  });
+
+  it('leaves a hidden calendar button out of the tab order', async () => {
+    const user = userEvent.setup();
+    renderComponent({ hideCalendarIcon: true });
+    expect(getTrigger()).toHaveAttribute('tabindex', '-1');
+    await user.tab();
+    expect(getInput()).toHaveFocus();
+    await user.tab();
+    expect(getTrigger()).not.toHaveFocus();
+    // The down arrow key is what is left to open the calendar with.
+    getInput().focus();
+    await user.keyboard('{ArrowDown}');
+    expect(await screen.findByRole('grid')).toBeInTheDocument();
+  });
+
+  it('navigates the calendar caption with dropdowns', async () => {
+    const user = userEvent.setup();
+    renderComponent({}, { singleDate: '2013-08-12' });
+    await openCalendar(user);
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'Choose the Month' }),
+      '2',
+    );
+    expect(
+      screen.getByRole('button', { name: 'March 12, 2013' }),
+    ).toBeInTheDocument();
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'Choose the Year' }),
+      '2011',
+    );
+    expect(
+      screen.getByRole('button', { name: 'March 12, 2011' }),
+    ).toBeInTheDocument();
+  });
+
+  it('reaches future years from the year dropdown', async () => {
+    const user = userEvent.setup();
+    renderComponent();
+    await openCalendar(user);
+    expect(screen.getByRole('option', { name: '2018' })).toBeInTheDocument();
+  });
+
+  it('navigates the years of a month field with a dropdown', async () => {
+    const user = userEvent.setup();
+    renderComponent({ mode: 'month', name: 'month' }, { month: '2013-08' });
+    await openCalendar(user);
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'Choose the Year' }),
+      '2011',
+    );
+    await user.click(screen.getByRole('button', { name: 'March 2011' }));
+    expect(getFormValues().month).toBe('2011-03');
+  });
+
   it('marks the field as dirty when a date is selected', async () => {
     const user = userEvent.setup();
     renderComponent({ showDirty: true }, { singleDate: '2013-08-12' });
-    expect(getTrigger()).not.toHaveClass('input-success');
+    expect(getField()).not.toHaveClass('input-success');
     await openCalendar(user);
     await user.click(screen.getByRole('button', { name: 'August 20, 2013' }));
-    expect(getTrigger()).toHaveClass('input-success');
+    expect(getField()).toHaveClass('input-success');
   });
 });

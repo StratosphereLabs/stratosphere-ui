@@ -4,10 +4,10 @@ import {
   MenuButton,
   MenuItems,
 } from '@headlessui/react';
-import { AnchorProps } from '@headlessui/react/dist/internal/floating';
 import classNames from 'classnames';
 import { Fragment, forwardRef } from 'react';
 
+import { PanelAnchor } from '../../common';
 import { Button, ButtonProps } from '../Button';
 import { Menu, MenuItem, MenuItemProps, MenuSize } from '../Menu';
 
@@ -17,7 +17,7 @@ export interface DropdownItemProps
 }
 
 export interface DropdownMenuProps {
-  anchor?: AnchorProps;
+  anchor?: PanelAnchor;
   buttonProps?: ButtonProps;
   className?: string;
   items: DropdownItemProps[];

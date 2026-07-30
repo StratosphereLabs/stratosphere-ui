@@ -1,14 +1,21 @@
 import {
   clampDate,
+  formatDateText,
+  formatDateTimeText,
   formatISODate,
   formatISODateTime,
   formatISOMonth,
+  formatMonthText,
   formatTimeValue,
+  getDropdownMonthRange,
   getMonthLabels,
   isDateUnavailable,
+  isMonthBeforeDay,
   isMonthUnavailable,
   parseDate,
   parseDateRange,
+  parseDateRangeText,
+  parseDateText,
   parseDateTime,
   serializeDateValue,
   withTimeValue,
@@ -250,5 +257,213 @@ describe('clampDate', () => {
     expect(clampDate(new Date(2013, 7, 15), { max, min })).toEqual(
       new Date(2013, 7, 15),
     );
+  });
+});
+
+describe('parseDateText', () => {
+  const REFERENCE = new Date(2013, 7, 12);
+  const options = { locale: 'en-US', referenceDate: REFERENCE };
+
+  it('reads numeric dates in the order of the locale', () => {
+    expect(parseDateText('8/20/2013', options)).toEqual(new Date(2013, 7, 20));
+    expect(parseDateText('8-20-2013', options)).toEqual(new Date(2013, 7, 20));
+    expect(parseDateText('20/8/2013', { ...options, locale: 'en-GB' })).toEqual(
+      new Date(2013, 7, 20),
+    );
+  });
+
+  it('reads named months, in full or abbreviated', () => {
+    expect(parseDateText('August 20, 2013', options)).toEqual(
+      new Date(2013, 7, 20),
+    );
+    expect(parseDateText('20 aug 2013', options)).toEqual(
+      new Date(2013, 7, 20),
+    );
+    expect(parseDateText('sept 5 2013', options)).toEqual(new Date(2013, 8, 5));
+    expect(parseDateText('2013 Aug 20', options)).toEqual(
+      new Date(2013, 7, 20),
+    );
+  });
+
+  it('reads ISO and compact values', () => {
+    expect(parseDateText('2013-08-20', options)).toEqual(new Date(2013, 7, 20));
+    expect(parseDateText('20130820', options)).toEqual(new Date(2013, 7, 20));
+  });
+
+  it('fills in the parts the text leaves out', () => {
+    expect(parseDateText('8/20', options)).toEqual(new Date(2013, 7, 20));
+    expect(parseDateText('aug 20', options)).toEqual(new Date(2013, 7, 20));
+    expect(parseDateText('20', options)).toEqual(new Date(2013, 7, 20));
+  });
+
+  it('reads two digit years as the closest century', () => {
+    expect(parseDateText('8/20/13', options)).toEqual(new Date(2013, 7, 20));
+    expect(parseDateText('8/20/98', options)).toEqual(new Date(1998, 7, 20));
+  });
+
+  it('reads a month and a year in month mode', () => {
+    const monthOptions = { ...options, mode: 'month' as const };
+    expect(parseDateText('Aug 2013', monthOptions)).toEqual(
+      new Date(2013, 7, 1),
+    );
+    expect(parseDateText('8/2013', monthOptions)).toEqual(new Date(2013, 7, 1));
+    expect(parseDateText('2013-08', monthOptions)).toEqual(
+      new Date(2013, 7, 1),
+    );
+    expect(parseDateText('201308', monthOptions)).toEqual(new Date(2013, 7, 1));
+  });
+
+  it('reads a 12 or 24 hour time in datetime mode', () => {
+    const dateTimeOptions = { ...options, mode: 'datetime' as const };
+    expect(parseDateText('Aug 20, 2013, 2:30 PM', dateTimeOptions)).toEqual(
+      new Date(2013, 7, 20, 14, 30),
+    );
+    expect(parseDateText('8/20/2013 14:30', dateTimeOptions)).toEqual(
+      new Date(2013, 7, 20, 14, 30),
+    );
+    expect(parseDateText('8/20/2013 12:05 am', dateTimeOptions)).toEqual(
+      new Date(2013, 7, 20, 0, 5),
+    );
+    expect(parseDateText('2013-08-20T14:30:45', dateTimeOptions)).toEqual(
+      new Date(2013, 7, 20, 14, 30, 45),
+    );
+  });
+
+  it('keeps the time of the reference date when none is typed', () => {
+    expect(
+      parseDateText('8/20/2013', {
+        ...options,
+        mode: 'datetime',
+        referenceDate: new Date(2013, 7, 12, 14, 30),
+      }),
+    ).toEqual(new Date(2013, 7, 20, 14, 30));
+    expect(
+      parseDateText('8/20/2013', { ...options, mode: 'datetime' }),
+    ).toEqual(new Date(2013, 7, 20));
+  });
+
+  it('returns null for text that is not a date', () => {
+    expect(parseDateText('', options)).toBeNull();
+    expect(parseDateText('not a date', options)).toBeNull();
+    expect(parseDateText('13/20/2013', options)).toBeNull();
+    expect(parseDateText('2/30/2013', options)).toBeNull();
+    expect(
+      parseDateText('8/20/2013 25:00', { ...options, mode: 'datetime' }),
+    ).toBeNull();
+    expect(parseDateText('ju 20 2013', options)).toBeNull();
+  });
+});
+
+describe('parseDateText and the formatted value', () => {
+  it('reads back the text each locale is given', () => {
+    const date = new Date(2013, 7, 20);
+    ['en-US', 'en-GB', 'de-DE', 'fr-FR', 'ja-JP'].forEach(locale => {
+      expect(parseDateText(formatDateText(date, locale), { locale })).toEqual(
+        date,
+      );
+      expect(
+        parseDateText(
+          formatDateTimeText(new Date(2013, 7, 20, 14, 30), locale),
+          { locale, mode: 'datetime' },
+        ),
+      ).toEqual(new Date(2013, 7, 20, 14, 30));
+      expect(
+        parseDateText(formatMonthText(date, locale), { locale, mode: 'month' }),
+      ).toEqual(new Date(2013, 7, 1));
+    });
+  });
+});
+
+describe('parseDateRangeText', () => {
+  const options = { locale: 'en-US', referenceDate: new Date(2013, 7, 12) };
+
+  it('reads the two dates of a range', () => {
+    expect(parseDateRangeText('8/12/2013 - 8/20/2013', options)).toEqual({
+      from: new Date(2013, 7, 12),
+      to: new Date(2013, 7, 20),
+    });
+    expect(parseDateRangeText('Aug 12, 2013 – Aug 20, 2013', options)).toEqual({
+      from: new Date(2013, 7, 12),
+      to: new Date(2013, 7, 20),
+    });
+    expect(parseDateRangeText('8/12/2013 to 8/20/2013', options)).toEqual({
+      from: new Date(2013, 7, 12),
+      to: new Date(2013, 7, 20),
+    });
+  });
+
+  it('reads a hyphen written tight against the dates', () => {
+    expect(parseDateRangeText('8/12/2013-8/20/2013', options)).toEqual({
+      from: new Date(2013, 7, 12),
+      to: new Date(2013, 7, 20),
+    });
+    expect(parseDateRangeText('Aug 12-Aug 20', options)).toEqual({
+      from: new Date(2013, 7, 12),
+      to: new Date(2013, 7, 20),
+    });
+  });
+
+  // A hyphen also separates the parts of a single date, so the ones that carry
+  // more than one of them stay a lone start rather than being split apart.
+  it('keeps a hyphenated single date whole', () => {
+    expect(parseDateRangeText('8-12-2013', options)).toEqual({
+      from: new Date(2013, 7, 12),
+      to: null,
+    });
+    expect(parseDateRangeText('2013-08-12', options)).toEqual({
+      from: new Date(2013, 7, 12),
+      to: null,
+    });
+  });
+
+  it('flips a range that is typed backwards', () => {
+    expect(parseDateRangeText('8/20/2013 - 8/12/2013', options)).toEqual({
+      from: new Date(2013, 7, 12),
+      to: new Date(2013, 7, 20),
+    });
+  });
+
+  it('leaves the end empty while only the start is typed', () => {
+    expect(parseDateRangeText('8/12/2013', options)).toEqual({
+      from: new Date(2013, 7, 12),
+      to: null,
+    });
+    expect(parseDateRangeText('Aug 12, 2013 – …', options)).toEqual({
+      from: new Date(2013, 7, 12),
+      to: null,
+    });
+  });
+
+  it('returns null when either end is not a date', () => {
+    expect(parseDateRangeText('', options)).toBeNull();
+    expect(parseDateRangeText('nope - 8/20/2013', options)).toBeNull();
+    expect(parseDateRangeText('8/12/2013 - nope', options)).toBeNull();
+  });
+});
+
+describe('isMonthBeforeDay', () => {
+  it('follows the numeric date format of the locale', () => {
+    expect(isMonthBeforeDay('en-US')).toBe(true);
+    expect(isMonthBeforeDay('en-GB')).toBe(false);
+    expect(isMonthBeforeDay('de-DE')).toBe(false);
+  });
+});
+
+describe('getDropdownMonthRange', () => {
+  const today = new Date(2013, 7, 12);
+
+  it('spans the years around today when there are no bounds', () => {
+    const { end, start } = getDropdownMonthRange({}, today);
+    expect(start.getFullYear()).toBe(1913);
+    expect(end.getFullYear()).toBe(2023);
+  });
+
+  it('uses the bounds it is given', () => {
+    const { end, start } = getDropdownMonthRange(
+      { max: new Date(2015, 5, 10), min: new Date(2010, 2, 4) },
+      today,
+    );
+    expect(start).toEqual(new Date(2010, 2, 4));
+    expect(end).toEqual(new Date(2015, 5, 10));
   });
 });

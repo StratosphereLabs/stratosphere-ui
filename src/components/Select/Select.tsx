@@ -4,12 +4,15 @@ import {
   ListboxOption,
   ListboxOptions,
 } from '@headlessui/react';
-import { AnchorProps } from '@headlessui/react/dist/internal/floating';
 import classNames from 'classnames';
 import { Fragment, ReactNode, useState } from 'react';
 import { FieldValues, useController } from 'react-hook-form';
 
-import { GenericDataType, getGroupedDataItems } from '../../common';
+import {
+  GenericDataType,
+  PanelAnchor,
+  getGroupedDataItems,
+} from '../../common';
 import { useFieldColor } from '../../hooks';
 import { Button, ButtonColor, ButtonProps } from '../Button';
 import { FormFieldProps, FormLabelText, FormValueMode } from '../Form';
@@ -26,7 +29,7 @@ export interface SelectProps<
     FormFieldProps<Values>,
     'controllerProps' | 'placeholder' | 'showDirty'
   > {
-  anchor?: AnchorProps;
+  anchor?: PanelAnchor;
   buttonColor?: ButtonColor;
   buttonProps?: ButtonProps;
   className?: string;

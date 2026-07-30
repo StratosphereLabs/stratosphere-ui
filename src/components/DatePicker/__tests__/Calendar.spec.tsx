@@ -748,6 +748,36 @@ describe('Calendar', () => {
       await user.keyboard('{ArrowLeft}');
       expect(screen.getByRole('button', { name: 'June 2013' })).toHaveFocus();
     });
+
+    it('navigates the years with a dropdown when asked to', async () => {
+      const user = userEvent.setup();
+      render(
+        <Calendar
+          captionLayout="dropdown"
+          locale="en-US"
+          max="2013-12-31"
+          min="2010-01-01"
+          mode="month"
+          value="2013-08"
+        />,
+      );
+      const dropdown = screen.getByRole('combobox', {
+        name: 'Choose the Year',
+      });
+      expect(dropdown).toHaveValue('2013');
+      expect(
+        screen.getAllByRole('option').map(({ textContent }) => textContent),
+      ).toEqual(['2010', '2011', '2012', '2013']);
+      await user.selectOptions(dropdown, '2011');
+      expect(
+        screen.getByRole('button', { name: 'August 2011' }),
+      ).toBeInTheDocument();
+    });
+
+    it('navigates the years with the arrows by default', () => {
+      render(<Calendar locale="en-US" mode="month" value="2013-08" />);
+      expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
+    });
   });
 
   it('renders a footer when provided', () => {

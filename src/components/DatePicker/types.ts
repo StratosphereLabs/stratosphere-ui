@@ -103,6 +103,11 @@ export interface CalendarRangeProps extends CalendarDayProps {
 }
 
 export interface CalendarMonthProps extends CalendarBaseProps {
+  /**
+   * Navigates the year with a dropdown instead of the arrows. The months are
+   * the grid itself, so `dropdown-months` is the same as `label` here.
+   */
+  captionLayout?: CalendarCaptionLayout;
   mode: 'month';
   onChange?: (value: Date) => void;
   value?: DateInput | null;

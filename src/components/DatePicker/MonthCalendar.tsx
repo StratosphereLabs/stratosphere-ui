@@ -9,7 +9,7 @@ import {
 } from 'react';
 
 import { useValueChangeEffect } from '../../hooks';
-import { ChevronLeftIcon, ChevronRightIcon } from '../Icons';
+import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from '../Icons';
 import { CalendarMonthGrid } from './CalendarMonthGrid';
 import { MONTH_GRID_COLUMNS } from './constants';
 import { CalendarMonthCell, CalendarMonthProps } from './types';
@@ -18,7 +18,9 @@ import {
   addYears,
   clampDate,
   formatISOMonth,
+  getDropdownMonthRange,
   getMonthLabels,
+  hasYearDropdown,
   isMonthUnavailable,
   isSameMonth,
   parseDate,
@@ -35,6 +37,7 @@ import {
  * Use `Calendar` with `mode="month"`, which renders this.
  */
 export const MonthCalendar = ({
+  captionLayout,
   className,
   defaultMonth,
   footer,
@@ -50,10 +53,29 @@ export const MonthCalendar = ({
   const captionId = useId();
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldFocusRef = useRef(false);
-  const min = useMemo(() => parseDate(minProp), [minProp]);
-  const max = useMemo(() => parseDate(maxProp), [maxProp]);
-  const today = startOfDay(new Date());
-  const selectedDate = parseDate(value);
+  // The dates below are memoized on their timestamps rather than on the props
+  // they are parsed from, since a `Date` prop built inline gives them a new
+  // identity on every render. Keeping the identity to the value lets the memos
+  // further down depend on the dates themselves instead of on a stand-in.
+  const minTime = parseDate(minProp)?.getTime();
+  const maxTime = parseDate(maxProp)?.getTime();
+  const selectedTime = parseDate(value)?.getTime();
+  const min = useMemo(
+    () => (minTime !== undefined ? new Date(minTime) : null),
+    [minTime],
+  );
+  const max = useMemo(
+    () => (maxTime !== undefined ? new Date(maxTime) : null),
+    [maxTime],
+  );
+  const selectedDate = useMemo(
+    () => (selectedTime !== undefined ? new Date(selectedTime) : null),
+    [selectedTime],
+  );
+  // Held for the lifetime of the calendar, which is mounted for as long as the
+  // popover is open, so that the current month cell does not depend on when the
+  // calendar happened to render.
+  const today = useMemo(() => startOfDay(new Date()), []);
   const controlledMonth = useMemo(() => parseDate(monthProp), [monthProp]);
   const [uncontrolledMonth, setUncontrolledMonth] = useState(() =>
     startOfMonth(
@@ -93,12 +115,7 @@ export const MonthCalendar = ({
     },
   );
   const monthLabels = useMemo(() => getMonthLabels(locale), [locale]);
-  // Timestamps are used as memo dependencies since a new Date instance is
-  // created on every render.
   const displayedYear = displayedMonth.getFullYear();
-  const maxTime = max?.getTime();
-  const minTime = min?.getTime();
-  const selectedTime = selectedDate?.getTime();
   const months = useMemo<CalendarMonthCell[]>(
     () =>
       monthLabels.map(({ long, short }, index) => {
@@ -113,15 +130,7 @@ export const MonthCalendar = ({
           text: short,
         };
       }),
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
-    [
-      displayedYear,
-      isDateDisabled,
-      maxTime,
-      minTime,
-      monthLabels,
-      selectedTime,
-    ],
+    [displayedYear, isDateDisabled, max, min, monthLabels, selectedDate, today],
   );
   const isVisible = (date: Date): boolean =>
     date.getFullYear() === displayedYear;
@@ -173,6 +182,19 @@ export const MonthCalendar = ({
     setFocusedMonth(clamped);
     if (clamped.getFullYear() !== displayedYear) changeMonth(clamped);
   };
+  // `react-day-picker` renders the caption dropdowns of the day grid, so the
+  // year dropdown of the month grid is rendered here with its markup, which is
+  // what daisyUI styles (an invisible select over the label and its chevron).
+  const showYearDropdown = hasYearDropdown(captionLayout);
+  const yearOptions = useMemo(() => {
+    if (!showYearDropdown) return [];
+    const { end, start } = getDropdownMonthRange({ max, min });
+    const firstYear = Math.min(start.getFullYear(), displayedYear);
+    const lastYear = Math.max(end.getFullYear(), displayedYear);
+    return [...Array(lastYear - firstYear + 1).keys()].map(
+      offset => firstYear + offset,
+    );
+  }, [displayedYear, max, min, showYearDropdown]);
   const previousYear = addYears(displayedMonth, -1);
   const nextYear = addYears(displayedMonth, 1);
   const isPreviousDisabled = isMonthUnavailable(
@@ -217,9 +239,47 @@ export const MonthCalendar = ({
         </nav>
         <div className="rdp-month">
           <div className="rdp-month_caption">
-            <span className="rdp-caption_label" id={captionId}>
-              {displayedYear}
-            </span>
+            {showYearDropdown ? (
+              <div className="rdp-dropdowns">
+                <span className="rdp-dropdown_root">
+                  <select
+                    aria-label="Choose the Year"
+                    className="rdp-dropdown rdp-years_dropdown"
+                    onChange={event =>
+                      changeMonth(
+                        new Date(
+                          Number(event.target.value),
+                          displayedMonth.getMonth(),
+                          1,
+                        ),
+                      )
+                    }
+                    value={displayedYear}
+                  >
+                    {yearOptions.map(year => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </select>
+                  <span
+                    aria-hidden
+                    className="rdp-caption_label"
+                    id={captionId}
+                  >
+                    {displayedYear}
+                    <ChevronDownIcon
+                      className="rdp-chevron"
+                      style={{ fill: 'none' }}
+                    />
+                  </span>
+                </span>
+              </div>
+            ) : (
+              <span className="rdp-caption_label" id={captionId}>
+                {displayedYear}
+              </span>
+            )}
           </div>
           <CalendarMonthGrid
             captionId={captionId}
