@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import {
   ChevronProps,
   DayPicker,
@@ -16,7 +16,9 @@ import { CalendarTimeInput } from './CalendarTimeInput';
 import { DEFAULT_TIME_VALUE, TWO_MONTH_MEDIA_QUERY } from './constants';
 import { CalendarDayModeProps, DateInput } from './types';
 import {
+  clampDate,
   formatDateLabel,
+  formatISODate,
   formatISODateTime,
   formatMonthLabel,
   formatMonthName,
@@ -27,6 +29,8 @@ import {
   parseDate,
   parseDateRange,
   parseDateTime,
+  startOfDay,
+  startOfMonth,
   withTimeValue,
 } from './utils';
 
@@ -94,6 +98,63 @@ export const DayCalendar = (props: CalendarDayModeProps) => {
         ? parseDateTime(props.value)
         : parseDate(props.value);
   const showSeconds = props.mode === 'datetime' && props.showSeconds === true;
+  const monthCount =
+    numberOfMonths ?? (mode === 'range' && isWideScreen ? 2 : 1);
+  /**
+   * The month the grid opens on when the caller has not asked for one. A
+   * selection anchors it, so a value outside the current month is on screen as
+   * soon as the calendar is mounted rather than a month's navigation away.
+   * `react-day-picker` only falls back to today, so the month is tracked here.
+   */
+  const selectedMonthAnchor =
+    props.mode === 'range' ? range.from : selectedDate;
+  const controlledMonth = useMemo(() => parseDate(month), [month]);
+  const [uncontrolledMonth, setUncontrolledMonth] = useState(() =>
+    startOfMonth(
+      controlledMonth ??
+        parseDate(defaultMonth) ??
+        selectedMonthAnchor ??
+        clampDate(startOfDay(new Date()), { max, min }),
+    ),
+  );
+  const displayedMonth =
+    controlledMonth !== null
+      ? startOfMonth(controlledMonth)
+      : uncontrolledMonth;
+  const changeMonth = (nextMonth: Date): void => {
+    const nextStartOfMonth = startOfMonth(nextMonth);
+    if (controlledMonth === null) setUncontrolledMonth(nextStartOfMonth);
+    onMonthChange?.(nextStartOfMonth);
+  };
+  /** Whether a date falls in one of the months that are currently on screen. */
+  const isMonthDisplayed = (date: Date): boolean => {
+    const offset =
+      (date.getFullYear() - displayedMonth.getFullYear()) * 12 +
+      date.getMonth() -
+      displayedMonth.getMonth();
+    return offset >= 0 && offset < monthCount;
+  };
+  // Follow the selected value when it changes from outside the calendar, e.g.
+  // when the form is reset while the popover is closed. A selection that is
+  // already on screen leaves the grid where it is, so completing a range in the
+  // second of two months does not scroll it away. The first render is skipped so
+  // that it stays a reaction to a change, leaving `defaultMonth` the say over
+  // the month the calendar opens on.
+  const hasRenderedRef = useRef(false);
+  useValueChangeEffect(
+    selectedMonthAnchor !== null ? formatISODate(selectedMonthAnchor) : '',
+    () => {
+      const hasRendered = hasRenderedRef.current;
+      hasRenderedRef.current = true;
+      if (
+        hasRendered &&
+        selectedMonthAnchor !== null &&
+        !isMonthDisplayed(selectedMonthAnchor)
+      ) {
+        changeMonth(selectedMonthAnchor);
+      }
+    },
+  );
   /**
    * In `datetime` mode a bound can carry a time of day, which restricts the
    * boundary day itself - the day grid stays bounded by the date alone, so the
@@ -212,7 +273,6 @@ export const DayCalendar = (props: CalendarDayModeProps) => {
     captionLayout,
     className: classNames('react-day-picker', className),
     components: { Chevron: CalendarChevron, Footer: CalendarFooter },
-    defaultMonth: parseDate(defaultMonth) ?? undefined,
     disabled,
     endMonth: max ?? undefined,
     fixedWeeks,
@@ -220,10 +280,9 @@ export const DayCalendar = (props: CalendarDayModeProps) => {
     formatters,
     labels,
     lang: locale,
-    month: parseDate(month) ?? undefined,
-    numberOfMonths:
-      numberOfMonths ?? (mode === 'range' && isWideScreen ? 2 : 1),
-    onMonthChange,
+    month: displayedMonth,
+    numberOfMonths: monthCount,
+    onMonthChange: changeMonth,
     showOutsideDays,
     showWeekNumber,
     startMonth: min ?? undefined,
@@ -238,8 +297,15 @@ export const DayCalendar = (props: CalendarDayModeProps) => {
         // click, instead of completing it as a range of that single day.
         min={1}
         mode="range"
-        onSelect={value =>
-          props.onChange?.({ from: value?.from ?? null, to: value?.to ?? null })
+        onSelect={(value, triggerDate) =>
+          // A click on a complete range starts a new one rather than moving the
+          // end that was clicked nearest to, so that a range takes the same two
+          // clicks whether or not the calendar opened with one selected.
+          props.onChange?.(
+            range.from !== null && range.to !== null
+              ? { from: triggerDate, to: null }
+              : { from: value?.from ?? null, to: value?.to ?? null },
+          )
         }
         selected={{ from: range.from ?? undefined, to: range.to ?? undefined }}
       />

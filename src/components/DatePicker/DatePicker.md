@@ -114,7 +114,7 @@ export const FlightFilters = () => {
 
   `min` and `max` are date bounds, so the earliest and latest day stay selectable, and a time of day on either bound restricts that day only - `max="2013-08-20T17:00"` allows all of August 20 up to 17:00. Midnight is read as a date-only bound, since that is what `'2013-08-20'` and `new Date(2013, 7, 20)` both resolve to, which keeps them meaning the whole day. The time field is bounded natively, so the browser validates it and its steppers stop at the bound, and a time carried over from another day is clamped into the bounds of the day it lands on.
 
-- `range` needs two clicks: the first sets the start, the second sets the end and closes the popover. Clicking a day before the start flips the range around, and clicking the start again clears it. Two months are shown side by side when the screen is wide enough for them.
+- `range` needs two clicks: the first sets the start, the second sets the end and closes the popover. Clicking a day before the start flips the range around, and clicking the start again clears it. A range that is already complete, including one the calendar opened with, is replaced rather than edited, so the two clicks are always the same two. Two months are shown side by side when the screen is wide enough for them.
 - `month` closes the popover as soon as a month is picked.
 
 ## Calendar
@@ -132,6 +132,8 @@ export const InlineRangeCalendar = () => {
 ```
 
 Its `value` accepts `Date` objects, timestamps and ISO strings, and `onChange` always receives `Date` objects (a `{ from, to }` object in `range` mode, where `to` is `null` until the range is complete). It also takes `defaultMonth`, `month` and `onMonthChange` to control the displayed month, `footer` to render content below the grid, and `autoFocus` to move focus into the day grid on mount.
+
+The calendar opens on `month` if it is controlled, then on `defaultMonth`, then on the month of the selection - the start of it in `range` mode - and on the current month when nothing is selected. Once it is open, a selection that changes from outside the calendar brings its month back into view, unless it is already one of the months on screen.
 
 `Calendar` renders `DayCalendar` for the day modes and `MonthCalendar` for `month` mode; both are exported for the rare case that only one of them is needed.
 

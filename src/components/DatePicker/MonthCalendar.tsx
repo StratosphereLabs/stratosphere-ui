@@ -74,11 +74,20 @@ export const MonthCalendar = ({
     onMonthChange?.(nextMonth);
   };
   // Follow the selected value when it changes from outside the calendar, e.g.
-  // when the form is reset while the popover is closed.
+  // when the form is reset while the popover is closed. The first render is
+  // skipped so that it stays a reaction to a change, leaving `defaultMonth` the
+  // say over the year the calendar opens on.
+  const hasRenderedRef = useRef(false);
   useValueChangeEffect(
     selectedDate !== null ? formatISOMonth(selectedDate) : '',
     () => {
-      if (selectedDate !== null && !isSameMonth(selectedDate, displayedMonth)) {
+      const hasRendered = hasRenderedRef.current;
+      hasRenderedRef.current = true;
+      if (
+        hasRendered &&
+        selectedDate !== null &&
+        !isSameMonth(selectedDate, displayedMonth)
+      ) {
         changeMonth(selectedDate);
       }
     },

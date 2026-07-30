@@ -237,6 +237,39 @@ describe('Calendar', () => {
       expect(screen.getByText('March 2013')).toBeInTheDocument();
     });
 
+    it('opens on the month of a value outside the current month', () => {
+      render(<Calendar locale="en-US" value="2013-02-05" />);
+      expect(screen.getByText('February 2013')).toBeInTheDocument();
+      expect(getDayButton('February 5, 2013')).toBeInTheDocument();
+    });
+
+    it('prefers defaultMonth over the month of the value', () => {
+      render(
+        <Calendar defaultMonth="2013-03" locale="en-US" value="2013-02-05" />,
+      );
+      expect(screen.getByText('March 2013')).toBeInTheDocument();
+    });
+
+    it('opens on the current month clamped into the bounds', () => {
+      render(<Calendar locale="en-US" max="2013-05-31" value={null} />);
+      expect(screen.getByText('May 2013')).toBeInTheDocument();
+    });
+
+    it('follows a value that changes to another month from outside', () => {
+      const { rerender } = render(
+        <Calendar locale="en-US" value="2013-08-12" />,
+      );
+      rerender(<Calendar locale="en-US" value="2013-11-04" />);
+      expect(screen.getByText('November 2013')).toBeInTheDocument();
+    });
+
+    it('stays where the user navigated to while the value is unchanged', async () => {
+      const user = userEvent.setup();
+      render(<Calendar locale="en-US" value="2013-08-12" />);
+      await user.click(screen.getByRole('button', { name: 'Next month' }));
+      expect(screen.getByText('September 2013')).toBeInTheDocument();
+    });
+
     it('stays on the controlled month and reports the requested one', async () => {
       const user = userEvent.setup();
       const onMonthChange = vi.fn();
@@ -470,6 +503,42 @@ describe('Calendar', () => {
       expect(getSelectedCells()).toHaveLength(4);
     });
 
+    it('starts a new range when one is already complete', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      render(
+        <Calendar
+          locale="en-US"
+          mode="range"
+          onChange={onChange}
+          value={{ from: '2013-08-12', to: '2013-08-20' }}
+        />,
+      );
+      // A day inside the selected range would otherwise move the nearest end of
+      // it, completing a range in a single click.
+      await user.click(getDayButton('August 15, 2013'));
+      const { from, to } = onChange.mock.calls[0][0] as DateRange;
+      expect(from !== null && formatISODate(from)).toBe('2013-08-15');
+      expect(to).toBeNull();
+    });
+
+    it('starts a new range from a day outside a complete one', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      render(
+        <Calendar
+          locale="en-US"
+          mode="range"
+          onChange={onChange}
+          value={{ from: '2013-08-12', to: '2013-08-20' }}
+        />,
+      );
+      await user.click(getDayButton('August 25, 2013'));
+      const { from, to } = onChange.mock.calls[0][0] as DateRange;
+      expect(from !== null && formatISODate(from)).toBe('2013-08-25');
+      expect(to).toBeNull();
+    });
+
     it('flips the range when the second date is earlier', async () => {
       const user = userEvent.setup();
       const onChange = vi.fn();
@@ -515,6 +584,41 @@ describe('Calendar', () => {
       );
       expect(container.querySelectorAll('.rdp-month')).toHaveLength(3);
     });
+
+    it('opens on the month the range starts in', () => {
+      render(
+        <Calendar
+          locale="en-US"
+          mode="range"
+          value={{ from: '2013-02-05', to: '2013-02-20' }}
+        />,
+      );
+      expect(screen.getByText('February 2013')).toBeInTheDocument();
+      expect(getDayButton('February 5, 2013')).toBeInTheDocument();
+      expect(getDayButton('February 20, 2013')).toBeInTheDocument();
+    });
+
+    it('stays put when the range is completed in the second month', async () => {
+      mockMatchMedia(true);
+      const user = userEvent.setup();
+      const RangeCalendar = () => {
+        const [value, setValue] = useState<DateRange>({ from: null, to: null });
+        return (
+          <Calendar
+            locale="en-US"
+            mode="range"
+            onChange={setValue}
+            value={value}
+          />
+        );
+      };
+      render(<RangeCalendar />);
+      // The start is picked in September, the second of the two months on
+      // screen, so the grid must not scroll it into the first one.
+      await user.click(getDayButton('September 20, 2013'));
+      expect(screen.getByText('August 2013')).toBeInTheDocument();
+      expect(screen.getByText('September 2013')).toBeInTheDocument();
+    });
   });
 
   describe('month mode', () => {
@@ -526,6 +630,31 @@ describe('Calendar', () => {
       expect(
         screen.getByRole('button', { name: 'August 2013' }),
       ).toHaveTextContent('Aug');
+    });
+
+    it('opens on the year of the value and prefers defaultMonth over it', () => {
+      const { unmount } = render(
+        <Calendar locale="en-US" mode="month" value="2011-08" />,
+      );
+      expect(screen.getByText('2011')).toBeInTheDocument();
+      unmount();
+      render(
+        <Calendar
+          defaultMonth="2015-01"
+          locale="en-US"
+          mode="month"
+          value="2011-08"
+        />,
+      );
+      expect(screen.getByText('2015')).toBeInTheDocument();
+    });
+
+    it('follows a value that changes to another year from outside', () => {
+      const { rerender } = render(
+        <Calendar locale="en-US" mode="month" value="2013-08" />,
+      );
+      rerender(<Calendar locale="en-US" mode="month" value="2015-04" />);
+      expect(screen.getByText('2015')).toBeInTheDocument();
     });
 
     it('marks the selected month', () => {

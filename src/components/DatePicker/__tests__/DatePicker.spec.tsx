@@ -210,12 +210,54 @@ describe('DatePicker', () => {
     });
   });
 
+  it('takes two clicks to replace a range it opened with', async () => {
+    const user = userEvent.setup();
+    renderComponent(
+      { endName: 'toDate', mode: 'range', name: 'fromDate' },
+      { fromDate: '2013-02-05', toDate: '2013-02-20' },
+    );
+    await openCalendar(user);
+    await user.click(screen.getByRole('button', { name: 'February 12, 2013' }));
+    expect(getFormValues()).toMatchObject({
+      fromDate: '2013-02-12',
+      toDate: '',
+    });
+    // The first click only starts the new range, so the calendar has to stay
+    // open for the second one.
+    expect(screen.getByRole('grid')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'February 18, 2013' }));
+    expect(getFormValues()).toMatchObject({
+      fromDate: '2013-02-12',
+      toDate: '2013-02-18',
+    });
+  });
+
   it('reads a range from two separate fields', () => {
     renderComponent(
       { endName: 'toDate', mode: 'range', name: 'fromDate' },
       { fromDate: '2013-08-12', toDate: '2013-08-20' },
     );
     expect(getTrigger()).toHaveTextContent('Aug 12, 2013 – Aug 20, 2013');
+  });
+
+  it('opens the calendar on the month of the stored value', async () => {
+    const user = userEvent.setup();
+    renderComponent({}, { singleDate: '2013-02-05' });
+    await openCalendar(user);
+    expect(screen.getByText('February 2013')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'February 5, 2013' }),
+    ).toBeInTheDocument();
+  });
+
+  it('opens the calendar on the month a stored range starts in', async () => {
+    const user = userEvent.setup();
+    renderComponent(
+      { endName: 'toDate', mode: 'range', name: 'fromDate' },
+      { fromDate: '2013-02-05', toDate: '2013-02-20' },
+    );
+    await openCalendar(user);
+    expect(screen.getByText('February 2013')).toBeInTheDocument();
   });
 
   it('shows two months of a range on wide screens', async () => {

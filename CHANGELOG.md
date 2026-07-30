@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## 3.3.1 (2026-07-29)
+
+- Fixed the day grid of `Calendar` and `DatePicker` opening on the current month while a value outside it was selected. `react-day-picker` only falls back to today, so the displayed month is tracked again and a selection anchors it, as `month` mode already did. A range anchors on its start, and a selection that is already on screen leaves the grid where it is, so completing a range in the second of two months no longer scrolls it away.
+- Fixed `defaultMonth` being overridden by the month of the value on the first render in every mode. Following the selected value is a reaction to it changing from outside the calendar, so it no longer runs on mount.
+- Fixed a click on a complete range in `range` mode moving the nearest end of it instead of starting a new range, which completed a range in a single click and closed the `DatePicker` popover with it. A range now takes the same two clicks whether or not the calendar opened with one selected.
+
 ## 3.3.0 (2026-07-29)
 
 - Rewrote `Calendar` and `DatePicker` to follow shadcn/ui's calendar and date picker composition. The day grid is now rendered by `react-day-picker`, the library shadcn/ui's calendar wraps and the one daisyUI's calendar component styles, so the hand written grid, keyboard navigation and focus management are gone while the daisyUI styling is unchanged.
