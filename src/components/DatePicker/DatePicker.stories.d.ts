@@ -20,5 +20,7 @@ export declare const DateRangeAsObject: Story;
 export declare const SingleMonth: Story;
 export declare const Clearable: Story;
 export declare const WithMinAndMax: Story;
+/** The arrows on their own, i.e. the caption of the calendar before dropdowns. */
+export declare const WithCaptionLabel: Story;
 export declare const Small: Story;
 export declare const WithError: Story;

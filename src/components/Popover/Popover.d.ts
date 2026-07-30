@@ -1,13 +1,13 @@
 import { PopoverProps as HeadlessUIPopoverProps } from '@headlessui/react';
-import { AnchorProps } from '@headlessui/react/dist/internal/floating';
 import { MutableRefObject } from '../../../node_modules/react';
+import { PanelAnchor } from '../../common';
 import { ButtonProps } from '../Button';
 export interface PopoverPanelRenderProps {
     open: boolean;
     close: (focusableElement?: HTMLElement | MutableRefObject<HTMLElement | null>) => void;
 }
 export interface PopoverProps extends Omit<HeadlessUIPopoverProps<'div'>, 'as' | 'className'> {
-    anchor?: AnchorProps;
+    anchor?: PanelAnchor;
     buttonProps: ButtonProps;
     className?: string;
     popoverClassName?: string;

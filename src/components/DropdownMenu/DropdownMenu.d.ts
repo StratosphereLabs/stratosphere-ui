@@ -1,11 +1,11 @@
-import { AnchorProps } from '@headlessui/react/dist/internal/floating';
+import { PanelAnchor } from '../../common';
 import { ButtonProps } from '../Button';
 import { MenuItemProps, MenuSize } from '../Menu';
 export interface DropdownItemProps extends Omit<MenuItemProps, 'disabled' | 'focus' | 'ref'> {
     id: string;
 }
 export interface DropdownMenuProps {
-    anchor?: AnchorProps;
+    anchor?: PanelAnchor;
     buttonProps?: ButtonProps;
     className?: string;
     items: DropdownItemProps[];

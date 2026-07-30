@@ -1,4 +1,4 @@
-import { DateInput, DateRange, DateRangeInput, DateSelectionMode, DateValueMode } from './types';
+import { CalendarCaptionLayout, DateInput, DateRange, DateRangeInput, DateSelectionMode, DateValueMode } from './types';
 export declare const ISO_DATE_REGEX: RegExp;
 /**
  * The hours, minutes and seconds are bounded so that an out of range time is
@@ -71,6 +71,32 @@ export declare const getMonthLabels: (locale?: string) => Array<{
     long: string;
     short: string;
 }>;
+/** True when the locale writes the month before the day, e.g. `8/12/2013`. */
+export declare const isMonthBeforeDay: (locale?: string) => boolean;
+export interface ParseDateTextOptions {
+    /** BCP 47 locale tag deciding the month names and the day/month order. */
+    locale?: string;
+    mode?: DateSelectionMode;
+    /** Fills in the parts the text leaves out. Defaults to today. */
+    referenceDate?: Date | null;
+}
+/**
+ * Resolves text a user typed into a date field to a `Date`, or to `null` when
+ * it cannot be read as a date. ISO values are taken as they are, and everything
+ * else is read leniently: the month can be named or numbered, the separators
+ * are free, the year can be left out or written with two digits, and in
+ * `datetime` mode a 12 or 24 hour time can follow the date. Parts the text
+ * leaves out come from `referenceDate`, so editing the day of a `datetime`
+ * value keeps its time of day.
+ */
+export declare const parseDateText: (text: string, { locale, mode, referenceDate }?: ParseDateTextOptions) => Date | null;
+/**
+ * Resolves text a user typed into a range field to a `{ from, to }` range, or
+ * to `null` when it cannot be read as one. The two dates are separated by a
+ * dash or by `to`, each of them is read by `parseDateText`, and a range typed
+ * backwards is flipped around. `to` is `null` while only the start is typed.
+ */
+export declare const parseDateRangeText: (text: string, options?: ParseDateTextOptions) => DateRange | null;
 export interface DateBoundsOptions {
     isDateDisabled?: (date: Date) => boolean;
     max?: Date | null;
@@ -80,6 +106,17 @@ export declare const isDateOutOfBounds: (date: Date, { max, min }: Pick<DateBoun
 export declare const isDateUnavailable: (date: Date, { isDateDisabled, max, min }: DateBoundsOptions) => boolean;
 /** True when every day of `month` falls outside of the min/max bounds. */
 export declare const isMonthUnavailable: (month: Date, { isDateDisabled, max, min }: DateBoundsOptions) => boolean;
+/** True when the caption layout navigates the years with a dropdown. */
+export declare const hasYearDropdown: (captionLayout?: CalendarCaptionLayout) => boolean;
+/**
+ * The first and last month the caption dropdowns can navigate to. The bounds
+ * of the calendar are used when it has them, and the years around today
+ * otherwise, so that a date in the future stays reachable.
+ */
+export declare const getDropdownMonthRange: ({ max, min }: Pick<DateBoundsOptions, "max" | "min">, today?: Date) => {
+    end: Date;
+    start: Date;
+};
 /**
  * Converts a selected date to the value stored in form state. Empty selections
  * are stored as an empty string in `iso` mode so that they stay compatible with

@@ -1,12 +1,11 @@
-import { AnchorProps } from '@headlessui/react/dist/internal/floating';
 import { ReactNode } from '../../../node_modules/react';
 import { FieldValues } from 'react-hook-form';
-import { GenericDataType } from '../../common';
+import { GenericDataType, PanelAnchor } from '../../common';
 import { ButtonColor, ButtonProps } from '../Button';
 import { FormFieldProps, FormValueMode } from '../Form';
 import { MenuSize } from '../Menu';
 export interface SelectProps<DataItem extends GenericDataType, Values extends FieldValues> extends Omit<FormFieldProps<Values>, 'controllerProps' | 'placeholder' | 'showDirty'> {
-    anchor?: AnchorProps;
+    anchor?: PanelAnchor;
     buttonColor?: ButtonColor;
     buttonProps?: ButtonProps;
     className?: string;

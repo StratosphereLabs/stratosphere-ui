@@ -7,4 +7,4 @@ import { CalendarMonthProps } from './types';
  *
  * Use `Calendar` with `mode="month"`, which renders this.
  */
-export declare const MonthCalendar: ({ className, defaultMonth, footer, isDateDisabled, locale, max: maxProp, min: minProp, month: monthProp, onChange, onMonthChange, value, }: CalendarMonthProps) => import("react/jsx-runtime").JSX.Element;
+export declare const MonthCalendar: ({ captionLayout, className, defaultMonth, footer, isDateDisabled, locale, max: maxProp, min: minProp, month: monthProp, onChange, onMonthChange, value, }: CalendarMonthProps) => import("react/jsx-runtime").JSX.Element;
