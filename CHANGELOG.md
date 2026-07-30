@@ -1,5 +1,19 @@
 # CHANGELOG.md
 
+## 3.3.0 (2026-07-29)
+
+- Rewrote `Calendar` and `DatePicker` to follow shadcn/ui's calendar and date picker composition. The day grid is now rendered by `react-day-picker`, the library shadcn/ui's calendar wraps and the one daisyUI's calendar component styles, so the hand written grid, keyboard navigation and focus management are gone while the daisyUI styling is unchanged.
+- Added new `datetime` selection mode to `Calendar` and `DatePicker`, which picks a date and a time. The time is a native `time` input in the calendar footer, `showSeconds` adds seconds to it and `timeLabel` renames it. `DatePicker` stores `yyyy-MM-ddTHH:mm` strings in `iso` mode, keeps the calendar open after a date is picked and closes it on **Done**.
+- Added time of day support to the `min` and `max` bounds of `datetime` mode. The bounds stay date bounds, so the earliest and latest day are still selectable, and a time on either bound restricts that day only. Midnight is read as a date-only bound so that `'2013-08-20'` and `new Date(2013, 7, 20)` keep meaning the whole day.
+- Added a second month to `range` mode on screens of 40rem or wider, falling back to a single month below it. `numberOfMonths` overrides the count in every day mode.
+- Added new props `autoFocus`, `captionLayout` and `showWeekNumber` to `Calendar`, and `captionLayout`, `numberOfMonths`, `showSeconds`, `showWeekNumber` and `timeLabel` to `DatePicker`.
+- Added new `useMediaQuery` hook, which tracks a CSS media query and reports `false` while `matchMedia` is unavailable.
+- Added new `DayCalendar` and `MonthCalendar` components, which `Calendar` renders for the day modes and for `month` mode.
+- Changed `range` mode to complete a range only on a second, different day. Clicking a day before the start still flips the range around, and clicking the start again now clears it.
+- Changed the `Calendar` nav buttons to be marked with `aria-disabled` instead of `disabled` at the `min` and `max` bounds, which is what `react-day-picker` does and what daisyUI dims.
+- Removed `CalendarDayGrid`, the `CalendarCell` and `RangePosition` types and the `addDays`, `getCalendarWeeks`, `getNextDateRange`, `getRangePosition` and `getWeekdayLabels` utilities, which `react-day-picker` now does. `CalendarCell` is replaced by `CalendarMonthCell`, which only describes a `month` mode cell.
+- Added `react-day-picker` as a dependency. It is bundled into the package, so consumers do not need to install it.
+
 ## 3.2.2 (2026-07-27)
 
 - Fixed the current month being indistinguishable from the selected month in `Calendar` and `DatePicker` `month` mode. Both were drawn as a solid fill, so the fill is now reserved for the selection and the current month is marked with a `primary` outline, which also lets the two states stack when the current month is the selected one.

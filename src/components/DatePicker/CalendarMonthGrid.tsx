@@ -2,14 +2,14 @@ import classNames from 'classnames';
 import { KeyboardEventHandler } from 'react';
 
 import { MONTH_GRID_COLUMNS } from './constants';
-import { CalendarCell } from './types';
+import { CalendarMonthCell } from './types';
 
 export interface CalendarMonthGridProps {
   captionId: string;
   focusedKey: string;
+  months: CalendarMonthCell[];
   onKeyDown: KeyboardEventHandler<HTMLTableElement>;
   onSelect: (date: Date) => void;
-  months: CalendarCell[];
 }
 
 /**
@@ -21,7 +21,7 @@ export interface CalendarMonthGridProps {
  * outline instead, so a filled cell always means "selected" and the two states
  * can be told apart (and stack, when the current month is the selected one).
  */
-const getColorClass = ({ disabled, isCurrent, selected }: CalendarCell) =>
+const getColorClass = ({ disabled, isCurrent, selected }: CalendarMonthCell) =>
   classNames(
     selected
       ? 'bg-base-content text-base-100'

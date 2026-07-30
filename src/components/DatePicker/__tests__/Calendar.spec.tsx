@@ -3,9 +3,10 @@ import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
 import { afterEach, beforeEach, vi } from 'vitest';
 
+import { mockMatchMedia } from '../../../../vitest/mockMatchMedia';
 import { Calendar } from '../Calendar';
 import { DateRange } from '../types';
-import { formatISODate } from '../utils';
+import { formatISODate, formatISODateTime } from '../utils';
 
 const getDayButton = (label: string) =>
   screen.getByRole('button', { name: label });
@@ -13,13 +14,18 @@ const getDayButton = (label: string) =>
 const getSelectedCells = () =>
   screen.getAllByRole('gridcell', { selected: true });
 
+/** The calendar caption is a live region, so the output is matched by name. */
+const getOutput = () => screen.getByRole('status', { name: 'Selection' });
+
 describe('Calendar', () => {
   beforeEach(() => {
+    mockMatchMedia(false);
     vi.useFakeTimers({ shouldAdvanceTime: true });
     vi.setSystemTime(new Date(2013, 7, 12, 12));
   });
 
   afterEach(() => {
+    vi.unstubAllGlobals();
     vi.useRealTimers();
   });
 
@@ -31,10 +37,13 @@ describe('Calendar', () => {
     });
 
     it('renders localized weekday headers', () => {
-      render(<Calendar locale="en-US" value="2013-08-12" />);
-      expect(
-        screen.getByRole('columnheader', { name: 'Sunday' }),
-      ).toHaveTextContent('Sun');
+      const { container } = render(
+        <Calendar locale="en-US" value="2013-08-12" />,
+      );
+      const weekdays = container.querySelectorAll('.rdp-weekday');
+      expect(weekdays[0]).toHaveTextContent('Sun');
+      expect(weekdays[0]).toHaveAttribute('aria-label', 'Sunday');
+      expect(weekdays).toHaveLength(7);
     });
 
     it('marks the selected date and today', () => {
@@ -64,6 +73,18 @@ describe('Calendar', () => {
       );
     });
 
+    it('reports the selected date again instead of clearing it', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      render(
+        <Calendar locale="en-US" onChange={onChange} value="2013-08-12" />,
+      );
+      await user.click(getDayButton('August 12, 2013'));
+      expect(formatISODate(onChange.mock.calls[0][0] as Date)).toBe(
+        '2013-08-12',
+      );
+    });
+
     it('navigates between months', async () => {
       const user = userEvent.setup();
       render(<Calendar locale="en-US" value="2013-08-12" />);
@@ -80,8 +101,9 @@ describe('Calendar', () => {
       );
       // daisyUI positions `.rdp-nav` absolutely against `.rdp-months`; outside
       // of it the nav is painted underneath and the arrows are not clickable.
-      const nav = container.querySelector('.rdp-months > .rdp-nav');
-      expect(nav).toBeInTheDocument();
+      expect(
+        container.querySelector('.rdp-months > .rdp-nav'),
+      ).toBeInTheDocument();
     });
 
     it('disables dates outside of the min and max bounds', () => {
@@ -98,7 +120,8 @@ describe('Calendar', () => {
       expect(getDayButton('August 21, 2013')).toBeDisabled();
     });
 
-    it('disables navigation past the min and max bounds', () => {
+    it('disables navigation past the min and max bounds', async () => {
+      const user = userEvent.setup();
       render(
         <Calendar
           locale="en-US"
@@ -107,10 +130,23 @@ describe('Calendar', () => {
           value="2013-08-12"
         />,
       );
-      expect(
-        screen.getByRole('button', { name: 'Previous month' }),
-      ).toBeDisabled();
-      expect(screen.getByRole('button', { name: 'Next month' })).toBeDisabled();
+      // react-day-picker keeps the nav buttons focusable and marks them with
+      // `aria-disabled`, which daisyUI dims in the same way as `disabled`.
+      const previous = screen.getByRole('button', { name: 'Previous month' });
+      const next = screen.getByRole('button', { name: 'Next month' });
+      expect(previous).toHaveAttribute('aria-disabled', 'true');
+      expect(next).toHaveAttribute('aria-disabled', 'true');
+      await user.click(next);
+      expect(screen.getByText('August 2013')).toBeInTheDocument();
+    });
+
+    it('ignores the time of a bound outside of datetime mode', () => {
+      render(
+        <Calendar locale="en-US" max="2013-08-20T14:30" value="2013-08-12" />,
+      );
+      // Only `datetime` mode selects a time, so the whole day is selectable.
+      expect(getDayButton('August 20, 2013')).toBeEnabled();
+      expect(getDayButton('August 21, 2013')).toBeDisabled();
     });
 
     it('disables dates rejected by isDateDisabled', () => {
@@ -126,12 +162,13 @@ describe('Calendar', () => {
     });
 
     it('hides outside days when showOutsideDays is false', () => {
-      render(
+      const { container } = render(
         <Calendar locale="en-US" showOutsideDays={false} value="2013-08-12" />,
       );
-      const outsideDay = getDayButton('July 28, 2013');
-      expect(outsideDay.parentElement).toHaveClass('rdp-hidden');
-      expect(outsideDay).toBeDisabled();
+      expect(
+        screen.queryByRole('button', { name: 'July 28, 2013' }),
+      ).not.toBeInTheDocument();
+      expect(container.querySelector('.rdp-hidden')).toBeInTheDocument();
     });
 
     it('always renders six weeks by default', () => {
@@ -139,6 +176,13 @@ describe('Calendar', () => {
         <Calendar locale="en-US" value="2015-02-01" />,
       );
       expect(container.querySelectorAll('.rdp-week')).toHaveLength(6);
+    });
+
+    it('renders a single month', () => {
+      const { container } = render(
+        <Calendar locale="en-US" value="2013-08-12" />,
+      );
+      expect(container.querySelectorAll('.rdp-month')).toHaveLength(1);
     });
 
     it('moves focus with the arrow keys and follows into the next month', async () => {
@@ -167,7 +211,213 @@ describe('Calendar', () => {
       render(<Calendar locale="en-US" max="2013-08-13" value="2013-08-12" />);
       await user.click(getDayButton('August 12, 2013'));
       await user.keyboard('{ArrowDown}');
-      expect(getDayButton('August 13, 2013')).toHaveFocus();
+      expect(getDayButton('August 12, 2013')).toHaveFocus();
+    });
+
+    it('navigates the caption with dropdowns when asked to', () => {
+      render(
+        <Calendar
+          captionLayout="dropdown"
+          locale="en-US"
+          max="2013-12-31"
+          min="2010-01-01"
+          value="2013-08-12"
+        />,
+      );
+      expect(
+        screen.getByRole('combobox', { name: 'Choose the Month' }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('combobox', { name: 'Choose the Year' }),
+      ).toBeInTheDocument();
+    });
+
+    it('opens on defaultMonth when nothing is selected', () => {
+      render(<Calendar defaultMonth="2013-03" locale="en-US" value={null} />);
+      expect(screen.getByText('March 2013')).toBeInTheDocument();
+    });
+
+    it('stays on the controlled month and reports the requested one', async () => {
+      const user = userEvent.setup();
+      const onMonthChange = vi.fn();
+      render(
+        <Calendar
+          locale="en-US"
+          month="2013-03"
+          onMonthChange={onMonthChange}
+          value={null}
+        />,
+      );
+      await user.click(screen.getByRole('button', { name: 'Next month' }));
+      expect(screen.getByText('March 2013')).toBeInTheDocument();
+      expect(onMonthChange).toHaveBeenCalledWith(new Date(2013, 3, 1));
+    });
+  });
+
+  describe('datetime mode', () => {
+    it('renders the time of the selected value', () => {
+      render(
+        <Calendar locale="en-US" mode="datetime" value="2013-08-12T14:30" />,
+      );
+      expect(screen.getByLabelText('Time')).toHaveValue('14:30');
+      expect(getDayButton('August 12, 2013').parentElement).toHaveClass(
+        'rdp-selected',
+      );
+    });
+
+    it('keeps the current time when a date is clicked', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      render(
+        <Calendar
+          locale="en-US"
+          mode="datetime"
+          onChange={onChange}
+          value="2013-08-12T14:30"
+        />,
+      );
+      await user.click(getDayButton('August 20, 2013'));
+      expect(formatISODateTime(onChange.mock.calls[0][0] as Date)).toBe(
+        '2013-08-20T14:30',
+      );
+    });
+
+    it('keeps the selected date when the time changes', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      render(
+        <Calendar
+          locale="en-US"
+          mode="datetime"
+          onChange={onChange}
+          value="2013-08-12T14:30"
+        />,
+      );
+      await user.clear(screen.getByLabelText('Time'));
+      await user.type(screen.getByLabelText('Time'), '09:15');
+      expect(formatISODateTime(onChange.mock.lastCall?.[0] as Date)).toBe(
+        '2013-08-12T09:15',
+      );
+    });
+
+    it('starts a new selection at midnight', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      render(
+        <Calendar
+          locale="en-US"
+          mode="datetime"
+          onChange={onChange}
+          value={null}
+        />,
+      );
+      expect(screen.getByLabelText('Time')).toHaveValue('00:00');
+      await user.click(getDayButton('August 20, 2013'));
+      expect(formatISODateTime(onChange.mock.calls[0][0] as Date)).toBe(
+        '2013-08-20T00:00',
+      );
+    });
+
+    it('renders seconds and a custom label when asked to', () => {
+      render(
+        <Calendar
+          locale="en-US"
+          mode="datetime"
+          showSeconds
+          timeLabel="Departure time"
+          value="2013-08-12T14:30:45"
+        />,
+      );
+      expect(screen.getByLabelText('Departure time')).toHaveValue('14:30:45');
+    });
+
+    it('bounds the time field by the time of the min and max bounds', () => {
+      render(
+        <Calendar
+          locale="en-US"
+          max="2013-08-20T17:00"
+          min="2013-08-10T09:30"
+          mode="datetime"
+          value="2013-08-20T14:30"
+        />,
+      );
+      // The day grid stays bounded by the date alone, so the boundary day is
+      // still selectable, and only its time is restricted.
+      expect(getDayButton('August 20, 2013')).toBeEnabled();
+      expect(getDayButton('August 21, 2013')).toBeDisabled();
+      expect(screen.getByLabelText('Time')).toHaveAttribute('max', '17:00');
+      expect(screen.getByLabelText('Time')).not.toHaveAttribute('min');
+    });
+
+    it('does not bound the time field on days between the bounds', () => {
+      render(
+        <Calendar
+          locale="en-US"
+          max="2013-08-20T17:00"
+          min="2013-08-10T09:30"
+          mode="datetime"
+          value="2013-08-15T14:30"
+        />,
+      );
+      const timeInput = screen.getByLabelText('Time');
+      expect(timeInput).not.toHaveAttribute('max');
+      expect(timeInput).not.toHaveAttribute('min');
+    });
+
+    it('ignores a bound whose time is midnight', () => {
+      render(
+        <Calendar
+          locale="en-US"
+          max="2013-08-20"
+          mode="datetime"
+          value="2013-08-20T14:30"
+        />,
+      );
+      // A `yyyy-MM-dd` bound and a `Date` at midnight both mean the whole day.
+      expect(screen.getByLabelText('Time')).not.toHaveAttribute('max');
+    });
+
+    it('clamps a time carried over to a bounded day', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      render(
+        <Calendar
+          locale="en-US"
+          max="2013-08-20T17:00"
+          min="2013-08-10T09:30"
+          mode="datetime"
+          onChange={onChange}
+          value="2013-08-15T22:00"
+        />,
+      );
+      await user.click(getDayButton('August 20, 2013'));
+      expect(formatISODateTime(onChange.mock.calls[0][0] as Date)).toBe(
+        '2013-08-20T17:00',
+      );
+      // The same time is in bounds on the earliest day, so it is kept.
+      await user.click(getDayButton('August 10, 2013'));
+      expect(formatISODateTime(onChange.mock.lastCall?.[0] as Date)).toBe(
+        '2013-08-10T22:00',
+      );
+    });
+
+    it('clamps a time carried over to the earliest day', async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+      render(
+        <Calendar
+          locale="en-US"
+          max="2013-08-20T17:00"
+          min="2013-08-10T09:30"
+          mode="datetime"
+          onChange={onChange}
+          value="2013-08-15T08:00"
+        />,
+      );
+      await user.click(getDayButton('August 10, 2013'));
+      expect(formatISODateTime(onChange.mock.calls[0][0] as Date)).toBe(
+        '2013-08-10T09:30',
+      );
     });
   });
 
@@ -182,18 +432,14 @@ describe('Calendar', () => {
       );
       expect(getDayButton('August 12, 2013').parentElement).toHaveClass(
         'rdp-range_start',
-        'rdp-selected',
       );
       expect(getDayButton('August 13, 2013').parentElement).toHaveClass(
         'rdp-range_middle',
       );
-      expect(getDayButton('August 13, 2013').parentElement).not.toHaveClass(
-        'rdp-selected',
-      );
       expect(getDayButton('August 15, 2013').parentElement).toHaveClass(
         'rdp-range_end',
-        'rdp-selected',
       );
+      expect(getSelectedCells()).toHaveLength(4);
     });
 
     it('selects a range across two clicks', async () => {
@@ -208,7 +454,7 @@ describe('Calendar', () => {
               onChange={setValue}
               value={value}
             />
-            <output>
+            <output aria-label="Selection">
               {value.from !== null ? formatISODate(value.from) : ''}
               {' to '}
               {value.to !== null ? formatISODate(value.to) : ''}
@@ -218,11 +464,9 @@ describe('Calendar', () => {
       };
       render(<RangeCalendar />);
       await user.click(getDayButton('August 12, 2013'));
-      expect(screen.getByRole('status')).toHaveTextContent('2013-08-12 to');
+      expect(getOutput()).toHaveTextContent('2013-08-12 to');
       await user.click(getDayButton('August 15, 2013'));
-      expect(screen.getByRole('status')).toHaveTextContent(
-        '2013-08-12 to 2013-08-15',
-      );
+      expect(getOutput()).toHaveTextContent('2013-08-12 to 2013-08-15');
       expect(getSelectedCells()).toHaveLength(4);
     });
 
@@ -241,6 +485,35 @@ describe('Calendar', () => {
       const { from, to } = onChange.mock.calls[0][0] as DateRange;
       expect(from !== null && formatISODate(from)).toBe('2013-08-05');
       expect(to !== null && formatISODate(to)).toBe('2013-08-12');
+    });
+
+    it('renders a single month on narrow screens', () => {
+      const { container } = render(
+        <Calendar locale="en-US" mode="range" value={null} />,
+      );
+      expect(container.querySelectorAll('.rdp-month')).toHaveLength(1);
+    });
+
+    it('renders two months when the screen is wide enough', () => {
+      mockMatchMedia(true);
+      const { container } = render(
+        <Calendar locale="en-US" mode="range" value={{ from: '2013-08-12' }} />,
+      );
+      expect(container.querySelectorAll('.rdp-month')).toHaveLength(2);
+      expect(screen.getByText('August 2013')).toBeInTheDocument();
+      expect(screen.getByText('September 2013')).toBeInTheDocument();
+    });
+
+    it('renders the requested number of months', () => {
+      const { container } = render(
+        <Calendar
+          locale="en-US"
+          mode="range"
+          numberOfMonths={3}
+          value={null}
+        />,
+      );
+      expect(container.querySelectorAll('.rdp-month')).toHaveLength(3);
     });
   });
 
@@ -354,6 +627,18 @@ describe('Calendar', () => {
         footer={<button type="button">Clear</button>}
         locale="en-US"
         value="2013-08-12"
+      />,
+    );
+    expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument();
+  });
+
+  it('renders a footer in month mode when provided', () => {
+    render(
+      <Calendar
+        footer={<button type="button">Clear</button>}
+        locale="en-US"
+        mode="month"
+        value="2013-08"
       />,
     );
     expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument();

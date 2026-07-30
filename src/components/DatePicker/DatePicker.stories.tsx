@@ -5,6 +5,7 @@ import { Form } from '../Form';
 import { DatePicker } from './DatePicker';
 
 interface FormValues {
+  dateTime: string;
   fromDate: string;
   month: string;
   singleDate: string;
@@ -12,6 +13,7 @@ interface FormValues {
 }
 
 const DEFAULT_VALUES: FormValues = {
+  dateTime: '',
   fromDate: '',
   month: '',
   singleDate: '',
@@ -77,6 +79,36 @@ export const WithDefaultValue: Story = {
   ),
 };
 
+export const DateAndTime: Story = {
+  args: {
+    labelText: 'Departure',
+    mode: 'datetime',
+    name: 'dateTime',
+  },
+  render: args => (
+    <FormWrapper defaultValues={{ dateTime: '2013-08-12T14:30' }}>
+      <DatePicker<FormValues> {...args} />
+    </FormWrapper>
+  ),
+};
+
+export const DateAndTimeWithSeconds: Story = {
+  args: {
+    isClearable: true,
+    labelText: 'Departure',
+    mode: 'datetime',
+    name: 'dateTime',
+    showSeconds: true,
+    timeLabel: 'Departure time',
+  },
+  render: args => (
+    <FormWrapper defaultValues={{ dateTime: '2013-08-12T14:30:45' }}>
+      <DatePicker<FormValues> {...args} />
+    </FormWrapper>
+  ),
+};
+
+/** Two months are shown side by side from 40rem up, and one below it. */
 export const DateRangeWithTwoFields: Story = {
   args: {
     endName: 'toDate',

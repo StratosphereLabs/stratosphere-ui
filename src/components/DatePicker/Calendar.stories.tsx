@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { Calendar } from './Calendar';
 import { DateRange } from './types';
-import { formatISODate, formatMonthText } from './utils';
+import { formatISODate, formatISODateTime, formatMonthText } from './utils';
 
 const meta: Meta<typeof Calendar> = {
   title: 'Calendar',
@@ -28,6 +28,36 @@ export const SingleDate: Story = {
   },
 };
 
+export const DateAndTime: Story = {
+  render: () => {
+    const [value, setValue] = useState<Date | null>(new Date());
+    return (
+      <div className="flex flex-col items-center gap-2">
+        <Calendar mode="datetime" onChange={setValue} value={value} />
+        <span className="text-sm opacity-60">
+          {value !== null ? formatISODateTime(value) : 'No date selected'}
+        </span>
+      </div>
+    );
+  },
+};
+
+export const DateAndTimeWithSeconds: Story = {
+  render: () => {
+    const [value, setValue] = useState<Date | null>(new Date());
+    return (
+      <Calendar
+        mode="datetime"
+        onChange={setValue}
+        showSeconds
+        timeLabel="Departure time"
+        value={value}
+      />
+    );
+  },
+};
+
+/** Two months are shown side by side from 40rem up, and one below it. */
 export const DateRangeSelection: Story = {
   render: () => {
     const [value, setValue] = useState<DateRange>({ from: null, to: null });
@@ -83,6 +113,22 @@ export const WithDisabledWeekends: Story = {
         value={value}
       />
     );
+  },
+};
+
+export const WithDropdownNavigation: Story = {
+  render: () => {
+    const [value, setValue] = useState<Date | null>(new Date());
+    return (
+      <Calendar captionLayout="dropdown" onChange={setValue} value={value} />
+    );
+  },
+};
+
+export const WithWeekNumbers: Story = {
+  render: () => {
+    const [value, setValue] = useState<Date | null>(new Date());
+    return <Calendar onChange={setValue} showWeekNumber value={value} />;
   },
 };
 

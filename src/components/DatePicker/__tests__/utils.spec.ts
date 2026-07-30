@@ -1,17 +1,17 @@
 import {
   clampDate,
   formatISODate,
+  formatISODateTime,
   formatISOMonth,
-  getCalendarWeeks,
+  formatTimeValue,
   getMonthLabels,
-  getNextDateRange,
-  getRangePosition,
-  getWeekdayLabels,
   isDateUnavailable,
   isMonthUnavailable,
   parseDate,
   parseDateRange,
+  parseDateTime,
   serializeDateValue,
+  withTimeValue,
 } from '../utils';
 
 describe('parseDate', () => {
@@ -45,6 +45,49 @@ describe('parseDate', () => {
   });
 });
 
+describe('parseDateTime', () => {
+  it('parses ISO date and time strings as local times', () => {
+    const date = parseDateTime('2013-08-12T14:30');
+    expect(date?.getDate()).toBe(12);
+    expect(date?.getHours()).toBe(14);
+    expect(date?.getMinutes()).toBe(30);
+    expect(date?.getSeconds()).toBe(0);
+  });
+
+  it('parses seconds when they are included', () => {
+    expect(parseDateTime('2013-08-12T14:30:45')?.getSeconds()).toBe(45);
+    expect(parseDateTime('2013-08-12 14:30')?.getHours()).toBe(14);
+  });
+
+  it('keeps the time of Date and timestamp values', () => {
+    const date = new Date(2013, 7, 12, 23, 45);
+    expect(parseDateTime(date)?.getHours()).toBe(23);
+    expect(parseDateTime(date.getTime())?.getMinutes()).toBe(45);
+  });
+
+  it('falls back to midnight for date-only values', () => {
+    expect(parseDateTime('2013-08-12')?.getHours()).toBe(0);
+  });
+
+  it('returns null for empty and invalid values', () => {
+    expect(parseDateTime('')).toBeNull();
+    expect(parseDateTime(null)).toBeNull();
+    expect(parseDateTime('not a date')).toBeNull();
+  });
+
+  it('returns null for out of range times', () => {
+    // An out of range time would otherwise overflow into the following day.
+    expect(parseDateTime('2013-08-12T12:60')).toBeNull();
+    expect(parseDateTime('2013-08-12T99:99')).toBeNull();
+  });
+
+  it('resolves an ISO end of day to the next midnight', () => {
+    // `24:00` is a valid ISO 8601 time, and the only overflow that is not a
+    // malformed value, so it is left to the `Date` constructor to resolve.
+    expect(parseDateTime('2013-08-12T24:00')).toEqual(new Date(2013, 7, 13));
+  });
+});
+
 describe('parseDateRange', () => {
   it('parses both ends of the range', () => {
     const { from, to } = parseDateRange({
@@ -72,38 +115,57 @@ describe('formatISOMonth', () => {
   });
 });
 
-describe('getCalendarWeeks', () => {
-  it('includes outside days to fill the first and last week', () => {
-    const weeks = getCalendarWeeks(new Date(2013, 7, 1));
-    expect(weeks[0][0].getMonth()).toBe(6);
-    expect(weeks[0][0].getDate()).toBe(28);
-    expect(weeks[0]).toHaveLength(7);
+describe('formatISODateTime', () => {
+  it('formats a local date and time without seconds', () => {
+    expect(formatISODateTime(new Date(2013, 7, 12, 14, 30))).toBe(
+      '2013-08-12T14:30',
+    );
   });
 
-  it('starts weeks on the requested weekday', () => {
-    const weeks = getCalendarWeeks(new Date(2013, 7, 1), 1);
-    expect(weeks[0][0].getDay()).toBe(1);
-  });
-
-  it('renders six weeks when fixedWeeks is set', () => {
-    // February 2015 starts on a Sunday and is exactly four weeks long.
-    expect(getCalendarWeeks(new Date(2015, 1, 1), 0, true)).toHaveLength(6);
-    expect(getCalendarWeeks(new Date(2015, 1, 1))).toHaveLength(4);
+  it('includes seconds when they are set', () => {
+    expect(formatISODateTime(new Date(2013, 7, 12, 14, 30, 45))).toBe(
+      '2013-08-12T14:30:45',
+    );
   });
 });
 
-describe('getWeekdayLabels', () => {
-  it('returns seven labels starting on the requested weekday', () => {
-    expect(getWeekdayLabels(0, 'en-US').map(({ short }) => short)).toEqual([
-      'Sun',
-      'Mon',
-      'Tue',
-      'Wed',
-      'Thu',
-      'Fri',
-      'Sat',
-    ]);
-    expect(getWeekdayLabels(1, 'en-US')[0].long).toBe('Monday');
+describe('formatTimeValue', () => {
+  it('formats hours and minutes', () => {
+    expect(formatTimeValue(new Date(2013, 7, 12, 9, 5))).toBe('09:05');
+  });
+
+  it('formats seconds when asked to', () => {
+    expect(formatTimeValue(new Date(2013, 7, 12, 9, 5, 3), true)).toBe(
+      '09:05:03',
+    );
+  });
+});
+
+describe('withTimeValue', () => {
+  const date = new Date(2013, 7, 12, 14, 30, 45);
+
+  it('applies a time to a date', () => {
+    expect(withTimeValue(date, '09:15')).toEqual(new Date(2013, 7, 12, 9, 15));
+    expect(withTimeValue(date, '09:15:30')).toEqual(
+      new Date(2013, 7, 12, 9, 15, 30),
+    );
+    expect(withTimeValue(date, '9:15')).toEqual(new Date(2013, 7, 12, 9, 15));
+    expect(withTimeValue(date, '23:59:59')).toEqual(
+      new Date(2013, 7, 12, 23, 59, 59),
+    );
+  });
+
+  it('leaves the date unchanged for values that are not a time', () => {
+    expect(withTimeValue(date, '')).toBe(date);
+    expect(withTimeValue(date, 'nope')).toBe(date);
+  });
+
+  it('leaves the date unchanged for out of range times', () => {
+    // An out of range time would otherwise overflow into the following day.
+    expect(withTimeValue(date, '24:00')).toBe(date);
+    expect(withTimeValue(date, '12:60')).toBe(date);
+    expect(withTimeValue(date, '12:30:60')).toBe(date);
+    expect(withTimeValue(date, '99:99')).toBe(date);
   });
 });
 
@@ -112,52 +174,6 @@ describe('getMonthLabels', () => {
     const labels = getMonthLabels('en-US');
     expect(labels).toHaveLength(12);
     expect(labels[7]).toEqual({ long: 'August', short: 'Aug' });
-  });
-});
-
-describe('getNextDateRange', () => {
-  it('starts a new range when nothing is selected', () => {
-    const date = new Date(2013, 7, 12);
-    expect(getNextDateRange({ from: null, to: null }, date)).toEqual({
-      from: date,
-      to: null,
-    });
-  });
-
-  it('completes the range with a later date', () => {
-    const from = new Date(2013, 7, 12);
-    const to = new Date(2013, 7, 20);
-    expect(getNextDateRange({ from, to: null }, to)).toEqual({ from, to });
-  });
-
-  it('flips the range when the second date is earlier', () => {
-    const from = new Date(2013, 7, 12);
-    const earlier = new Date(2013, 7, 5);
-    expect(getNextDateRange({ from, to: null }, earlier)).toEqual({
-      from: earlier,
-      to: from,
-    });
-  });
-
-  it('starts over once the range is complete', () => {
-    const from = new Date(2013, 7, 12);
-    const to = new Date(2013, 7, 20);
-    const next = new Date(2013, 7, 25);
-    expect(getNextDateRange({ from, to }, next)).toEqual({
-      from: next,
-      to: null,
-    });
-  });
-});
-
-describe('getRangePosition', () => {
-  const range = { from: new Date(2013, 7, 12), to: new Date(2013, 7, 15) };
-
-  it('identifies the start, middle and end of the range', () => {
-    expect(getRangePosition(new Date(2013, 7, 12), range)).toBe('start');
-    expect(getRangePosition(new Date(2013, 7, 13), range)).toBe('middle');
-    expect(getRangePosition(new Date(2013, 7, 15), range)).toBe('end');
-    expect(getRangePosition(new Date(2013, 7, 16), range)).toBeNull();
   });
 });
 
@@ -189,16 +205,22 @@ describe('isMonthUnavailable', () => {
 });
 
 describe('serializeDateValue', () => {
-  const date = new Date(2013, 7, 12);
+  const date = new Date(2013, 7, 12, 14, 30);
 
-  it('serializes ISO dates and months', () => {
+  it('serializes ISO dates, times and months', () => {
     expect(serializeDateValue(date, 'single', 'iso')).toBe('2013-08-12');
     expect(serializeDateValue(date, 'range', 'iso')).toBe('2013-08-12');
+    expect(serializeDateValue(date, 'datetime', 'iso')).toBe(
+      '2013-08-12T14:30',
+    );
     expect(serializeDateValue(date, 'month', 'iso')).toBe('2013-08');
   });
 
   it('serializes Date values', () => {
-    expect(serializeDateValue(date, 'single', 'date')).toEqual(date);
+    expect(serializeDateValue(date, 'single', 'date')).toEqual(
+      new Date(2013, 7, 12),
+    );
+    expect(serializeDateValue(date, 'datetime', 'date')).toEqual(date);
     expect(serializeDateValue(date, 'month', 'date')).toEqual(
       new Date(2013, 7, 1),
     );

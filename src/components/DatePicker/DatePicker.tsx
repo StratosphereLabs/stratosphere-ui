@@ -25,13 +25,14 @@ import {
 import { CalendarIcon } from '../Icons';
 import { Calendar } from './Calendar';
 import {
+  DEFAULT_DATE_TIME_PLACEHOLDER,
   DEFAULT_MONTH_PLACEHOLDER,
   DEFAULT_RANGE_PLACEHOLDER,
   DEFAULT_SINGLE_PLACEHOLDER,
   RANGE_SEPARATOR,
 } from './constants';
 import {
-  CalendarBaseProps,
+  CalendarDayProps,
   DateRange,
   DateRangeInput,
   DateSelectionMode,
@@ -39,9 +40,11 @@ import {
 } from './types';
 import {
   formatDateText,
+  formatDateTimeText,
   formatMonthText,
   parseDate,
   parseDateRange,
+  parseDateTime,
   serializeDateValue,
 } from './utils';
 
@@ -50,13 +53,16 @@ const EMPTY_RANGE: DateRange = { from: null, to: null };
 export interface DatePickerProps<Values extends FieldValues>
   extends Omit<FormFieldProps<Values>, 'controllerProps'>,
     Pick<
-      CalendarBaseProps,
+      CalendarDayProps,
+      | 'captionLayout'
       | 'fixedWeeks'
       | 'isDateDisabled'
       | 'locale'
       | 'max'
       | 'min'
+      | 'numberOfMonths'
       | 'showOutsideDays'
+      | 'showWeekNumber'
       | 'weekStartsOn'
     > {
   anchor?: AnchorProps;
@@ -77,23 +83,30 @@ export interface DatePickerProps<Values extends FieldValues>
   onChange?: (value: Date | DateRange | null) => void;
   panelClassName?: string;
   portal?: boolean;
+  /** Adds seconds to the time field of `datetime` mode. */
+  showSeconds?: boolean;
   size?: InputSize;
+  /** Label of the time field of `datetime` mode. Defaults to `Time`. */
+  timeLabel?: string;
   /** Store the value as an ISO string (the default) or as a `Date`. */
   valueMode?: DateValueMode;
 }
 
 /**
- * A date picker field for react-hook-form, built on the daisyUI calendar
- * styles. Supports selecting a single date, a date range or a single month.
+ * A date picker field for react-hook-form, built on shadcn/ui's date picker
+ * composition of a popover and a calendar, and styled by daisyUI. Supports
+ * selecting a single date, a date and a time, a date range or a single month.
  *
  * With the default `valueMode` of `iso`, `single` and `range` fields store
- * `yyyy-MM-dd` strings and `month` fields store `yyyy-MM` strings, matching the
- * values of native `date` and `month` inputs.
+ * `yyyy-MM-dd` strings, `datetime` fields store `yyyy-MM-ddTHH:mm` strings and
+ * `month` fields store `yyyy-MM` strings, matching the values of the native
+ * `date`, `datetime-local` and `month` inputs.
  */
 export const DatePicker = <Values extends FieldValues>({
   anchor,
   buttonClassName,
   calendarClassName,
+  captionLayout,
   className,
   color,
   disabled,
@@ -110,13 +123,17 @@ export const DatePicker = <Values extends FieldValues>({
   min,
   mode = 'single',
   name,
+  numberOfMonths,
   onChange,
   panelClassName,
   placeholder,
   portal,
   showDirty,
   showOutsideDays,
+  showSeconds,
+  showWeekNumber,
   size,
+  timeLabel,
   valueMode = 'iso',
   weekStartsOn,
 }: DatePickerProps<Values>) => {
@@ -139,7 +156,12 @@ export const DatePicker = <Values extends FieldValues>({
       : endName !== undefined
         ? { from: parseDate(startValue), to: parseDate(endValue) }
         : parseDateRange(startValue as DateRangeInput | null);
-  const selectedDate = mode === 'range' ? null : parseDate(startValue);
+  const selectedDate =
+    mode === 'range'
+      ? null
+      : mode === 'datetime'
+        ? parseDateTime(startValue)
+        : parseDate(startValue);
   const selectionText =
     mode === 'range'
       ? range.from !== null || range.to !== null
@@ -150,7 +172,9 @@ export const DatePicker = <Values extends FieldValues>({
       : selectedDate !== null
         ? mode === 'month'
           ? formatMonthText(selectedDate, locale)
-          : formatDateText(selectedDate, locale)
+          : mode === 'datetime'
+            ? formatDateTimeText(selectedDate, locale)
+            : formatDateText(selectedDate, locale)
         : null;
   const setFieldValue = (
     fieldName: Path<Values>,
@@ -176,10 +200,10 @@ export const DatePicker = <Values extends FieldValues>({
     onChange?.(value);
     if (value.from !== null && value.to !== null) close();
   };
-  const handleDateChange = (value: Date, close: () => void): void => {
+  const handleDateChange = (value: Date, close?: () => void): void => {
     setFieldValue(name, serialize(value));
     onChange?.(value);
-    close();
+    close?.();
   };
   const handleClear = (close: () => void): void => {
     if (mode === 'range') {
@@ -197,15 +221,24 @@ export const DatePicker = <Values extends FieldValues>({
       ? DEFAULT_RANGE_PLACEHOLDER
       : mode === 'month'
         ? DEFAULT_MONTH_PLACEHOLDER
-        : DEFAULT_SINGLE_PLACEHOLDER);
+        : mode === 'datetime'
+          ? DEFAULT_DATE_TIME_PLACEHOLDER
+          : DEFAULT_SINGLE_PLACEHOLDER);
   const calendarProps = {
     className: calendarClassName,
-    fixedWeeks,
     isDateDisabled,
     locale,
     max,
     min,
+  };
+  /** The day grid props, which `month` mode does not accept. */
+  const dayCalendarProps = {
+    ...calendarProps,
+    captionLayout,
+    fixedWeeks,
+    numberOfMonths,
     showOutsideDays,
+    showWeekNumber,
     weekStartsOn,
   };
   return (
@@ -246,26 +279,48 @@ export const DatePicker = <Values extends FieldValues>({
           )}
         >
           {({ close }) => {
+            // `datetime` mode keeps the calendar open after a date is picked so
+            // that the time can be set, and closes with **Done** instead.
             const footer =
-              isClearable === true ? (
-                <div className="flex justify-end">
-                  <Button
-                    color="ghost"
-                    onClick={() => handleClear(close)}
-                    size="xs"
-                  >
-                    Clear
-                  </Button>
+              isClearable === true || mode === 'datetime' ? (
+                <div className="flex justify-end gap-2">
+                  {isClearable === true ? (
+                    <Button
+                      color="ghost"
+                      onClick={() => handleClear(close)}
+                      size="xs"
+                    >
+                      Clear
+                    </Button>
+                  ) : null}
+                  {mode === 'datetime' ? (
+                    <Button color="primary" onClick={() => close()} size="xs">
+                      Done
+                    </Button>
+                  ) : null}
                 </div>
               ) : undefined;
             if (mode === 'range') {
               return (
                 <Calendar
-                  {...calendarProps}
+                  {...dayCalendarProps}
                   footer={footer}
                   mode="range"
                   onChange={value => handleRangeChange(value, close)}
                   value={range}
+                />
+              );
+            }
+            if (mode === 'datetime') {
+              return (
+                <Calendar
+                  {...dayCalendarProps}
+                  footer={footer}
+                  mode="datetime"
+                  onChange={value => handleDateChange(value)}
+                  showSeconds={showSeconds}
+                  timeLabel={timeLabel}
+                  value={selectedDate}
                 />
               );
             }
@@ -282,7 +337,7 @@ export const DatePicker = <Values extends FieldValues>({
             }
             return (
               <Calendar
-                {...calendarProps}
+                {...dayCalendarProps}
                 footer={footer}
                 mode="single"
                 onChange={value => handleDateChange(value, close)}
