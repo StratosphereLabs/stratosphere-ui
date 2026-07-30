@@ -4,10 +4,10 @@ import {
   PopoverButton,
   PopoverPanel,
 } from '@headlessui/react';
-import { AnchorProps } from '@headlessui/react/dist/internal/floating';
 import classNames from 'classnames';
 import { MutableRefObject, forwardRef } from 'react';
 
+import { PanelAnchor } from '../../common';
 import { Button, ButtonProps } from '../Button';
 
 export interface PopoverPanelRenderProps {
@@ -19,7 +19,7 @@ export interface PopoverPanelRenderProps {
 
 export interface PopoverProps
   extends Omit<HeadlessUIPopoverProps<'div'>, 'as' | 'className'> {
-  anchor?: AnchorProps;
+  anchor?: PanelAnchor;
   buttonProps: ButtonProps;
   className?: string;
   popoverClassName?: string;

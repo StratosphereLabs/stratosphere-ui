@@ -178,6 +178,20 @@ export const WithMinAndMax: Story = {
   ),
 };
 
+/** The arrows on their own, i.e. the caption of the calendar before dropdowns. */
+export const WithCaptionLabel: Story = {
+  args: {
+    captionLayout: 'label',
+    labelText: 'Departure Date',
+    name: 'singleDate',
+  },
+  render: args => (
+    <FormWrapper defaultValues={{ singleDate: '2013-08-12' }}>
+      <DatePicker<FormValues> {...args} />
+    </FormWrapper>
+  ),
+};
+
 export const Small: Story = {
   args: {
     labelText: 'Departure Date',
