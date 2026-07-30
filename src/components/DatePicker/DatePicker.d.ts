@@ -1,8 +1,8 @@
 import { AnchorProps } from '@headlessui/react/dist/internal/floating';
 import { FieldValues, Path } from 'react-hook-form';
 import { FormFieldProps, InputColor, InputSize } from '../Form';
-import { CalendarBaseProps, DateRange, DateSelectionMode, DateValueMode } from './types';
-export interface DatePickerProps<Values extends FieldValues> extends Omit<FormFieldProps<Values>, 'controllerProps'>, Pick<CalendarBaseProps, 'fixedWeeks' | 'isDateDisabled' | 'locale' | 'max' | 'min' | 'showOutsideDays' | 'weekStartsOn'> {
+import { CalendarDayProps, DateRange, DateSelectionMode, DateValueMode } from './types';
+export interface DatePickerProps<Values extends FieldValues> extends Omit<FormFieldProps<Values>, 'controllerProps'>, Pick<CalendarDayProps, 'captionLayout' | 'fixedWeeks' | 'isDateDisabled' | 'locale' | 'max' | 'min' | 'numberOfMonths' | 'showOutsideDays' | 'showWeekNumber' | 'weekStartsOn'> {
     anchor?: AnchorProps;
     buttonClassName?: string;
     calendarClassName?: string;
@@ -21,16 +21,22 @@ export interface DatePickerProps<Values extends FieldValues> extends Omit<FormFi
     onChange?: (value: Date | DateRange | null) => void;
     panelClassName?: string;
     portal?: boolean;
+    /** Adds seconds to the time field of `datetime` mode. */
+    showSeconds?: boolean;
     size?: InputSize;
+    /** Label of the time field of `datetime` mode. Defaults to `Time`. */
+    timeLabel?: string;
     /** Store the value as an ISO string (the default) or as a `Date`. */
     valueMode?: DateValueMode;
 }
 /**
- * A date picker field for react-hook-form, built on the daisyUI calendar
- * styles. Supports selecting a single date, a date range or a single month.
+ * A date picker field for react-hook-form, built on shadcn/ui's date picker
+ * composition of a popover and a calendar, and styled by daisyUI. Supports
+ * selecting a single date, a date and a time, a date range or a single month.
  *
  * With the default `valueMode` of `iso`, `single` and `range` fields store
- * `yyyy-MM-dd` strings and `month` fields store `yyyy-MM` strings, matching the
- * values of native `date` and `month` inputs.
+ * `yyyy-MM-dd` strings, `datetime` fields store `yyyy-MM-ddTHH:mm` strings and
+ * `month` fields store `yyyy-MM` strings, matching the values of the native
+ * `date`, `datetime-local` and `month` inputs.
  */
-export declare const DatePicker: <Values extends FieldValues>({ anchor, buttonClassName, calendarClassName, className, color, disabled, endName, fixedWeeks, hideCalendarIcon, hideErrorMessage, isClearable, isDateDisabled, isRequired, labelText, locale, max, min, mode, name, onChange, panelClassName, placeholder, portal, showDirty, showOutsideDays, size, valueMode, weekStartsOn, }: DatePickerProps<Values>) => import("react/jsx-runtime").JSX.Element;
+export declare const DatePicker: <Values extends FieldValues>({ anchor, buttonClassName, calendarClassName, captionLayout, className, color, disabled, endName, fixedWeeks, hideCalendarIcon, hideErrorMessage, isClearable, isDateDisabled, isRequired, labelText, locale, max, min, mode, name, numberOfMonths, onChange, panelClassName, placeholder, portal, showDirty, showOutsideDays, showSeconds, showWeekNumber, size, timeLabel, valueMode, weekStartsOn, }: DatePickerProps<Values>) => import("react/jsx-runtime").JSX.Element;

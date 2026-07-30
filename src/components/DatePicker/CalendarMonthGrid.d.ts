@@ -1,11 +1,11 @@
 import { KeyboardEventHandler } from '../../../node_modules/react';
-import { CalendarCell } from './types';
+import { CalendarMonthCell } from './types';
 export interface CalendarMonthGridProps {
     captionId: string;
     focusedKey: string;
+    months: CalendarMonthCell[];
     onKeyDown: KeyboardEventHandler<HTMLTableElement>;
     onSelect: (date: Date) => void;
-    months: CalendarCell[];
 }
 /**
  * Renders the twelve months of the displayed year. daisyUI only styles day
